@@ -4,10 +4,29 @@ body {
     
 }
 
+nav{
+    background-color: black;
+}
+/*Changes the color of the container class.*/
+.container{
+    background-color: aliceblue;
+}
+
 h1 {
     color: black;
 }
 
 p {
     color: black
+}
+
+/*Provides margins for some of my pages.*/
+.pushdown{
+    margin-top: 20px;
+}
+
+/*Class for rotating some of my pictures. Source taken from stack overflow.
+https://stackoverflow.com/questions/20061774/rotate-an-image-in-image-source-in-html*/
+.rotate90{
+    transform: rotate(90deg);
 }
