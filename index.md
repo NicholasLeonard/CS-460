@@ -1,3 +1,5 @@
-## Nicholas Leonard
+# Nicholas Leonard
 
-Testing my overall Git pages portfolio.
+This is a Portfolio that will contain all of the work that I have done for the first course in the Senior sequence at Western Oregon University.
+
+![picture](Portfolio_Photos/me_western.jpg)
