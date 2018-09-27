@@ -17,4 +17,4 @@ I am a Senior at Western Oregon University studying Computer Science. I will be 
 
 Here are all the links to the blogs and demos of the work I did throughout the term.
 
-1.[Homework 1](HW1/h1index.md) CSS, HTML, Git, and Bootstrap
+1. [Homework 1](HW1/h1index.md) CSS, HTML, Git, and Bootstrap
