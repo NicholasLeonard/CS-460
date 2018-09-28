@@ -7,13 +7,13 @@ I have never used any of these programs before, so this whole project was a new 
 
 ### Important Links!
 Here is the link to my main Github repository which holds all of my source code for this assignment.
-![Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
+[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
 
 Here is the link to the website I made for this assignment.
-![Demo](wk1Website.html)
+[Demo](wk1Website.html)
 
 This link will take you back to my main Portfolio page.
-![Portfolio intro](../index.md)
+[Portfolio intro](../index.md)
 
 
 ### Step 1. Setting up git and making a github account and repository.
