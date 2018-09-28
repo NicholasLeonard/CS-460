@@ -13,7 +13,12 @@ This is a Portfolio that contains all of the work that I have done for CS 460, w
 I am a Senior at Western Oregon University studying Computer Science. I will be graduating in June 2019 and am looking forward to a long and fulfilling career as a software engineer. I enjoy camping, hiking, and fishing. I like to play videogames as well as watch movies and I really enjoy having LAN parties with friends. Someday I would like to do some traveling. I would love to travel from the west coast to the east coast and do some traveling over seas.
 
 
-## Homework
+## Code Repository
+Here is the link to my github repository which houses all of the source code that I used for all of these projects.
+[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
+
+
+## Homework CS 460 Software Engineering I
 
 Here are all the links to the blogs and demos of the work I did throughout the term.
 
