@@ -43,9 +43,8 @@ Date:   Tue Sep 25 12:32:34 2018 -0700
     First stages of html page for website 1
 ```
 
-
+<b\>
 ### Step 2. Coding a Multipage Website using HTML and Bootstrap.
-
 
 For this assignment, we had to have multiple pages as well as use two different kinds of lists, a table, and show the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then use multiple columns in later pages.
 
@@ -177,7 +176,7 @@ For this page, I decided to put the list and the table into two columns to keep 
             </div>
 ```
 
-
+<b\>
 ### Step 3 Styling the website using CSS
 
 For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I think black texts works the best. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements that I was using as captions with my images. This allowed me to mess with justification and alignment.
