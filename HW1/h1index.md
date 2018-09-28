@@ -72,7 +72,8 @@ To get Bootstrap to work with my pages, I also had to include the necessary link
 </head>
 ```
 
-One of the assignment requirements was for us to include some form of link navigation so that we could access all the pages for our website. I decided that an active tab system would be an appropriate choice and it also gave me an opportunity to use a list to meet one of the other requirements. Therefore, I included the HTML coding for a navbar and navigation functionality.
+One of the assignment requirements was for us to include some form of link navigation so that we could access all the pages in our website. I decided that an active tab system would be an appropriate choice and it also gave me an opportunity to use a list to meet one of the other requirements. Therefore, I included the HTML coding for a navbar and navigation functionality.
+
 
 ```html
 <nav class="navbar">
@@ -90,4 +91,31 @@ One of the assignment requirements was for us to include some form of link navig
             </li>
         </ul>
     </nav>
+```
+
+Making the navigation bar was a lot of fun. I started by having dummy links because I did not yet have additional pages and I had dummy titles because I was not sure what I was going to call the other pages. However, once I got going it started to come pretty easily and I was able to come up with some names for my different pages. I did, however, almost forget to go back and change the names of the links and add the active class to the current page I was on so that the tab would highlight. It all worked out in the end though.
+
+
+For the next page, I decided to use two columns of images with descriptive text to knockout the multicolumn requirement but to also get some practice with image linking. So I used bootstrap div, container, row, and column classes to position the images on the page and then put in links to include the images. I did some specific modifications in my CSS file for these elements that I will talk about a little bit later.
+
+```html
+ <div class="container pushdown">
+         <div class="row">
+             <div class="col-sm-6">
+                 <div class="contanier">
+                     <img class="img-fluid mx-auto d-block rounded pushdown" src="car1.jpg" alt="My first car.">
+                     <p class="pushdown" id="caption">Here is a picture of my first car. Manual transmission for life!</p>
+                    </div>
+             </div>
+             <div class="col-sm-6">
+                 <div class="container">
+                     <img class="img-fluid mx-auto d-block rounded pushdown" src="gpu1.jpg" alt="My first GPU!">
+                     <p class="pushdown" id="caption">This is a picture of my first GPU that I got when building my computer.</p>
+                 </div>
+                 
+             </div>
+         </div>
+
+         
+     </div>
 ```
