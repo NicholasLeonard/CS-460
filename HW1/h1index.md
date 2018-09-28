@@ -122,7 +122,7 @@ For the next page, I decided to use two columns of images with descriptive text 
 
 Once I finished the picture page, I moved on to the third and final page of the website where I decided to use a detail list and a table of first events to finish off the remaining HTML requirements. I decided to use a detail list element because I wanted to list some of the things I like to do and then provide a little description about them. This list turned into more of a get to know me rather than first events for me, but the table on the same page is about first events, which keeps more in theme with the website.
 
-For this page, I decided to put the list and the table into two columns to keep with the multicolumn requirement, but I used some of bootstraps cool features and had the columns span different widths so that the table had more horizontal room than the list. 
+For this page, I decided to put the list and the table into two columns to keep with the multicolumn requirement, but I used some of bootstraps cool features and had the columns span different widths so that the table had more horizontal room than the list. After finishing the list, I put in a table to finish the requirement. The table contained several entries that detailed some of my first events such as camping.
 
 
 ```html
@@ -151,4 +151,60 @@ For this page, I decided to put the list and the table into two columns to keep 
                     <dd>I love all kinds of movies. From old westerns and war movies to modern movies like Avatar and Avengers Infinity War. I especially enjoy watching them with other people.</dd>
                 </dl>
             </div>
+```
+```html
+<div class="col-sm-7">
+                <div class="table-responsive-sm">
+                    <table class="table table-bordered">
+                        <tr><th>First Event</th> <th>Where</th></tr>
+                        <tr><td>Camping trip</td> <td>A lake somewhere</td></tr>
+                        <tr><td>Job</td> <td>Baldwin - Boy Scout Summer Camp</td></tr>
+                        <tr><td>Word</td> <td>Ball</td></tr>
+                        <tr><td>Video Game</td> <td>Spyro: Rypto's Rage</td></tr>
+                    </table>
+                </div>
+            </div>
+```
+
+
+### Step 3 Styling the website using CSS
+
+For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I think black texts works the best. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements that I was using as captions with my images. This allowed me to mess with justification and alignment.
+
+```CSS
+body {
+    background-color: rgb(82, 79, 79);    
+}
+
+/*Changes the color of the container class.*/
+.container{
+    background-color: aliceblue;
+}
+
+h1 {
+    color: black;
+}
+
+h2 {
+    color: black;
+}
+
+p {
+    color: black;    
+}
+
+/*Provides margins for some of my pages.*/
+.pushdown{
+    margin-top: 20px;
+}
+
+/*ID for caption text for pictures*/
+#caption{
+    text-align: center
+}
+
+/*Alignment modification for pictures on website*/
+.img{
+    vertical-align: middle
+}
 ```
