@@ -3,7 +3,17 @@
 
 ## Homework 1
 
-I have never used any of these programs before, so this whole project was a new experience for me. It was a great experience of learning new tools and experimenting to cement the process in my head.
+I have never used any of these programs before, so this whole project was a new experience for me. It was a great experience. I enjoyed learning new tools and experimenting with them to cement the processes in my head and to try to understand how they work.
+
+### Important Links!
+Here is the link to my main Github repository which holds all of my source code for this assignment.
+![Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
+
+Here is the link to the website I made for this assignment.
+![Demo](wk1Website.html)
+
+This link will take you back to my main Portfolio page.
+![Portfolio intro](../index.md)
 
 
 ### Step 1. Setting up git and making a github account and repository.
@@ -171,7 +181,7 @@ For this page, I decided to put the list and the table into two columns to keep 
 
 For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I think black texts works the best. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements that I was using as captions with my images. This allowed me to mess with justification and alignment.
 
-```CSS
+```css
 body {
     background-color: rgb(82, 79, 79);    
 }
@@ -208,3 +218,5 @@ p {
     vertical-align: middle
 }
 ```
+
+That is how I made my website. I would like to continue to tweak it and mess with things so that I can learn more and continue to make it better. However, for now, this is how it will stay. If you want to preview my website, follow the link marked Demo at the top of this page.
