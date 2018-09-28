@@ -8,14 +8,12 @@ I have never used any of these programs before, so this whole project was a new 
 ### Important Links!
 Here is the link to my main Github repository which holds all of my source code for this assignment.
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
-
-Here is the link to the website I made for this assignment.
+Here is the link to the website I made for this assignment.\
 [Demo](wk1Website.html)
+This link will take you back to my main Portfolio page.<br/>
+[Portfolio](../index.md)
 
-This link will take you back to my main Portfolio page.
-[Portfolio intro](../index.md)
-
-
+<br/>
 ### Step 1. Setting up git and making a github account and repository.
 
 The first thing I had to do was actually download git from the provided link in the homework page. Once I had downloaded and installed git and created the remote repository on github, I had to clone the repository onto my local machine.
