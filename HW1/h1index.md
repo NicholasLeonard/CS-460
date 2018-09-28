@@ -8,8 +8,10 @@ I have never used any of these programs before, so this whole project was a new 
 ### Important Links!
 Here is the link to my main Github repository which holds all of my source code for this assignment.
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
-Here is the link to the website I made for this assignment.\
+
+Here is the link to the website I made for this assignment.
 [Demo](wk1Website.html)
+
 This link will take you back to my main Portfolio page.<br/>
 [Portfolio](../index.md)
 
@@ -21,6 +23,7 @@ The first thing I had to do was actually download git from the provided link in 
 ```bash
 git clone https://github.com/NicholasLeonard/NicholasLeonard.github.io.git
 ```
+
 After I made the clone, I had to run two git config commands to properly set my git username and email to match with my github profile.
 
 ```bash
