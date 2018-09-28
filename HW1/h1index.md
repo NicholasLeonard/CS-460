@@ -33,7 +33,7 @@ Date:   Tue Sep 25 12:32:34 2018 -0700
 ```
 
 
-### Step 2. Coding a Multipage Website using HTML, CSS, and Bootstrap.
+### Step 2. Coding a Multipage Website using HTML and Bootstrap.
 
 
 For this assignment, we had to have multiple pages as well as use two different kinds of lists, a table, and show the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then use multiple columns in later pages.
@@ -118,4 +118,37 @@ For the next page, I decided to use two columns of images with descriptive text 
 
          
      </div>
+```
+
+Once I finished the picture page, I moved on to the third and final page of the website where I decided to use a detail list and a table of first events to finish off the remaining HTML requirements. I decided to use a detail list element because I wanted to list some of the things I like to do and then provide a little description about them. This list turned into more of a get to know me rather than first events for me, but the table on the same page is about first events, which keeps more in theme with the website.
+
+For this page, I decided to put the list and the table into two columns to keep with the multicolumn requirement, but I used some of bootstraps cool features and had the columns span different widths so that the table had more horizontal room than the list. 
+
+
+```html
+<div class="container">
+        <div class="row">
+            <div class="col-sm-5">
+                <dl>
+                    <dt>Video Games</dt>
+                    <dd>I like playing all kinds of games from retro mario to modern shooters.</dd>
+                    
+                    <dt>Camping</dt>
+                    <dd>I love all kinds of camping. I have camped by a lake where I've gone fishing and
+                        I have also camped out in a lodge with the fire roaring and snow outside.
+                    </dd>
+
+                    <dt>Driving</dt>
+                    <dd>I love driving on a sunny day with the windows down and the radio up. Part of
+                        the reason I like to drive I think is that I drive a manual transmission. It
+                        is a lot of fun.
+                    </dd>
+
+                    <dt>Being with friends and family</dt>
+                    <dd>My family and friends are two of the most important things in my life. I love to sit and talk with them or watch movies with them or just hangout and chill.</dd>
+
+                    <dt>Watching Movies</dt>
+                    <dd>I love all kinds of movies. From old westerns and war movies to modern movies like Avatar and Avengers Infinity War. I especially enjoy watching them with other people.</dd>
+                </dl>
+            </div>
 ```
