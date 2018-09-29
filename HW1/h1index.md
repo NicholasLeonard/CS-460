@@ -2,13 +2,13 @@
 <br/>
 ## Homework 1
 
-I have never used any of these programs before, so this whole project was a new experience for me. It was a great experience. I enjoyed learning new tools and experimenting with them to cement the processes in my head and to try to understand how they work.
+I have never used any of these programs before, so this whole project was a new experience for me. I really enjoyed it and I enjoyed learning new tools as well as experimenting with them to cement the processes in my head and so I can understand how they work.
 
 ### Important Links!
-Here is the link to my main Github repository which holds all of my source code for this assignment.
+Here is the link to my main Github repository, which holds all of my source code for this assignment.
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
 
-Here is the link to the website I made for this assignment.
+Here is the link to the website I made for this assignment.<br/>
 [Demo](wk1Website.html)
 
 This link will take you back to my main Portfolio page.<br/>
@@ -45,7 +45,7 @@ Date:   Tue Sep 25 12:32:34 2018 -0700
 <br/>
 ### Step 2. Coding a Multipage Website using HTML and Bootstrap.
 
-For this assignment, we had to have multiple pages as well as use two different kinds of lists, a table, and show the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then use multiple columns in later pages.
+For this assignment, I had to make a website with multiple pages. The formatting of the pages was up to me but my site had to contain at least two different kinds of lists, a table, and demonstrate the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then I used multiple columns in later pages.
 
 ```html
 <div class="container pushdown">
@@ -60,7 +60,7 @@ For this assignment, we had to have multiple pages as well as use two different 
         </div>
     </div>
 ```
-I wanted the text to appear in a box on top of the regular background so I put it into a container to allow for more specific custimization options. We also had to use bootstrap 4 for formatting but were not aloud any absolute links. Thus, I downloaded the bootstrap 4 zip from the link provided in the homework and put the files in my local repository.
+I wanted the text to appear in a box on top of the regular background so I put it into a container to allow for more specific customization options. I also had to use bootstrap 4 for the general formatting of the pages. I was, however, not allowed to use absolute links for this assignment so I downloaded the bootstrap 4 zip from the link provided in the homework details page (linked [here](http://www.wou.edu/~morses/classes/cs46x/assignments/HW1.html)) and put the files in my local repository.
 
 ![picture](../Portfolio_Photos/bootstrapfiles.png)
 
