@@ -45,7 +45,7 @@ Date:   Tue Sep 25 12:32:34 2018 -0700
 <br/>
 ### Step 2. Coding a Multipage Website using HTML and Bootstrap.
 
-For this assignment, I had to make a website with multiple pages. The formatting of the pages was up to me but my site had to contain at least two different kinds of lists, a table, and demonstrate the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then I used multiple columns in later pages.
+For this assignment, I had to make a website with multiple pages. The overall style and formatting of the pages was up to me, but my site had to contain at least two different kinds of lists, a table, and demonstrate the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then I used multiple columns in later pages.
 
 ```html
 <div class="container pushdown">
@@ -65,7 +65,7 @@ I wanted the text to appear in a box on top of the regular background so I put i
 ![picture](../Portfolio_Photos/bootstrapfiles.png)
 
 
-To get Bootstrap to work with my pages, I also had to include the necessary links in the head element of my HTML document. I also had to use a CSS file, which I also linked in the head of the document.
+To get Bootstrap to work with my pages, I had to include the necessary links in the head element of my HTML document. I also had to create and use my own CSS file, which I also linked in the head of the document.
 
 ```html
 <head>
@@ -81,7 +81,7 @@ To get Bootstrap to work with my pages, I also had to include the necessary link
 </head>
 ```
 
-One of the assignment requirements was for us to include some form of link navigation so that we could access all the pages in our website. I decided that an active tab system would be an appropriate choice and it also gave me an opportunity to use a list to meet one of the other requirements. Therefore, I included the HTML coding for a navbar and navigation functionality.
+One of the assignment requirements, was to include some form of link navigation so that all pages in my website could be accessed. I decided to use an active tab system because I thought it looked cool and it also allowed me to use one of the two lists I needed to meet the requirements. Therefore, I included the HTML coding for a navbar and active tab system to provide navigation functionality. I repeated this code on subsequent pages so that they were all linked together.
 
 
 ```html
@@ -102,10 +102,10 @@ One of the assignment requirements was for us to include some form of link navig
     </nav>
 ```
 
-Making the navigation bar was a lot of fun. I started by having dummy links because I did not yet have additional pages and I had dummy titles because I was not sure what I was going to call the other pages. However, once I got going it started to come pretty easily and I was able to come up with some names for my different pages. I did, however, almost forget to go back and change the names of the links and add the active class to the current page I was on so that the tab would highlight. It all worked out in the end though.
+Making the navigation bar and link system was a lot of fun. I started with dummy links and titles because I did not yet have additional pages to link to and I did not know what to call the other pages. However, once I got going, it started to come pretty easily and I was able to come up with some names for my different pages. I did, however, almost forget to go back and change the names of the links on all the pages. I even forgot to add the active class to the current page I was on so that the tab would highlight. It all worked out in the end though.
 
 
-For the next page, I decided to use two columns of images with descriptive text to knockout the multicolumn requirement but to also get some practice with image linking. So I used bootstrap div, container, row, and column classes to position the images on the page and then put in links to include the images. I did some specific modifications in my CSS file for these elements that I will talk about a little bit later.
+For the next page, I decided to use two columns of images with descriptive text to knockout the multicolumn requirement, but to also provide some practice with image linking. So I used bootstrap div, container, row, and column classes to position the images on the page and then created links to include the images. I did some specific modifications in my CSS file for these elements that I will talk about a little bit later.
 
 ```html
  <div class="container pushdown">
@@ -129,9 +129,9 @@ For the next page, I decided to use two columns of images with descriptive text 
      </div>
 ```
 
-Once I finished the picture page, I moved on to the third and final page of the website where I decided to use a detail list and a table of first events to finish off the remaining HTML requirements. I decided to use a detail list element because I wanted to list some of the things I like to do and then provide a little description about them. This list turned into more of a get to know me rather than first events for me, but the table on the same page is about first events, which keeps more in theme with the website.
+Once I finished the picture page, I moved on to the third and final page of the website where I decided to use a detail list and a table of first events to finish off the remaining HTML requirements. I decided to use a detail list element because I wanted to list some of the things I like to do and then provide a little description about them. This list turned into more of a get to know me rather than first events, but I enjoyed making it all the same. The table on the same page, however, does include entries about first events, which keeps more in line with the theme of the website.
 
-For this page, I decided to put the list and the table into two columns to keep with the multicolumn requirement, but I used some of bootstraps cool features and had the columns span different widths so that the table had more horizontal room than the list. After finishing the list, I put in a table to finish the requirement. The table contained several entries that detailed some of my first events such as camping.
+For this page, I decided to put the list and the table into two columns to keep with the multicolumn requirement, but I used some of bootstraps cool column features to do it. I had the columns span different widths of the page so that the table had more horizontal room than the list. After finishing the list, I put in a table to finish the requirement. The table contained several entries that detailed some of my first events such as camping. The syntax for the table was a little confusing for me and it was hard to keep it straight, but I managed to tackle this too.
 
 
 ```html
@@ -178,7 +178,7 @@ For this page, I decided to put the list and the table into two columns to keep 
 <br/>
 ### Step 3 Styling the website using CSS
 
-For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I think black texts works the best. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements that I was using as captions with my images. This allowed me to mess with justification and alignment.
+For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I wanted consistent black text throughout. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements so that I could use them as captions with my images. This allowed me to mess with justification and alignment for the captions of the images.
 
 ```css
 body {
@@ -218,4 +218,4 @@ p {
 }
 ```
 
-That is how I made my website. I would like to continue to tweak it and mess with things so that I can learn more and continue to make it better. However, for now, this is how it will stay. If you want to preview my website, follow the link marked Demo at the top of this page.
+That is how I made my website. I would like to continue to tweak and experiment with elements to improve the website as well as my skill. However, for now, this is how it will stay. If you want to preview my website, follow the link marked Demo at the top of this page.
