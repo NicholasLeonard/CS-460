@@ -5,7 +5,7 @@
 I have never used any of these programs before, so this whole project was a new experience for me. I really enjoyed it and I enjoyed learning new tools as well as experimenting with them to cement the processes in my head and so I can understand how they work.
 
 ### Important Links!
-Here is the link to my main Github repository, which holds all of my source code for this assignment.
+Here is the link to my main Github repository, which holds all of my source code for this assignment.<br/>
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
 
 Here is the link to the website I made for this assignment.<br/>
@@ -129,7 +129,7 @@ For the next page, I decided to use two columns of images with descriptive text 
      </div>
 ```
 
-Once I finished the picture page, I moved on to the third and final page of the website where I decided to use a detail list and a table of first events to finish off the remaining HTML requirements. I decided to use a detail list element because I wanted to list some of the things I like to do and then provide a little description about them. This list turned into more of a get to know me rather than first events, but I enjoyed making it all the same. The table on the same page, however, does include entries about first events, which keeps more in line with the theme of the website.
+Once I finished the picture page, I moved on to the third and final page of the website where I decided to use a detail list and a table of first events to finish off the remaining HTML requirements. I decided to use a detail list element because I wanted to list some of the things I like to do and then provide a little description about them. This list turned into more of a get to know me rather than first events, but I enjoyed making it all the same. The table on the same page, however, does include entries about first events, which kept more in line with the theme of the website.
 
 For this page, I decided to put the list and the table into two columns to keep with the multicolumn requirement, but I used some of bootstraps cool column features to do it. I had the columns span different widths of the page so that the table had more horizontal room than the list. After finishing the list, I put in a table to finish the requirement. The table contained several entries that detailed some of my first events such as camping. The syntax for the table was a little confusing for me and it was hard to keep it straight, but I managed to tackle this too.
 
@@ -178,7 +178,7 @@ For this page, I decided to put the list and the table into two columns to keep 
 <br/>
 ### Step 3 Styling the website using CSS
 
-For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I wanted consistent black text throughout. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements so that I could use them as captions with my images. This allowed me to mess with justification and alignment for the captions of the images.
+For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I wanted consistent black text throughout. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class, pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements so that I could use them as captions with my images. This allowed me to mess with justification and alignment for the captions of the images.
 
 ```css
 body {
@@ -218,4 +218,4 @@ p {
 }
 ```
 
-That is how I made my website. I would like to continue to tweak and experiment with elements to improve the website as well as my skill. However, for now, this is how it will stay. If you want to preview my website, follow the link marked Demo at the top of this page.
+That is how I made my website. I would like to continue to tweak and experiment with elements to improve the website as well as my skill. However, for now, this is how it will stay. If you want to preview my website, follow the link marked Demo at the top of this page. Thanks for reading!
