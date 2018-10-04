@@ -12,7 +12,10 @@
     $("#calc").click(getString);
 });*/
 $(document).ready(function(){
-    $("#countme").submit(getString());
+    $("#countme").submit(getString);
+    $("#reset").click(function(){//this is to clear the table from a previous entry.
+        $("#tableHere").empty();
+    });
 });
 
 //used to get the data from the text area for parsing and counting. Returns false so form works.
@@ -134,11 +137,20 @@ function count(content){
     }
     console.log(tallies + " tallies of letters"); //confirming final tallies
 
-   // genTable(tallies);
+    genTable(tallies);
 };
 
 //used to generate the table with tally totals.
 function genTable(tallies){
+    $("#tableHere").append("<table id='tallytble'>");
+    $("#tallytble").append("<tr id='hdrw'>");
+    $("#tallytble").append("<tr id='drw'");
+    var headers = ['a','B','C','D','E','F','G','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    console.log(headers + " headers_for_table");//testing headers for array
+    for(i=0; i < tallies.length; i++){
+        $("#hdrw").append("<th>"+ headers[i] + "</th>");
+        $("#drw").append("<td>"+tallies[i]+"</td>");        
+    }
     
 };
 /*use a switch to go through the string and tally all the different letters. if " ", skip to next place. should probably use charAt() to return the character at the specified index. should also convert to lower case*/
