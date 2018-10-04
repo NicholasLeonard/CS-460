@@ -133,6 +133,12 @@ function count(content){
         }
     }
     console.log(tallies + " tallies of letters"); //confirming final tallies
+
+   // genTable(tallies);
 };
 
+//used to generate the table with tally totals.
+function genTable(tallies){
+    
+};
 /*use a switch to go through the string and tally all the different letters. if " ", skip to next place. should probably use charAt() to return the character at the specified index. should also convert to lower case*/
