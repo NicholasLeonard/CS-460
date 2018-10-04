@@ -63,8 +63,7 @@ p {
 #parser{
     margin: 0 auto;
     display: block;
-    width: 50%;
-    height: 140%;
+    width: 90%;
     background-color: black;
     color: white;
 }
