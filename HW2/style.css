@@ -1,0 +1,76 @@
+body {
+    background-color: rgb(82, 79, 79);    
+}
+
+nav{
+    background-color: black
+}
+
+/*Changes the color of the container class.*/
+.container{
+    background-color: aliceblue;
+}
+
+h1 {
+    color: black;
+}
+
+h2 {
+    color: black;
+}
+
+p {
+    color: black;    
+}
+
+/*Provides margins for some of my pages.*/
+.pushdown{
+    margin-top: 20px;
+}
+
+/*Provides more margins*/
+.pushdown50{
+    margin-top: 50px;
+}
+
+/*ID for caption text for pictures*/
+#caption{
+    text-align: center
+}
+
+/*Alignment modification for pictures on website*/
+.img{
+    vertical-align: middle
+}
+
+/*Styling for wk2webpage*/
+
+/*id for one trick header*/
+#h1{
+    color: black;
+    padding: 10px;
+    text-indent: 10px;
+}
+
+.container{
+    background-color: white;    
+}
+
+#parscontainer{
+    padding-bottom: 40px;
+}
+
+/*styles the input textarea*/
+#parser{
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+    background-color: black;
+    color: white;
+}
+
+/*highlighting cells that have letters in result table*/
+.have{
+    background-color: green;
+    color: black
+}
