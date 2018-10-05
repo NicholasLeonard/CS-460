@@ -147,3 +147,202 @@ $(document).ready(function(){
     $("#reset").click(clr_tble); //this is to clear the table from a previous entry or a reset.
 });
 ```
+
+As you can see from the snippet above, jQuery identifies the form element by its id and then listens for the event, which in this case is the form being submitted. Once the form has been submitted, it begins by calling getString, which is a javascript function I wrote to handle the input and calculation. 
+
+```javascript
+//used to get the data from the text area for parsing and counting. Returns false so form works.
+function getString(){
+        var content = $.trim($("#parser").val());
+        console.log(content);//test string input
+        count(content);//used to total letters
+        return false;//prevents form from automatically submitting and resetting
+    }
+```
+This function uses jquery to get the input from the form and put it into a content variable, which is then passed to a count function that does the hard computation. I also included several `console.log()` commands to record the steps of the function to the browser console so I could confirm that the data was actually being passed. I had a problem where when the form was submitted it would cycle through everything and then wipe it out. To solve this problem I had to have this function return false. This prevented the page from continousley cycling.
+
+Once `getString()` retrieved the users input, I passed it to `count()` to do the computation. Once again, I used several `console.log()` commands to record the process of the data through the function.
+
+```javascript
+//used to prep for calculation
+function count(content){
+    //converts string to lowercase characters for comparison
+    var content = content.toLocaleLowerCase();
+    console.log(content + " lower_case_str");//used for testing
+
+    //gets the length of the string for loop
+    length = content.length;
+    console.log(length + " length_of_string")//used for testing
+
+    //array to hold totals of letter counts
+    var tallies = [];
+    for(i=0; i<26; i++){
+        tallies.push(0);
+    }
+    
+    console.log(tallies.length + " num_of_elements");//testing lenght of tallies
+    console.log(content.charAt(0) + " first_letter");//testing that content.charAt() was working
+
+    // loop provides work for tallying letters
+    for(i = 0; i < length; i++){
+        console.log("test_for_loop");//making sure loop is working
+        var char = content.charAt(i); //used to get individual letters from input string for comparison
+        console.log(char + " test_of_char"); //confirming that char is getting letters
+
+        switch (char){ //used to provide 26 comparisons for english letters
+            default:    //this way nonletter characters are skipped.
+                break;               
+            case "a"://add comment to webpage for empty tally array
+                tallies[0] = tallies[0] + 1;
+                break;
+            case "b":
+                tallies[1] = tallies[1] + 1;
+                break;
+            case "c":
+                tallies[2] = tallies[2] + 1;
+                break;
+            case "d":
+                tallies[3] = tallies[3] + 1;
+                break;
+            case "e":
+                tallies[4] = tallies[4] + 1;
+                break;
+            case "f":
+                tallies[5] = tallies[5] + 1;
+                break;
+            case "g":
+                tallies[6] = tallies[6] + 1;
+                break;
+            case "h":
+                tallies[7] = tallies[7] + 1;
+                break;
+            case "i":
+                tallies[8] = tallies[8] + 1;
+                break;
+            case "j":
+                tallies[9] = tallies[9] + 1;
+                break;
+            case "k":
+                tallies[10] = tallies[10] + 1;
+                break;
+            case "l":
+                tallies[11] = tallies[11] + 1;
+                break;
+            case "m":
+                tallies[12] = tallies[12] + 1;
+                break;
+            case "n":
+                tallies[13] = tallies[13] + 1;
+                break;
+            case "o":
+                tallies[14] = tallies[14] + 1;
+                break;
+            case "p":
+                tallies[15] = tallies[15] + 1;
+                break;
+            case "q":
+                tallies[16] = tallies[16] + 1;
+                break;
+            case "r":
+                tallies[17] = tallies[17] + 1;
+                break;
+            case "s":
+                tallies[18] = tallies[18] + 1;
+                break;
+            case "t":
+                tallies[19] = tallies[19] + 1;
+                break;
+            case "u":
+                tallies[20] = tallies[20] + 1;
+                break;
+            case "v":
+                tallies[21] = tallies[21] + 1;
+                break;
+            case "w":
+                tallies[22] = tallies[22] + 1;
+                break;
+            case "x":
+                tallies[23] = tallies[23] + 1;
+                break;
+            case "y":
+                tallies[24] = tallies[24] + 1;
+                break;
+            case "z":
+                tallies[25] = tallies[25] + 1;
+                break;                    
+        }
+    }
+    console.log(tallies + " tallies of letters"); //confirming final tallies
+
+    genTable(tallies);//used to make the result table
+};
+```
+
+Once I had the counts for the letters, I used `genTable()` to create and populate the table. I continued to use `console.log()` to record the steps of data through the function and to confirm that everything wa working properly.
+
+```javascript
+//used to generate the table with tally totals.
+function genTable(tallies){
+
+    //jquery to create initial outline of table
+    $("#tableHere").append('<p>Here are your totals.</p>', '<table class="table table-bordered table-condensed" id="tallytble">');
+    $("#tallytble").append("<tr id='hdrw'>");
+    $("#tallytble").append("<tr id='drw'");
+    
+    //array containing headers for table
+    var headers = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+    console.log(headers + " headers_for_table");//testing headers for array
+
+    //loop for populating result table
+    for(i=0; i < tallies.length; i++){
+        if(tallies[i]>0){
+            $("#hdrw").append("<th class='have'>"+ headers[i] +"</th>");
+            $("#drw").append("<td class='have'>"+ tallies[i] +"</td>");
+        }else{
+            $("#hdrw").append("<th>"+ headers[i] + "</th>");
+            $("#drw").append("<td>"+tallies[i]+"</td>"); 
+        }      
+    }
+};
+```
+
+The resulting computation was well displayed in a formatted table that highlights the inputs so the user can easily find what letters they used and how many there were.
+
+![picture](../Portfolio_Photos/blog2_complete_screenshot.jpg)
+
+It is however, a rather boring display when nothing is entered.
+
+![picture](../Portfolio_Photos/blog2_complete_0_letters.jpg)
+
+That is my Letter Tallier. I encourage you to try it out. It also utilizes classes like `table-responsive` to make the table scrollable when you shrink the screen. This contributes to the webpages ability to work and display on smaller screens, which is an important feature of responsive webdesign.
+
+### Merging back to Master
+
+After I finished all the work on this page, I had to merge the feature branch back with the main branch. I accomplished this by checkingout the master branch and then merging my feature branch with the master branch. You can even see the branch merge with master with the `git graph` command. Thanks for reading!
+
+```bash
+git checkout master
+git merge hw2
+
+$ git log --oneline --graph
+* 1342974 (HEAD -> master, origin/master, origin/HEAD) Fixed bug in blog 2.
+* 13183c1 Added to blog 2 and improved the photo.
+* 07f5b3d First coupld entries in blog 2. Testing picture link.
+* ae71e99 Beginnings of the blog post.
+* c18352a Pics for blog 2 and cleaned up html and commented CSS.
+*   1e144b8 Completeing merge of master and hw2
+|\
+| * 053c721 (origin/hw2, hw2) Finished webpage, CSS, and Javascript files.
+| * 47f8f12 Fully functional javascript and jquery.
+| * 44d207c Minor additions
+| * 3e8bf3b Finished code for calculation.
+| * 9f2ab3f Changes to html and javascript.
+| * ea6fde3 Started formatting webpage and CSS. Created JavaScript file.
+| * 48df648 Beginnings of new webpage with additional styles in CSS file.
+| * 742129c Initial commit of hw2 feature work.
+* | 9463b40 Modified README to show commit on master.
+|/
+* 15a2f3b Last formatting tweaks to blog 1.
+* e67b608 Final final formatting for blog 1.
+```
