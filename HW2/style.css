@@ -52,10 +52,12 @@ p {
     text-indent: 10px;
 }
 
+
 .container{
     background-color: white;    
 }
 
+/*Additional padding for the container div holding the parser form*/
 #parscontainer{
     padding-bottom: 40px;
 }
