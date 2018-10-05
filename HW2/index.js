@@ -1,31 +1,20 @@
-/*$(document).ready(function(){
-    $("#countme").click(function (){
-        var content = $.trim($("#parser").val());
-            console.log("this part works atleast");
-    });
-
-
-    
-});*/
-/*$(document).ready(function(){
-
-    $("#calc").click(getString);
-});*/
 $(document).ready(function(){
-    $("#countme").submit(getString);
-    $("#reset").click(function(){//this is to clear the table from a previous entry.
-        $("#tableHere").empty();
-    });
+    $("#countme").submit(clr_tble);
+    $("#countme").submit(getString); //start calculation once the form is submitted.
+    $("#reset").click(clr_tble); //this is to clear the table from a previous entry or a reset.
 });
+
+//used to clear previous results
+function clr_tble(){
+    $("#tableHere").empty();
+}
 
 //used to get the data from the text area for parsing and counting. Returns false so form works.
 function getString(){
         var content = $.trim($("#parser").val());
-        //if(content === "")
-        //$("#parser").val("You have to enter something.");//form is currently submitting upon page load.
-        console.log(content);
-        count(content);
-        return false;
+        console.log(content);//test string input
+        count(content);//used to total letters
+        return false;//prevents form from automatically submitting and resetting
     }
 
 //used to prep for calculation
@@ -46,6 +35,7 @@ function count(content){
     
     console.log(tallies.length + " num_of_elements");//testing lenght of tallies
     console.log(content.charAt(0) + " first_letter");//testing that content.charAt() was working
+
     // loop provides work for tallying letters
     for(i = 0; i < length; i++){
         console.log("test_for_loop");//making sure loop is working
@@ -54,7 +44,7 @@ function count(content){
 
         switch (char){ //used to provide 26 comparisons for english letters
             default:    //this way nonletter characters are skipped.
-                break;                
+                break;               
             case "a"://add comment to webpage for empty tally array
                 tallies[0] = tallies[0] + 1;
                 break;
@@ -137,20 +127,30 @@ function count(content){
     }
     console.log(tallies + " tallies of letters"); //confirming final tallies
 
-    genTable(tallies);
+    genTable(tallies);//used to make the result table
 };
 
 //used to generate the table with tally totals.
 function genTable(tallies){
-    $("#tableHere").append("<table id='tallytble'>");
+
+    //jquery to create initial outline of table
+    $("#tableHere").append('<p>Here are your totals.</p>', '<table class="table table-bordered table-condensed" id="tallytble">');
     $("#tallytble").append("<tr id='hdrw'>");
     $("#tallytble").append("<tr id='drw'");
-    var headers = ['a','B','C','D','E','F','G','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-    console.log(headers + " headers_for_table");//testing headers for array
-    for(i=0; i < tallies.length; i++){
-        $("#hdrw").append("<th>"+ headers[i] + "</th>");
-        $("#drw").append("<td>"+tallies[i]+"</td>");        
-    }
     
+    //array containing headers for table
+    var headers = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+    console.log(headers + " headers_for_table");//testing headers for array
+
+    //loop for populating result table
+    for(i=0; i < tallies.length; i++){
+        if(tallies[i]>0){
+            $("#hdrw").append("<th class='have'>"+ headers[i] +"</th>");
+            $("#drw").append("<td class='have'>"+ tallies[i] +"</td>");
+        }else{
+            $("#hdrw").append("<th>"+ headers[i] + "</th>");
+            $("#drw").append("<td>"+tallies[i]+"</td>"); 
+        }      
+    }
 };
-/*use a switch to go through the string and tally all the different letters. if " ", skip to next place. should probably use charAt() to return the character at the specified index. should also convert to lower case*/

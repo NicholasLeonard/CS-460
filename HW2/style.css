@@ -60,10 +60,17 @@ p {
     padding-bottom: 40px;
 }
 
+/*styles the input textarea*/
 #parser{
     margin: 0 auto;
     display: block;
-    width: 90%;
+    width: 80%;
     background-color: black;
     color: white;
+}
+
+/*highlighting cells that have letters in result table*/
+.have{
+    background-color: green;
+    color: black
 }
