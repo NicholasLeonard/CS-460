@@ -54,7 +54,7 @@ I had originally thought to have the input box in a left column and generate the
 <br/>
 ### Step 4. Coding the page in HTML, styling with CSS, and using JavaScript and JQuery to modify
 
-After I finished designing the page and coming up with ideas, it was time to begin coding. I started with the main container, the title header, and the input form. As I stated earlier, I wanted a <code><textarea></code> input element because it allows for more input then the standared <code><input></code> element. I used CSS to style the input area extensively and I will talk about that later but I did have to specify the number of rows for the text area in the tag. I also added two Bootstrap 4 form buttons for submitting the form and beginning and the calcualtion as well as a reset button to put the entire page back to its original state.
+After I finished designing the page and coming up with ideas, it was time to begin coding. I started with the main container, the title header, and the input form. As I stated earlier, I wanted a textarea input element because it allows for more input then the standared input element. I used CSS to style the input area extensively and I will talk about that later but I did have to specify the number of rows for the text area in the tag. I also added two Bootstrap 4 form buttons for submitting the form and beginning and the calcualtion as well as a reset button to put the entire page back to its original state.
 
 ```html
 <body>
