@@ -6,7 +6,8 @@ namespace Translation
         /*Add an element to the rear of the queue and return the element that was enqueued*/
         T Push(T element);
 
-        /*Remove and return the front element*/
+        /*Remove and return the front element
+         throws QueueUnderFlowException if queue is empty*/
 
         T Pop();
 

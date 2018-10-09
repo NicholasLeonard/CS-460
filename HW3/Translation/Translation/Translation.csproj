@@ -47,6 +47,7 @@
       <Link>Node.cs</Link>
     </Compile>
     <Compile Include="IQueueInterface.cs" />
+    <Compile Include="LinkedQueue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueUnderFlowException.cs" />
