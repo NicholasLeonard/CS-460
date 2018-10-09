@@ -23,6 +23,7 @@ namespace Translation
             if ( IsEmpty() )
             {
                 Node<T> tmp = new Node<T>(element, null);
+                Rear = Front = tmp;
             }
             else
             {
@@ -37,7 +38,7 @@ namespace Translation
         public T Pop()
         {
             T tmp = default(T);
-            if( IsEmpty())
+            if(IsEmpty())
             {
                 throw new QueueUnderFlowException("The queue was empty when pop was invoked.");
             }

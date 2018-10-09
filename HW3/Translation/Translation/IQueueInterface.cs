@@ -8,7 +8,11 @@ namespace Translation
 
         /*Remove and return the front element
          throws QueueUnderFlowException if queue is empty*/
-
+           /// <summary>
+           /// 
+           /// </summary>
+           /// <returns></returns>
+           
         T Pop();
 
         /*Test if the queue is empty. Return true if empty.*/

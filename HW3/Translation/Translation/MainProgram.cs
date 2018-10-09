@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Translation
 {
@@ -59,7 +60,33 @@ namespace Translation
         //Driver program to test above function
         static void Main(string[] args)
         {
-
+            int n = 10;
+            if(args.Length < 1)
+            {
+                Console.WriteLine("Please invoke with the max value to print binary up to, like this:");
+                Console.Write("\t Translate 12");
+            }
+            try
+            {
+                n = Int32.Parse(args[0]);
+            }
+            catch(FormatException)
+            {
+                Console.WriteLine("I'm sorry, I can't understand the number: " + args[0]);
+                return;
+            }
+            LinkedList<string> output = GenerateBinaryRepresentationList(n);
+            //Print it right justified. Longest string is the last one.
+            //Print enough spaces to move it over the correct distance.
+            int maxlength = output.Count();
+            foreach (string s in output)
+            {
+                for(int i = 0; i < maxlength - s.Length; ++i)
+                {
+                    Console.Write(" ");
+                }
+                Console.WriteLine(s);
+            }
         }
     }
 
