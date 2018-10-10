@@ -4,7 +4,9 @@ using System.Text;
 using System.Linq;
 
 namespace Translation
-{
+{/// <summary>
+/// A class that contains the driving program and the generation program for the binary representation of numbers.
+/// </summary>
     public class MainProgram
     {
         /**
@@ -20,6 +22,20 @@ namespace Translation
      *          etc.
      * and then storing each "value" in a list as it is "visited".
      */
+     ///<summary>
+     /// Print the binary representation of all numbers from 1 up to n.
+     /// This is accomplished by using a FIFO queue to perform a level
+     /// order(i.e.BFS) traversal of a virtual binary tree that
+    /// looks like this:
+     ///                 1
+     ///             /       \
+     ///            10       11
+     ///           /  \     /  \
+     ///         100  101  110  111
+     ///          etc.
+
+     /// and then storing each "value" in a list as it is "visited". A method for generating a list for the binary representation of numbers.
+     /// </summary>
      static LinkedList<string> GenerateBinaryRepresentationList(int n)
         {
             //Create an empty queue of strings with which to perform the traversal.
@@ -58,6 +74,10 @@ namespace Translation
         }
 
         //Driver program to test above function
+        /// <summary>
+        /// Driver function for the above function
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             int n = 10;
@@ -78,10 +98,10 @@ namespace Translation
             LinkedList<string> output = GenerateBinaryRepresentationList(n);
             //Print it right justified. Longest string is the last one.
             //Print enough spaces to move it over the correct distance.
-            int maxlength = output.Count();
+            int maxLength = output.Count();
             foreach (string s in output)
             {
-                for(int i = 0; i < maxlength - s.Length; ++i)
+                for(int i = 0; i < maxLength - s.Length; ++i)
                 {
                     Console.Write(" ");
                 }

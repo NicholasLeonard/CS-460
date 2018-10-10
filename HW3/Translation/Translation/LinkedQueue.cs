@@ -4,13 +4,13 @@ namespace Translation
 {
     public class LinkedQueue<T>:IQueueInterface<T>
     {
-        private Node<T> Front;
-        private Node<T> Rear;
+        private Node<T> front;
+        private Node<T> rear;
 
        public LinkedQueue()
         {
-            Front = null;
-            Rear = null;
+            front = null;
+            rear = null;
         }
 
         public T Push(T element)
@@ -23,14 +23,14 @@ namespace Translation
             if ( IsEmpty() )
             {
                 Node<T> tmp = new Node<T>(element, null);
-                Rear = Front = tmp;
+                rear = front = tmp;
             }
             else
             {
                 //General case
                 Node<T> tmp = new Node<T>(element, null);
-                Rear.Next = tmp;
-                Rear = tmp;
+                rear.Next = tmp;
+                rear = tmp;
             }
             return element;
         }
@@ -42,16 +42,16 @@ namespace Translation
             {
                 throw new QueueUnderFlowException("The queue was empty when pop was invoked.");
             }
-            else if( Front == Rear)
+            else if( front == rear)
             {// one item in queue
-                tmp = Front.Data;
-                Front = null;
-                Rear = null;
+                tmp = front.Data;
+                front = null;
+                rear = null;
             }
             else
             {// General case
-                tmp = Front.Data;
-                Front = Front.Next;
+                tmp = front.Data;
+                front = front.Next;
             }
 
             return tmp;
@@ -59,7 +59,7 @@ namespace Translation
 
         public bool IsEmpty()
         {
-            if( Front == null && Rear == null)
+            if( front == null && rear == null)
             {
                 return true;
             }
