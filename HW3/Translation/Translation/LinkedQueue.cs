@@ -1,7 +1,10 @@
 ﻿using System;
 
 namespace Translation
-{
+{/// <summary>
+/// FIFO Queue that implements IQueueInterface.
+/// </summary>
+/// <typeparam name="T"></typeparam>
     public class LinkedQueue<T>:IQueueInterface<T>
     {
         private Node<T> front;
@@ -12,7 +15,11 @@ namespace Translation
             front = null;
             rear = null;
         }
-
+        /// <summary>
+        /// Used to push new elements into the queue.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public T Push(T element)
         {
             if( element == null )
@@ -21,7 +28,7 @@ namespace Translation
             }
 
             if ( IsEmpty() )
-            {
+            {//creates first node in queue
                 Node<T> tmp = new Node<T>(element, null);
                 rear = front = tmp;
             }
@@ -35,8 +42,12 @@ namespace Translation
             return element;
         }
 
+        /// <summary>
+        /// Used to remove elements from the queue.
+        /// </summary>
+        /// <returns></returns>
         public T Pop()
-        {
+        {//C# quirk, Genenric types cannot equal null. Use default to set null values for all types.
             T tmp = default(T);
             if(IsEmpty())
             {
@@ -57,6 +68,10 @@ namespace Translation
             return tmp;
         }
 
+        /// <summary>
+        /// Tests if the queue is empty.
+        /// </summary>
+        /// <returns></returns>
         public bool IsEmpty()
         {
             if( front == null && rear == null)
