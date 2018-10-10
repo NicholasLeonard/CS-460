@@ -9,34 +9,12 @@ namespace Translation
 /// </summary>
     public class MainProgram
     {
-        /**
-     * Print the binary representation of all numbers from 1 up to n.
-     * This is accomplished by using a FIFO queue to perform a level 
-     * order (i.e. BFS) traversal of a virtual binary tree that 
-     * looks like this:
-     *                 1
-     *             /       \
-     *            10       11
-     *           /  \     /  \
-     *         100  101  110  111
-     *          etc.
-     * and then storing each "value" in a list as it is "visited".
-     */
-     ///<summary>
-     /// Print the binary representation of all numbers from 1 up to n.
-     /// This is accomplished by using a FIFO queue to perform a level
-     /// order(i.e.BFS) traversal of a virtual binary tree that
-    /// looks like this:
-     ///                 1
-     ///             /       \
-     ///            10       11
-     ///           /  \     /  \
-     ///         100  101  110  111
-     ///          etc.
-
-     /// and then storing each "value" in a list as it is "visited". A method for generating a list for the binary representation of numbers.
-     /// </summary>
-     static LinkedList<string> GenerateBinaryRepresentationList(int n)
+        /// <summary>
+        /// Print the binary representation of all numbers from 1 up to n. This is accomplished by using a FIFO queue to perform a level order(i.e.BFS) traversal of a virtual binary tree and then storing each "value" in a list as it is "visited".
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        static LinkedList<string> GenerateBinaryRepresentationList(int n)
         {
             //Create an empty queue of strings with which to perform the traversal.
             LinkedQueue<StringBuilder> q = new LinkedQueue<StringBuilder>();

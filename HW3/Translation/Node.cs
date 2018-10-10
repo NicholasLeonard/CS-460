@@ -10,7 +10,7 @@
         public T Data;
         public Node<T> Next;
         /// <summary>
-        /// Method for assigning data value and pointer for linked list.
+        /// Constructor for assigning data value and pointer for linked list.
         /// </summary>
         /// <param name="Data"></param>
         /// <param name="Next"></param>
