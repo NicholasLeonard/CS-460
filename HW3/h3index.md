@@ -52,7 +52,7 @@ public class Node<T>
 	}
 }
 ```
-```cs
+```csharp
 namespace Translation
 {
     /// <summary>
@@ -74,6 +74,67 @@ namespace Translation
             this.Data = Data;
             this.Next = Next;
         }
+    }
+}
+```
+
+After I finished the Node file, I moved to the QueueInterface Java file. Once again, there were a lot of similarities between the Java code and the C# code. The only real difference was that the initialized `pop()` function in the Java code had a `throws QueueUnderFlowException`, which cannot be done in the C# code. The exception can still be thrown, that particular code just cannot be in the initialzation of the function in C#. The other big difference was the naming convention. In C#, interfaces declerations begin with an I, so I changed the name of the interface to IQueueInterface and I capitalized the methods to keep inline with C# naming conventions. The other difference was the variable type for a boolean value is bool in C# rather than boolean in Java.
+```java
+/**
+ * A FIFO queue interface.  This ADT is suitable for a singly
+ * linked queue. (Java)
+ */
+public interface QueueInterface<T>
+{
+    /**
+     * Add an element to the rear of the queue
+     * 
+     * @return the element that was enqueued
+     */
+    T push(T element);
+
+    /**
+     * Remove and return the front element.
+     * 
+     * @throws Thrown if the queue is empty
+     */
+    T pop() throws QueueUnderflowException;
+
+    /**
+     * Test if the queue is empty
+     * 
+     * @return true if the queue is empty; otherwise false
+     */
+    boolean isEmpty();
+}
+```
+
+```csharp
+namespace Translation
+{/// <summary>
+/// Interface for different queue types.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+    public interface IQueueInterface<T>
+    {
+        /// <summary>
+        /// Add an element to the rear of the queue and return the element that was enqueued.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        T Push(T element);
+
+           /// <summary>
+           /// Remove and return the front element and throws a QueueUnderFlowException if the queue is empty.
+           /// </summary>
+           /// <returns></returns>
+        T Pop();
+
+        /// <summary>
+        /// Test if the queue is empty. Return true if the queue is empty; false otherwise.
+        /// </summary>
+        /// <returns></returns>
+        bool IsEmpty();
     }
 }
 ```

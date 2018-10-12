@@ -53,7 +53,7 @@ namespace Translation
 
         //Driver program to test above function
         /// <summary>
-        /// Driver function for the above function
+        /// Driver function for GenerateBinaryRepresentationList function.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)

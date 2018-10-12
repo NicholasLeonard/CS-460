@@ -17,10 +17,8 @@ namespace Translation
            /// Remove and return the front element and throws a QueueUnderFlowException if the queue is empty.
            /// </summary>
            /// <returns></returns>
-           
         T Pop();
 
-        /*Test if the queue is empty. Return true if empty.*/
         /// <summary>
         /// Test if the queue is empty. Return true if the queue is empty; false otherwise.
         /// </summary>
