@@ -138,3 +138,43 @@ namespace Translation
     }
 }
 ```
+
+Next up was the QueueUnderFlowException java file. For this file, I had to use class inheritance. User defined exceptions have to inherit properties from the general exceptions class in C#. So I just used the inheritance character `:` to declare the classes in this file. Java also uses `super()` while C# uses `base`. So I used inheritance for that as well.
+
+```java
+/**
+ * A custom unchecked exception to represent situations where 
+ * an illegal operation was performed on an empty queue.
+ */
+public class QueueUnderflowException extends RuntimeException
+{
+  public QueueUnderflowException()
+  {
+    super();
+  }
+
+  public QueueUnderflowException(String message)
+  {
+    super(message);
+  }
+}
+```
+
+```csharp
+namespace Translation
+{    /// <summary>
+    /// A custom exception to represent situations where an illegal operation was performed on an empty queue.
+    /// </summary>
+    public class QueueUnderFlowException : Exception
+    {//user made exception with no message.
+        public QueueUnderFlowException() : base()
+        {
+        }
+
+        //user made exception that displays a message.
+        public QueueUnderFlowException(string message) : base(message)
+        {
+        }
+    }
+}
+```
