@@ -2,7 +2,7 @@
 <br/>
 ## Homework 2
 
-Once again, I have never used javaScript or jQuery before but I found the process fun and fairly straight forward. For this assignment, I had to make another webpage and then use javascript and jquery to modify it in some way. Therefore, I decided to do a letter counter that would take an input string from the user and then return a jquery generated table with the total counts of each letter used. I had a lot of fun doing it and it turned out pretty well. I also had to use a seperate branch in git to do this "feature" and then merge it back into the main branch when we were finished. That was cool because I got some experience with branching and actual work flow control.
+Once again, I have never used javaScript or jQuery before but I found the process fun and fairly straight forward. For this assignment, I had to make another webpage and then use javascript and jquery to modify it in some way. Therefore, I decided to do a letter counter that would take an input string from the user and then return a jquery generated table with the total counts of each letter used. I had a lot of fun doing it and it turned out pretty well. I also had to use a seperate branch in git to do this "feature" and then merge it back into the main branch when I was finished. That was cool because I got some experience with branching and work flow control in git.
 
 ### Important Links
 Here is the link to my github repository that holds all the source code for this assignment.<br/>
@@ -17,7 +17,7 @@ This link will take you back to my home Portfolio page.<br/>
 <br/>
 ### Step 1. Creating a new feature branch in git for Hwk2.
 
-The first thing I had to do was create a new branch to work on so I could git (hehe) some experience with branching and to keep this work from contaminating everything I had done before. So using the git branching command, I created a new branch and checked it out so that I could work on that branch instead of the master branch.
+The first thing I had to do, was create a new branch to work on so I could git (hehe) some experience with branching. So using the git branching command, I created a new branch and checked it out so that I all the work for this assignment would be on the assignment branch instead of master.
 ```bash
 git branch hw2
 
@@ -27,23 +27,23 @@ git checkout hw2
 <br/>
 ### Step 2-3. Planning and Design
 
-After I created the new working branch and checked it out, I had to decide what it was I wanted to do and if I was going to add it to my original website. I decided not to add it to the website I made for assignment 1 because I wanted to keep each assignment isolated so that they could be shown individually. I did, however, decide to use most of the stylings in my CSS file from the original website.
+After I created the new working branch and checked it out, I had to decide what exactly I wanted to do and whether or not to add it to my original website. I decided not to add it to the website I made for assignment 1 because I wanted to keep each assignment isolated so that they could be viewed individually. I did, however, decide to use most of the styling in my CSS file from the original website.
 
-Once I decided that I was not going to add it to the first website, I had to decide what I was going to do. The requirement was that it had to read input from the user in some way and then display something. I had to do this by using javascript and jquery to modify existing elements and add new elements to the page. I decided to create a simple tallier that would read in an input string from the user and then generate a table that showed the total number of each letter that was used in the string.
+Once I decided that I was not going to add it to the first website, I had to decide what I was going to do. The requirement stated that I had to read input from the user and then display something and modify my page in some way. I had to use javascript and jquery to modify existing elements, and add new elements to the page. I decided to create a simple tallier that would read an input string from the user and then generate a table that showed the total number of each letter that was used in the string.
 
-I also had to consider how I wanted to design the site. I decided to just have one main container with the input area in a form and the table appearing in a <code><div></code> element beneath the form.
+I also had to consider how I wanted to design the site. I decided to have one main container with a form that contained the input area and have the table in a new `<div>` element beneath it.
 
 ![picture](../Portfolio_Photos/blog2_0.jpg)
 
-After I had the initial container, I would use a header tag to put a title for the following elements.
+After I had the initial container, I would use a header tag to display a title for the following elements.
 
 ![picture](../Portfolio_Photos/blog2_1.jpg)
 
-Then I wanted to add the actual form with a text area type input to allow the user to enter an unlimited number of characters as apposed to the 20 or so limit with a standared form input element. I also wanted to add a caption to the form with an instructional message to the user.
+Then I wanted to add the form with a text area input type to allow the user to enter an input string of any length as appossed to the 20 or so limit with a standared input form element. I also wanted to add a caption to the form with an instructional message to the user.
 
 ![picture](../Portfolio_Photos/blog2_2.jpg)
 
-I also wanted to add two buttons to the form for submitting it to begin the calculation and a reset button to allow the user to enter a new input string. I also wanted to style these buttons using Bootstrap 4 to make them a little more interesting.
+Furthermore, I wanted to add two buttons to the form for submitting the form to begin the calculation and for resetting the form to allow the user to enter a new input string. I also wanted to style these buttons using Bootstrap 4 to make them a little more interesting.
 
 ![picture](../Portfolio_Photos/blog2_3.jpg)
 
@@ -54,7 +54,7 @@ I had originally thought to have the input box in a left column and generate the
 <br/>
 ### Step 4. Coding the page in HTML, styling with CSS, and using JavaScript and JQuery to modify
 
-After I finished designing the page and coming up with ideas, it was time to begin coding. I started with the main container, the title header, and the input form. As I stated earlier, I wanted a textarea input element because it allows for more input then the standared input element. I used CSS to style the input area extensively and I will talk about that later but I did have to specify the number of rows for the text area in the tag. I also added two Bootstrap 4 form buttons for submitting the form and beginning and the calcualtion as well as a reset button to put the entire page back to its original state.
+After I finished designing the page and coming up with ideas, it was time to begin coding. I started with the main container, the title header, and the input form. As I stated earlier, I wanted a `textarea` input element because it allows for longer inputs then the standared input element. I used CSS to style the input area extensively and I will talk about that later. I did, however, have to specify the number of rows for the text area in the tag. I also added two Bootstrap 4 form buttons for submitting the form to begin the calculation as well as a reset button to reset the form and clear any previously generated tables.
 
 ```html
 <body>
@@ -70,7 +70,7 @@ After I finished designing the page and coming up with ideas, it was time to beg
                 </form>
 ```
 
-After I had made the initial form, I had to create a new <code><div></code> element to put the generated table in. I kept it in the same container as the form so that it would just expand down the page as the table was made. I had to give the element an id so that I could reference it in my javascript and jquery to add the table later on.
+After I made the initial form, I had to create a new `<div>` element to put the generated table in. I kept it in the same container as the form so that it would just expand down the page as the table was made. I had to give the element an id so that I could reference it in my javascript and jquery later on.
 ```html
 <div class="container pushdown">
             <h1 id="h1">Letter Tallies</h1>
@@ -91,14 +91,14 @@ After I had made the initial form, I had to create a new <code><div></code> elem
     </div>
 ```
 
-I also had to make sure that the <code><body></code> element had the scripts to jquery and my javascript files so that the page could be modified. I decided to use a CDN to load the jquery rather than hosting it my self.
+I also had to make sure that the `<body>` element had the scripts to jquery and my javascript files so that the page could be modified. I decided to use a CDN to load the jquery rather than hosting it my self.
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="index.js"></script>
 </body>
 ```
-I used a CSS file to style my page. The main stylings I copied over from the file I used for my previous webpage, however, I added several other stylings for specific elements of this page. I used the CSS mainly to style the input text area to look like a DOS command shell, which I thought was pretty cool. I also used the CSS to position the input area in the middle of the page and to mess with its size. I added some padding to other elements and specifically created one class to use with my table so that I could highlight specific cells.
+I used a CSS file to style my page. The main stylings I copied over from the file I used for my previous webpage, however, I added several other stylings for specific elements on this page. I used the CSS mainly to style the input text area to look like a DOS command shell, which I thought was pretty cool. I also used the CSS to position the input area in the middle of the page and to mess with its size. I added some padding to other elements and specifically created one class to use with my table so that I could highlight specific cells.
 
 ```css
 /*Styling for wk2webpage*/
@@ -148,7 +148,7 @@ $(document).ready(function(){
 });
 ```
 
-As you can see from the snippet above, jQuery identifies the form element by its id and then listens for the event, which in this case is the form being submitted. Once the form has been submitted, it begins by calling getString, which is a javascript function I wrote to handle the input and calculation. 
+As you can see from the snippet above, jQuery identifies the form element by its id and then listens for the event, which in this case, is the submission of the form. Once the form has been submitted, it begins by calling getString, which is a javascript function I wrote to handle the input and calculation. 
 
 ```javascript
 //used to get the data from the text area for parsing and counting. Returns false so form works.
@@ -159,7 +159,7 @@ function getString(){
         return false;//prevents form from automatically submitting and resetting
     }
 ```
-This function uses jquery to get the input from the form and put it into a content variable, which is then passed to a count function that does the hard computation. I also included several `console.log()` commands to record the steps of the function to the browser console so I could confirm that the data was actually being passed. I had a problem where when the form was submitted it would cycle through everything and then wipe it out. To solve this problem I had to have this function return false. This prevented the page from continousley cycling.
+This function uses jquery to get the input from the form and put it into a content variable, which is then passed to a count function that does the hard computation. I also included several `console.log()` commands to display the steps of the function to the browser console so I could confirm that the data was actually being passed. I had a problem where when the form was submitted, it would cycle through everything and then wipe everything out. To solve this problem, I had to have this function return false. This prevented the page from continousley cycling.
 
 Once `getString()` retrieved the users input, I passed it to `count()` to do the computation. Once again, I used several `console.log()` commands to record the process of the data through the function.
 
@@ -278,7 +278,7 @@ function count(content){
 };
 ```
 
-Once I had the counts for the letters, I used `genTable()` to create and populate the table. I continued to use `console.log()` to record the steps of data through the function and to confirm that everything wa working properly.
+Once I had the counts for the letters, I used `genTable()` to create and populate the table. I continued to use `console.log()` to record the steps of data through the function and to confirm that everything was working properly.
 
 ```javascript
 //used to generate the table with tally totals.
@@ -307,7 +307,7 @@ function genTable(tallies){
 };
 ```
 
-The resulting computation was well displayed in a formatted table that highlights the inputs so the user can easily find what letters they used and how many there were.
+The resulting computation was displayed in a formatted table that highlighted the inputs so the user can easily find what letters they used and how many there were.
 
 ![picture](../Portfolio_Photos/blog2_complete_screenshot.jpg)
 
