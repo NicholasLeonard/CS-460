@@ -35,6 +35,8 @@ To further test the program, I ran it with a string instead of a number and I tr
 
 Before doing this homework assignment, I had worked with very little Java and I had never touched C#. However, I was able to effectively work out the translation from Java to C# and I actually really like C#. I like its simplicity and format as well as the strength of its type safety. 
 
+#### Node File
+
 I started with the Node class. Because C# contains a lot of similarities to Java, the only real difference between the Java file and the C# file were the nameing conventions, such as capitalization of public variables and methods, the format of the XML comments, and the use of a namespace in C#. I actually started by just translating the code and then came back through later and added the XML comments for the C# code.
 
 ```java
@@ -78,7 +80,10 @@ namespace Translation
 }
 ```
 
+#### QueueInterface File
+
 After I finished the Node file, I moved to the QueueInterface Java file. Once again, there were a lot of similarities between the Java code and the C# code. The only real difference was that the initialized `pop()` function in the Java code had a `throws QueueUnderFlowException`, which cannot be done in the C# code. The exception can still be thrown, that particular code just cannot be in the initialzation of the function in C#. The other big difference was the naming convention. In C#, interfaces declerations begin with an I, so I changed the name of the interface to IQueueInterface and I capitalized the methods to keep inline with C# naming conventions. The other difference was the variable type for a boolean value is bool in C# rather than boolean in Java.
+
 ```java
 /**
  * A FIFO queue interface.  This ADT is suitable for a singly
@@ -139,7 +144,8 @@ namespace Translation
 }
 ```
 
-Next up was the QueueUnderFlowException java file. For this file, I had to use class inheritance. User defined exceptions have to inherit properties from the general exceptions class in C#. So I just used the inheritance character `:` to declare the classes in this file. Java also uses `super()` while C# uses `base`. So I used inheritance for that as well.
+#### QueueUnderFlowException File
+Next up was the QueueUnderFlowException java file. For this file, I had to use class inheritance. User defined exceptions have to inherit properties from the general exceptions class in C#. So I just used the inheritance character `:` to declare the classes in this file. Java also uses `super()` while C# uses `base`. So I used inheritance for that as well. I also had to include `using System;` in order to access the general Exception and base classes.
 
 ```java
 /**
@@ -178,3 +184,180 @@ namespace Translation
     }
 }
 ```
+
+#### LinkedQueue File
+
+The next file I worked on was the LinkedQueue file. There were no really big differences between the Java and C# files. However, there were a few things like C#'s `NullReferenceException` instead of Java's `NullPointerException` and the difference in the naming conventions between Java and C#. There was one significant difference between the two files in that C# does not allow generic types to be set to default. So in the pop function in Java code where `T tmp` gets set to null, I had to use C#'s `default()` function instead, and pass it the generic type T. The way that the `default()` function works is that once the class is declared with a specific type, it will set the default null value for that type. Thus, it sets value types to 0, reference types to null, and boolean types to false. I found this specific C# quirk interesting and kind of cool.
+
+```java
+/**
+ * A Singly Linked FIFO Queue.  
+ * From Dale, Joyce and Weems "Object-Oriented Data Structures Using Java"
+ * Modified for CS 460 HW3
+ * 
+ * See QueueInterface.java for documentation
+ */
+
+public class LinkedQueue<T> implements QueueInterface<T>
+{
+	private Node<T> front;
+	private Node<T> rear;
+
+	public LinkedQueue()
+	{
+		front = null;
+		rear = null;
+	}
+
+	public T push(T element)
+	{ 
+		if( element == null )
+		{
+			throw new NullPointerException();
+		}
+		
+		if( isEmpty() )
+		{
+			Node<T> tmp = new Node<T>( element, null );
+			rear = front = tmp;
+		}
+		else
+		{		
+			// General case
+			Node<T> tmp = new Node<T>( element, null );
+			rear.next = tmp;
+			rear = tmp;
+        }
+        return element;
+	}     
+
+	public T pop()
+	{
+		T tmp = null;
+		if( isEmpty() )
+		{
+			throw new QueueUnderflowException("The queue was empty when pop was invoked.");
+		}
+		else if( front == rear )
+		{	// one item in queue
+			tmp = front.data;
+			front = null;
+			rear = null;
+		}
+		else
+		{
+			// General case
+			tmp = front.data;
+			front = front.next;
+		}
+		
+		return tmp;
+	}
+
+	public boolean isEmpty()
+	{              
+		if( front == null && rear == null )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+```
+
+```csharp
+using System;
+
+namespace Translation
+{/// <summary>
+/// FIFO Queue that implements IQueueInterface.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+    public class LinkedQueue<T>:IQueueInterface<T>
+    {
+        private Node<T> front;
+        private Node<T> rear;
+
+       public LinkedQueue()
+        {
+            front = null;
+            rear = null;
+        }
+        /// <summary>
+        /// Used to push new elements into the queue.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public T Push(T element)
+        {
+            if( element == null )
+            {
+                throw new NullReferenceException();
+            }
+
+            if ( IsEmpty() )
+            {//creates first node in queue
+                Node<T> tmp = new Node<T>(element, null);
+                rear = front = tmp;
+            }
+            else
+            {
+                //General case
+                Node<T> tmp = new Node<T>(element, null);
+                rear.Next = tmp;
+                rear = tmp;
+            }
+            return element;
+        }
+
+        /// <summary>
+        /// Used to remove elements from the queue.
+        /// </summary>
+        /// <returns></returns>
+        public T Pop()
+        {//C# quirk, Genenric types cannot equal null. Use default to set null values for all types.
+            T tmp = default(T);
+            if(IsEmpty())
+            {
+                throw new QueueUnderFlowException("The queue was empty when pop was invoked.");
+            }
+            else if( front == rear)
+            {// one item in queue
+                tmp = front.Data;
+                front = null;
+                rear = null;
+            }
+            else
+            {// General case
+                tmp = front.Data;
+                front = front.Next;
+            }
+
+            return tmp;
+        }
+
+        /// <summary>
+        /// Tests if the queue is empty.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            if( front == null && rear == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+}
+```
+
+#### Main File
+
+The last file to translate 
