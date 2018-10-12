@@ -360,7 +360,7 @@ namespace Translation
 
 #### Main File
 
-The last file to translate was the Java main file. I believe that this file contained the most differences between the C# and Java verisons. The only main (heh) difference between the two in the first function definition was that when a new binary number was added to the list, Java used `add()` and I had to use `AddLast()` for the C# version. Again, I had to observe proper C# naming conventions with capitalization for methods and variables but short of that, the files were very similar. The big differences between the two file came in the Main driver function for the GenerateBinaryRepresentationList function. To write to the console, Java uses `System.out.println()` and `System.out.print()` but for C# I had to use `Console.WriteLine()` and `Console.Write()` respectively. Later, I had to use C#'s `Count()` instead of Java's `getLast().length()` to determine the length of the linked list returned by GenerateBinaryRepresentationList. The syntax and method for parsing the input is a little different in C# then in Java so I had to change that too. The only other difference was that I had to use a `foreach` and `for` loop instead of the two `for` loops in the Java code.
+The last file to translate was the Java main file. This file contained the most differences between the C# and Java verisons. The only main (heh) difference between the two in the first function definition was when a new binary number was added to the list, Java used `add()` and I had to use `AddLast()` for the C# version. Again, I had to observe proper C# naming conventions with capitalization for methods and variables but short of that, the first parts of the files were very similar. The big differences between the two files came in the Main driver function for the GenerateBinaryRepresentationList function. To write to the console, Java uses `System.out.println()` and `System.out.print()` but for C# I had to use `Console.WriteLine()` and `Console.Write()` respectively. Later, I had to use C#'s `Count()` instead of Java's `getLast().length()` to determine the length of the linked list returned by GenerateBinaryRepresentationList. The syntax and method for parsing the input is a little different in C# then in Java so I had to change that too. The only other difference was that I had to use a `foreach` and `for` loop instead of the two `for` loops in the Java code.
 
 ```java
 java.util.LinkedList; 
@@ -551,7 +551,7 @@ After I finished translating the code, I had to test the C# program to see if it
 
 ![picture](../Portfolio_Photos/Translation12.PNG)
 
-Next I tried running it with no input to see if it would display the example message to the console. It worked like a charm.
+Next, I tried running it with no input to see if it would display the example message to the console. It worked like a charm.
 
 ![picture](../Portfolio_Photos/TranslationNoI.PNG)
 
