@@ -52,7 +52,7 @@ public class Node<T>
 	}
 }
 ```
-```C#
+```cs
 namespace Translation
 {
     /// <summary>
