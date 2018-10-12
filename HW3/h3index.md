@@ -18,12 +18,12 @@ This assignment presented the first oppertunity for me to use an IDE for the cla
 ### Step 2. Run the Java Program
 
 Before I could start translating the Java code, I had to run the program and see what it actually does. So, using a Windows Command Prompt, I navigated to the folder containing the Java files and ran the program with an input of 12.
-![picture](../Portfolio_Photos/Java12.png)
+![picture](../Portfolio_Photos/Java12.PNG)
 
 I then tried running it without giving it an argument to test the program and see what would happen.
-![picture](../Portfolio_Photos/JavaNoI.png)
+![picture](../Portfolio_Photos/JavaNoI.PNG)
 
 To further test the program, I ran it with a string instead of a number and I tried running it with a negative number.
-![picture](../Portfolio_Photos/JavaFormat.png)
+![picture](../Portfolio_Photos/JavaFormat.PNG)
 
-![picture](../Portfolio_Photos/JavaNegative.png)
+![picture](../Portfolio_Photos/JavaNegative.PNG)
