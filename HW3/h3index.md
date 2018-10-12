@@ -148,7 +148,7 @@ namespace Translation
 Next up was the QueueUnderFlowException java file. For this file, I had to use class inheritance. User defined exceptions have to inherit properties from the general exceptions class in C#. So I just used the inheritance character `:` to declare the classes in this file. Java also uses `super()` while C# uses `base`. So I used inheritance for that as well. I also had to include `using System;` in order to access the general Exception and base classes.
 
 ```java
-/**
+/**(java)
  * A custom unchecked exception to represent situations where 
  * an illegal operation was performed on an empty queue.
  */
@@ -190,7 +190,7 @@ namespace Translation
 The next file I worked on was the LinkedQueue file. There were no really big differences between the Java and C# files. However, there were a few things like C#'s `NullReferenceException` instead of Java's `NullPointerException` and the difference in the naming conventions between Java and C#. There was one significant difference between the two files in that C# does not allow generic types to be set to default. So in the pop function in Java code where `T tmp` gets set to null, I had to use C#'s `default()` function instead, and pass it the generic type T. The way that the `default()` function works is that once the class is declared with a specific type, it will set the default null value for that type. Thus, it sets value types to 0, reference types to null, and boolean types to false. I found this specific C# quirk interesting and kind of cool.
 
 ```java
-/**
+/**(java)
  * A Singly Linked FIFO Queue.  
  * From Dale, Joyce and Weems "Object-Oriented Data Structures Using Java"
  * Modified for CS 460 HW3
@@ -360,4 +360,207 @@ namespace Translation
 
 #### Main File
 
-The last file to translate 
+The last file to translate was the Java main file. I believe that this file contained the most differences between the C# and Java verisons. The only main (heh) difference between the two in the first function definition was that when a new binary number was added to the list, Java used `add()` and I had to use `AddLast()` for the C# version. Again, I had to observe proper C# naming conventions with capitalization for methods and variables but short of that, the files were very similar. The big differences between the two file came in the Main driver function for the GenerateBinaryRepresentationList function. To write to the console, Java uses `System.out.println()` and `System.out.print()` but for C# I had to use `Console.WriteLine()` and `Console.Write()` respectively. Later, I had to use C#'s `Count()` instead of Java's `getLast().length()` to determine the length of the linked list returned by GenerateBinaryRepresentationList. The syntax and method for parsing the input is a little different in C# then in Java so I had to change that too. The only other difference was that I had to use a `foreach` and `for` loop instead of the two `for` loops in the Java code.
+
+```java
+java.util.LinkedList; 
+
+public class Main  
+{ 
+    /**
+     * Print the binary representation of all numbers from 1 up to n.
+     * This is accomplished by using a FIFO queue to perform a level 
+     * order (i.e. BFS) traversal of a virtual binary tree that 
+     * looks like this:
+     *                 1
+     *             /       \
+     *            10       11
+     *           /  \     /  \
+     *         100  101  110  111
+     *          etc.
+     * and then storing each "value" in a list as it is "visited".
+     */
+    static LinkedList<String> generateBinaryRepresentationList(int n) 
+    { 
+        // Create an empty queue of strings with which to perform the traversal
+        LinkedQueue<StringBuilder> q = new LinkedQueue<StringBuilder>(); 
+
+        // A list for returning the binary values
+        LinkedList<String> output = new LinkedList<String>();
+        
+        if(n < 1)
+        {
+            // binary representation of negative values is not supported
+            // return an empty list
+            return output;
+        }
+          
+        // Enqueue the first binary number.  Use a dynamic string to avoid string concat
+        q.push(new StringBuilder("1")); 
+          
+        // BFS 
+        while(n-- > 0) 
+        { 
+            // print the front of queue 
+            StringBuilder sb = q.pop(); 
+            output.add(sb.toString()); 
+            
+            // Make a copy
+            StringBuilder sbc = new StringBuilder(sb.toString());
+
+            // Left child
+            sb.append('0');
+            q.push(sb);
+            // Right child
+            sbc.append('1');
+            q.push(sbc); 
+        }
+        return output;
+    } 
+      
+    // Driver program to test above function 
+    public static void main(String[] args)  
+    { 
+        int n = 10;
+        if(args.length < 1)
+        {
+            System.out.println("Please invoke with the max value to print binary up to, like this:");
+            System.out.println("\tjava Main 12");
+            return;
+        }
+        try 
+        {
+            n = Integer.parseInt(args[0]);
+        } 
+        catch (NumberFormatException e) 
+        {
+            System.out.println("I'm sorry, I can't understand the number: " + args[0]);
+            return;
+        }
+        LinkedList<String> output = generateBinaryRepresentationList(n);
+        // Print it right justified.  Longest string is the last one.
+        // Print enough spaces to move it over the correct distance
+        int maxLength = output.getLast().length();
+        for(String s : output)
+        {
+            for(int i = 0; i < maxLength - s.length(); ++i)
+            {
+                System.out.print(" ");
+            }
+            System.out.println(s);
+        }
+```
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Linq;
+
+namespace Translation
+{/// <summary>
+/// A class that contains the driving program and the generation program for the binary representation of numbers.
+/// </summary>
+    public class MainProgram
+    {
+        /// <summary>
+        /// Print the binary representation of all numbers from 1 up to n. This is accomplished by using a FIFO queue to perform a level order(i.e.BFS) traversal of a virtual binary tree and then storing each "value" in a list as it is "visited".
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        static LinkedList<string> GenerateBinaryRepresentationList(int n)
+        {
+            //Create an empty queue of strings with which to perform the traversal.
+            LinkedQueue<StringBuilder> q = new LinkedQueue<StringBuilder>();
+
+            //A list for returning the binary values
+            LinkedList<string> output = new LinkedList<string>();
+
+            if(n < 1)
+            {
+                //binary representation of negative values is not suppported return an empty list
+                return output;
+            }
+
+            //Enqueue the first binary number. Use a dynamic string to avoid string concat
+            q.Push(new StringBuilder("1"));
+
+            //BFS
+            while(n-- > 0)
+            {
+                //print the font of queue. possibly put try catch here.
+                StringBuilder sb = q.Pop();
+                output.AddLast(sb.ToString());
+
+                //make a copy
+                StringBuilder sbc = new StringBuilder(sb.ToString());
+
+                //Left child
+                sb.Append("0");
+                q.Push(sb);
+                //Right child
+                sbc.Append("1");
+                q.Push(sbc);
+            }
+            return output;
+        }
+
+        //Driver program to test above function
+        /// <summary>
+        /// Driver function for GenerateBinaryRepresentationList function.
+        /// </summary>
+        /// <param name="args"></param>
+        static void Main(string[] args)
+        {
+            int n = 10;
+            if(args.Length < 1)
+            {
+                Console.WriteLine("Please invoke with the max value to print binary up to, like this:");
+                Console.WriteLine("\t Translate 12");
+                return;
+            }
+            try
+            {
+                n = Int32.Parse(args[0]);
+            }
+            catch(FormatException)
+            {
+                Console.WriteLine("I'm sorry, I can't understand the number: " + args[0]);
+                return;
+            }
+            LinkedList<string> output = GenerateBinaryRepresentationList(n);
+            //Print it right justified. Longest string is the last one.
+            //Print enough spaces to move it over the correct distance.
+            int maxLength = output.Count();
+            foreach (string s in output)
+            {
+                for(int i = 0; i < maxLength - s.Length; ++i)
+                {
+                    Console.Write(" ");
+                }
+                Console.WriteLine(s);
+            }
+        }
+    }
+}
+```
+
+### Testing the C# Program
+
+After I finished translating the code, I had to test the C# program to see if it produced the same result as the Java code. So I opened a new Windows Command Console and navigated to the Debug folder that contained the executable file. I started by running the program with an input of 12 like I did with the Java program, which returned a tree similar to the Java program. The C# version tabs over the output a little more than the Java program but it still produced the same values, which is truly what I was going for.
+
+![picture](../Portfolio_Photos/Translation12.PNG)
+
+Next I tried running it with no input to see if it would display the example message to the console. It worked like a charm.
+
+![picture](../Portfolio_Photos/TranslationNoI.PNG)
+
+Then I ran the program with a string input rather than a number to see what would happen. As expected, it told me that it did not recognize the number that I gave it, just like it did in the Java program. Score!
+
+![picture](../Portfolio_Photos/TranslationFormat.PNG)
+
+For the final test, I tried inputting a negative number and it returned an empty string, which is what is should have done because this program does not support the representation of negative numbers in binary.
+
+![picture](../Portfolio_Photos/TranslationNegative.PNG)
+
+And that is the new program! Pretty cool right?
