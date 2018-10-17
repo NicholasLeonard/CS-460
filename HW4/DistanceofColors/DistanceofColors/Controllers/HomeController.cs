@@ -15,8 +15,6 @@ namespace DistanceofColors.Controllers
 
         public ActionResult Converter()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
