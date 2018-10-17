@@ -13,6 +13,7 @@ namespace DistanceofColors.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Converter()
         {
             return View();
