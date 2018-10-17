@@ -7,29 +7,38 @@
     <form action="/Home/Converter" method="get">
         <div class="col-md-6 form-group">
             <label for="mile">Miles</label>
-            <input class="form-control" type="number" name="mile"/>
+            <input class="form-control" type="number" name="Mile" step=".001"/>
         </div>
         <div class="col-md-6 form-group">
             <h3>Metric Units</h3>
             <hr />
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="units" value="Millimeters"/>
+                <input class="form-check-input" type="radio" name="Units" value="Millimeters"/>
                 <label class="form-check-label" for="Millimeters">Millimeters</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="units" value="Centimeters"/>
+                <input class="form-check-input" type="radio" name="Units" value="Centimeters"/>
                 <label class="form-check-label" for="Centimeters">Centimeters</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="units" value="Meters"/>
+                <input class="form-check-input" type="radio" name="Units" value="Meters"/>
                 <label class="form-check-label" for="Meters">Meters</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="units" value="Kilometers"/>
+                <input class="form-check-input" type="radio" name="Units" value="Kilometers"/>
                 <label class="form-check-label" for="Kilometers">Kilometers</label>
             </div>
             <button class="btn btn-primary" type="submit">Convert</button>
         </div>
-            
     </form>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @if(ViewBag.Conversion != null)
+        {
+            <p>@ViewBag.Conversion</p>
+        }
+        <p>Result here please.</p>
+    </div>
 </div>
