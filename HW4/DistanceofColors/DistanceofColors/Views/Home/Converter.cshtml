@@ -4,10 +4,10 @@
 <h2>@ViewBag.Title.</h2>
 
 <div class="row">
-    <form action="/Home/Converter" method="get">
+    <form <action="/Home/Converter" method="get">
         <div class="col-md-6 form-group">
             <label for="mile">Miles</label>
-            <input class="form-control" type="number" name="Mile" step=".001"/>
+            <input class="form-control" type="number" name="Mile" step=".001" required/>
         </div>
         <div class="col-md-6 form-group">
             <h3>Metric Units</h3>
@@ -35,10 +35,8 @@
 
 <div class="row">
     <div class="col-md-6">
-        @if(ViewBag.Conversion != null)
-        {
-            <p>@ViewBag.Conversion</p>
-        }
-        <p>Result here please.</p>
-    </div>
-</div>
+                
+        <p>@ViewBag.Conversion</p>
+
+     </div>
+ </div>

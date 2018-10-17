@@ -17,27 +17,35 @@ namespace DistanceofColors.Controllers
         [HttpGet]
         public ActionResult Converter()
         {
-            double miles = Convert.ToDouble(Request.QueryString["Mile"]);
+            string MileInput = Request.QueryString["Mile"];
             string units = Request.QueryString["Units"];
-            Debug.WriteLine(miles);
-            Debug.WriteLine(units);
-            double result;
-            switch (units)
-            {
-                case "Millimeters":
-                    result = miles * 1609344;
-                    break;
-                case "Centimeters":
-                    result = miles * 160934.4;
-                    break;
-                case "Meters":
-                    result = miles * 1609.344;
-                    break;
-                case "Kilometers":
-                    result = miles * 1.609344;
-                    break;
-            }
-            
+
+            if (MileInput != null)
+            {//do a try catch here to handle query string input.
+                double miles = Convert.ToDouble(MileInput);
+                double result = 0;
+                Debug.WriteLine(miles);
+                Debug.WriteLine(units);
+                
+                switch (units)
+                {
+                    case "Millimeters":
+                        result = miles * 1609344;
+                        break;
+                    case "Centimeters":
+                        result = miles * 160934.4;
+                        break;
+                    case "Meters":
+                        result = miles * 1609.344;
+                        break;
+                    case "Kilometers":
+                        result = miles * 1.609344;
+                        break;
+                }
+
+                string message = "The conversion is " + Convert.ToString(result);
+                ViewBag.Conversion = message;
+            }    
             
             return View();
         }
