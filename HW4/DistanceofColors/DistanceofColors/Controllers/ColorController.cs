@@ -9,6 +9,7 @@ namespace DistanceofColors.Controllers
     public class ColorController : Controller
     {
         // GET: Color
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
