@@ -9,7 +9,7 @@ namespace DistanceofColors.Controllers
     public class ColorController : Controller
     {
         // GET: Color
-        public ActionResult Index()
+        public ActionResult Create()
         {
             return View();
         }
