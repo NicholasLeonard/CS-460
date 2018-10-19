@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Miles to Metric Converter";
+}
+<h2>@ViewBag.Title.</h2>
+
+<div class="row">
+    <form action="/Home/Converter" method="get">
+        <div class="col-md-6 form-group">
+            <label for="Miles">Miles</label>
+            <input class="form-control" type="number" name="Miles" step=".001" required/>
+            <!--Displays custom error messages for invalid query string inputs-->
+            <p class="error">@ViewBag.Error @ViewBag.NoMetric</p>
+          
+        </div>
+        <div class="col-md-6 form-group">
+            <h3>Metric Units</h3>
+            <hr /><!--Radio buttons for metric measurment to convert to-->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Millimeters"/>
+                <label class="form-check-label" for="Millimeters">Millimeters</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Centimeters"/>
+                <label class="form-check-label" for="Centimeters">Centimeters</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Meters"/>
+                <label class="form-check-label" for="Meters">Meters</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Kilometers" checked/>
+                <label class="form-check-label" for="Kilometers">Kilometers</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Convert</button>
+        </div>
+    </form>
+</div>
+
+<!--Section for displaying the result of the conversion-->
+<div class="row">
+    <div class="col-md-6">
+                
+        <p id="conversion">@ViewBag.Conversion</p>
+
+     </div>
+ </div>

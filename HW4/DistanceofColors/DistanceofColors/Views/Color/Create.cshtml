@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Color Selector";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="row">
+    @using (Html.BeginForm())
+    {<!--Form creation with placeholders for example input, pattern to force hex input, and required to force input.-->
+    <div class="form-group">
+        @Html.Label("FirstColor", "First Color")
+        @Html.TextBox("FirstColor", "", new { @class = "form-control", placeholder="#234fff",pattern="#[0-9-Fa-f]{6}", required="required"})
+    </div>
+    <div class="form-group">
+        @Html.Label("SecondColor", "Second Color")
+        @Html.TextBox("SecondColor", "", new { @class = "form-control", placeholder="#111fff", pattern="#[0-9-Fa-f]{6}", required="required"})
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Mix</button>
+    </div>
+        
+    }
+</div>
+
+<div class="row"><!--Section to display color tiles and if statement to prevent them from displaying until after POST method-->
+    @if (ViewBag.Mix != null)
+    {
+        <div class="col-lg-8">
+            <div class="col-sm-2 card" style="background-color: @ViewBag.FirstColor;">
+           
+            </div>
+            <div class="col-sm-1">
+                <p class="symbols">+</p>
+            </div>
+            <div class="col-sm-2 card" style="background-color: @ViewBag.SecondColor;">
+
+            </div>
+            <div class="col-sm-1">
+                <p class="symbols">=</p>
+            </div>
+            <div class="col-sm-2 card" style="background-color: @ViewBag.MixedColor;">
+
+            </div>
+        </div>
+    }
+</div>
+
