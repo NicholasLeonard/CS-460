@@ -17,12 +17,22 @@ namespace DistanceofColors.Controllers
         [HttpGet]
         public ActionResult Converter()
         {
-            string MileInput = Request.QueryString["Mile"];
+            string MileInput = Request.QueryString["Miles"];
             string units = Request.QueryString["Units"];
 
+            
             if (MileInput != null)
-            {//do a try catch here to handle query string input.
-                double miles = Convert.ToDouble(MileInput);
+            {
+                double miles = 0;
+                try
+                {
+                    miles = Convert.ToDouble(MileInput);
+                }
+                catch (FormatException)
+                {
+                    ViewBag.Error = "You created a format exception! Please enter the correct input.";
+                    return View();
+                }
                 double result = 0;
                 Debug.WriteLine(miles);
                 Debug.WriteLine(units);
@@ -41,19 +51,17 @@ namespace DistanceofColors.Controllers
                     case "Kilometers":
                         result = miles * 1.609344;
                         break;
+                    default:
+                        ViewBag.NoMetric = "You didn't select a proper metric measurment that I recognize! Check your spelling and capitalization.";
+                        break;
                 }
-
-                string message = "The conversion is " + Convert.ToString(result);
-                ViewBag.Conversion = message;
+                if(ViewBag.NoMetric == null)
+                {
+                    string message = "The conversion is " + Convert.ToString(result) + " " + units;
+                    ViewBag.Conversion = message;
+                }
             }    
             
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

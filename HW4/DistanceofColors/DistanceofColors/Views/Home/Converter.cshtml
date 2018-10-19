@@ -6,8 +6,11 @@
 <div class="row">
     <form action="/Home/Converter" method="get">
         <div class="col-md-6 form-group">
-            <label for="mile">Miles</label>
-            <input class="form-control" type="number" name="Mile" step=".001" required/>
+            <label for="Miles">Miles</label>
+            <input class="form-control" type="number" name="Miles" step=".001" required/>
+
+            <p class="error">@ViewBag.Error @ViewBag.NoMetric</p>
+          
         </div>
         <div class="col-md-6 form-group">
             <h3>Metric Units</h3>
@@ -25,7 +28,7 @@
                 <label class="form-check-label" for="Meters">Meters</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="Units" value="Kilometers"/>
+                <input class="form-check-input" type="radio" name="Units" value="Kilometers" checked/>
                 <label class="form-check-label" for="Kilometers">Kilometers</label>
             </div>
             <button class="btn btn-primary" type="submit">Convert</button>
@@ -36,7 +39,7 @@
 <div class="row">
     <div class="col-md-6">
                 
-        <p>@ViewBag.Conversion</p>
+        <p id="conversion">@ViewBag.Conversion</p>
 
      </div>
  </div>
