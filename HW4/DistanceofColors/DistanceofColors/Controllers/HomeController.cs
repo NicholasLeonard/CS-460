@@ -70,7 +70,7 @@ namespace DistanceofColors.Controllers
                         break;
                     default:
                         //Custom error message to handle format errors in the Units query string.
-                        ViewBag.NoMetric = "You didn't select a proper metric measurment that I recognize! Check your spelling and capitalization.";
+                        ViewBag.NoMetric = "You didn't select a metric measurment that I recognize! Check your spelling and capitalization.";
                         break;
                 }
                 //Executes if the switch statement completed with no format errors.
