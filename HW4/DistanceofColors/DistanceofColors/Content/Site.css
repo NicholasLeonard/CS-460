@@ -28,6 +28,10 @@ textarea {
     width: 10rem;
     height: 10rem;
     border-radius: 5px;
-    margin: 20px;
 }
 
+.symbols{
+    padding-top: 4rem;
+    font-size:large;
+    text-align: center;
+}

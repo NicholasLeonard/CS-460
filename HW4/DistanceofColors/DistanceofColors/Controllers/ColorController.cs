@@ -66,12 +66,16 @@ namespace DistanceofColors.Controllers
             }
             
             Color MixedColor = Color.FromArgb(MixedColorR, MixedColorG, MixedColorB);
-
+            if(MixedColor.IsEmpty == false)
+            {
+                ViewBag.Mix = 100;
+            }
             Debug.WriteLine(PrimaryColor);
             Debug.WriteLine(SecondaryColor);
             Debug.WriteLine(MixedColor.R);
             Debug.WriteLine(MixedColor.G);
             Debug.WriteLine(MixedColorB);
+            
 
             string ResultColor = ColorTranslator.ToHtml(MixedColor);
             Debug.WriteLine(ResultColor);

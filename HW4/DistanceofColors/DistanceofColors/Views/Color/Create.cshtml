@@ -24,8 +24,27 @@
 </div>
 
 <div class="row">
-    <div class="container card" style="background-color: aqua;">
-        
-    </div>
+    @if (ViewBag.Mix != null)
+    {
+
+
+        <div class="col-lg-8">
+            <div class="col-sm-2 card" style="background-color: @ViewBag.FirstColor;">
+           
+            </div>
+            <div class="col-sm-1">
+                <p class="symbols">+</p>
+            </div>
+            <div class="col-sm-2 card" style="background-color: @ViewBag.SeondColor;">
+
+            </div>
+            <div class="col-sm-1">
+                <p class="symbols">=</p>
+            </div>
+            <div class="col-sm-2 card" style="background-color: @ViewBag.MixedColor;">
+
+            </div>
+        </div>
+    }
 </div>
 
