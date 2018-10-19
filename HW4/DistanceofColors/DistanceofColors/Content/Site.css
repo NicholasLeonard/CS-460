@@ -23,6 +23,7 @@ textarea {
     max-width: 280px;
 }
 
+/*Used to format the color cards for the color selector*/
 .card {
     perspective: 10000px;
     width: 10rem;
@@ -30,8 +31,23 @@ textarea {
     border-radius: 5px;
 }
 
+/*Used for the equation symbols on the color selector*/
 .symbols{
     padding-top: 4rem;
     font-size:large;
     text-align: center;
+}
+
+/*Used for custom error messages on converter page*/
+.error {
+    padding-top: 3em;
+    color: red;
+    font-size: xx-large;
+    font-style: italic;
+}
+
+/*Used for styling the conversion text on the conversion page*/
+#conversion {
+    font-size: large;
+    font-weight: bold;
 }
