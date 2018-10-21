@@ -55,3 +55,51 @@ Once I figured out what all the files and folders were and how they worked, I we
 
 ### Step 3. The Converter
 
+Once the landing page was done, I moved on to the Converter page because it was going to use the same controller as the landing page. On this page, I used plain old HTML to structure the page and make the form for the input. The form on this page used GET to request from the server and passed data via query strings in the URI. The form element I created called the GET Converter action method that was in the Home Controller. I used two medium coloumns in this form to put the mile input and error text on one side and the radio buttons for the metric unit to convert to in another coloumn. I also had to add required to the miles input box to provide validation and I also had to set the type to number in order to prevent the user from sending strings to the server.
+
+```html
+<div class="row">
+    <form action="/Home/Converter" method="get">
+        <div class="col-md-6 form-group">
+            <!--Input box for the number of miles to convert-->
+            <label for="Miles">Miles</label>
+            <input class="form-control" type="number" name="Miles" step=".001" required/>
+            <!--Displays custom error messages for invalid query string inputs-->
+            <p class="error">@ViewBag.Error @ViewBag.NoMetric</p>
+          
+        </div>
+        <div class="col-md-6 form-group">
+            <h3>Metric Units</h3>
+            <hr /><!--Radio buttons for metric measurment to convert to-->
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Millimeters"/>
+                <label class="form-check-label" for="Millimeters">Millimeters</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Centimeters"/>
+                <label class="form-check-label" for="Centimeters">Centimeters</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Meters"/>
+                <label class="form-check-label" for="Meters">Meters</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="Units" value="Kilometers" checked/>
+                <label class="form-check-label" for="Kilometers">Kilometers</label>
+            </div>
+            <button class="btn btn-primary" type="submit">Convert</button>
+        </div>
+    </form>
+</div>
+```
+
+### Step 3-2 The Converter Action Method
+
+Once I had designed the page and created the form, I had to write the code for the action method so the server would know what to do with the data it was passed. I first had to get the data out of the query strings. I accomplished this by creating two string variables and calling the Controller `Request` method to get the data out of the query strings.
+```csharp
+[HttpGet]
+        public ActionResult Converter()
+        {//Local variables that contain the results of the query strings from the page.
+            string MileInput = Request.QueryString["Miles"];
+            string Units = Request.QueryString["Units"];
+```
