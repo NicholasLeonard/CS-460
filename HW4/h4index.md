@@ -240,7 +240,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 </div>
  ```
 
- #### The Controller and the Action Method
+ ####The Controller and the Action Method
 
  Once I had finished the Razor code and the general layout of the result, I moved on to the logic for the controller. There are two action methods in this controller. The first is a GET method that just displays the default page.
  ```csharp
