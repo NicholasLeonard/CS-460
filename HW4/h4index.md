@@ -186,9 +186,9 @@ After I read the input, I put the rest of the execution cycle inside an if state
 ...
  ```
 
- ### Step 5. The Color Selector
+### Step 5. The Color Selector
 
- #### The View with Razor
+#### The View with Razor
 
  After I finished the landing page and the Converter page, I moved on to the Color Selector page. For this page, I had to make a new Controller and a new view per the requirements of the assignment. I started by creating a new Controller called Color in the Controller folder of my MVC project. I then created a new view called Create in the new Color folder that was generated in the Views folder of the MVC project when I made a new Controller. For this page, I had to use Razor helper functions to construct the form and its input fields. It took me a while to figureout how to added stylings and such to the elements that the Razor functions generated, but I eventually learned how to do it and was then able to add styling classes, placeholder values, pattern specifiers, and required attributes to fully customize the Razor generated elements.
 
@@ -240,7 +240,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 </div>
  ```
 
- ####The Controller and the Action Method
+#### The Controller and the Action Method
 
  Once I had finished the Razor code and the general layout of the result, I moved on to the logic for the controller. There are two action methods in this controller. The first is a GET method that just displays the default page.
  ```csharp
