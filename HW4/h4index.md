@@ -173,7 +173,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
             }
  ```
 
- I had a problem where the default page would show the conversion message with a 0 value. To solve the problem, I had to put an if statement in that checked the value of the `ViewBag` created by the default case of the switch so that it would only display when the conversion completed with no problems.
+ I had a problem where the default page would show the conversion message with a 0 value. To solve the problem, I had to put in an if statement that checked the value of the `ViewBag` created by the default case of the switch so that it would only display when the conversion completed with no problems.
 
  ```csharp
  ...
@@ -185,3 +185,232 @@ After I read the input, I put the rest of the execution cycle inside an if state
                 }
 ...
  ```
+
+ ### Step 5. The Color Selector
+
+ #### The View with Razor
+
+ After I finished the landing page and the Converter page, I moved on to the Color Selector page. For this page, I had to make a new Controller and a new view per the requirements of the assignment. I started by creating a new Controller called Color in the Controller folder of my MVC project. I then created a new view called Create in the new Color folder that was generated in the Views folder of the MVC project when I made a new Controller. For this page, I had to use Razor helper functions to construct the form and its input fields. It took me a while to figureout how to added stylings and such to the elements that the Razor functions generated, but I eventually learned how to do it and was then able to add styling classes, placeholder values, pattern specifiers, and required attributes to fully customize the Razor generated elements.
+
+ ```html
+<div class="row">
+    @using (Html.BeginForm())
+    {<!--Form creation with placeholders for example input, pattern to force hex input, and required to force input.-->
+    <div class="form-group">
+        @Html.Label("FirstColor", "First Color")
+        @Html.TextBox("FirstColor", "", new { @class = "form-control", placeholder="#234fff",pattern="#[0-9-Fa-f]{6}", required="required"})
+    </div>
+    <div class="form-group">
+        @Html.Label("SecondColor", "Second Color")
+        @Html.TextBox("SecondColor", "", new { @class = "form-control", placeholder="#111fff", pattern="#[0-9-Fa-f]{6}", required="required"})
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Mix</button>
+    </div>
+        
+    }
+</div>
+ ```
+
+ After I managed to get Razor to generate the form elements, I created the basic formatting elements to display the results of the color mixer.
+ 
+ ```html
+<div class="row">
+    <!--Section to display color tiles and if statement to prevent them from displaying until after POST method-->
+    @if (ViewBag.Mix != null)
+    {
+        <div class="col-lg-8">
+            <div class="col-sm-2 card" style="background-color: @ViewBag.FirstColor;">
+           
+            </div>
+            <div class="col-sm-1">
+                <p class="symbols">+</p>
+            </div>
+            <div class="col-sm-2 card" style="background-color: @ViewBag.SecondColor;">
+
+            </div>
+            <div class="col-sm-1">
+                <p class="symbols">=</p>
+            </div>
+            <div class="col-sm-2 card" style="background-color: @ViewBag.MixedColor;">
+
+            </div>
+        </div>
+    }
+</div>
+ ```
+
+ #### The Controller and the Action Method
+
+ Once I had finished the Razor code and the general layout of the result, I moved on to the logic for the controller. There are two action methods in this controller. The first is a GET method that just displays the default page.
+ ```csharp
+/// <summary>
+        /// Action method responsible for displaying default view from a GET request.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+ ```
+
+ The second, is the POST action method that handles all of the logic and calculations for displaying the colors to the view. This method also uses parameter binding so that there is no data visible to the user and to help preserve its integrity.
+
+ ```csharp
+[HttpPost]
+        public ActionResult Create(string FirstColor, string SecondColor)
+        {//Console lines to make sure function is getting colors
+            Debug.WriteLine(FirstColor);
+            Debug.WriteLine(SecondColor);
+...
+ ```
+
+ The next thing I did was initialize two internal Color objects to store the colors from the form and to use for the mixing.
+ 
+ ```csharp
+ ...
+ //Initializing new color objects that store ARGB values read in from a string containing the Hex number for 
+            //the colors. These strings are coming from the HTML form.
+            Color PrimaryColor = ColorTranslator.FromHtml(FirstColor);
+            Color SecondaryColor = ColorTranslator.FromHtml(SecondColor);
+...
+ ```
+
+ To get the mixed color, I added the individual Red, Green, and Blue components of the two input colors to get the Red, Green, and Blue components of the mixed color. To do this, I had to declare a collection of local variables that contained the values of the individual RGB components of the input colors. I also initialized the RGB component variables of the mixed color to 0 and then assigned them their true values later on.
+
+ ```csharp
+...
+//R,B,G componenets of the first color from the form converted from its hex value into its integer values.
+            int PrimaryColorR = PrimaryColor.R;
+            int PrimaryColorG = PrimaryColor.G;
+            int PrimaryColorB = PrimaryColor.B;
+           
+            //R,B,G componenets of the second color from the form converted from its hex value into its integer values.
+            int SecondaryColorR = SecondaryColor.R;
+            int SecondaryColorG = SecondaryColor.G;
+            int SecondaryColorB = SecondaryColor.B;
+
+            //R,B,G conponenets of the mixed color initialized to 0 but will later store the sum from the respective
+            //components of the first and second colors.
+            int MixedColorR = 0;
+            int MixedColorG = 0;
+            int MixedColorB = 0;
+...
+ ```
+
+ I used a chane of `if-else` statements to perform the math. If the sum of one component of the two input colors exceeded 255, then I just set the value of the corresponding component of the mixed color to 255. Basically, 255 was the cap for each component of the mixed color.
+
+ ```csharp
+ ...
+ //Setting the actual values of the R,G,B components of the mixed color from the two input colors.
+            //Each component is capped at 255.
+            if(PrimaryColorR + SecondaryColorR < 255)
+            {
+                MixedColorR = PrimaryColorR + SecondaryColorR;
+            }
+            else
+            {
+                MixedColorR = 255;
+            }
+            if(PrimaryColorG + SecondaryColorG < 255)
+            {
+                MixedColorG = PrimaryColorG + SecondaryColorG;
+            }
+            else
+            {
+                MixedColorG = 255;
+            }
+            if(PrimaryColorB + SecondaryColorB < 255)
+            {
+                MixedColorB = PrimaryColorB + SecondaryColorB;
+
+            }
+            else
+            {
+                MixedColorB = 255;
+            }
+ ...
+ ```
+
+ I then created a new Color object for the mixed color and used one of Color's methods, `FromARGB` to assign the computed values for each component to the mixed color objects values.
+
+ ```csharp
+...
+//Initializing new color object from the computed R,G,B components.
+            Color MixedColor = Color.FromArgb(MixedColorR, MixedColorG, MixedColorB);
+...
+```
+
+I then had an if statement confirming that `MixedColor` had, indeed been initialized so that I could display the resulting content on the view.
+
+```csharp
+...
+//Used to initialize a viewbag to trigger display of the color cards on the webpage.
+            if(MixedColor.IsEmpty == false)
+            {//Number is insignificant as long as it is not null.
+                ViewBag.Mix = 100;
+            }
+...
+```
+
+I then converted the Color object that contained the mixed color back into a string and sent it plus the two input colors back to the view that placed them in styling attributes of the result display section so that the color cards would be displayed on the main page.
+
+```csharp
+...
+//Converting mixed color back into hex string from its Color object
+            string ResultColor = ColorTranslator.ToHtml(MixedColor);
+
+            //Console line to confirm resulting color.
+            Debug.WriteLine(ResultColor);
+
+            //Viewbags for passing all three hex string colors to the styling section of the webpage for displaying of
+            //the color cards.
+            ViewBag.FirstColor = FirstColor;
+            ViewBag.SecondColor = SecondColor;
+            ViewBag.MixedColor = ResultColor;
+
+            return View();
+        }
+```
+
+#### Styling the Color Cards
+
+Once I passed the colors back to the view, I had to style the elements so that they looked like cards with the given colors. I did this primarily through the main CSS file for the entire application. I defined a new styling class called `.card` to modify `<div>` elements into color cards. Because web browsers often cache CSS files for sites, I decided to style the elements in the CSS file but provide the colors in the HTML for the page itself. That way the colors would always update regardless of wether the CSS file was cached or not. I also created a class called `.symbols` for the elements that contained math symbols used on the mixer page.
+
+```css
+/*Used to format the color cards for the color selector*/
+.card {
+    perspective: 10000px;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5px;
+}
+
+/*Used for the equation symbols on the color selector*/
+.symbols{
+    padding-top: 4rem;
+    font-size:large;
+    text-align: center;
+}
+```
+
+The last bit of styling I created was for the result of the conversion from the converter page and the error messages that I displayed on the converter page as well.
+
+```css
+/*Used for custom error messages on converter page*/
+.error {
+    padding-top: 3em;
+    color: red;
+    font-size: xx-large;
+    font-style: italic;
+}
+
+/*Used for styling the conversion text on the conversion page*/
+#conversion {
+    font-size: large;
+    font-weight: bold;
+}
+```
+
+And that is how I made the MVC Application! Pretty cool right?! I really enjoyed doing this assignment. There was a lot to learn and a lot of bugs to work out, but once I finally got through all the bugs the result is pretty cool! Thanks for reading.
