@@ -13,7 +13,8 @@ namespace SurveyResponse.Controllers
             return View();
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Forms()
         {
             ViewBag.Message = "Your application description page.";
 
