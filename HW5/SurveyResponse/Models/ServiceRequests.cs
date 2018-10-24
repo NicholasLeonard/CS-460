@@ -8,12 +8,17 @@ namespace SurveyResponse.Models
 {
     public class ServiceRequests
     {
+        [Required, MaxLength(20)]
         public string FirstName { get; set; }
+        [Required, MaxLength(20)]
         public string LastName { get; set; }
+        [Required, MaxLength(40)]
         public string ApartmentName { get; set; }
+        [Required]
         public int UnitNumber { get; set; }
-        [Phone]
+        [Phone, Required]
         public string Phone { get; set; }
+        [Required, MaxLength(500)]
         public string Comments { get; set; }
         public bool EnterForMaintenance { get; set; }
     }
