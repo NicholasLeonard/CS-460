@@ -7,7 +7,7 @@
 	[UnitNumber] INT NOT NULL,
 	[Phone] NVARCHAR(15) NOT NULL,
 	[Comments] NVARCHAR(1000),
-	[MaintanenceEntry] INT NOT NULL,
+	[MaintanenceEntry] BIT NOT NULL,
 	[SubmissionTime] DateTime NOT NULL
 	CONSTRAINT [PK_dbo.ServiceRequests] PRIMARY KEY CLUSTERED([ID] ASC)
 );

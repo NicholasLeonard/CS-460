@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SurveyResponse.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,7 +23,7 @@ namespace SurveyResponse.Controllers
         }
 
         [HttpPost]
-        public ActionResult FormPost()
+        public ActionResult Forms(ServiceRequests Request)
         {
             return View();
         }
