@@ -21,6 +21,12 @@ namespace SurveyResponse.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult FormPost()
+        {
+            return View();
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
