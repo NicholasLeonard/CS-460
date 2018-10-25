@@ -33,7 +33,7 @@ namespace SurveyResponse.Models
         public bool EnterForMaintenance { get; set; }
 
         private DateTime TimeSent = DateTime.Now;
-        private DateTime Submitted
+        public DateTime Submitted
         {
             get { return TimeSent; }
             set { TimeSent = value; }
