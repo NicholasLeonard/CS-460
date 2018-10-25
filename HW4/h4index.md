@@ -2,7 +2,7 @@
 <br/>
 ## Homework 4
 
-This assignment was all about MVC and HTTP's GET and POST methods. To complete this assignment, I had to utilize tools and languages that I had been learning throughout this entire term as well as some new ones like HTML's Razor helper functions. I really enjoyed this project. I found learning how the GET and POST methods work really interesting and I thought the two tasks I had to do to demeonstrate there use was fun and interesting.
+This assignment was all about MVC and HTTP's GET and POST methods. To complete this assignment, I had to utilize tools and languages that I have been learning throughout this entire term as well as some new ones like HTML's Razor helper functions. I really enjoyed this project. I found learning about GET and POST methods and how they work really interesting. I also thought the two tasks I had to do to demeonstrate their use fun and interesting.
 
 ### Important Links
 Here is the link to my github repository, which houses all of the source code for this assignment and others. <br/>
@@ -16,11 +16,11 @@ This link will take you back to my main portfolio page.
 
 ### Step 1. Creating a new MVC Project and Learning the Design Layout
 
-Assignment 4 involved learning GET and POST by building a new Method View Controller (MVC) and having two views that did different things using those HTTP methods. The first thing I had to do was create a new MVC project in Visual Studio. After I created a new MVC .NETFRAMEWORK project, I had to go through the folders and files it created to learn the layout and what did what.
+Assignment 4 involved learning GET and POST by building a new Method View Controller (MVC) that had two views, one contained a metric Converter that used GET and the other had a Color Mixer using POST. The first thing I had to do was create a new MVC project in Visual Studio. After I created a new MVC .NETFRAMEWORK project, I went through the folders and files it created to learn the layout and what did what.
 
 ### Step 2. Creating the Landing Page
 
-Once I figured out what all the files and folders were and how they worked, I went to work constructing the actual application. Visual Studio is nice in that when it created the new project, it defined a predetermined layout and style so I just modified the landing page to suit my needs. I added new descriptions and titles to the section heads and modified the effects of the buttons.
+Once I figured out all the files and folders, I went to work constructing the actual application. Visual Studio is nice in the fact that when it created the new project, it defined a predetermined layout and style so I just modified the landing page to suit my needs. I added new descriptions and titles to the section heads and modified the effects of the buttons.
 
 ```html
 @{
@@ -55,7 +55,7 @@ Once I figured out what all the files and folders were and how they worked, I we
 
 ### Step 3. The Converter
 
-Once the landing page was done, I moved on to the Converter page because it was going to use the same controller as the landing page. On this page, I used plain old HTML to structure the page and make the form for the input. The form on this page used GET to request from the server and passed data via query strings in the URI. The form element I created called the GET Converter action method that was in the Home Controller. I used two medium coloumns in this form to put the mile input and error text on one side and the radio buttons for the metric unit to convert to in another coloumn. I also had to add required to the miles input box to provide validation and I also had to set the type to number in order to prevent the user from sending strings to the server.
+Once the landing page was done, I moved on to the Converter page, which utilized the same controller as the landing page. On this page, I used plain old HTML to structure the page and make the form for the input. The form on this page used GET to request from the server and passed data via query strings in the URI. The form element I created called the GET Converter action method defined in the Home Controller. I used two medium coloumns in the form to put the mile input and error text on one side and the radio buttons for the metric unit conversion in another coloumn. I also had to add required to the miles input box to provide validation and I also had to set the type to number in order to prevent the user from sending strings to the server.
 
 ```html
 <div class="row">
@@ -118,7 +118,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 ...
 ```
 
- If `MIleInput` contains a value, then the form has been submitted and the view needs to dynamically display something. Thus, the if statement executes and does the conversion. There is a switch statement to determine which conversion needs to be performed. The default case of the switch displays an error message, which would occur if the user entered a value through the query string but did not match one of the four valid input types.
+ If `MIleInput` contains a value, then the form has been submitted and the view needs to dynamically display a result. Thus, the if statement executes and does the conversion. There is a switch statement to determine which conversion needs to be performed. The default case of the switch displays an error message, which would occur if the user entered a value through the query string but did not match one of the four valid input types.
 
  ```csharp
  //Confirms that input was actually read, otherwise it just displays the default page.
@@ -266,7 +266,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 ...
  ```
 
- The next thing I did was initialize two internal Color objects to store the colors from the form and to use for the mixing.
+ The next thing I did was initialize two internal Color objects to store the colors from the form and to use for mixing the color.
  
  ```csharp
  ...
@@ -354,7 +354,7 @@ I then had an if statement confirming that `MixedColor` had, indeed been initial
 ...
 ```
 
-I then converted the Color object that contained the mixed color back into a string and sent it plus the two input colors back to the view that placed them in styling attributes of the result display section so that the color cards would be displayed on the main page.
+I then converted the Color object that contained the mixed color back into a string and sent it, as well as the two input colors, back to the view, which placed them in styling attributes in the results section so that the color cards would be displayed on the main page.
 
 ```csharp
 ...
@@ -413,4 +413,4 @@ The last bit of styling I created was for the result of the conversion from the 
 }
 ```
 
-And that is how I made the MVC Application! Pretty cool right?! I really enjoyed doing this assignment. There was a lot to learn and a lot of bugs to work out, but once I finally got through all the bugs the result is pretty cool! Thanks for reading.
+And that is how I made the MVC Application! Pretty cool right?! I really enjoyed doing this assignment. There was a lot to learn and a lot of bugs to work out, but once I finally got through it all, the result was pretty cool! Thanks for reading.
