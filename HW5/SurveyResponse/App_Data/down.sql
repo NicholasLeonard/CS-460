@@ -1,2 +1,2 @@
 ﻿-- Remove Table from ServiceRequests Database
-DROP TABLE [dbo].[Requests];
+DROP TABLE [dbo].[ServiceRequests];

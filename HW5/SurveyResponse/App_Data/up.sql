@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Requests]
+﻿CREATE TABLE [dbo].[ServiceRequests]
 (
 	[Id] INT IDENTITY(0,1) NOT NULL,
 	[FirstName] NVARCHAR(64) NOT NULL,
@@ -7,12 +7,12 @@
 	[UnitNumber] INT NOT NULL,
 	[Phone] NVARCHAR(15) NOT NULL,
 	[Comments] NVARCHAR(1000),
-	[MaintanenceEntry] BIT NOT NULL,
-	[SubmissionTime] DateTime NOT NULL
+	[EnterForMaintenance] BIT NOT NULL,
+	[Submitted] DateTime NOT NULL
 	CONSTRAINT [PK_dbo.ServiceRequests] PRIMARY KEY CLUSTERED([ID] ASC)
 );
 
-INSERT INTO [dbo].[Requests] (FirstName, LastName, ApartmentName, UnitNumber, Phone, Comments, MaintanenceEntry, SubmissionTime) VALUES
+INSERT INTO [dbo].[ServiceRequests] (FirstName, LastName, ApartmentName, UnitNumber, Phone, Comments, EnterForMaintenance, Submitted) VALUES
 ('James', 'Reed', 'Mountain View Apartments', '1', '987-324-0001', 'My water heater is not working.', '1', '2018-10-1 04:30:00'),
 ('Caroline', 'Beckers', 'Mountain View Apartments', '20', '503-334-8765', 'The air conditioning is constantly running and I can not shut it off!', '1', '2018-08-23 14:00:21'),
 ('Raymon', 'Cletus', 'Mountain View Apartments', '5', '876-990-9999', 'The kitchen sink is leaking.', '1', '2018-10-20 12:34:00'),
