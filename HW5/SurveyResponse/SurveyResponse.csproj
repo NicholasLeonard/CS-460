@@ -154,7 +154,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ServiceRequestsController.cs" />
     <Compile Include="DAL\RequestContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,14 +205,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Forms.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\FormPost.cshtml" />
-    <Content Include="Views\ServiceRequests\Create.cshtml" />
-    <Content Include="Views\ServiceRequests\Delete.cshtml" />
-    <Content Include="Views\ServiceRequests\Details.cshtml" />
-    <Content Include="Views\ServiceRequests\Edit.cshtml" />
-    <Content Include="Views\ServiceRequests\Index.cshtml" />
+    <Content Include="Views\Home\List.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

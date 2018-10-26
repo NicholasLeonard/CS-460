@@ -4,35 +4,34 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>Service Requests</h2>
 
-<table class="table-responsive table-bordered">
+<table class="table table-responsive text-center">
     <tr>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.LastName)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.ApartmentName)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.UnitNumber)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Phone)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Comments)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.EnterForMaintenance)
         </th>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Submitted)
         </th>
-        <th></th>
     </tr>
     
     @foreach (var item in Model)

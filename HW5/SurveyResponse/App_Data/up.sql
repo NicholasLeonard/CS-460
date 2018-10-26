@@ -14,7 +14,7 @@
 
 INSERT INTO [dbo].[ServiceRequests] (FirstName, LastName, ApartmentName, UnitNumber, Phone, Comments, EnterForMaintenance, Submitted) VALUES
 ('James', 'Reed', 'Mountain View Apartments', '1', '987-324-0001', 'My water heater is not working.', '1', '2018-10-1 04:30:00'),
-('Caroline', 'Beckers', 'Mountain View Apartments', '20', '503-334-8765', 'The air conditioning is constantly running and I can not shut it off!', '1', '2018-08-23 14:00:21'),
+('Caroline', 'Beckers', 'Mountain View Apartments', '20', '503-334-8765', 'The air conditioning is constantly running and I can not shut it off!', '1', '2018-10-1 4:29:21'),
 ('Raymon', 'Cletus', 'Mountain View Apartments', '5', '876-990-9999', 'The kitchen sink is leaking.', '1', '2018-10-20 12:34:00'),
 ('Julie', 'Bishop', 'Mountain View Apartments', '12', '971-665-2023', 'One of my bedroom doors has fallen off of its hinges.', '0', '2018-09-29 16:45:46'),
 ('Randel', 'Wagner', 'Mountain View Apartments', '3', '541-667-2077', 'My internet is down and I keep hearing random static from my television', '0', '2018-10-22 20:00:00')
