@@ -23,7 +23,7 @@ namespace SurveyResponse.Models
         [Required, Display(Name = "Building Number")]
         public int UnitNumber { get; set; }
 
-        [Phone, Required, Display(Name = "Phone Number")]
+        [Required, DataType(DataType.PhoneNumber), Display(Name = "Phone Number")]
         public string Phone { get; set; }
 
         [Required, MaxLength(500), Display(Name = "Comments")]
