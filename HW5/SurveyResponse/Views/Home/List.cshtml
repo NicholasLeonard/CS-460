@@ -5,7 +5,7 @@
 }
 
 <h2>Service Requests</h2>
-
+<!--A table for Displaying the requests from the database-->
 <table class="table table-responsive text-center">
     <tr>
         <th class="text-center">
@@ -35,7 +35,7 @@
     </tr>
     
     @foreach (var item in Model)
-    {
+    {<!--Loop iterates through and displays all items from the table-->
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)

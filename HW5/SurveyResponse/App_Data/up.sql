@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[ServiceRequests]
+﻿-- Adds table to database and seeds it with 5 values
+CREATE TABLE [dbo].[ServiceRequests]
 (
 	[Id] INT IDENTITY(0,1) NOT NULL,
 	[FirstName] NVARCHAR(64) NOT NULL,

@@ -2,7 +2,7 @@
 
 <h2>Maintenance Request Form</h2>
 
-
+<!--Form for submitting service requests-->
 @using (Html.BeginForm("Forms", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -45,7 +45,6 @@
 </div>
    <div class="row">
        <div class="container-fluid">
-           
           <button class="btn btn-success" type="submit">Submit</button>
        </div>
    </div>
