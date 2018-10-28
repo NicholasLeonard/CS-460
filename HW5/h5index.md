@@ -6,13 +6,13 @@ This assignment was about adding a database and a model to my previous use of th
 
 ### Important Links
 Here is the link to my github repository, which houses all of the source code for this project and others. <br/>
-![Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
+[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
 Here is the link to a demo video of the application in action. <br/>
-![Demo Video](https://www.youtube.com/watch?v=lUZODFTdpZA&t=3s)<br/>
+[Demo Video](https://www.youtube.com/watch?v=lUZODFTdpZA&t=3s)<br/>
 
 This link will take you back to my main Portfolio page.<br/>
-![Home](../index.md)
+[Home](../index.md)
 
 ### Step 1. Creating the new Project
 I started by creating a new MVC project, similar to what I did with the last assignment. I then decided to take it one step at a time and start by just making a landing page for the application. I removed the link buttons on the landing page that the default project gave me. I also decided to add a picture that stretched across the top of my website beneath the navbar. I put the code for this in the main layout page for the entire website so that the picture would be on all of the pages in the website.
@@ -324,6 +324,7 @@ At the bottom of the controller, I put a statement to release the controllers ac
         }
 ```
 Here is a screenshot of the list page.
+
 ![picture](../Portfolio_Photos/Assignment5/list.png)
 
 And that is how I made a second MVC project, this time using a database. Thanks for reading.
