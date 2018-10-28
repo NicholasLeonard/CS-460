@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SurveyResponse.Models.ServiceRequests>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Service Requests</h2>
+<!--A table for Displaying the requests from the database-->
+<table class="table table-responsive text-center">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.ApartmentName)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.UnitNumber)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Comments)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.EnterForMaintenance)
+        </th>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Submitted)
+        </th>
+    </tr>
+    
+    @foreach (var item in Model)
+    {<!--Loop iterates through and displays all items from the table-->
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnterForMaintenance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Submitted)
+            </td>
+        </tr>
+    }
+
+</table>
+
