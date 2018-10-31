@@ -25,10 +25,11 @@ textarea {
 
 .search{
     position:relative;
-    flex-flow:row;
-}
+ }
 
-.button{
-    float:right; 
+.submit{
+    position:absolute;
+    right:0%;
+    bottom:0%; 
 }
 
