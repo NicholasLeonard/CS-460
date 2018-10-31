@@ -20,5 +20,15 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 100%;
 }
+
+.search{
+    position:relative;
+    flex-flow:row;
+}
+
+.button{
+    float:right; 
+}
+
