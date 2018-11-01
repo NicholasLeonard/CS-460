@@ -1,9 +1,7 @@
-﻿@model BigDatabase.Models.Person
-@{
+﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
@@ -11,8 +9,8 @@
         <div class="col-lg-8">
             <div class="form-group">
                 <div class="search">
-                    @Html.LabelFor(x => x.SearchName)
-                    @Html.TextBoxFor(x => x.SearchName, new { @class = "form-control" })
+                    <h3 class="text-center">Find a Client</h3>
+                    <input class="form-control" placeholder="Search name..." type="text" />
                     <button class="btn-primary button btn submit">Search</button>
                 </div>
                 
@@ -22,3 +20,5 @@
         
     </div>
 }
+
+<p>Result here</p>
