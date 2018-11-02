@@ -1,17 +1,19 @@
-﻿@{
+﻿@model IEnumerable<BigDatabase.Models.ViewModels.PersonVM>
+
+@{
     ViewBag.Title = "About";
 }
 
 
-@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+@using (Html.BeginForm("About", "Home", FormMethod.Get))
 {
     <div class="row">
         <div class="col-lg-8">
             <div class="form-group">
                 <div class="search">
                     <h3 class="text-center">Find a Client</h3>
-                    <input class="form-control" placeholder="Search name..." type="text" />
-                    <button class="btn-primary button btn submit">Search</button>
+                    <input class="form-control" placeholder="Search name..." type="text" name="client" />
+                    <button class="btn-primary button btn" type="submit">Search</button>
                 </div>
                 
             </div>
@@ -21,4 +23,12 @@
     </div>
 }
 
-<p>Result here</p>
+@foreach(var s in Model)
+{
+     <ul>
+         <li>
+             @Html.ActionLink(s.Name, "Details", "Home", routeValues: new { result = s.Name }, htmlAttributes: null)
+         </li>
+     </ul>
+        
+}

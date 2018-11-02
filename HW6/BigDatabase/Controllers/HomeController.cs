@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using BigDatabase.Controllers;
 using BigDatabase.Models;
 using BigDatabase.Models.ViewModels;
+using System.Web.Security;
 
 namespace BigDatabase.Controllers
 {
@@ -23,11 +24,22 @@ namespace BigDatabase.Controllers
         [HttpGet]
         public ActionResult About()
         {
+            string client = Request.QueryString["client"];
 
-
-            List<PersonVM> SearchResult = db.People.Where(person => person.FullName.Contains("a")).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+            
+            List<PersonVM> SearchResult = db.People.Where(person => person.FullName.Contains(client)).Where(p => p.PersonID 
+            != 1).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
                 
-            return View();
+            return View(SearchResult);
+        }
+
+        [HttpGet]
+        public ActionResult Details(string result)
+        {
+            Debug.WriteLine(result);
+            List<PersonVM> DetailPerson = db.People.Where(person => person.FullName == result).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+           
+            return View(DetailPerson);
         }
 
         public ActionResult Contact()
