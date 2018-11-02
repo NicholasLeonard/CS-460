@@ -13,7 +13,5 @@ namespace BigDatabase.Models.ViewModels
         public string FaxNumber { get; set; }
         public string EmailAddress { get; set; }
         public DateTime ValidFrom { get; set; }
-
-        //IEnumerable<Person> People { get; set; }
     }
 }

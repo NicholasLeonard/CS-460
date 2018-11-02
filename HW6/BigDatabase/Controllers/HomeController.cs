@@ -9,6 +9,7 @@ using BigDatabase.Controllers;
 using BigDatabase.Models;
 using BigDatabase.Models.ViewModels;
 using System.Web.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BigDatabase.Controllers
 {
@@ -29,24 +30,35 @@ namespace BigDatabase.Controllers
             {
                 List<PersonVM> SearchResult = db.People.Where(person => person.FullName.Contains(client)).Where(p => p.PersonID 
                             != 1).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
-                ViewBag.Toggle = 1;
-                
-                return View(SearchResult);
+
+                if (SearchResult.FirstOrDefault() == null)
+                {
+                    ViewBag.Toggle = 2;
+                    return View(SearchResult);
+                }
+                else
+                {
+                    ViewBag.Toggle = 1;
+                    return View(SearchResult);
+                }
             }
             else
             {
                 return View();
             }
-            
-            
         }
 
         [HttpGet]
         public ActionResult Details(string result)
         {
+            if(result == null || result == "")
+            {
+                return (RedirectToAction("About"));
+            }
+
             Debug.WriteLine(result);
             List<PersonVM> DetailPerson = db.People.Where(person => person.FullName == result).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
-           
+
             return View(DetailPerson);
         }
 

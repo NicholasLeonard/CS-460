@@ -4,7 +4,33 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="details" class="clearfix">
+                <h3 id="details-name">@Model.FirstOrDefault().Name</h3>
+                <hr />
+                <div class="col-sm-3">
+                    <p>Preferred Name:</p>
+                    <p>Phone:</p>
+                    <p>Fax:</p>
+                    <p>Email:</p>
+                    <p>Registered Since:</p>
+                </div>
+                <div class="col-sm-5">
+                    <p>@Model.FirstOrDefault().PreferredName</p>
+                    <a href="tel:@Model.FirstOrDefault().PhoneNumber">@Model.FirstOrDefault().PhoneNumber</a>
+                    <p>@Model.FirstOrDefault().FaxNumber</p>
+                    <a href="mailto:@Model.FirstOrDefault().EmailAddress">@Model.FirstOrDefault().EmailAddress</a>
+                    <p>@Model.FirstOrDefault().ValidFrom</p>
+                </div>
+                <div class="col-sm-offset-3" style="padding-bottom: 2em;">
+                    <a href="https://placeholder.com"><img src="https://via.placeholder.com/150x200" /></a>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
 
