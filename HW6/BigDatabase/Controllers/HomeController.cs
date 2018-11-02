@@ -25,12 +25,20 @@ namespace BigDatabase.Controllers
         public ActionResult About()
         {
             string client = Request.QueryString["client"];
-
-            
-            List<PersonVM> SearchResult = db.People.Where(person => person.FullName.Contains(client)).Where(p => p.PersonID 
-            != 1).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+            if(client != null && client != "")
+            {
+                List<PersonVM> SearchResult = db.People.Where(person => person.FullName.Contains(client)).Where(p => p.PersonID 
+                            != 1).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+                ViewBag.Toggle = 1;
                 
-            return View(SearchResult);
+                return View(SearchResult);
+            }
+            else
+            {
+                return View();
+            }
+            
+            
         }
 
         [HttpGet]

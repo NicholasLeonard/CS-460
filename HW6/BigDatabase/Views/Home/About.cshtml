@@ -12,23 +12,31 @@
             <div class="form-group">
                 <div class="search">
                     <h3 class="text-center">Find a Client</h3>
-                    <input class="form-control" placeholder="Search name..." type="text" name="client" />
+                    <input class="form-control" placeholder="Search name..." type="text" name="client" required />
                     <button class="btn-primary button btn" type="submit">Search</button>
                 </div>
-                
+
             </div>
         </div>
-       
-        
+
+
     </div>
 }
 
-@foreach(var s in Model)
+@if (ViewBag.Toggle == 1)
 {
-     <ul>
-         <li>
-             @Html.ActionLink(s.Name, "Details", "Home", routeValues: new { result = s.Name }, htmlAttributes: null)
-         </li>
-     </ul>
-        
+    foreach (var s in Model)
+    {
+        <ul>
+            <li>
+                @Html.ActionLink(s.Name, "Details", "Home", routeValues: new { result = s.Name }, htmlAttributes: null)
+            </li>
+        </ul>
+
+    }
 }
+else
+{
+
+}
+
