@@ -35,8 +35,36 @@ namespace BigDatabase.Controllers
                                     .Where(p => p.FullName == result)
                                     .Include("PrimaryContactPersonID")
                                     .SelectMany(p => p.Customers2).ToList();
-            //
-           // var PurchaseHistory = db;
+            //Items Purchased Details
+            var ItemDetails = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                                .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                                .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices).Include("InvoiceID")
+                                .SelectMany(x => x.InvoiceLines).OrderByDescending(x => x.LineProfit).Take(10).ToList();
+
+            var SalesMen = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                             .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders).Include("OrderID")
+                             .Include("CustomerID").SelectMany(x => x.Invoices).Include("InvoiceID")
+                             .SelectMany(x => x.InvoiceLines).OrderByDescending(x => x.LineProfit).Take(10)
+                             .Include("InvoiceID").Select(x => x.Invoice).Include("SalespersonID").Select(x => x.Person4)
+                             .ToList();
+            //Items Purchased Details
+
+            List<ItemPurchased> Top10Items = new List<ItemPurchased>();
+            
+            for (int i = 0; i < 10; i++)
+            {
+                Top10Items.Add(new ItemPurchased
+                {
+                    StockItemID = ItemDetails.ElementAt(i).StockItemID,
+                    ItemDescription = ItemDetails.ElementAt(i).Description,
+                    LineProfit = ItemDetails.ElementAt(i).LineProfit,
+                    SalesPerson = SalesMen.ElementAt(i).FullName
+                });
+                
+            }
+
+
+
 
             PersonVM Customer = new PersonVM
             {//Default Details
@@ -46,21 +74,26 @@ namespace BigDatabase.Controllers
                 FaxNumber = DetailPerson.First().FaxNumber,
                 EmailAddress = DetailPerson.First().EmailAddress,
                 ValidFrom = DetailPerson.First().ValidFrom,
+                //Customer Company Details
                 CompanyName = CustomerDetails.First().CustomerName,
                 CompanyPhone = CustomerDetails.First().PhoneNumber,
                 CompanyFax = CustomerDetails.First().FaxNumber,
                 CompanyWebsite = CustomerDetails.First().WebsiteURL,
                 CompanyValidFrom = CustomerDetails.First().ValidFrom,
-                Orders = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID").SelectMany(x => x.Customers2)
-                                                                                    .Include("CustomerID").SelectMany(x => x.Orders).Count(),
+                //Purchase History Details
+                Orders = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                           .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders).Count(),
+
                 GrossSales = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
-                               .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders).Include("OrderID")
-                               .Include("CustomerID").SelectMany(x => x.Invoices).Include("InvoiceID").SelectMany(x => x.InvoiceLines)
-                               .Sum(x => x.ExtendedPrice),
+                               .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                               .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices)
+                               .Include("InvoiceID").SelectMany(x => x.InvoiceLines).Sum(x => x.ExtendedPrice),
+
                 GrossProfit = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
-                               .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders).Include("OrderID")
-                               .Include("CustomerID").SelectMany(x => x.Invoices).Include("InvoiceID").SelectMany(x => x.InvoiceLines)
-                               .Sum(x => x.LineProfit),
+                               .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                               .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices)
+                               .Include("InvoiceID").SelectMany(x => x.InvoiceLines).Sum(x => x.LineProfit),
+                ItemPurchaseSummary = Top10Items
             };
             return View(DetailPerson);
         }

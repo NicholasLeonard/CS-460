@@ -27,6 +27,6 @@ namespace BigDatabase.Models.ViewModels
         public decimal GrossProfit { get; set; }
         
         //Items Purchased Details
-        List<ItemPurchased> ItemPurchaseSummary { get; set; }
+        public List<ItemPurchased> ItemPurchaseSummary { get; set; }
     }
 }
