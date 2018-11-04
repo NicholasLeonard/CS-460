@@ -5,6 +5,9 @@ using System.Web;
 
 namespace BigDatabase.Models.ViewModels
 {
+    /// <summary>
+    /// A class that holds all details about a client of World Wide Importers.
+    /// </summary>
     public class PersonVM
     {//Default Details
         public string Name { get; set; }
@@ -26,7 +29,7 @@ namespace BigDatabase.Models.ViewModels
         public decimal GrossSales { get; set; }
         public decimal GrossProfit { get; set; }
         
-        //Items Purchased Details
+        //Items Purchased Details. See ItemPurchased.cs
         public List<ItemPurchased> ItemPurchaseSummary { get; set; }
     }
 }
