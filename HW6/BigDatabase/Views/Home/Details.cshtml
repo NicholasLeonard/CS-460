@@ -6,7 +6,7 @@
 
 
 
-<div class="container">
+<div class="container container-details">
     <div class="row">
         <div class="col-lg-9">
             <div id="details" class="clearfix">
@@ -36,7 +36,7 @@
 
 @if (ViewBag.Toggle == 1)
 {
-    <div class="container">
+    <div class="container container-details">
         <div class="row">
             <div class="col-lg-9">
                 <div id="details" class="clearfix">
@@ -60,7 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container container-details">
         <div class="row">
             <div class="col-lg-9">
                 <div id="details" class="clearfix">
@@ -70,13 +70,42 @@
                         <p>Total Orders:</p>
                         <p>Gross Sales:</p>
                         <p>Gross Profit:</p>
-                        
+
                     </div>
                     <div class="col-sm-5">
                         <p>@Model.FirstOrDefault().Orders</p>
-                        <p>$@Model.FirstOrDefault().GrossSales</p>
-                        <p>@Model.FirstOrDefault().GrossProfit</p>
+                        <p>@{string sales = String.Format("{0:C2}", Model.FirstOrDefault().GrossSales);}@sales</p>
+                        <p>@{string profit = String.Format("{0:C2}", Model.FirstOrDefault().GrossProfit);}@profit</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Company Details</h3>
+                    <hr />
+                    <table class="table table-striped table-responsive table-condensed">
+                        <tr>
+                            <th>StockItemID</th>
+                            <th>Description</th>
+                            <th>Line Profit</th>
+                            <th>Sales Person</th>
+                        </tr>
+                        
+                            @foreach(var item in Model.FirstOrDefault().ItemPurchaseSummary)
+                            {
+                                <tr>
+                                    <td>@item.StockItemID</td>
+                                    <td>@item.ItemDescription</td>
+                                    <td>@{string LineProfit = string.Format("{0:C2}", item.LineProfit);}@LineProfit</td>
+                                    <td>@item.SalesPerson</td>
+                                </tr>
+                            }
+                        
+                    </table>
                 </div>
             </div>
         </div>

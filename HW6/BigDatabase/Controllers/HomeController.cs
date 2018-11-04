@@ -16,15 +16,13 @@ namespace BigDatabase.Controllers
     public class HomeController : Controller
     {
         private UserContext db = new UserContext();
-        
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+       
+        /// <summary>
+        /// Action method that displays a searchbar and the results of the search for people in World Wide Importers database
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult About()
+        public ActionResult Index()
         {
             string client = Request.QueryString["client"];
             if (client != null && client != "" && client != " ")
@@ -49,9 +47,14 @@ namespace BigDatabase.Controllers
             }
         }
 
+        /// <summary>
+        /// Action method for displaying specific details about a client or employee of World Wide Importers
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Details(string result)
-        {
+        {//allows bigger queries to run without throwing a timeout exception
             db.Database.CommandTimeout = 300;
             if (result == null || result == "")
             {
@@ -66,7 +69,6 @@ namespace BigDatabase.Controllers
                                     .Where(p => p.FullName == result)
                                     .Include("PrimaryContactPersonID")
                                     .SelectMany(p => p.Customers2).ToList();
-            //Debug.WriteLine(CustomerDetails.GetType());
 
             //Executes if CustomerDetails doesn't have any values.
             if (CustomerDetails.Count == 0)
@@ -75,11 +77,6 @@ namespace BigDatabase.Controllers
             }
             else
             {
-
-
-                //Queries through System.Data.Entity.Core.EntityCommandExecutionException because they took too long so I put them in a try
-                //catch. Solved the problem.
-
                 //Items Purchased Details See PersonVM.cs. This query gets details on top 10 items sold to the customer.
                 var ItemDetails = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
                                     .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
@@ -109,7 +106,7 @@ namespace BigDatabase.Controllers
                     });
 
                 }
-
+                //Creates a list of a PersonVM to be passed to the view that contains all of the necessary information
                 List<PersonVM> Customers = new List<PersonVM>
                 {
                     new PersonVM
@@ -143,7 +140,7 @@ namespace BigDatabase.Controllers
                         ItemPurchaseSummary = Top10Items
                     }
                 };
-
+                
                 ViewBag.Toggle = 1;
                 return View(Customers);
             }

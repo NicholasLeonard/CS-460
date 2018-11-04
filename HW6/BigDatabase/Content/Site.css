@@ -51,3 +51,7 @@ background: none;
 #details-name{
     padding-left: 1em;
 }
+
+.container-details{
+    padding-bottom: 1em;
+}
