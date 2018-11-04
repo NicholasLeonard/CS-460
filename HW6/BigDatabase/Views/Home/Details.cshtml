@@ -21,16 +21,64 @@
                 </div>
                 <div class="col-sm-5">
                     <p>@Model.FirstOrDefault().PreferredName</p>
-                    <a href="tel:@Model.FirstOrDefault().PhoneNumber">@Model.FirstOrDefault().PhoneNumber</a>
+                    <p><a href="tel:@Model.FirstOrDefault().PhoneNumber">@Model.FirstOrDefault().PhoneNumber</a></p>
                     <p>@Model.FirstOrDefault().FaxNumber</p>
-                    <a href="mailto:@Model.FirstOrDefault().EmailAddress">@Model.FirstOrDefault().EmailAddress</a>
+                    <p><a href="mailto:@Model.FirstOrDefault().EmailAddress">@Model.FirstOrDefault().EmailAddress</a></p>
                     <p>@Model.FirstOrDefault().ValidFrom</p>
                 </div>
-                <div class="col-sm-offset-3" style="padding-bottom: 2em;">
+                <div class="col-sm-offset-3" style="padding-bottom: 1em;">
                     <a href="https://placeholder.com"><img src="https://via.placeholder.com/150x200" /></a>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 </div>
 
+@if (ViewBag.Toggle == 1)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Company Details</h3>
+                    <hr />
+                    <div class="col-sm-3">
+                        <p>Company Name:</p>
+                        <p>Phone Number:</p>
+                        <p>Fax Number:</p>
+                        <p>Website:</p>
+                        <p>Customer Since:</p>
+                    </div>
+                    <div class="col-sm-5">
+                        <p>@Model.FirstOrDefault().CompanyName</p>
+                        <p><a href="tel:@Model.FirstOrDefault().CompanyPhone">@Model.FirstOrDefault().CompanyPhone</a></p>
+                        <p>@Model.FirstOrDefault().CompanyFax</p>
+                        <p><a href="@Model.FirstOrDefault().CompanyWebsite">@Model.FirstOrDefault().CompanyWebsite</a></p>
+                        <p>@Model.FirstOrDefault().CompanyValidFrom</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Purchase History</h3>
+                    <hr />
+                    <div class="col-sm-3">
+                        <p>Total Orders:</p>
+                        <p>Gross Sales:</p>
+                        <p>Gross Profit:</p>
+                        
+                    </div>
+                    <div class="col-sm-5">
+                        <p>@Model.FirstOrDefault().Orders</p>
+                        <p>$@Model.FirstOrDefault().GrossSales</p>
+                        <p>@Model.FirstOrDefault().GrossProfit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

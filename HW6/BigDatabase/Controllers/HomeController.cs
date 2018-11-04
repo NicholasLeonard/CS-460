@@ -16,6 +16,7 @@ namespace BigDatabase.Controllers
     public class HomeController : Controller
     {
         private UserContext db = new UserContext();
+        
 
         public ActionResult Index()
         {
@@ -51,11 +52,12 @@ namespace BigDatabase.Controllers
         [HttpGet]
         public ActionResult Details(string result)
         {
+            db.Database.CommandTimeout = 300;
             if (result == null || result == "")
             {
                 return (RedirectToAction("About"));
             }
-
+            
             //Get's the default information for the details page.
             List<PersonVM> DetailPerson = db.People.Where(person => person.FullName == result).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
 
@@ -64,16 +66,20 @@ namespace BigDatabase.Controllers
                                     .Where(p => p.FullName == result)
                                     .Include("PrimaryContactPersonID")
                                     .SelectMany(p => p.Customers2).ToList();
+            //Debug.WriteLine(CustomerDetails.GetType());
 
             //Executes if CustomerDetails doesn't have any values.
             if (CustomerDetails.Count == 0)
             {// If the person is not a customer of World Wide Importers, return default details page.
-                return View(DetailPerson); 
+                return View(DetailPerson);
             }
-            //Queries through System.Data.Entity.Core.EntityCommandExecutionException because they took too long so I put them in a try
-            //catch. Solved the problem.
-            try
+            else
             {
+
+
+                //Queries through System.Data.Entity.Core.EntityCommandExecutionException because they took too long so I put them in a try
+                //catch. Solved the problem.
+
                 //Items Purchased Details See PersonVM.cs. This query gets details on top 10 items sold to the customer.
                 var ItemDetails = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
                                     .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
@@ -103,69 +109,59 @@ namespace BigDatabase.Controllers
                     });
 
                 }
-                PersonVM Customer = new PersonVM
-                {//Default Details See PersonVM.cs. Basic details about the person being searched.
-                    Name = DetailPerson.First().Name,
-                    PreferredName = DetailPerson.First().PreferredName,
-                    PhoneNumber = DetailPerson.First().PhoneNumber,
-                    FaxNumber = DetailPerson.First().FaxNumber,
-                    EmailAddress = DetailPerson.First().EmailAddress,
-                    ValidFrom = DetailPerson.First().ValidFrom,
-                    //Customer Company Details; See PersonVM.cs. Details about the customer's company.
-                    CompanyName = CustomerDetails.First().CustomerName,
-                    CompanyPhone = CustomerDetails.First().PhoneNumber,
-                    CompanyFax = CustomerDetails.First().FaxNumber,
-                    CompanyWebsite = CustomerDetails.First().WebsiteURL,
-                    CompanyValidFrom = CustomerDetails.First().ValidFrom,
-                    //Purchase History Details; See PersonVM.cs. Total orders, GrossSales and Gross profit for those orders.
-                    Orders = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+
+                List<PersonVM> Customers = new List<PersonVM>
+                {
+                    new PersonVM
+                    {//Default Details See PersonVM.cs. Basic details about the person being searched.
+                        Name = DetailPerson.First().Name,
+                        PreferredName = DetailPerson.First().PreferredName,
+                        PhoneNumber = DetailPerson.First().PhoneNumber,
+                        FaxNumber = DetailPerson.First().FaxNumber,
+                        EmailAddress = DetailPerson.First().EmailAddress,
+                        ValidFrom = DetailPerson.First().ValidFrom,
+                        //Customer Company Details; See PersonVM.cs. Details about the customer's company.
+                        CompanyName = CustomerDetails.First().CustomerName,
+                        CompanyPhone = CustomerDetails.First().PhoneNumber,
+                        CompanyFax = CustomerDetails.First().FaxNumber,
+                        CompanyWebsite = CustomerDetails.First().WebsiteURL,
+                        CompanyValidFrom = CustomerDetails.First().ValidFrom,
+                        //Purchase History Details; See PersonVM.cs. Total orders, GrossSales and Gross profit for those orders.
+                        Orders = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
                                .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders).Count(),
 
-                    GrossSales = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                        GrossSales = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
                                    .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
                                    .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices)
                                    .Include("InvoiceID").SelectMany(x => x.InvoiceLines).Sum(x => x.ExtendedPrice),
 
-                    GrossProfit = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                        GrossProfit = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
                                    .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
                                    .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices)
                                    .Include("InvoiceID").SelectMany(x => x.InvoiceLines).Sum(x => x.LineProfit),
-                    //Items purchased details. A list of details about the top 10 most profitable items sold to the customer. See ItemPurchased.cs
-                    ItemPurchaseSummary = Top10Items
+                        //Items purchased details. A list of details about the top 10 most profitable items sold to the customer. See ItemPurchased.cs
+                        ItemPurchaseSummary = Top10Items
+                    }
                 };
 
-
-
-                /*Debug.WriteLine(Customer.Name);
-                Debug.WriteLine(Customer.PreferredName);
-                Debug.WriteLine(Customer.PhoneNumber);
-                Debug.WriteLine(Customer.FaxNumber);
-                Debug.WriteLine(Customer.EmailAddress);
-                Debug.WriteLine(Customer.ValidFrom);
-                Debug.WriteLine(Customer.CompanyName);
-                Debug.WriteLine(Customer.CompanyPhone);
-                Debug.WriteLine(Customer.CompanyFax);
-                Debug.WriteLine(Customer.CompanyWebsite);
-                Debug.WriteLine(Customer.CompanyValidFrom);
-                Debug.WriteLine(Customer.Orders);
-                Debug.WriteLine(Customer.GrossSales);
-                Debug.WriteLine(Customer.GrossProfit);
-                for (int x = 0; x < 10; x++)
-                {
-                    Debug.WriteLine(Customer.ItemPurchaseSummary.ElementAt(x).StockItemID);
-                    Debug.WriteLine(Customer.ItemPurchaseSummary.ElementAt(x).ItemDescription);
-                    Debug.WriteLine(Customer.ItemPurchaseSummary.ElementAt(x).LineProfit);
-                    Debug.WriteLine(Customer.ItemPurchaseSummary.ElementAt(x).SalesPerson);
-
-                }*/
-                return View(DetailPerson);
+                ViewBag.Toggle = 1;
+                return View(Customers);
             }
-            catch (System.Data.Entity.Core.EntityCommandExecutionException)
+        }
+
+        
+
+        /// <summary>
+        /// Garbage collection method for disposing of database access when the controller has finished executing
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
+                db.Dispose();
             }
-
-            return View(DetailPerson);
-
+            base.Dispose(disposing);
         }
     }
 }
