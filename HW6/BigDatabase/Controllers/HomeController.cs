@@ -23,26 +23,28 @@ namespace BigDatabase.Controllers
         /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
-        {
+        {//gets query string from form submission with a get method
             string client = Request.QueryString["client"];
+            
+            //checks to make sure a search has actually been made. Handles some checking for query string manipulation.
             if (client != null && client != "" && client != " ")
             {
                 List<PersonVM> SearchResult = db.People.Where(person => person.FullName.Contains(client)).Where(p => p.PersonID
                             != 1).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
 
                 if (SearchResult.FirstOrDefault() == null)
-                {
+                {//Displays a no results found message
                     ViewBag.Toggle = 2;
                     return View(SearchResult);
                 }
                 else
-                {
+                {//Displays results on page
                     ViewBag.Toggle = 1;
                     return View(SearchResult);
                 }
             }
             else
-            {
+            {//displays the default search page
                 return View();
             }
         }
@@ -58,11 +60,15 @@ namespace BigDatabase.Controllers
             db.Database.CommandTimeout = 300;
             if (result == null || result == "")
             {
-                return (RedirectToAction("Index"));
+                return RedirectToAction("Index");
             }
             
             //Get's the default information for the details page.
             List<PersonVM> DetailPerson = db.People.Where(person => person.FullName == result).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+            if(DetailPerson.FirstOrDefault() == null)
+            {
+                return RedirectToAction("Index");
+            }
 
             //Customer Company Details. See PersonVM.cs
             var CustomerDetails = db.People

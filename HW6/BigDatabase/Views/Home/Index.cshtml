@@ -6,7 +6,7 @@
 
 
 @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-{
+{@*Form with search bar for submitting to the server*@
     <div class="row">
         <div class="col-lg-8">
             <div class="form-group">
@@ -24,14 +24,14 @@
 }
 
 @if (ViewBag.Toggle == 1)
-{
+{@*Loop for displaying all of the results as an Actionlink to route to details page*@
     foreach (var s in Model)
     {
         <ul>
             <li>
                 @*@using(Html.BeginForm("Details", "Home", FormMethod.Post))
                 {
-                    @Html.TextBox(s.Name, s.Name)
+                    <input type="url" value="@s.Name" />
                 }*@
                 @Html.ActionLink(s.Name, "Details", "Home", routeValues: new { result = s.Name }, htmlAttributes: null)
             </li>
@@ -40,7 +40,7 @@
     }
 }
 else if(ViewBag.Toggle == 2)
-{
+{@*Displays if no results were found*@
     <p>No results match your search.</p>
 }
 else

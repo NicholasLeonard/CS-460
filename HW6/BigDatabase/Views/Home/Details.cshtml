@@ -5,7 +5,7 @@
 }
 
 
-
+@*Default results display section. This section is for details about an individual person.*@
 <div class="container container-details">
     <div class="row">
         <div class="col-lg-9">
@@ -35,7 +35,7 @@
 </div>
 
 @if (ViewBag.Toggle == 1)
-{
+{@*Customer details section. Displays details about the company.*@
     <div class="container container-details">
         <div class="row">
             <div class="col-lg-9">
@@ -70,7 +70,7 @@
                         <p>Total Orders:</p>
                         <p>Gross Sales:</p>
                         <p>Gross Profit:</p>
-
+                        @*This section displays Purchase History details. The code below provides fromatting to dollar values.*@
                     </div>
                     <div class="col-sm-5">
                         <p>@Model.FirstOrDefault().Orders</p>
@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>@*This section displays details about the top 10 items sold to the customer.*@
     <div class="container container-details">
         <div class="row">
             <div class="col-lg-9">
