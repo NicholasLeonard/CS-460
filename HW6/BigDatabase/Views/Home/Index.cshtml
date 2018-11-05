@@ -5,7 +5,7 @@
 }
 
 
-@using (Html.BeginForm("About", "Home", FormMethod.Get))
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
 {
     <div class="row">
         <div class="col-lg-8">
@@ -29,6 +29,10 @@
     {
         <ul>
             <li>
+                @*@using(Html.BeginForm("Details", "Home", FormMethod.Post))
+                {
+                    @Html.TextBox(s.Name, s.Name)
+                }*@
                 @Html.ActionLink(s.Name, "Details", "Home", routeValues: new { result = s.Name }, htmlAttributes: null)
             </li>
         </ul>

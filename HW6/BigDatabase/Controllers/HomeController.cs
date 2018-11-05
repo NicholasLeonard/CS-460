@@ -58,7 +58,7 @@ namespace BigDatabase.Controllers
             db.Database.CommandTimeout = 300;
             if (result == null || result == "")
             {
-                return (RedirectToAction("About"));
+                return (RedirectToAction("Index"));
             }
             
             //Get's the default information for the details page.
