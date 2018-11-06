@@ -1,0 +1,113 @@
+﻿@model IEnumerable<BigDatabase.Models.ViewModels.PersonVM>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+@*Default results display section. This section is for details about an individual person.*@
+<div class="container container-details">
+    <div class="row">
+        <div class="col-lg-9">
+            <div id="details" class="clearfix">
+                <h3 id="details-name">@Model.FirstOrDefault().Name</h3>
+                <hr />
+                <div class="col-sm-3">
+                    <p>Preferred Name:</p>
+                    <p>Phone:</p>
+                    <p>Fax:</p>
+                    <p>Email:</p>
+                    <p>Registered Since:</p>
+                </div>
+                <div class="col-sm-5">
+                    <p>@Model.FirstOrDefault().PreferredName</p>
+                    <p><a href="tel:@Model.FirstOrDefault().PhoneNumber">@Model.FirstOrDefault().PhoneNumber</a></p>
+                    <p>@Model.FirstOrDefault().FaxNumber</p>
+                    <p><a href="mailto:@Model.FirstOrDefault().EmailAddress">@Model.FirstOrDefault().EmailAddress</a></p>
+                    <p>@Model.FirstOrDefault().ValidFrom</p>
+                </div>
+                <div class="col-sm-offset-3" style="padding-bottom: 1em;">
+                    <a href="https://placeholder.com"><img src="https://via.placeholder.com/150x200" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Toggle == 1)
+{@*Customer details section. Displays details about the company.*@
+    <div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Company Details</h3>
+                    <hr />
+                    <div class="col-sm-3">
+                        <p>Company Name:</p>
+                        <p>Phone Number:</p>
+                        <p>Fax Number:</p>
+                        <p>Website:</p>
+                        <p>Customer Since:</p>
+                    </div>
+                    <div class="col-sm-5">
+                        <p>@Model.FirstOrDefault().CompanyName</p>
+                        <p><a href="tel:@Model.FirstOrDefault().CompanyPhone">@Model.FirstOrDefault().CompanyPhone</a></p>
+                        <p>@Model.FirstOrDefault().CompanyFax</p>
+                        <p><a href="@Model.FirstOrDefault().CompanyWebsite">@Model.FirstOrDefault().CompanyWebsite</a></p>
+                        <p>@Model.FirstOrDefault().CompanyValidFrom</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Purchase History</h3>
+                    <hr />
+                    <div class="col-sm-3">
+                        <p>Total Orders:</p>
+                        <p>Gross Sales:</p>
+                        <p>Gross Profit:</p>
+                        @*This section displays Purchase History details. The code below provides fromatting to dollar values.*@
+                    </div>
+                    <div class="col-sm-5">
+                        <p>@Model.FirstOrDefault().Orders</p>
+                        <p>@{string sales = String.Format("{0:C2}", Model.FirstOrDefault().GrossSales);}@sales</p>
+                        <p>@{string profit = String.Format("{0:C2}", Model.FirstOrDefault().GrossProfit);}@profit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>@*This section displays details about the top 10 items sold to the customer.*@
+    <div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Item Summary</h3>
+                    <hr />
+                    <table class="table table-striped table-responsive table-condensed">
+                        <tr>
+                            <th>StockItemID</th>
+                            <th>Description</th>
+                            <th>Line Profit</th>
+                            <th>Sales Person</th>
+                        </tr>
+                        
+                            @foreach(var item in Model.FirstOrDefault().ItemPurchaseSummary)
+                            {
+                                <tr>
+                                    <td>@item.StockItemID</td>
+                                    <td>@item.ItemDescription</td>
+                                    <td>@{string LineProfit = string.Format("{0:C2}", item.LineProfit);}@LineProfit</td>
+                                    <td>@item.SalesPerson</td>
+                                </tr>
+                            }
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

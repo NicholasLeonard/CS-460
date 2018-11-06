@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BigDatabase.Models.ViewModels.PersonVM>
+
+@{
+    ViewBag.Title = "About";
+}
+
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{@*Form with search bar for submitting to the server*@
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="form-group">
+                <div class="search">
+                    <h3 class="text-center">Find a Client</h3>
+                    <input class="form-control" placeholder="Search name..." type="text" name="client" required />
+                    <button class="btn-primary button btn" type="submit">Search</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Toggle == 1)
+{@*Loop for displaying all of the results as an Actionlink to route to details page*@
+    foreach (var s in Model)
+    {
+        <ul style="list-style-type: none;">
+            <li>
+                @Html.ActionLink(s.Name, "Details", "Home", routeValues: new { result = s.Name }, htmlAttributes: null)
+            </li>
+        </ul>
+
+    }
+}
+else if(ViewBag.Toggle == 2)
+{@*Displays if no results were found*@
+    <p>No results match your search.</p>
+}
+else
+{
+
+}
+
