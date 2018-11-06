@@ -168,4 +168,203 @@ Once the result was passed to the view, I was able to display it by running a `f
 
 ### Step 3. More Content and Coding Extended Features
 #### Feature 2 Customer Sales Dashboard
-This feature involves
+This feature involves expanding upon the previous search feature by listing more information in the details page. Specifically, if the person searched for is a customer of World Wide Importers, additional information needs to be displayed. This information includes company name and contact info, total number of orders, gross sales and profit, as well as a list of the top 10 items sold to the customer and the sales person in charge of handling the item. To do this, I added a lot of logic to the details action method in the controller.
+
+#### The first Details
+I started by running two queries. The first retrieved the details that were used in the previous feature. The second query determined if the search subject was a customer of World Wide Importers, and returned a list containing all of the customer information like the name of the company, company phone number, fax, and website.
+
+```csharp
+ //Get's the default information for the details page.
+            List<PersonVM> DetailPerson = db.People.Where(person => person.FullName == result).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+            
+            //This is in case someone messes with the url on the details page
+            if(DetailPerson.FirstOrDefault() == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            //Customer Company Details. See PersonVM.cs
+            var CustomerDetails = db.People
+                                    .Where(p => p.FullName == result)
+                                    .Include("PrimaryContactPersonID")
+                                    .SelectMany(p => p.Customers2).ToList();
+```
+
+I then added an if statement that checked to see if `CustomerDetails` has any values. If it does not, then it just displays the default details from feature 1, if it does, then I continue to gather information to initialize my view model. To initialize my view model, I ran a query `ItemDetails` to get all of the info about the top 10 items sold to the customer. I then ran a query `SalesMen` to get all of the salespeople for the top 10 items. I then ran a `for` loop to make a list of classes that contains all of the details for the top 10 items to initialize my view model.
+
+```csharp
+//Executes if CustomerDetails doesn't have any values.
+            if (CustomerDetails.Count == 0)
+            {// If the person is not a customer of World Wide Importers, return default details page.
+                return View(DetailPerson);
+            }
+            else
+            {
+                //Items Purchased Details See PersonVM.cs. This query gets details on top 10 items sold to the customer.
+                var ItemDetails = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                                    .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                                    .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices).Include("InvoiceID")
+                                    .SelectMany(x => x.InvoiceLines).OrderByDescending(x => x.LineProfit).Take(10).ToList();
+
+                //A list of salesman for the top 10 items sold to the customer.
+                var SalesMen = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                                             .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                                             .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices).Include("InvoiceID")
+                                             .SelectMany(x => x.InvoiceLines).OrderByDescending(x => x.LineProfit).Take(10)
+                                             .Include("InvoiceID").Select(x => x.Invoice).Include("SalespersonID").Select(x => x.Person4)
+                                             .ToList();
+                //Items Purchased Details see PersonVM.cs
+
+                List<ItemPurchased> Top10Items = new List<ItemPurchased>();
+
+                //Intializes a list of ItemPurchased classes that contains the details for the top 10 items sold to the customer.
+                for (int i = 0; i < 10; i++)
+                {//Initializes ItemPurchased for each of the 10 items
+                    Top10Items.Add(new ItemPurchased
+                    {
+                        StockItemID = ItemDetails.ElementAt(i).StockItemID,
+                        ItemDescription = ItemDetails.ElementAt(i).Description,
+                        LineProfit = ItemDetails.ElementAt(i).LineProfit,
+                        SalesPerson = SalesMen.ElementAt(i).FullName
+                    });
+
+                }
+```
+
+#### Initializing my View Model
+Once I had all of the information that I needed, I created a new list of my view model and initialized it with all of the data that I gathered from the database. The default details are initialized from the `DetailPerson` list that I made earlier. This was done by selecting the first element of the list and accessing each individual property. The same process was followed to initialize the company details section. For the Purchase History section, I used queries to initialize the Orders, Gross Sales, and Gross Profit properties by counting and summing the appropriate fields in the tables. To initialize the `ItemPurchaseSummary` list, I just assigned it the `top10Items` list that was made previously. I then passed the list of initialized view models to the view and displayed the results.
+
+```csharp
+//Creates a list of a PersonVM to be passed to the view that contains all of the necessary information
+                List<PersonVM> Customers = new List<PersonVM>
+                {
+                    new PersonVM
+                    {//Default Details See PersonVM.cs. Basic details about the person being searched.
+                        Name = DetailPerson.First().Name,
+                        PreferredName = DetailPerson.First().PreferredName,
+                        PhoneNumber = DetailPerson.First().PhoneNumber,
+                        FaxNumber = DetailPerson.First().FaxNumber,
+                        EmailAddress = DetailPerson.First().EmailAddress,
+                        ValidFrom = DetailPerson.First().ValidFrom,
+                        //Customer Company Details; See PersonVM.cs. Details about the customer's company.
+                        CompanyName = CustomerDetails.First().CustomerName,
+                        CompanyPhone = CustomerDetails.First().PhoneNumber,
+                        CompanyFax = CustomerDetails.First().FaxNumber,
+                        CompanyWebsite = CustomerDetails.First().WebsiteURL,
+                        CompanyValidFrom = CustomerDetails.First().ValidFrom,
+                        //Purchase History Details; See PersonVM.cs. Total orders, GrossSales and Gross profit for those orders.
+                        Orders = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                               .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders).Count(),
+
+                        GrossSales = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                                   .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                                   .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices)
+                                   .Include("InvoiceID").SelectMany(x => x.InvoiceLines).Sum(x => x.ExtendedPrice),
+
+                        GrossProfit = db.People.Where(person => person.FullName.Contains(result)).Include("PrimaryContactPersonID")
+                                   .SelectMany(x => x.Customers2).Include("CustomerID").SelectMany(x => x.Orders)
+                                   .Include("OrderID").Include("CustomerID").SelectMany(x => x.Invoices)
+                                   .Include("InvoiceID").SelectMany(x => x.InvoiceLines).Sum(x => x.LineProfit),
+                        //Items purchased details. A list of details about the top 10 most profitable items sold to the customer. See ItemPurchased.cs
+                        ItemPurchaseSummary = Top10Items
+                    }
+                };
+                
+                ViewBag.Toggle = 1;
+                return View(Customers);
+```
+
+#### The Updated Details View
+Once I passed the view model to the view, it was time to display it. The first section that I displayed was the default details about the search subject. The next section I displayed was the company details section.
+
+```html
+@if (ViewBag.Toggle == 1)
+{@*Customer details section. Displays details about the company.*@
+    <div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Company Details</h3>
+                    <hr />
+                    <div class="col-sm-3">
+                        <p>Company Name:</p>
+                        <p>Phone Number:</p>
+                        <p>Fax Number:</p>
+                        <p>Website:</p>
+                        <p>Customer Since:</p>
+                    </div>
+                    <div class="col-sm-5">
+                        <p>@Model.FirstOrDefault().CompanyName</p>
+                        <p><a href="tel:@Model.FirstOrDefault().CompanyPhone">@Model.FirstOrDefault().CompanyPhone</a></p>
+                        <p>@Model.FirstOrDefault().CompanyFax</p>
+                        <p><a href="@Model.FirstOrDefault().CompanyWebsite">@Model.FirstOrDefault().CompanyWebsite</a></p>
+                        <p>@Model.FirstOrDefault().CompanyValidFrom</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+```
+
+The next thing I displayed was the Purchase Summary, which contained the total number of orders, the gross sales, and the gross profit. I added some formatting in the view where I switched to C# using `@{}` to declare a new string and format it and then I displayed the formated string rather then the actual property itself.
+
+```html
+<div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Purchase History</h3>
+                    <hr />
+                    <div class="col-sm-3">
+                        <p>Total Orders:</p>
+                        <p>Gross Sales:</p>
+                        <p>Gross Profit:</p>
+                        @*This section displays Purchase History details. The code below provides fromatting to dollar values.*@
+                    </div>
+                    <div class="col-sm-5">
+                        <p>@Model.FirstOrDefault().Orders</p>
+                        <p>@{string sales = String.Format("{0:C2}", Model.FirstOrDefault().GrossSales);}@sales</p>
+                        <p>@{string profit = String.Format("{0:C2}", Model.FirstOrDefault().GrossProfit);}@profit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+```
+
+After that, the last thing to display was a table containing the details about the top 10 items sold to the customer. I also formatted the line profit property and displayed the formatted string rather then the actual property itself.
+
+```html
+@*This section displays details about the top 10 items sold to the customer.*@
+    <div class="container container-details">
+        <div class="row">
+            <div class="col-lg-9">
+                <div id="details" class="clearfix">
+                    <h3 id="details-name">Item Summary</h3>
+                    <hr />
+                    <table class="table table-striped table-responsive table-condensed">
+                        <tr>
+                            <th>StockItemID</th>
+                            <th>Description</th>
+                            <th>Line Profit</th>
+                            <th>Sales Person</th>
+                        </tr>
+                        
+                            @foreach(var item in Model.FirstOrDefault().ItemPurchaseSummary)
+                            {
+                                <tr>
+                                    <td>@item.StockItemID</td>
+                                    <td>@item.ItemDescription</td>
+                                    <td>@{string LineProfit = string.Format("{0:C2}", item.LineProfit);}@LineProfit</td>
+                                    <td>@item.SalesPerson</td>
+                                </tr>
+                            }
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+```
+And that is how I created this search page for the client, this time with a pre-existing database. Thanks for reading.

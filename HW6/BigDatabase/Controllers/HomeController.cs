@@ -65,6 +65,8 @@ namespace BigDatabase.Controllers
             
             //Get's the default information for the details page.
             List<PersonVM> DetailPerson = db.People.Where(person => person.FullName == result).Select(person => new PersonVM { Name = person.FullName, PreferredName = person.PreferredName, PhoneNumber = person.PhoneNumber, FaxNumber = person.FaxNumber, EmailAddress = person.EmailAddress, ValidFrom = person.ValidFrom }).ToList();
+            
+            //This is in case someone messes with the url on the details page
             if(DetailPerson.FirstOrDefault() == null)
             {
                 return RedirectToAction("Index");
