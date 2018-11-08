@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Searches]
+(
+	[Id] INT IDENTITY(0,1) NOT NULL,
+	[Time] DateTime NOT NULL,
+	[Request] NVARCHAR(10) NOT NULL,
+	[IPAddress] NVARCHAR(20) NOT NULL,
+	[AgentType] NVARCHAR(500) NOT NULL
+	CONSTRAINT [PK_dbo.Searches] PRIMARY KEY CLUSTERED([ID] ASC)
+);
