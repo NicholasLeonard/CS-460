@@ -9,7 +9,7 @@ Here is the link to my github repository, which houses all of the source code fo
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
 Here is the link to a demo video of the application in action. <br/>
-(Coming Soon!)<br/>
+[Demo Video](https://youtu.be/trBopo6a7tI)<br/>
 
 This link will take you back to my main Portfolio page.<br/>
 [Home](../index.md)
