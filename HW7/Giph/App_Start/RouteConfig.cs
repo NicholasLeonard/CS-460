@@ -14,6 +14,12 @@ namespace Giph
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ApiRequest",
+                url: "{controller}/{action}/{word}",
+                defaults: new { controller = "Api", action = "Translate"}
+                );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Main", action = "Index", id = UrlParameter.Optional }
