@@ -5,6 +5,9 @@ namespace Giph.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
+    /// <summary>
+    /// Creates a connection with the logging database
+    /// </summary>
     public partial class SearchContext : DbContext
     {
         public SearchContext()

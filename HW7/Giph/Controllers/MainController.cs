@@ -8,7 +8,11 @@ namespace Giph.Controllers
 {
     public class MainController : Controller
     {
-        // GET: Main
+        /// <summary>
+        /// Displays main page
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public ActionResult Index()
         {
             return View();

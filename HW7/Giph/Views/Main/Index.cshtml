@@ -3,14 +3,18 @@
     ViewBag.Title = "Index";
 }
 
-
+<!--Text box for user input-->
 <div class="container text-center">
     <h2>Giphy Stuff</h2>
     <div class="form-group">
         <input class="form-control" type="text" id="textbox" placeholder="Type Here"/>
     </div>
+    <div>
+        <button class="btn btn-danger" id="clear" align="left">Clear</button>
+    </div>
 </div>
 
+<!--displays content from textbox-->
 <div class="container">
     <p id="dynamic"></p>
 </div>

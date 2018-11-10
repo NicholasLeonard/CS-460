@@ -16,9 +16,14 @@ using Giph.Models;
 namespace Giph.Controllers
 {
     public class ApiController : Controller
-    {
+    {//establishes a connection to the searchlog database
         SearchContext db = new SearchContext();
 
+        /// <summary>
+        /// Handles ajax request for content from giphy api
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         [HttpGet]
         public JsonResult Giph(string word)
         {
@@ -39,8 +44,8 @@ namespace Giph.Controllers
             //parses the json object to get the necessary data and converts it to a string for entry in the next parse
             var data = JObject.Parse(ApiResponse)["data"].ToString();
             
-            Debug.WriteLine(data);
-
+            //Debug.WriteLine(data);
+            //initializes a new record for entry into the database
             Search search = new Search
             {
                 Time = DateTime.Now,
@@ -50,6 +55,7 @@ namespace Giph.Controllers
                 AgentType = Request.UserAgent
             };
 
+            //adds record to the database
             db.Searches.Add(search);
             db.SaveChanges();
 
@@ -61,6 +67,10 @@ namespace Giph.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Disposes of connection to database
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

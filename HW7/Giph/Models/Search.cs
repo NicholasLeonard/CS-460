@@ -6,6 +6,9 @@ namespace Giph.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    /// <summary>
+    /// Model for logging giph requests in the database
+    /// </summary>
     public partial class Search
     {
         public int Id { get; set; }
