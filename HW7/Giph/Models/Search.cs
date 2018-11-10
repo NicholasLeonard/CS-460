@@ -21,6 +21,10 @@ namespace Giph.Models
         public string IPAddress { get; set; }
 
         [Required]
+        [StringLength(20)]
+        public string BrowserType { get; set; }
+
+        [Required]
         [StringLength(500)]
         public string AgentType { get; set; }
     }

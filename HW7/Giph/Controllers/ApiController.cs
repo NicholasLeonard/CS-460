@@ -11,11 +11,14 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using Giph.Models;
 
 namespace Giph.Controllers
 {
     public class ApiController : Controller
     {
+        SearchContext db = new SearchContext();
+
         [HttpGet]
         public JsonResult Giph(string word)
         {
@@ -35,22 +38,36 @@ namespace Giph.Controllers
             string ApiResponse = reader.ReadToEnd();
             //parses the json object to get the necessary data and converts it to a string for entry in the next parse
             var data = JObject.Parse(ApiResponse)["data"].ToString();
-            //parses the json object to get necessary data and converts to string for entry in next parse
-            //string images = JObject.Parse(data)["images"].ToString();
-            //casts the resulting json object to a json object for passing back to the client
-            //var preview = JObject.Parse(images)["preview"].ToString();
-            Debug.WriteLine(data);
-            /*var test = new
-            {
-                
-            };*/
             
+            Debug.WriteLine(data);
+
+            Search search = new Search
+            {
+                Time = DateTime.Now,
+                Request = Request.HttpMethod,
+                IPAddress = Request.UserHostAddress,
+                BrowserType = Request.Browser.Type,
+                AgentType = Request.UserAgent
+            };
+
+            db.Searches.Add(search);
+            db.SaveChanges();
+
             //closes connections to Giphy Api
             reader.Close();
             dataStream.Close();
             response.Close();
-            
+
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

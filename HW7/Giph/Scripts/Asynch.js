@@ -36,7 +36,7 @@ function displayResult(preview) {
     console.log(preview);
     var test = JSON.parse(preview);
     
-    $("#dynamic").append('<iframe src="' + test.embed_url + '" width="100" height="100" align="middle" frameborder="0"></iframe>');
+    $("#dynamic").append(' <iframe src="' + test.embed_url + '" width="100" height="100" align="middle" frameborder="0"></iframe>');
 }
 
 //used if nothing was returned from the api
