@@ -42,7 +42,7 @@ namespace Giph.Controllers
             //reads the response from the Api
             string ApiResponse = reader.ReadToEnd();
             //parses the json object to get the necessary data and converts it to a string for entry in the next parse
-            var data = JObject.Parse(ApiResponse)["data"].ToString();
+            string data = JObject.Parse(ApiResponse)["data"].ToString();
             
             //Debug.WriteLine(data);
             //initializes a new record for entry into the database
