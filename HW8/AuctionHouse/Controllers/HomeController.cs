@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
 using Microsoft.Ajax.Utilities;
+using AuctionHouse.Models.ViewModels;
 
 namespace AuctionHouse.Controllers
 {
@@ -19,17 +20,17 @@ namespace AuctionHouse.Controllers
         }
 
         public ActionResult List()
-        {
+        {//gets all of the items from the database
             var Items = db.Items;
+            //a new list of item view models for displaying in the view
+            List<ItemVM> ItemList = new List<ItemVM>();
+            //populates the list
             foreach (var item in Items)
             {
-                Debug.WriteLine(item.Id);
-                Debug.WriteLine(item.ItemName);
-                Debug.WriteLine(item.Description);
-                Debug.WriteLine(item.Seller);
+                ItemList.Add(new ItemVM { Id = item.Id, Description = item.Description, ItemName = item.ItemName, Seller = item.Seller });
             }    
                 
-            return View();
+            return View(ItemList);
         }
 
         public ActionResult Contact()

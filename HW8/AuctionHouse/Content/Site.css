@@ -27,3 +27,8 @@ textarea {
     text-align: center;
     font-family: 'Spectral SC', serif;
 }
+
+#ItemList{
+    list-style-type: square;
+    font-size: medium;
+}
