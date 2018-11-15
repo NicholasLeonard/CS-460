@@ -256,9 +256,9 @@ CREATE TABLE [dbo].[Searches]
 ```
 I also have two different pictures showing the different entries in the database.
 
-![picture](../Portfolio_Photos/Assignment7/Table1.png)
+![picture](../Portfolio_Photos/Assignment7/Table1.PNG)
 
-![picture](../Portfolio_Photos/Assignment7/Table2.png)
+![picture](../Portfolio_Photos/Assignment7/Table2.PNG)
 
 Because I had to log my API requests, I had to add the recording logic to the method handling the requests. So, when a new search is sent to the method, it initializes a new `Search` class with the time of the request, the ip address, the browser type, the user agent, and the request type and then adds it to the database and saves the changes.
 
