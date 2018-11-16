@@ -1,0 +1,27 @@
+﻿@model AuctionHouse.Models.ViewModels.ItemVM
+@{
+    ViewBag.Title = "Details";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover table-striped">
+                <tr>
+                    <th>Id</th>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Seller</th>
+                </tr>
+                <tr>
+                    <td>@Model.ItemId</td>
+                    <td>@Model.ItemName</td>
+                    <td>@Model.Description</td>
+                    <td>@Model.Seller</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

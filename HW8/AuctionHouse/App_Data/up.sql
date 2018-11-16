@@ -1,35 +1,37 @@
 ﻿CREATE TABLE [dbo].[Buyers]
 (
-	[Id] INT IDENTITY(0,1) NOT NULL,
+	[BuyerId] INT IDENTITY(0,1) NOT NULL,
     [BuyerName] NVARCHAR(50) NOT NULL,
-	CONSTRAINT [PK_dbo.Buyers] PRIMARY KEY CLUSTERED([Id] ASC)
+	CONSTRAINT [PK_dbo.Buyers] PRIMARY KEY CLUSTERED([BuyerId] ASC)
 );
 
 CREATE TABLE [dbo].[Sellers]
 (
-	[Id] INT IDENTITY(0,1) NOT NULL,
+	[SellerId] INT IDENTITY(0,1) NOT NULL,
     [SellerName] NVARCHAR(50) NOT NULL, 
-    CONSTRAINT [PK_dbo.Sellers] PRIMARY KEY CLUSTERED([Id] ASC)
+    CONSTRAINT [PK_dbo.Sellers] PRIMARY KEY CLUSTERED([SellerId] ASC)
 );
 
 CREATE TABLE [dbo].[Items]
 (
-	[Id] INT IDENTITY(0,1) NOT NULL, 
+	[ItemId] INT IDENTITY(0,1) NOT NULL, 
     [ItemName] NVARCHAR(100) NOT NULL,
 	[Description] NVARCHAR(200) NOT NULL,
 	[Seller] INT NOT NULL,
-	CONSTRAINT [PK_dbo.Items] PRIMARY KEY CLUSTERED([Id] ASC),
-    CONSTRAINT [FK_Items_Sellers] FOREIGN KEY ([Seller]) REFERENCES [Sellers]([Id])
+	CONSTRAINT [PK_dbo.Items] PRIMARY KEY CLUSTERED([ItemId] ASC),
+    CONSTRAINT [FK_Items_Sellers] FOREIGN KEY ([Seller]) REFERENCES [Sellers]([SellerId])
 );
 
 CREATE TABLE [dbo].[Bids]
 (
+	[BidId] INT IDENTITY(0,1) NOT NULL,
 	[Item] INT NOT NULL,
 	[Buyer] INT NOT NULL, 
     [Price] DECIMAL NOT NULL, 
-    [TimeStamp] DATETIME2 NOT NULL, 
-    CONSTRAINT [FK_Bids_Item] FOREIGN KEY ([Item]) REFERENCES [Items]([ID]), 
-    CONSTRAINT [FK_Bids_Buyer] FOREIGN KEY ([Buyer]) REFERENCES [Buyers]([Id])	
+    [TimeStamp] DATETIME2 NOT NULL,
+	CONSTRAINT [PK-dbo.Bids] PRIMARY KEY CLUSTERED([BidId] ASC),
+    CONSTRAINT [FK_Bids_Item] FOREIGN KEY ([Item]) REFERENCES [Items]([ItemID]), 
+    CONSTRAINT [FK_Bids_Buyer] FOREIGN KEY ([Buyer]) REFERENCES [Buyers]([BuyerId])	
 );
 
 INSERT INTO [dbo].[Buyers] (BuyerName) VALUES ('Jane Stone'),('Tom McMasters'),('Otto Vanderwall')

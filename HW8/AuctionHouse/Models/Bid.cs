@@ -8,22 +8,15 @@ namespace AuctionHouse.Models
 
     public partial class Bid
     {
-        [Key]
-        [Column(Order = 0)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int BidId { get; set; }
+
         public int Item { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [StringLength(50)]
-        public string Buyer { get; set; }
+        public int Buyer { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         public decimal Price { get; set; }
 
-        [Key]
-        [Column(Order = 3, TypeName = "datetime2")]
+        [Column(TypeName = "datetime2")]
         public DateTime TimeStamp { get; set; }
 
         public virtual Buyer Buyer1 { get; set; }

@@ -27,7 +27,7 @@ namespace AuctionHouse.Controllers
             //populates the list
             foreach (var item in Items)
             {
-                ItemList.Add(new ItemVM { Id = item.Id, Description = item.Description, ItemName = item.ItemName, Seller = item.Seller });
+                ItemList.Add(new ItemVM { ItemId = item.ItemId, ItemName = item.ItemName, Description = item.Description, Seller = item.Seller1.SellerName });
             }    
                 
             return View(ItemList);
@@ -39,9 +39,15 @@ namespace AuctionHouse.Controllers
             {
                 return RedirectToAction("List");
             }
-            var item = db.Items.Find(id);
-            ItemVM details = new ItemVM { Id = item.Id, Description = item.Description, ItemName = item.ItemName, Seller = item.Seller};
-            return View(details);
+            else
+            {
+                var item = db.Items.Find(id);
+                ItemVM details = new ItemVM { ItemId = item.ItemId,
+                    ItemName = item.ItemName,
+                    Description = item.Description,
+                    Seller = item.Seller1.SellerName };
+                return View(details);
+            }   
         }
 
         /// <summary>
