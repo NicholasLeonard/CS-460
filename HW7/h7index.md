@@ -7,6 +7,8 @@ This assignment was all about asynchronous page manipulation. I was required to 
 Here is the link to my github repository, which houses all of the source code for this project and others. <br/>
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
+[Demo Video](https://youtu.be/eNHwiQe_mmY)<br/>
+
 This link will take you back to my main Portfolio page.<br/>
 [Home](../index.md)
 
