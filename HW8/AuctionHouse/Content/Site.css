@@ -32,3 +32,7 @@ textarea {
     list-style-type: square;
     font-size: medium;
 }
+
+a:link, a:hover, a:visited, a:active{
+    color: black;
+}

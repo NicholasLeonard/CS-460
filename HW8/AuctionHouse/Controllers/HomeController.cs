@@ -33,11 +33,15 @@ namespace AuctionHouse.Controllers
             return View(ItemList);
         }
 
-        public ActionResult Contact()
+        public ActionResult Details(int? id)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if(id == null)
+            {
+                return RedirectToAction("List");
+            }
+            var item = db.Items.Find(id);
+            ItemVM details = new ItemVM { Id = item.Id, Description = item.Description, ItemName = item.ItemName, Seller = item.Seller};
+            return View(details);
         }
 
         /// <summary>

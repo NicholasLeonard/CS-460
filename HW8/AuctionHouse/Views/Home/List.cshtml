@@ -11,7 +11,7 @@
             <ul id="ItemList">
                 @foreach(var x in Model)
                 {
-                    <li>@Html.ActionLink(x.ItemName, "Details", "Home")</li>
+                    <li>@Html.ActionLink(x.ItemName, "Details", "Home", routeValues: new { id = x.Id}, htmlAttributes: null)</li>
                 };
             </ul>
         </div>
