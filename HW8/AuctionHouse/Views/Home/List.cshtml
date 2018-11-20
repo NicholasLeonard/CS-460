@@ -12,8 +12,12 @@
                 @foreach(var x in Model)
                 {
                     <li>@Html.ActionLink(x.ItemName, "Details", "Home", routeValues: new { id = x.ItemId}, htmlAttributes: null)</li>
-                };
+                }
             </ul>
+        </div>
+        <div class="col-sm-4">
+            <h3>Add a new Item</h3>
+            @Html.ActionLink("Create", "Create", "Home", new { @class="btn btn-primary"})
         </div>
     </div>
 </div>

@@ -1,0 +1,31 @@
+﻿@model AuctionHouse.Models.Item
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(x => x.ItemName)
+                @Html.EditorFor(x => x.ItemName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description)
+                @Html.EditorFor(x => x.Description, new { htmlAttributes = new { @class="form-control"} })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Seller)
+                @Html.DropDownList("Seller", null, htmlAttributes: new { @class="form-control"})
+            </div>
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <button class="btn btn-default" type="submit">Create</button>
+        </div>
+    </div>
+}

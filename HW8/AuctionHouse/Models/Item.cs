@@ -18,6 +18,7 @@ namespace AuctionHouse.Models
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Item Name")]
         public string ItemName { get; set; }
 
         [Required]

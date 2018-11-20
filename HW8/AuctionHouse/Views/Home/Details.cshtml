@@ -21,6 +21,12 @@
                     <td>@Model.Description</td>
                     <td>@Model.Seller</td>
                 </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Home", routeValues: new { id = Model.ItemId }, htmlAttributes: null)
+                        @Html.ActionLink("Delete", "Delete", "Home", routeValues: new { id = Model.ItemId }, htmlAttributes: null)
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
