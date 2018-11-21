@@ -30,7 +30,7 @@ CREATE TABLE [dbo].[Bids]
     [Price] DECIMAL NOT NULL, 
     [TimeStamp] DATETIME2 NOT NULL,
 	CONSTRAINT [PK-dbo.Bids] PRIMARY KEY CLUSTERED([BidId] ASC),
-    CONSTRAINT [FK_Bids_Item] FOREIGN KEY ([Item]) REFERENCES [Items]([ItemID]), 
+    CONSTRAINT [FK_Bids_Item] FOREIGN KEY ([Item]) REFERENCES [Items]([ItemId]), 
     CONSTRAINT [FK_Bids_Buyer] FOREIGN KEY ([Buyer]) REFERENCES [Buyers]([BuyerId])	
 );
 

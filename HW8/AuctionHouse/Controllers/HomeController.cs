@@ -9,6 +9,7 @@ using Microsoft.Ajax.Utilities;
 using AuctionHouse.Models.ViewModels;
 using System.Net;
 using System.Data.Entity;
+using Newtonsoft.Json;
 
 namespace AuctionHouse.Controllers
 {
@@ -129,6 +130,33 @@ namespace AuctionHouse.Controllers
             db.Items.Remove(item);
             db.SaveChanges();
             return RedirectToAction("List");
+        }
+
+        public JsonResult Update(int? id)
+        {
+            Item item = db.Items.Find(id);
+            List<BidVM> AllBids = new List<BidVM>();
+            foreach(var x in item.Bids.OrderByDescending(x => x.Price))
+            {
+                
+                /*Debug.WriteLine(x.Buyer1.BuyerName);
+                Debug.WriteLine(x.Price);*/
+                
+                AllBids.Add(new BidVM
+                {
+                    Buyer = x.Buyer1.BuyerName,
+                    Price = x.Price
+                });
+            }
+            foreach(var y in AllBids)
+            {
+                Debug.WriteLine(y.Buyer);
+                Debug.WriteLine(y.Price);
+            }
+
+            var test = JsonConvert.SerializeObject(AllBids);
+          
+            return Json(test, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
