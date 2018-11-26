@@ -19,7 +19,36 @@ namespace AuctionHouse.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var RecentBids = db.Bids.OrderByDescending(x => x.TimeStamp).Take(10).ToList();
+            List<ItemVM> Recent10 = new List<ItemVM>();
+
+            foreach (var x in RecentBids)
+            {
+                Debug.WriteLine(x.TimeStamp);
+                
+                if(x.TimeStamp.Date == DateTime.Today)
+                {
+                    Recent10.Add(new ItemVM {
+                        ItemId = x.Item1.ItemId,
+                        ItemName = x.Item1.ItemName,
+                        Buyer = x.Buyer1.BuyerName,
+                        BidAmount = x.Price,
+                        BidTime = x.TimeStamp.ToString("h:mm:ss tt")
+                    });
+                }
+                else
+                {
+                    Recent10.Add(new ItemVM {
+                        ItemId = x.Item1.ItemId,
+                        ItemName = x.Item1.ItemName,
+                        Buyer = x.Buyer1.BuyerName,
+                        BidAmount = x.Price,
+                        BidTime = x.TimeStamp.ToString()
+                    });
+                }
+            }
+           
+            return View(Recent10);
         }
 
         public ActionResult List()
@@ -148,12 +177,7 @@ namespace AuctionHouse.Controllers
                     Price = x.Price
                 });
             }
-            foreach(var y in AllBids)
-            {
-                Debug.WriteLine(y.Buyer);
-                Debug.WriteLine(y.Price);
-            }
-
+            
             var test = JsonConvert.SerializeObject(AllBids);
           
             return Json(test, JsonRequestBehavior.AllowGet);

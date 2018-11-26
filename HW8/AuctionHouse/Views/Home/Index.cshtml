@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<AuctionHouse.Models.ViewModels.ItemVM>
+@{
     ViewBag.Title = "Reginald's Ancient Antiquities Auction House";
 }
 
@@ -26,9 +27,16 @@
                     <th>Bid Amount</th>
                     <th>Bid Time</th>
                 </tr>
-                <tbody id="recent">
-
-                </tbody>
+                @foreach(var x in Model)
+                {
+                    <tr>
+                        <td>@x.ItemId</td>
+                        <td>@Html.ActionLink(x.ItemName, "Details", "Home", routeValues: new { id = x.ItemId}, htmlAttributes: null)</td>
+                        <td>@x.Buyer</td>
+                        <td>@{string BidAmount = string.Format("{0:C2}", x.BidAmount);}@BidAmount</td>
+                        <td>@x.BidTime</td>
+                    </tr>
+                }
             </table>
         </div>
     </div>
