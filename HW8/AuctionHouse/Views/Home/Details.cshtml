@@ -1,0 +1,52 @@
+﻿@model AuctionHouse.Models.ViewModels.ItemVM
+@{
+    ViewBag.Title = "Details";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-condensed table-hover table-striped">
+                <tr>
+                    <th>Id</th>
+                    <th>Item Name</th>
+                    <th>Description</th>
+                    <th>Seller</th>
+                </tr>
+                <tr>
+                    <td>@Model.ItemId</td>
+                    <td>@Model.ItemName</td>
+                    <td>@Model.Description</td>
+                    <td>@Model.Seller</td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Home", routeValues: new { id = Model.ItemId }, htmlAttributes: null)
+                        @Html.ActionLink("Delete", "Delete", "Home", routeValues: new { id = Model.ItemId }, htmlAttributes: null)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Buyer</th>
+                    <th>Price</th>
+                </tr>
+                <tbody id="bids">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section mySection{
+    <script src="~/Scripts/bids.js"></script>
+}

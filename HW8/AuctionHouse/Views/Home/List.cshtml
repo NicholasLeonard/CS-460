@@ -1,0 +1,23 @@
+﻿@model IEnumerable<AuctionHouse.Models.ViewModels.ItemVM>
+@{
+    ViewBag.Title = "Item List";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <ul id="ItemList">
+                @foreach(var x in Model)
+                {
+                    <li>@Html.ActionLink(x.ItemName, "Details", "Home", routeValues: new { id = x.ItemId}, htmlAttributes: null)</li>
+                }
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <h3>Add a new Item</h3>
+            @Html.ActionLink("Create", "Create", "Home", new { @class="btn btn-primary"})
+        </div>
+    </div>
+</div>

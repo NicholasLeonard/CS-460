@@ -1,0 +1,43 @@
+﻿@model List<AuctionHouse.Models.ViewModels.ItemVM>
+@{
+    ViewBag.Title = "Reginald's Ancient Antiquities Auction House";
+}
+
+<div class="container-fluid" id="center">
+    <h1>@ViewBag.Title</h1>
+    <h3>Welcome to Reginald's acution house. Home of interesting, ancient, artifacts.</h3>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1">
+            <a class="btn btn-primary" href="/Bids/Create">Bid on an Item!</a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h3>Recent Bids!</h3>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-condensed">
+                <tr>
+                    <th>Item Id</th>
+                    <th>Item Name</th>
+                    <th>Buyer</th>
+                    <th>Bid Amount</th>
+                    <th>Bid Time</th>
+                </tr>
+                @foreach(var x in Model)
+                {
+                    <tr>
+                        <td>@x.ItemId</td>
+                        <td>@Html.ActionLink(x.ItemName, "Details", "Home", routeValues: new { id = x.ItemId}, htmlAttributes: null)</td>
+                        <td>@x.Buyer</td>
+                        <td>@{string BidAmount = string.Format("{0:C2}", x.BidAmount);}@BidAmount</td>
+                        <td>@x.BidTime</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
