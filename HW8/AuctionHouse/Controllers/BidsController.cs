@@ -40,8 +40,18 @@ namespace AuctionHouse.Controllers
         {
             if (ModelState.IsValid)
             {//gets the current highest bid for the selected item.
-                decimal highestBid = db.Bids.Where(x => x.Item1.ItemId == bid.Item).Select(x => x.Price).Max();
-                if(bid.Price > highestBid)
+                var highestBid = db.Bids.Where(x => x.Item1.ItemId == bid.Item).Select(x => x.Price);
+                decimal? topBid = null;
+                if(highestBid.FirstOrDefault() != 0)
+                {
+                    topBid = highestBid.Max();
+                }
+                else
+                {
+                    topBid = 0;
+                }
+
+                if(bid.Price > topBid)
                 {//adds the bid to the database if it is higher then the current bid
                     bid.TimeStamp = DateTime.Now;
                     db.Bids.Add(bid);
@@ -52,7 +62,7 @@ namespace AuctionHouse.Controllers
                 {//error if the submitted bid is not the highest bid
                     ViewBag.Buyer = new SelectList(db.Buyers, "BuyerId", "BuyerName", bid.Buyer);
                     ViewBag.Item = new SelectList(db.Items, "ItemId", "ItemName", bid.Item);
-                    ModelState.AddModelError("price", "You must bid higher then the current bid of $" + highestBid);
+                    ModelState.AddModelError("price", "You must bid higher then the current bid of $" + topBid);
                     return View(bid);
                 }
                 
