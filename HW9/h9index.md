@@ -18,14 +18,14 @@ The first thing I had to do was make an account on azure and create a resource g
 ![picture](../Portfolio_Photos/Assignment9/ResourceGroup.PNG)
 <br/>
 I then had to make a SQL Server and SQL Database and add a firewall rule to allow my machine to access the database.<br/>
-![picture](FirewallRule.PNG)
+![picture](../Portfolio_Photos/Assignment9/FirewallRule.PNG)
 <br/>
-![picture](azureDBEmpty.PNG)
+![picture](../Portfolio_Photos/Assignment9/azureDBEmpty.PNG)
 <br/>
 I then connected to the azure database in visual studio and ran the up script to create tables and seed the database.<br/>
-![picture](azureDBPopulated.PNG)
+![picture](../Portfolio_Photos/Assignment9/azureDBPopulated.PNG)
 <br/>
 I then made a Web App on azure and deployed it into the resource group and then published the site from visual studio into the deployed Web App.<br/>
-![picture](azureWebappNotpublished.PNG)
+![picture](../Portfolio_Photos/Assignment9/azureWebappNotpublished.PNG)
 <br/>
-![picture](azureWebappPublished.PNG)
+![picture](../Portfolio_Photos/Assignment9/azureWebappPublished.PNG)
