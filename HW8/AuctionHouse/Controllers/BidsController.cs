@@ -16,14 +16,20 @@ namespace AuctionHouse.Controllers
     {
         private AuctionContext db = new AuctionContext();
 
-        // GET: Bids
+        /// <summary>
+        /// Action method for displaying the main page for bids
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var bids = db.Bids.Include(b => b.Buyer1).Include(b => b.Item1);
             return View(bids.ToList());
         }
 
-        // GET: Bids/Create
+        /// <summary>
+        /// Get method for adding bids to the database
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             ViewBag.Buyer = new SelectList(db.Buyers, "BuyerId", "BuyerName");
@@ -31,9 +37,11 @@ namespace AuctionHouse.Controllers
             return View();
         }
 
-        // POST: Bids/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Post action method for adding bids to the database
+        /// </summary>
+        /// <param name="bid"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BidId,Item,Buyer,Price")] Bid bid)
@@ -73,7 +81,10 @@ namespace AuctionHouse.Controllers
             return View(bid);
         }
 
-
+        /// <summary>
+        /// Disposes of connection to the database
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

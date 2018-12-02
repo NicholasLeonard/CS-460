@@ -2,6 +2,7 @@
     window.setInterval(ajax_call, interval);
 });
 
+//ajax function for calling to the server
 var ajax_call = function () {
     var pageURL = window.location.href;
     var id = pageURL.substr(pageURL.lastIndexOf('/') + 1);
@@ -18,6 +19,7 @@ var ajax_call = function () {
 
 var interval = 1000 * 5;
 
+//used to display all of the bids on the page
 function displayBids(AllBids) {
 
     $("#bids").empty();
@@ -29,6 +31,7 @@ function displayBids(AllBids) {
     }
 }
 
+//used for displaying an error message if JSON returns an error
 function displayError() {
     $("#bids").empty();
     $("#bids").append("ERROR IN THE AJAX!");

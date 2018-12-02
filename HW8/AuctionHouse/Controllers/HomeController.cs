@@ -17,6 +17,10 @@ namespace AuctionHouse.Controllers
     {
         AuctionContext db = new AuctionContext();
 
+        /// <summary>
+        /// Action method for displaying the main page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var RecentBids = db.Bids.OrderByDescending(x => x.TimeStamp).Take(10).ToList();
@@ -51,6 +55,10 @@ namespace AuctionHouse.Controllers
             return View(Recent10);
         }
 
+        /// <summary>
+        /// Action method for displaying the list of items in the database
+        /// </summary>
+        /// <returns></returns>
         public ActionResult List()
         {//gets all of the items from the database
             var Items = db.Items;
@@ -65,6 +73,11 @@ namespace AuctionHouse.Controllers
             return View(ItemList);
         }
 
+        /// <summary>
+        /// Get method for displaying details about entries in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int? id)
         {
             if(id == null)
@@ -82,6 +95,10 @@ namespace AuctionHouse.Controllers
             }   
         }
 
+        /// <summary>
+        /// Get action method for adding entries into the databse
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create()
         {
@@ -89,6 +106,11 @@ namespace AuctionHouse.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Post action method for adding entries into the database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include ="ItemName, Description, Seller")] Item item)
@@ -107,6 +129,11 @@ namespace AuctionHouse.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Get action method for editing entries in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -123,6 +150,11 @@ namespace AuctionHouse.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Post action method for editing entries in the database
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([Bind(Include ="ItemId,ItemName,Description,Seller")] Item item)
         {
@@ -136,6 +168,11 @@ namespace AuctionHouse.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Action method for deleting items from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Delete(int? id)
         {
@@ -151,6 +188,11 @@ namespace AuctionHouse.Controllers
             return View(item);
         }
 
+        /// <summary>
+        /// Action method for deleting items from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -161,6 +203,11 @@ namespace AuctionHouse.Controllers
             return RedirectToAction("List");
         }
 
+        /// <summary>
+        /// Action method for returning a json result to the page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public JsonResult Update(int? id)
         {
             Item item = db.Items.Find(id);
