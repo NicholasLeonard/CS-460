@@ -39,10 +39,19 @@ We want a centralized discussion site that can be found easily and where an indi
 6. What is it important to know about our users?  What data should we collect? Should we collect data?
     Viewstatistics, age, ethnic, ip address, location, company. Important info is age for content selection, nationality for language selection, and location for targeted adds.
 7. If there are news articles on multiple sites that are about the same topic should we have separate discussion pages or just one?
+    One discussion page.
 8. What kind of discussion do we want to create? Linear traditional, chronological, ranked, or ?
+    Ranked discussion with the option to view chronologically.
 9. Should we allow image/video uploads and host them ourselves?
-10. 
-
+    Not initially. Look in to adding it as a later feature.
+10. Will there be a text limit on each post? If so, how large will it be?
+    The initial post will be limited to 5000 characters, response posts will be limited to 1000 characters.
+11. How are we generating revenue?
+    Rent ad space. Premium accounts. Account currency.
+12. How will the website be moderated?
+    Series of user moderators, corporate moderators, and a moderating algorithm.
+13. Can posts be edited or deleted? If so, by whom?
+    Posts can be edited and deleted by the original poster. The post will still be visible it will just say deleted. All posts may be deleted by moderators and the post will say deleted by moderator.
 ### Interviews
 
 ### ?
@@ -55,6 +64,7 @@ We want a centralized discussion site that can be found easily and where an indi
 4. User accounts
 5. A user needs to be able to keep track of things they've commented on and easily go back to those discussion pages.  If someone rates or responds to their comment we need to alert them.
 6. Allow users to identify fundamental questions and potential answers about the topic under discussion.  Users can then vote on answers.
+7. Premium accounts remove all rented ad space and doubles character limits. Allow users to see their view history, allow animated icons, and a special premium icon.
 
 ## Initial Modeling
 
