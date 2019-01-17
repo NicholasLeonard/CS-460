@@ -53,9 +53,17 @@ We want a centralized discussion site that can be found easily and where an indi
 13. Can posts be edited or deleted? If so, by whom?
     Posts can be edited and deleted by the original poster. The post will still be visible it will just say deleted. All posts may be deleted by moderators and the post will say deleted by moderator.
 ### Interviews
+    DQ. How much traffic are you expecting on the site?
+    SA. The range of 2 - 4 million users daily.
+    SQ. Is that a reasonable expectation for traffic?
+    DA. You are unlikly to get that much traffic right off but we can architecture for that amount of traffic. This kind will require high end servers.
+    SQ. How can we increase traffic?
+    DA. We can utilize ads on different websites to increase traffic on ours.
+    SQ. Aren't ads bad?
+    DA. Yes. But you need to make an initial investment in the website to create traffic.
+    SR. Hmmm. Okay. I guess I get it now.
 
-### ?
-
+    DQ. 
 ## List of Needs and Features
 
 1. A great looking landing page with info to tell the user what our site is all about and how to use it.  Include a link to and a page with more info.  Needs a page describing our company and our philosophy.
@@ -65,7 +73,9 @@ We want a centralized discussion site that can be found easily and where an indi
 5. A user needs to be able to keep track of things they've commented on and easily go back to those discussion pages.  If someone rates or responds to their comment we need to alert them.
 6. Allow users to identify fundamental questions and potential answers about the topic under discussion.  Users can then vote on answers.
 7. Premium accounts remove all rented ad space and doubles character limits. Allow users to see their view history, allow animated icons, and a special premium icon.
-
+8. Moderator capabilities.
+9. Posts made by users need to be able to be deleted.
+10. Users need to be able to change the language used on the website.
 ## Initial Modeling
 
 ### Use Case Diagrams
@@ -78,7 +88,7 @@ We want a centralized discussion site that can be found easily and where an indi
 2. Site and data must be backed up regularly and have failover redundancy that will allow the site to remain functional in the event of loss of primary web server or primary database.  We can live with 1 minute of complete downtime per event and up to 1 hour of read-only functionality before full capacity is restored.
 3. Site should never return debug error pages.  Web server must never return 404's.  All server errors must be logged.  Users should receive a custom error page in that case telling them what to do.
 4. Must work in all languages and countries.  English will be the default language but users can comment in their own language and we may translate it.
-5. 
+5. We must have a way of preventing bots from accessing and registering on the site.
 
 ## Identify Functional Requirements (User Stories)
 
