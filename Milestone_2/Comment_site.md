@@ -3,7 +3,7 @@
 
 ## Summary of Our Approach to Software Development
 
-[What processes are we following?  What are we choosing to do and at what level of detail or extent?]
+For informed users who need more information on a topic from multiple view points, the Rialo site is a central discussion site for users so that they can civilly discuss any topic and pose questions related to those topics. This site will provide a forum for users to discuss topics from other sites that do not host discussion forums such as CNN. Unlike the news sites that host these articles, users can have discussion and debate about these topics from multiple news sources. Our product will allow users to view articles from multiple sites to allow users to get the full story and perspective on a particular topic.
 
 ## Initial Vision Discussion with Stakeholders
 
@@ -63,7 +63,16 @@ We want a centralized discussion site that can be found easily and where an indi
     DA. Yes. But you need to make an initial investment in the website to create traffic.
     SR. Hmmm. Okay. I guess I get it now.
 
-    DQ. 
+    DQ. What kind of interface are you looking for?
+    SA. Looking for user friendly, easy to use. With professional and formal looking design.
+    DQ. Do you want a specific color scheme that you're looking for?
+    SA. Easy on the eyes no flashy colors no bright colors.
+    DQ. How do you want the other pages linked?
+    SA. Navigation bar at the top and the footer where you can select what page to go to. When you are on the bottom there should be a button that takes you to the top of the page next to the scroll bar.
+
+    DQ. Is there a desire or a plan for a mobile site?
+    SA. Yes.
+    
 ## List of Needs and Features
 
 1. A great looking landing page with info to tell the user what our site is all about and how to use it.  Include a link to and a page with more info.  Needs a page describing our company and our philosophy.
@@ -107,19 +116,34 @@ T: Task
    2. [T] Configure web app to use our db with Identity tables in it
    3. [T] Create a user table and customize user pages to display additional data
 3. [F] Allow logged in user to create new discussion page
+    1. [U] As a logged in user, I want to///////// 
 4. [F] Allow any user to search for and find an existing discussion page
 5. [E] Allow a logged in user to write a comment on an article in an existing discussion page
-   1. [F]
-      1. [U]
-         1. [T]
-         2. [T]
-         3. [T]
-      2. [U]
-   2. [F]
-   3. [F]
-6. [U] As a robot I would like to be prevented from creating an account on your website so I don't ask millions of my friends to join your website and add comments about male enhancement drugs.
-7. 
+   1. [F] Display a list of current discussion topics in most recent order.
+        1. [U] As a logged in user, I want to be able to view the current list of topics.
+            1. [T] Query database to display topics.
+            2. [T] Create sorting capability for topics.
+        2. [U] As a logged out user, I want to view the current list of topics.
+            1. [T] Query database to display topics.
+            2. [T] Check logged in status. Remove sorting feature if logged out.
+ 2. [F] Display selected topic and current comments.
+        1. [U]  
+    
 
+7. [E] Allow users to view their comment history and alert them when one of their comments or discussions has been commented on or rated.
+    1. [F] Have a history page that displays a given users comment history.
+        1. [U] As a logged in user, I want to visit my history page that displays all comments and discussions I have started in chronological order.
+    2. [F] The history page can be viewed in chronological, most popular, or least popular comments order.
+        1. [U] As a logged in user, I want to sort my history page by chronological order.
+        2. [U] As a logged in user, I want to sort my history page by most popular comments or discussions.
+        3. [U] As a logged in user, I want to sort my history page by least popular comments or discussions.
+    3. [F] Have an alert system that messages the user when their comments and discussions have been commented on.
+        1. [U] As a logged in user, I want to see a notification when someone comments on my discussions or comments.
+        2. [U] As a logged out user, I want to receive an email when someone comments on my discussions or comments.
+    4. [F] Have an alert system that messages the user when their comments and discussions have been rated.
+        1. [U] As a logged in user, I want to see a notification when someone rates my comment or discussion.
+        2. [U] As a logged out user, I want to receive an email when someone rates my comment or discussion.
+6. [U] As a robot I would like to be prevented from creating an account on your website so I don't ask millions of my friends to join your website and add comments about male enhancement drugs.
 ## Initial Architecture Envisioning
 
 ## Agile Data Modeling
