@@ -1,9 +1,13 @@
 2018-19 Class Project Inception: Discussion Hub
 =====================================
 
-## Summary of Our Approach to Software Development
+## Vision Statement
 
 For informed users who need more information on a topic from multiple view points, the Rialo site is a central discussion site for users so that they can civilly discuss any topic and pose questions related to those topics. This site will provide a forum for users to discuss topics from other sites that do not host discussion forums such as CNN. Unlike the news sites that host these articles, users can have discussion and debate about these topics from multiple news sources. Our product will allow users to view articles from multiple sites to allow users to get the full story and perspective on a particular topic.
+
+## Summary of Our Approach to Software Development
+
+Our approach to software development involves the Disciplined Agile Delivery method intermixed with key elements of other approaches. Namely SCRUM. We generally use the MVC 5 software architecture and outside database support. We believe in the quality of work produced by a small team of collaborating, respectful, and singly located development professionals.
 
 ## Initial Vision Discussion with Stakeholders
 
@@ -116,7 +120,7 @@ T: Task
    2. [T] Configure web app to use our db with Identity tables in it
    3. [T] Create a user table and customize user pages to display additional data
 3. [F] Allow logged in user to create new discussion page
-    1. [U] As a logged in user, I want to///////// 
+    1. [U] As a logged in user, I want to create a discussion page so that I can have a conversation about it with other users.
 4. [F] Allow any user to search for and find an existing discussion page
 5. [E] Allow a logged in user to write a comment on an article in an existing discussion page
    1. [F] Display a list of current discussion topics in most recent order.
@@ -126,11 +130,9 @@ T: Task
         2. [U] As a logged out user, I want to view the current list of topics.
             1. [T] Query database to display topics.
             2. [T] Check logged in status. Remove sorting feature if logged out.
- 2. [F] Display selected topic and current comments.
-        1. [U]  
-    
-
-7. [E] Allow users to view their comment history and alert them when one of their comments or discussions has been commented on or rated.
+   2. [F] Display selected topic and current comments.
+        1. [U] As a visitor to the site, I want to browse the comments on a topic I select. 
+6. [E] Allow users to view their comment history and alert them when one of their comments or discussions has been commented on or rated.
     1. [F] Have a history page that displays a given users comment history.
         1. [U] As a logged in user, I want to visit my history page that displays all comments and discussions I have started in chronological order.
     2. [F] The history page can be viewed in chronological, most popular, or least popular comments order.
@@ -143,7 +145,7 @@ T: Task
     4. [F] Have an alert system that messages the user when their comments and discussions have been rated.
         1. [U] As a logged in user, I want to see a notification when someone rates my comment or discussion.
         2. [U] As a logged out user, I want to receive an email when someone rates my comment or discussion.
-6. [U] As a robot I would like to be prevented from creating an account on your website so I don't ask millions of my friends to join your website and add comments about male enhancement drugs.
+7. [U] As a robot I would like to be prevented from creating an account on your website so I don't ask millions of my friends to join your website and add comments about male enhancement drugs.
 ## Initial Architecture Envisioning
 
 ## Agile Data Modeling
