@@ -92,3 +92,4 @@ C:\Users\Nicholas\Desktop\CS461\toastercode\Milestone_3\milestone3\milestone3\ob
 C:\Users\Nicholas\Desktop\CS461\toastercode\Milestone_3\milestone3\milestone3\obj\Release\milestone3.csproj.CopyComplete
 C:\Users\Nicholas\Desktop\CS461\toastercode\Milestone_3\milestone3\milestone3\obj\Release\milestone3.dll
 C:\Users\Nicholas\Desktop\CS461\toastercode\Milestone_3\milestone3\milestone3\obj\Release\milestone3.pdb
+C:\Users\Nicholas\Desktop\CS461\toastercode\Milestone_3\milestone3\milestone3\obj\Release\milestone3.csprojAssemblyReference.cache
