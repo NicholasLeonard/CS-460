@@ -12,53 +12,57 @@
 <div class="row">
     <div class="col-md-12">
         <center>
-            <h2>Browse Topics</h2>
+            <h2>Browse Posts!</h2>
             @*need to work on the topic page, once we got the database working*@
             <p><a class="btn btn-primary" @Html.ActionLink("Read", "Index", "Topics")</a></p>
 
-                @{/*  ----- NOTE: replace DATABASENAME with Azure database -----
-                   
-                  <tbody>
-                      @foreach (var item in Model)
-                      {
-                          <tr>
-                              <td>
-                                  @* @Html.DisplayFor(m => DATABASENAME.ID) *@
-                              </td>
-                              <td>
+            @{/*  ----- NOTE: replace DATABASENAME with Azure database -----
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @* @Html.DisplayFor(m => DATABASENAME.ID) *@
+                            </td>
+                            <td>
 
 
-                                  @* @Html.DisplayFor(m => DATABASENAME.Title) *@
-                              </td>
-                              <td>
-                                  @* @Html.DisplayFor(m => DATABASENAME.Ranking) *@
-                              </td>
-                              <td>
-                                  @* @Html.DisplayFor(m => DATABASENAME.Views) *@
-                              </td>
-                              <td>
-                                  @* @Html.DisplayFor(m => DATABASENAME.Category) *@
-                              </td>
+                                @* @Html.DisplayFor(m => DATABASENAME.Title) *@
+                            </td>
+                            <td>
+                                @* @Html.DisplayFor(m => DATABASENAME.Ranking) *@
+                            </td>
+                            <td>
+                                @* @Html.DisplayFor(m => DATABASENAME.Views) *@
+                            </td>
+                            <td>
+                                @* @Html.DisplayFor(m => DATABASENAME.Category) *@
+                            </td>
 
-                              <td>
+                            <td>
 
-                                  @*check for date*@
-                                  @if (DATABASENAME.Timestamp.Date == DateTime.Today)
-                                  {
-                                      @*Format DateTime to show only the time*@
-                                      DateTime time = item.Timestamp;
-                                      @time.ToString("hh:mm tt");
-                                  }
-                                  else
-                                  {
-                                      @Html.DisplayFor(m => item.Timestamp)
-                                  }
+                                @*check for date*@
+                                @if (DATABASENAME.Timestamp.Date == DateTime.Today)
+                                {
+                                    @*Format DateTime to show only the time*@
+                                    DateTime time = item.Timestamp;
+                                    @time.ToString("hh:mm tt");
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(m => item.Timestamp)
+                                }
 
-                              </td>
-                          </tr>
-                      }
-                  </tbody>
-                  */}
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                */}
+            <h2 style="padding-top:50px;">Create a New Post!</h2>
+            @*need to work on the topic page, once we got the database working*@
+            <p><a class="btn btn-primary" @Html.ActionLink("Create", "Create", "Topics")</a></p>
+
             </table>
         </center>
 </div>

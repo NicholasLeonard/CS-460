@@ -4,30 +4,27 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>All Posts</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create a New Post!", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
+            Upvotes
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            News Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WebURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ranking)
+            Category
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Views)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
+            Time Posted
         </th>
         <th></th>
     </tr>
@@ -35,27 +32,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WebURL)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Ranking)
+        </td>
+        <td>
+            <a href="@Html.DisplayFor(modelItem => item.WebURL)">@Html.DisplayFor(modelItem => item.Title)</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Views)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TopicId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TopicId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TopicId })
         </td>
     </tr>
 }

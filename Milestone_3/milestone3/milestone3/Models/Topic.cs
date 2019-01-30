@@ -18,12 +18,27 @@ namespace milestone3.Models
         [StringLength(500)]
         public string WebURL { get; set; }
 
-        public int Ranking { get; set; }
+        public int Rank = 0;
+        public int Ranking
+        {
+            get { return Rank; }
+            set { Rank = value; }
+        }
 
-        public int Views { get; set; }
+        public int View = 0;
+        public int Views
+        {
+            get { return View; }
+            set { View = value; }
+        }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime Timestamp { get; set; }
+        public DateTime Date = DateTime.Now;
+
+        public DateTime Timestamp
+        {
+            get { return Date; }
+            set { Date = value; }
+        }
 
         public int CategoryID { get; set; }
 
