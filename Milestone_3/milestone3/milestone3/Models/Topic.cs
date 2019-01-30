@@ -14,14 +14,19 @@ namespace milestone3.Models
         [StringLength(50)]
         public string Title { get; set; }
 
-        public int? Ranking { get; set; }
+        [Required]
+        [StringLength(500)]
+        public string WebURL { get; set; }
+
+        public int Ranking { get; set; }
 
         public int Views { get; set; }
 
-        [StringLength(50)]
-        public string Category { get; set; }
-
         [Column(TypeName = "datetime2")]
         public DateTime Timestamp { get; set; }
+
+        public int CategoryID { get; set; }
+
+        public virtual Category Category { get; set; }
     }
 }

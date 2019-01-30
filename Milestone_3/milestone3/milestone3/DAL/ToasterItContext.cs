@@ -12,6 +12,7 @@ namespace milestone3.Models
         {
         }
 
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Topic> Topics { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
