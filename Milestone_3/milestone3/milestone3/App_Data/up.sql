@@ -17,9 +17,20 @@ CREATE TABLE [dbo].[Topics]
 	[CategoryID] INT NOT NULL,
 
 	CONSTRAINT [PK_dbo.Topics] PRIMARY KEY CLUSTERED([TopicId] ASC),
-	CONSTRAINT [FK_dbo.Categories] FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+	CONSTRAINT [FK_Topics_Categories] FOREIGN KEY ([CategoryID]) REFERENCES [Categories]([CategoryID])
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
+);
+
+CREATE TABLE [dbo].[Comments]
+(
+	[CommentId] INT IDENTITY(0,1),
+	[Content] NVARCHAR(1000),
+	[Ranking] INT NULL,
+	[Timestamp] DATETIME2 NOT NULL,
+	[TopicId] INT,
+	CONSTRAINT [PK_dbo.Comments] PRIMARY KEY CLUSTERED ([CommentId] ASC),
+	CONSTRAINT [Fk_Comments_Topics] FOREIGN KEY ([TopicId]) REFERENCES [Topics]([TopicId]) 
 );
 
 INSERT INTO	[dbo].[Categories] (CategoryName) VALUES
