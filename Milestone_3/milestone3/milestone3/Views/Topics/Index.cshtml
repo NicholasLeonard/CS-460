@@ -1,27 +1,30 @@
 ﻿@model IEnumerable<milestone3.Models.Topic>
 
 @{
-    ViewBag.Title = "Topics";
+    ViewBag.Title = "Index";
 }
 
-<h2>All Topics</h2>
+<h2>All Posts</h2>
 
+<p>
+    @Html.ActionLink("Create a New Post!", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            Upvotes
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Ranking)
+            News Title
+        </th>
+        <th>
+            Category
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Views)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Timestamp)
+            Time Posted
         </th>
         <th></th>
     </tr>
@@ -29,16 +32,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Ranking)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Views)
+            <a href="@Html.DisplayFor(modelItem => item.WebURL)">@Html.DisplayFor(modelItem => item.Title)</a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Category)
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Views)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Timestamp)
