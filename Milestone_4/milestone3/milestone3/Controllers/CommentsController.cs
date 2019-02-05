@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using milestone3.Models;
+using System.Diagnostics;
 
 namespace milestone3.Controllers
 {
@@ -46,10 +47,12 @@ namespace milestone3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommentId,Content,Ranking,Timestamp,TopicId")] Comment comment)
+        public ActionResult Create([Bind(Include = "CommentId,Content,Ranking")] Comment comment)
         {
             if (ModelState.IsValid)
             {
+                comment.Timestamp = DateTime.Now;
+                comment.TopicId = 0;
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index");

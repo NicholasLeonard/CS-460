@@ -223,6 +223,7 @@
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Topics\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
