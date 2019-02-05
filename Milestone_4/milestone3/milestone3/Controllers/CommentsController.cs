@@ -15,10 +15,16 @@ namespace milestone3.Controllers
     {
         private ToasterItContext db = new ToasterItContext();
 
-        // GET: Comments
-        public ActionResult Index()
+        // GET: Comments with ID
+        public ActionResult Index(int id)
         {
-            return View(db.Comments.ToList());
+            // Get the title of the page of the comments we are looking at
+            var title = db.Topics.Where(x => x.TopicId == id).SingleOrDefault()?.Title;
+            ViewBag.Title = title;
+            // Store the id for the page
+            ViewBag.Topic = id;
+            // Return only comments from current post (this will have to be fixed if we add navigation to just comments
+            return View(db.Comments.Where(i => i.TopicId.Value == id).ToList());
         }
 
         // GET: Comments/Details/5
@@ -29,6 +35,8 @@ namespace milestone3.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Comment comment = db.Comments.Find(id);
+            //For use of return button in details page
+            ViewBag.Topic = comment.TopicId;
             if (comment == null)
             {
                 return HttpNotFound();
@@ -37,8 +45,10 @@ namespace milestone3.Controllers
         }
 
         // GET: Comments/Create
+        // Make sure to pass in topicid or this baby will break the site now
         public ActionResult Create(int? topicid)
         {
+            ViewBag.Topic = topicid;
             Comment comment = new Comment
             {
                 TopicId = topicid
@@ -53,12 +63,18 @@ namespace milestone3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CommentId,Content,Ranking,TopicId")] Comment comment)
         {
+            //Viewbag is a blessing, we can return with it
+            ViewBag.Topic = comment.TopicId;
+
             if (ModelState.IsValid)
             {
                 comment.Timestamp = DateTime.Now;
+                // User defaultly upvotes their own post
+                comment.Ranking = 1;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //Make sure we are redirected to comments with appropriate id
+                return RedirectToAction("Index", new { id = ViewBag.Topic });
             }
 
             return View(comment);

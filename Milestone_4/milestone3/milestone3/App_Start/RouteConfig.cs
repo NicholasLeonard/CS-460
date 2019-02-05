@@ -14,6 +14,12 @@ namespace milestone3
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "CommentsView",
+                url: "Controller/{action}/{id}",
+                defaults: new {controller = "CommentsController", action = "Index",}
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

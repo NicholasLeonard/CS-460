@@ -10,6 +10,7 @@ namespace milestone3.Models
     {
         public int CommentId { get; set; }
 
+        [Required]
         [StringLength(1000)]
         public string Content { get; set; }
 
@@ -17,7 +18,8 @@ namespace milestone3.Models
 
         [Column(TypeName = "datetime2")]
         public DateTime Timestamp { get; set; }
-
+        
+        [Required]
         public int? TopicId { get; set; }
     }
 }

@@ -59,9 +59,14 @@
     </div>
 }
 
+<!--Allow the user to either go back to other topics or go to the comments list-->
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <p>
+        @Html.ActionLink("Back to Topics", "Index", "Topics") |
+        @Html.ActionLink("Go To Comments", "Index", new { id = ViewBag.Topic })
+    </p>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
