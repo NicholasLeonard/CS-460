@@ -37,9 +37,13 @@ namespace milestone3.Controllers
         }
 
         // GET: Comments/Create
-        public ActionResult Create()
+        public ActionResult Create(int? topicid)
         {
-            return View();
+            Comment comment = new Comment
+            {
+                TopicId = topicid
+            };
+            return View(comment);
         }
 
         // POST: Comments/Create
@@ -47,12 +51,11 @@ namespace milestone3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CommentId,Content,Ranking")] Comment comment)
+        public ActionResult Create([Bind(Include = "CommentId,Content,Ranking,TopicId")] Comment comment)
         {
             if (ModelState.IsValid)
             {
                 comment.Timestamp = DateTime.Now;
-                comment.TopicId = 0;
                 db.Comments.Add(comment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
