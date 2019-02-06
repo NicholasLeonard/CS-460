@@ -23,11 +23,23 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Topics", "Index", "Topics")</li>
-
-                    @* Will add in the future, incomplete for now *@
-                    @* <li>@Html.ActionLink("Login", "Index", "Member")</li> *@
-
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @*login link only shows when user is not logged in*@
+                    @*if the user is logged in*@
+                    @if (Session["UserID"] != null)
+                    {
+                        <li>@Html.ActionLink(@Session["Username"].ToString(), "Settings", "User")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "User")</li>
+                    }
+                    else
+                    {
+                        @*user is not logged in*@
+                        <li>@Html.ActionLink("Login", "Login", "User")</li>
+                    }
+                </ul>
+
             </div>
         </div>
     </div>
