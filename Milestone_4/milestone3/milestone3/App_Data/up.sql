@@ -41,7 +41,7 @@ CREATE TABLE [dbo].[User]
 	[Email] NVARCHAR(100) NOT NULL,
 	[Pseudonym] NVARCHAR(50) NOT NULL,
 	[PaymentInformation] NVARCHAR(100) NULL
-	CONSTRAINT [PK_dbo.Users] PRIMARY KEY CLUSTERED([Userid] ASC)
+	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED([Userid] ASC)
 );
 
 
