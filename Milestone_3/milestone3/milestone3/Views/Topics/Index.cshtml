@@ -46,6 +46,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Timestamp)
         </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.TopicId })
+        </td>
+        <td>
+            @Html.ActionLink("Comments", "Index", "Comments", new { id = item.TopicId }, null)
+        </td>
     </tr>
 }
 

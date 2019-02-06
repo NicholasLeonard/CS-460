@@ -46,6 +46,22 @@ namespace milestone3.Controllers
             return View(topic);
         }
 
+        // GET: Topics/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Topic topic = db.Topics.Find(id);
+            if (topic == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(topic);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
