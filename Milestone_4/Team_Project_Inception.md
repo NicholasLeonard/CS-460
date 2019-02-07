@@ -106,7 +106,7 @@ T: Task
     -Risk Level: Low
     -Reason: For some reason or another, a member of the group is missing from an activity
     -Plan of Action: We need to work without that member for the particular part of the project
-    -Prevention: Members need to be open about their availablity and communicate on how to meet, additionaly
+    -Prevention: Members need to be open about their availablity and communicate on how to meet, additionaly prioritize this work
 
 #### Visual Studio causes an issue
 
