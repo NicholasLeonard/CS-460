@@ -1,34 +1,33 @@
-"Regardless of what we discover, we understand and truly believe that everyone did the best job they could, given what they knew at the ti;me, their skill and abilities, ther resources availabel, and the situation at hand.
+# Sprint Retrospective Summary
 
-Note: Scores were 5's team is functioning well.
+## Prime Directive of Retrospectives
 
-# Alex Learned:
-how we need to effectivly manage time at beg of inception and stay unified in getting ground work started. learned importance of testing steps in each part of an acceptance criteria. I learned some of our ability to work at a certain rate
+Regardless of what we discover, we understand and truly believe that everyone did the best job they could, given what they knew at the time, their skill and abilities, the resources available, and the situation at hand.
 
-# Chi Learned
-learned how to work as a team and how to use other peoples resources find resources and modifiy it to fit the needs. how to use git manage and share code. how to managae time effectivly. communication through discord.
+## Safety Check
 
-# Jace learned
-how we can able to communicate online with ability to use discord. working through issues as arise. VS issures that arise. how we've gage how much work we can do in a sprint.
+5 across the board.
 
-# Nick Learned
-leared how to right effective user storyies and that we need to be specific so we know what needs to get done. I learned dev ops pain ass use it properly so coordinated as possible. I learned the reliability of my team. 
+## What We Learned
 
-# Alex not going right
-better effectivly set up burndown chart. use dev ops as attended. have entire thing set up right. correctly use dev ops, correctly comment on it and hit criteria.
+We learned that we need to effectively manage time at the beginning of inception and sprints to get a solid foundation for our architecture and design. We also learned the importance of scheduling time for testing and making sure that we perform thorough tests. We learned how to work as a team and how to fully utilize the resources at our disposal. We also learned the importance of communication and that we need to communicate more through discord so that we can be up to date with everything that each developer is doing. We also learned the importance of gaging how much work we can do and is feasible for our time constraints and current team dynamic. We also learned the importance of writing good user stories with accurate descriptions so we can understand what it is we are actually trying to build.
 
-# nick not going right 
-dev ops stuff 
+## What Still is not Going Right
 
-# jace not going right
-gitignore was in their properly.
+We need to properly set up Dev Ops so that the burn-down chart actually works and displays in our sprints. We also had a problem with the gitignore not working but that has since been resolved.
 
-# Action Plan
-we need to properly set up sprints on dev ops. and we need to all use dev ops. and we need to show progress for individual on dev ops.
+## What can the Team do Better in the Next Sprint
 
-Have down before the sprint starts.
-use default comment structure.
-communicate more over discord over the weekend cause chi doesn't know people's progress
+We can have Dev Ops set up properly and remember to actually track our progress on the site. 
 
-# brought up with scott or becka
+## Action Plan
+
+* Fully set up sprints on Dev Ops before hand
+
+* Update task boards daily
+
+* Update team members over the weekend as to our progress
+
+## Items out side of the Meeting
+
 Nothing to bring up.
