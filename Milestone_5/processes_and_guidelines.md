@@ -13,7 +13,7 @@ We are using the following tools and versions for this project:
 * Bootstrap v 3.7
 
 We are using D.A.D. mixed with scrum sprints and planning meetings. We are using the git branching workflow for our control structure. We branch off of Development with a feature branch to complete a user story and then issue a pull request to merge that feature branch into Development. Please merge your Development into your feature branch before issuing the request so we can minimize merge conflicts.
-Feature branches are of the form: sprint-DeveloperName-feature
+Feature branches are of the form: sprint-feature-DeveloperName
 
 We recommend that you match our software and version numbers. Remember! Consistency matters.
 Also, when a new message goes out that one of the main branches has been updated, master and Development, please update your repositories so that we can be as consistent as possible.

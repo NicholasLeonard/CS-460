@@ -40,10 +40,16 @@ This project was conceived and built by the current members of Western Oregon Un
 1. All problems will be brought up to those involved. No beating around the bush and no behind the back talk. We want to be productive here and we want to be friends. It is best just to get it in the open.
 
 2. COMMENT YOUR CODE!!!! Please comment your code. It matters so very much to Alex and we don't want to hurt him.
+    General Commenting Rules:
+		    -Standard Code Blocks at the start of all major functions  [see](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments)
 
 3. Please follow the processes and guidelines listed on the processes and guidelines page for contributing code and understanding our formatting and coding standards. It is very important that we are consistent.
 
 4. Always finish your code on time to the best of your ability. We understand that life happens and you can't always meet your deadlines, but the point is to finish what you start. Do your absolute best.
+
+## Team Song
+
+It is important for every team to have a song and an anthem. [Here](https://www.youtube.com/watch?v=helzmv4sPH8) is ours.
 
 ## Contributing
 
