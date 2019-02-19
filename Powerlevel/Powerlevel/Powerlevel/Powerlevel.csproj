@@ -257,6 +257,17 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-Powerlevel-20190211040554.mdf" />
+    <Content Include="App_Data\aspnet-Powerlevel-20190211040554_log.ldf">
+      <DependentUpon>aspnet-Powerlevel-20190211040554.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\EXERCISE_DOWN.sql" />
+    <Content Include="App_Data\EXERCISE_SEED.sql" />
+    <Content Include="App_Data\EXERCISE_UP.sql" />
+    <Content Include="App_Data\PLAN_DOWN.sql" />
+    <Content Include="App_Data\PLAN_UP.sql" />
+    <Content Include="App_Data\WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\WORKOUT_UP.sql" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />
@@ -500,9 +511,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
