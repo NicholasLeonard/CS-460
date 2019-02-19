@@ -3,11 +3,11 @@ CREATE the table for Exercises
 */
 CREATE TABLE [dbo].[Exercises]
 (
-	[ExerciseId] INT IDENTITY(0,1) NOT NULL, 
+	[ExerciseId] INT IDENTITY(1,1) NOT NULL, 
     [Name] NCHAR(128) NOT NULL, 
     [Type] NCHAR(64) NOT NULL, 
     [MainMuscleWorked] NCHAR(64) NOT NULL,
-    [Instructions] NCHAR(3000) NOT NULL,
+    [Instructions] NVARCHAR(3000) NOT NULL,
 	CONSTRAINT [PK_dbo.Exercises] PRIMARY KEY CLUSTERED ([ExerciseId] ASC)
 );
 
@@ -16,7 +16,7 @@ CREATE the table for Exercise's Flags
 */
 CREATE TABLE [dbo].[ExerciseFlags]
 (
-	[FlagId] INT IDENTITY(0,1) NOT NULL,
+	[FlagId] INT IDENTITY(1,1) NOT NULL,
 	[ExerciseId] INT NOT NULL,
 	[Sets] BIT,
 	[Reps] BIT,
@@ -32,9 +32,9 @@ CREATE the table for Exercise's required equipment
 */
 CREATE TABLE [dbo].[ExerciseEquipment]
 (
-	[RequirementId] INT IDENTITY(0,1) NOT NULL,
+	[RequirementId] INT IDENTITY(1,1) NOT NULL,
 	[ExerciseId] INT NOT NULL,
-	[None] BIT,
+	[NoEquipment] BIT,
 	[Bench] BIT,
 	[Dumbells] BIT,
 	[BarbellRack] BIT,
@@ -49,9 +49,9 @@ Create the table for Exercise Images
 */
 CREATE TABLE [dbo].[ExerciseImages]
 (
-	[ImageId] INT IDENTITY(0,1) NOT NULL,
+	[ImageId] INT IDENTITY(1,1) NOT NULL,
 	[ExerciseId] INT NOT NULL,
-	[ImageName] NCHAR(100) NOT NULL, 
+	[ImageName] NCHAR(128) NOT NULL, 
 	CONSTRAINT [PK_dbo.ExerciseImages] PRIMARY KEY CLUSTERED ([ImageId] ASC),
 	CONSTRAINT [FK_dbo.Exercises_Images] FOREIGN KEY (ExerciseId) REFERENCES Exercises(ExerciseId)
 );
