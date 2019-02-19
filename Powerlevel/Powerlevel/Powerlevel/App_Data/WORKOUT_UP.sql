@@ -11,21 +11,6 @@ CREATE TABLE [dbo].[Workouts]
 	CONSTRAINT [PK_dbo.Workouts] PRIMARY KEY CLUSTERED ([WorkoutId] ASC)
 );
 
-/*CREATE the table for needed equipment in a workout*/
-CREATE TABLE [dbo].[WorkoutEquipment]
-(
-	[RequirementId] INT IDENTITY(1,1) NOT NULL,
-	[WorkoutId] INT NOT NULL,
-	[NoEquipment] BIT,
-	[Bench] BIT,
-	[Dumbells] BIT,
-	[BarbellRack] BIT,
-	[PullupBar] BIT,
-	[Spotter] BIT,
-	CONSTRAINT [PK_dbo.WorkoutEquipment] PRIMARY KEY CLUSTERED ([RequirementId] ASC),
-	CONSTRAINT [FK_dbo.Workout_Equipment] FOREIGN KEY (WorkoutId) REFERENCES Workouts(WorkoutId)
-);
-
 /*CREATE the table that links workouts to thier various exercises in an order */
 CREATE TABLE [dbo].[WorkoutExercises]
 (

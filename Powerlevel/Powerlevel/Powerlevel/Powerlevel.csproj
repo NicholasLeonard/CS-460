@@ -264,6 +264,8 @@
     <Content Include="App_Data\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\EXERCISE_SEED.sql" />
     <Content Include="App_Data\EXERCISE_UP.sql" />
+    <Content Include="App_Data\PLAN_DOWN.sql" />
+    <Content Include="App_Data\PLAN_UP.sql" />
     <Content Include="App_Data\WORKOUT_DOWN.sql" />
     <Content Include="App_Data\WORKOUT_UP.sql" />
     <Content Include="Content\bootstrap-datepicker.css" />
