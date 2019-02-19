@@ -19,8 +19,12 @@ CREATE TABLE [dbo].[WorkoutExercises]
 	[ExerciseId] INT NOT NULL,
 	[OrderNumber] INT,
 	CONSTRAINT [PK_dbo.WorkoutExercises] PRIMARY KEY CLUSTERED ([LinkId] ASC),
-	CONSTRAINT [FK_dbo.WorkoutExercises_Workouts] FOREIGN KEY (WorkoutId) REFERENCES Workouts(WorkoutId),
+	CONSTRAINT [FK_dbo.WorkoutExercises_Workouts] FOREIGN KEY (WorkoutId) REFERENCES Workouts(WorkoutId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	CONSTRAINT [FK_dbo.WorkoutExercises_Exercises] FOREIGN KEY (ExerciseId) REFERENCES Exercises(ExerciseId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 

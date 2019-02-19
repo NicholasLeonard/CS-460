@@ -20,6 +20,10 @@ CREATE TABLE [dbo].[PlanWorkouts]
 	[WorkoutId] INT NOT NULL,
 	[DayOfPlan] INT NOT NULL
 	CONSTRAINT [PK_dbo.PlanWorkouts] PRIMARY KEY CLUSTERED ([LinkId] ASC),
-	CONSTRAINT [FK_dbo.PlanWorkouts_Plans] FOREIGN KEY (PlanId) REFERENCES Plans(PlanId),
+	CONSTRAINT [FK_dbo.PlanWorkouts_Plans] FOREIGN KEY (PlanId) REFERENCES Plans(PlanId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 	CONSTRAINT [FK_dbo.PlanWorkouts_Workouts] FOREIGN KEY (WorkoutId) REFERENCES Workouts(WorkoutId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
