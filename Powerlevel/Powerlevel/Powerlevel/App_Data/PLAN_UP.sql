@@ -27,3 +27,19 @@ CREATE TABLE [dbo].[PlanWorkouts]
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
+
+INSERT INTO [dbo].[Plans] (Name, Type, Description, DaysToComplete, NumberOfWorkouts) VALUES
+('Chest and Back Plan', 'Upper-Body', 'The core of this plan works out your chest and back, with most of the workouts also 
+strengthening your triceps.', 3, 10)
+
+INSERT INTO [dbo].[PlanWorkouts] (PlanId, WorkoutId, DayOfPlan) VALUES
+(1,1,1),
+(1,2,1),
+(1,3,1),
+(1,4,1),
+(1,5,1),
+(1,1,3),
+(1,6,3),
+(1,7,3),
+(1,8,3),
+(1,5,3)

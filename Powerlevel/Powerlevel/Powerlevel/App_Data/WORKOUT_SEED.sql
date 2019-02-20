@@ -14,4 +14,13 @@ INSERT INTO [dbo].[Workouts] (Name, Type, MainMuscleFocus, TimeEstimate) VALUES
 
 /* Links each workout exercise to a workout, an exercise, and an order to complete the workout */
 INSERT INTO [dbo].[WorkoutExercises] (WorkoutId, ExerciseId, OrderNumber) VALUES
-(1,1,1)
+(1,1,1),
+(2,2,2),
+(3,3,3),
+(4,4,4),
+(5,5,5),
+(1,1,6),
+(6,6,7),
+(7,7,8),
+(8,8,9),
+(5,5,10)
