@@ -82,9 +82,13 @@ namespace Powerlevel.Controllers
         {
             var fitbitClient = GetFitbitClient();
 
+            DateTime test = DateTime.Parse("02-15-2019");
+
             ViewBag.AccessToken = fitbitClient.AccessToken;
 
             ViewBag.UserProfile = await fitbitClient.GetUserProfileAsync();
+
+            ViewBag.UserWeight = await fitbitClient.GetWeightAsync(test);
 
             return View("TestToken");
         }
