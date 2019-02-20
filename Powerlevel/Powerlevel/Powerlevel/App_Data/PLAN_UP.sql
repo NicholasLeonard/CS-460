@@ -28,10 +28,14 @@ CREATE TABLE [dbo].[PlanWorkouts]
 		ON UPDATE CASCADE
 );
 
+/* Table for the name of a plan, the type of plan it is (working upper-body, back, legs, etc.), a description of the plan, 
+how many days it will take to complete, and the number of workouts in the plan */
 INSERT INTO [dbo].[Plans] (Name, Type, Description, DaysToComplete, NumberOfWorkouts) VALUES
 ('Chest and Back Plan', 'Upper-Body', 'The core of this plan works out your chest and back, with most of the workouts also 
 strengthening your triceps.', 3, 10)
 
+/* Table to connect the plan to a workout via PlanID and WorkoutID, 
+as well as display which day of the plan the workout should be completed */
 INSERT INTO [dbo].[PlanWorkouts] (PlanId, WorkoutId, DayOfPlan) VALUES
 (1,1,1),
 (1,2,1),

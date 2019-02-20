@@ -224,6 +224,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlanWorkoutsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -282,6 +283,7 @@
       <DependentUpon>toaster.mdf</DependentUpon>
     </Content>
     <Content Include="App_Data\WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\WORKOUT_SEED.sql" />
     <Content Include="App_Data\WORKOUT_UP.sql" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -525,6 +527,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
+    <Content Include="Views\PlanWorkouts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

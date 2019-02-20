@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Powerlevel.Models.PlanWorkout>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Minimally altered CRUD code to display the sample "Chest and Back Plan" and its exercises -->
+<h2>Workout Plans</h2>
+<h3>Chest and Back Plan (3 Days)</h3>
+<table class="table">
+    <tr>
+        <th>
+            Exercise
+        </th>
+        <th>
+            Day in Plan
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Workout.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DayOfPlan)
+        </td>
+    </tr>
+}
+
+</table>
