@@ -25,6 +25,8 @@ CREATE TABLE [dbo].[ExerciseFlags]
 	[Weight] BIT,
 	CONSTRAINT [PK_dbo.ExerciseFlags] PRIMARY KEY CLUSTERED ([FlagId] ASC),
 	CONSTRAINT [FK_dbo.Exercises_Flags] FOREIGN KEY (ExerciseId) REFERENCES Exercises(ExerciseId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 /*
@@ -42,6 +44,8 @@ CREATE TABLE [dbo].[ExerciseEquipment]
 	[Spotter] BIT,
 	CONSTRAINT [PK_dbo.ExerciseEquipment] PRIMARY KEY CLUSTERED ([RequirementId] ASC),
 	CONSTRAINT [FK_dbo.Exercises_Equipment] FOREIGN KEY (ExerciseId) REFERENCES Exercises(ExerciseId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 /*
@@ -54,4 +58,6 @@ CREATE TABLE [dbo].[ExerciseImages]
 	[ImageName] NCHAR(128) NOT NULL, 
 	CONSTRAINT [PK_dbo.ExerciseImages] PRIMARY KEY CLUSTERED ([ImageId] ASC),
 	CONSTRAINT [FK_dbo.Exercises_Images] FOREIGN KEY (ExerciseId) REFERENCES Exercises(ExerciseId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
 );
