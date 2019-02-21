@@ -265,6 +265,7 @@
     <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercis.cs" />
+    <Compile Include="Controllers\WorkoutsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -528,6 +529,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\PlanWorkouts\Index.cshtml" />
+    <Content Include="Views\Workouts\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
