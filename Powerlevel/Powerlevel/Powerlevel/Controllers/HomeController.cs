@@ -20,6 +20,8 @@ namespace Powerlevel.Controllers
             return View();
         }
 
+        //only show to logged in users
+        [Authorize]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
