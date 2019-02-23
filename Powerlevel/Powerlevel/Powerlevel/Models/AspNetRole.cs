@@ -6,28 +6,21 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class PlanWorkout
+    public partial class AspNetRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PlanWorkout()
+        public AspNetRole()
         {
-            UserWorkouts = new HashSet<UserWorkout>();
+            AspNetUsers = new HashSet<AspNetUser>();
         }
 
-        [Key]
-        public int LinkID { get; set; }
+        public string Id { get; set; }
 
-        public int PlanId { get; set; }
-
-        public int WorkoutId { get; set; }
-
-        public int DayOfPlan { get; set; }
-
-        public virtual Plan Plan { get; set; }
-
-        public virtual Workout Workout { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserWorkout> UserWorkouts { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

@@ -15,10 +15,10 @@
 
     <!--Displays "Chest and Back Plan (3 Days)" but may need to be altered when multiple workout plans are added-->
     <h3>
-        @{ 
+        @{
             var result = Model.GroupBy(x => x.Plan.Name);
         }
-        @foreach(var item in result)
+        @foreach (var item in result)
         {
             @Html.DisplayFor(modelItem => item.Key)
         }
@@ -49,6 +49,11 @@
         }
 
     </table>
+
+    <br />
+    <!-- Directs user to plan creation page -->
+    @Html.ActionLink("Start a New Plan!", "Create", "UserWorkouts")
+
 }
 else
 {
