@@ -1,13 +1,12 @@
 ﻿@model Powerlevel.Models.Exercis
+@using Powerlevel.Models
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Exercis</h4>
+    <h4>Exercise</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -27,7 +26,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MainMuscleWorked)
+            Primary Muscle Group
         </dt>
 
         <dd>
@@ -41,7 +40,17 @@
         <dd>
             @Html.DisplayFor(model => model.Instructions)
         </dd>
-
+        <!-- This block of code takes in the Viewbag list of ExerciseImage objects and displays the image for each one-->
+        <dt>
+            Images
+        </dt>
+        <dd>
+            @foreach(ExerciseImage item in ViewBag.Images)
+            {
+                <!--Using the ImageName field, we can display all of the exercise images-->
+                <img src="~/Content/images/exercise_examples/@item.ImageName" alt="ExerciseImage" style="height:400px;"/>
+            }
+        </dd>
     </dl>
 </div>
 <p>

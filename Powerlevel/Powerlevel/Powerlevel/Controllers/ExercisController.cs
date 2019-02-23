@@ -28,6 +28,7 @@ namespace Powerlevel.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Exercis exercis = db.Exercises.Find(id);
+            ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == exercis.ExerciseId).ToList();
             if (exercis == null)
             {
                 return HttpNotFound();
