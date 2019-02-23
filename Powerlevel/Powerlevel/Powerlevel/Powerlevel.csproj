@@ -241,6 +241,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ExercisController.cs" />
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -520,8 +521,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -548,6 +547,11 @@
     <Content Include="Views\Fitbit\TestToken.cshtml" />
     <Content Include="Views\PlanWorkouts\Index.cshtml" />
     <Content Include="Views\Workouts\Details.cshtml" />
+    <Content Include="Views\Exercis\Create.cshtml" />
+    <Content Include="Views\Exercis\Delete.cshtml" />
+    <Content Include="Views\Exercis\Details.cshtml" />
+    <Content Include="Views\Exercis\Edit.cshtml" />
+    <Content Include="Views\Exercis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
