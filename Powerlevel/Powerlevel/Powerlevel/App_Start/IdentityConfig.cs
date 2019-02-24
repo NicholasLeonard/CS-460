@@ -29,7 +29,7 @@ namespace Powerlevel
     //    }
     //}
 
-    //send confirmation mail
+    //send confirmation mail using SendGrid services
     public class EmailService : IIdentityMessageService
     {
         public async Task SendAsync(IdentityMessage message)
@@ -43,7 +43,7 @@ namespace Powerlevel
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
             myMessage.From = new System.Net.Mail.MailAddress(
-                                "admin@PowerLevel.toastercode", "PowerLevel CEO");
+                                "no-reply@PowerLevel.toastercode", "PowerLevel");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;
