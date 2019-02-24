@@ -241,6 +241,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ExercisController.cs" />
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -316,6 +317,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\exercise_examples\1_1.jpg" />
+    <Content Include="Content\images\exercise_examples\1_2.jpg" />
+    <Content Include="Content\images\exercise_examples\2_1.jpg" />
+    <Content Include="Content\images\exercise_examples\3_1.jpg" />
+    <Content Include="Content\images\exercise_examples\4_1.jpg" />
+    <Content Include="Content\images\exercise_examples\5_1.jpg" />
+    <Content Include="Content\images\exercise_examples\6_1.jpg" />
+    <Content Include="Content\images\exercise_examples\7_1.jpg" />
+    <Content Include="Content\images\exercise_examples\8_1.jpg" />
     <Content Include="Scripts\datepicker.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
@@ -520,8 +530,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -548,6 +556,8 @@
     <Content Include="Views\Fitbit\TestToken.cshtml" />
     <Content Include="Views\PlanWorkouts\Index.cshtml" />
     <Content Include="Views\Workouts\Details.cshtml" />
+    <Content Include="Views\Exercis\Details.cshtml" />
+    <Content Include="Views\Exercis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
