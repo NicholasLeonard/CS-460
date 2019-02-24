@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - PowerLevel</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-
+    
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -39,7 +40,10 @@
     </div>
 
 
+    
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/ToasterScripts.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
