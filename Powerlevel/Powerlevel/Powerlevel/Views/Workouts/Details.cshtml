@@ -1,0 +1,45 @@
+﻿@model Powerlevel.Models.Workout
+
+<!-- Page to display specified Workout details, including the type of workout it is,
+    the muscle focus, and about how long it'll take to complete it -->
+
+@{
+    ViewBag.Title = "Workout Details";
+}
+
+<h2>Workout Details for @Html.DisplayFor(model => model.Name)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            Muscle Focus
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainMuscleFocus)
+        </dd>
+
+        <dt>
+            Estimated Duration
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeEstimate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <!--This link to the exercise page works, HOWEVER, it must be changed to get the right ID next time-->
+    @Html.ActionLink("How to do this Exercise", "Details", "Exercis", new { id = Model.WorkoutId }, null) |
+    @Html.ActionLink("Back to Plans", "Index", "PlanWorkouts")
+</p>

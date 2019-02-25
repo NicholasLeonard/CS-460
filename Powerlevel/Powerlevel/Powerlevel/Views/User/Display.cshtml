@@ -1,0 +1,20 @@
+﻿@model Powerlevel.Models.User
+
+@{
+    ViewBag.Title = "Display";
+}
+
+<h2>Metrics for @Model.UserName</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Height:</dt>
+        <dd>
+            @Model.Height
+        </dd>
+        <dt>Weight:</dt>
+        <dd>
+            @Model.Weight
+        </dd>
+    </dl>
+</div>
