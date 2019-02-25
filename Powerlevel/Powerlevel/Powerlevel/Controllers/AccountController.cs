@@ -18,6 +18,7 @@ namespace Powerlevel.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
         //access to the database for logging username in our user table in addition to the auto generated table
         private toasterContext db = new toasterContext();
 

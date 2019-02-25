@@ -801,6 +801,7 @@
     <Content Include="Views\Exercis\Details.cshtml" />
     <Content Include="Views\Exercis\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Display.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
