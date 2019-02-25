@@ -18,6 +18,8 @@ namespace Powerlevel.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        //access to the database for logging username in our user table in addition to the auto generated table
+        private toasterContext db = new toasterContext();
 
         public AccountController()
         {
@@ -183,6 +185,12 @@ namespace Powerlevel.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
+
+                    // Adding to the database for user stats that we need to track seperate from the standared template database table
+                    var our_user = new User { UserName = model.Username};
+                    db.Users.Add(our_user);
+                    db.SaveChanges();
                     //  Comment the following line to prevent log in until the user is confirmed.
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
@@ -463,6 +471,7 @@ namespace Powerlevel.Controllers
                     _signInManager.Dispose();
                     _signInManager = null;
                 }
+                db.Dispose();
             }
 
             base.Dispose(disposing);
@@ -538,5 +547,6 @@ namespace Powerlevel.Controllers
             return callbackUrl;
         }
         #endregion
+
     }
 }

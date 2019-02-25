@@ -246,6 +246,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlanWorkoutsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -284,6 +285,7 @@
     <Compile Include="Models\Plan.cs" />
     <Compile Include="Models\PlanWorkout.cs" />
     <Compile Include="DAL\toasterContext.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercis.cs" />
     <Compile Include="Controllers\WorkoutsController.cs" />
@@ -291,15 +293,16 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-Powerlevel-20190211040554.mdf" />
-    <Content Include="App_Data\aspnet-Powerlevel-20190211040554_log.ldf">
-      <DependentUpon>aspnet-Powerlevel-20190211040554.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\EXERCISE_SEED.sql" />
     <Content Include="App_Data\EXERCISE_UP.sql" />
     <Content Include="App_Data\PLAN_DOWN.sql" />
     <Content Include="App_Data\PLAN_UP.sql" />
+    <Content Include="App_Data\Toaster.mdf" />
+    <Content Include="App_Data\Toaster_log.ldf">
+      <DependentUpon>Toaster.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\User_Up.sql" />
     <Content Include="App_Data\WORKOUT_DOWN.sql" />
     <Content Include="App_Data\WORKOUT_SEED.sql" />
     <Content Include="App_Data\WORKOUT_UP.sql" />
@@ -756,7 +759,9 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\ToasterScripts.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -795,6 +800,7 @@
     <Content Include="Views\Workouts\Details.cshtml" />
     <Content Include="Views\Exercis\Details.cshtml" />
     <Content Include="Views\Exercis\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

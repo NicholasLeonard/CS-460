@@ -8,7 +8,7 @@ namespace Powerlevel.Models
     public partial class toasterContext : DbContext
     {
         public toasterContext()
-            : base("name=toaster")
+            : base("name=toasterContext")
         {
         }
 
@@ -18,6 +18,7 @@ namespace Powerlevel.Models
         public virtual DbSet<Exercis> Exercises { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
         public virtual DbSet<PlanWorkout> PlanWorkouts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkoutExercis> WorkoutExercises { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
 

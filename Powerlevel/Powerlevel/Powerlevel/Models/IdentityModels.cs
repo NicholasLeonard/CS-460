@@ -27,7 +27,7 @@ namespace Powerlevel.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("toaster", throwIfV1Schema: false)
+            : base("toasterContext", throwIfV1Schema: false)
         {
         }
 
