@@ -8,7 +8,7 @@ namespace Powerlevel.Models
     public partial class toasterContext : DbContext
     {
         public toasterContext()
-            : base("name=toasterContext")
+            : base("name=toaster")
         {
         }
 
