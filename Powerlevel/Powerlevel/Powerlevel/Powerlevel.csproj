@@ -248,6 +248,7 @@
     <Compile Include="Controllers\PlanWorkoutsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserWorkoutsController.cs" />
+    <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -277,6 +278,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Controllers\WorkoutsController.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs" />
     <Compile Include="Models\AspNetUser.cs" />
     <Compile Include="Models\AspNetUserClaim.cs" />
@@ -286,8 +288,12 @@
     <Compile Include="Models\ExerciseEquipment.cs" />
     <Compile Include="Models\ExerciseFlag.cs" />
     <Compile Include="Models\ExerciseImage.cs" />
-    <Compile Include="DAL\toasterContext.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\WorkoutPlan.cs" />
+    <Compile Include="Models\WorkoutPlanWorkout.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserWorkout.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
