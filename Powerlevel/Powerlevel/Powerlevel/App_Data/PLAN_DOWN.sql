@@ -1,20 +1,13 @@
-/* This code commented out so that the DOWN.sql worked for me
-
 /* This is the DOWN Script for Workout Plans */
-/*DOWN script for workout tables*/
-
-/* DROP FKs */
-ALTER TABLE [dbo].[PlanWorkouts] DROP CONSTRAINT [FK_dbo.PlanWorkouts_Plans]
-ALTER TABLE [dbo].[PlanWorkouts] DROP CONSTRAINT [FK_dbo.PlanWorkouts_Workouts]
-
-/* DROP PKs */
-ALTER TABLE [dbo].[Plans] 		 DROP CONSTRAINT [PK_dbo.Plans]
-ALTER TABLE [dbo].[PlanWorkouts] DROP CONSTRAINT [PK_dbo.PlanWorkouts]
-
+/* Edit Log
+2/28/2019
+	-REFACTOR: Changed all Singlur instances for table names to Plural
+	-REFACTOR: Changed all Foreign Keys to follow format FK_[Tableitisin]_[Tableitrefences]
+	-REFACTOR: Plan is a reserved word ins SQL, changed table names to WorkoutPlan and WorkoutPlanWorkout to reflect this
 */
 
 /* DROP all tables */
-DROP TABLE IF EXISTS [dbo].[Plans] 
-DROP TABLE IF EXISTS [dbo].[PlanWorkouts]
+DROP TABLE IF EXISTS [dbo].[WorkoutPlan] 
+DROP TABLE IF EXISTS [dbo].[WorkoutPlanWorkout]
 
 GO

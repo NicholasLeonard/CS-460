@@ -1,4 +1,11 @@
 /* This file is only for populating the lists of exercises, as such a list is exhaustive */
+/* Edit Log
+2/28/2019
+	-REFACTOR: Changed all Singlur instances for table names to Plural
+	-REDESIGN: Flag and Equipment tables have been altered into One-To-Many Transaction Tables
+*/
+
+
 /*Items inserted:
 	ID 1: Bench Press
 	ID 2: Bent-over row
@@ -9,22 +16,11 @@
 	ID 7: Hammer-grip dumbbell bench press
 	ID 8: Dumbbell triceps extension
 */
-
-/* THE FOLLOWING CODE IS TEMPORARILY COMMENTED OUT IN FAVOR OF MORE GENERIC INFORMATION ABOUT WORKOUTS
 /* Insert into main exercise table */
 
 /* NOTE:: The  + CHAR(13)+CHAR(10) + is for a line break and carriage return, will help in display of description */
-INSERT INTO [dbo].[Exercises]  (Name, Type, MainMuscleWorked, Instructions) VALUES
-( 'Pushup',
-'Strength',
-'Chest',
-'1. Lie on the floor face down and place your hands about 36 inches apart while holding your torso up at arms length.' +  + CHAR(13)+CHAR(10) +
-'2. Next, lower yourself downward until your chest almost touches the floor as you inhale.'  + CHAR(13)+CHAR(10) +
-'3. Now breathe out and press your upper body back up to the starting position while squeezing your chest.'  + CHAR(13)+CHAR(10) +
-'4. After a brief pause at the top contracted position, you can begin to lower yourself downward again for as many repetitions as needed.')
-*/
 
-INSERT INTO [dbo].[Exercises]  (Name, Type, MainMuscleWorked, Instructions) VALUES
+INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
 ('Bench Press', 'Strength', 'Chest',
 'Lie on a flat bench, holding a barbell with your hands slightly wider than shoulder-width apart using an overhand grip. 
 Brace your core and press your feet into the ground, then lower the bar towards your chest. Press it back up to the start.'),
@@ -46,27 +42,27 @@ Drive your feet into the floor and press the weights straight up, then lower the
 ('Dumbbell triceps extension', 'Strength', 'Triceps', 'Stand tall holding a dumbbell in each hand over your head, arms straight. 
 Keeping your chest up, core braced and elbows pointing up, lower the weights behind your head, then return to the start.')
 
-/* Insert into flags table, all binary */
-INSERT INTO [dbo].[ExerciseFlags] (ExerciseId, Sets, Reps, Duration, Distance, Weight) VALUES
-(1, 1, 1, 0, 0, 0),
-(2, 1, 1, 0, 0, 0),
-(3, 1, 1, 0, 0, 0),
-(4, 1, 1, 0, 0, 0),
-(5, 1, 1, 0, 0, 0),
-(6, 1, 1, 0, 0, 0),
-(7, 1, 1, 0, 0, 0),
-(8, 1, 1, 0, 0, 0)
+/* Insert into flags table, all binary using Sets, Reps, Duration, Distance, Weight*/
+INSERT INTO [dbo].[ExerciseFlags] (ExerciseId, FlagName) VALUES
+(1, 'Sets'),(1, 'Reps'),
+(2, 'Sets'),(2, 'Reps'),
+(3, 'Sets'),(3, 'Reps'),
+(4, 'Sets'),(4, 'Reps'),
+(5, 'Sets'),(5, 'Reps'),
+(6, 'Sets'),(6, 'Reps'),
+(7, 'Sets'),(7, 'Reps'),
+(8, 'Sets'),(8, 'Reps')
 
-/* Insert into Equipment table, all binary */
-INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, NoEquipment, Bench, Dumbells, BarbellRack, PullupBar, Spotter) VALUES
-(1, 0, 1, 0, 1, 0, 1),
-(2, 0, 0, 0, 1, 0, 0),
-(3, 0, 0, 0, 0, 1, 0),
-(4, 0, 1, 1, 0, 0, 0),
-(5, 1, 0, 0, 0, 0, 0),
-(6, 0, 1, 1, 0, 0, 0),
-(7, 0, 1, 1, 0, 0, 0),
-(8, 0, 0, 1, 0, 0, 0)
+/* Insert into Equipment table, all binary using NoEquipment, Bench, Dumbells, BarbellRack, PullupBar, Spotter*/
+INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
+(1, 'Bench'),(1, 'Barbell Rack'),(1, 'Spotter'),
+(2, 'Barbell Rack'),
+(3, 'Pullup Bar'),
+(4, 'Bench'),(4, 'Dumbells'),
+(5, 'No Equipment'),
+(6, 'Bench'),(6, 'Dumbells'),
+(7, 'Bench'),(7, 'Dumbells'),
+(8, 'Dumbells')
 
 /* Insert into Exercise Images table, lookup used for reference */
 INSERT INTO [dbo].[ExerciseImages] (ExerciseId, ImageName) VALUES

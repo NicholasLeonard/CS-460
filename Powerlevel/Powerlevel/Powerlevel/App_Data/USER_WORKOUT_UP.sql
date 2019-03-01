@@ -7,7 +7,7 @@
 	CONSTRAINT [FK_dbo.UserWorkout_AspNetUsers] FOREIGN KEY (UsernameId) REFERENCES AspNetUsers(Id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-	CONSTRAINT [FK_dbo.UserWorkout_PlanWorkouts] FOREIGN KEY (UserCurrentPlan) REFERENCES PlanWorkouts(LinkId)
+	CONSTRAINT [FK_dbo.UserWorkout_PlanWorkouts] FOREIGN KEY (UserCurrentPlan) REFERENCES WorkoutPlanWorkout(LinkId)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
