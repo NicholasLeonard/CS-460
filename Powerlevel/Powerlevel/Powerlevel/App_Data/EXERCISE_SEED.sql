@@ -43,7 +43,7 @@ Drive your feet into the floor and press the weights straight up, then lower the
 Keeping your chest up, core braced and elbows pointing up, lower the weights behind your head, then return to the start.')
 
 /* Insert into flags table, all binary using Sets, Reps, Duration, Distance, Weight*/
-INSERT INTO [dbo].[ExerciseFlags] (ExerciseId, FlagName) VALUES
+INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (1, 'Sets'),(1, 'Reps'),
 (2, 'Sets'),(2, 'Reps'),
 (3, 'Sets'),(3, 'Reps'),
@@ -65,7 +65,7 @@ INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (8, 'Dumbells')
 
 /* Insert into Exercise Images table, lookup used for reference */
-INSERT INTO [dbo].[ExerciseImages] (ExerciseId, ImageName) VALUES
+INSERT INTO [dbo].[ExerciseImage] (ExerciseId, ImageName) VALUES
 (1, '1_1.jpg'),
 (1, '1_2.jpg'),
 (2, '2_1.jpg'),

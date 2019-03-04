@@ -11,3 +11,6 @@ CREATE TABLE [dbo].[User]
     [Weight] INT NULL, 
     [UserName] NVARCHAR(256) NOT NULL,
 )
+
+INSERT INTO [dbo].[User] (UserName) VALUES ('tester')
+GO
