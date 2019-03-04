@@ -10,7 +10,7 @@ using Powerlevel.Models;
 
 namespace Powerlevel.Controllers
 {
-    public class ExercisController : Controller
+    public class ExerciseController : Controller
     {
         private toasterContext db = new toasterContext();
 

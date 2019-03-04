@@ -17,7 +17,7 @@ namespace Powerlevel.Controllers
         // GET: UserWorkouts
         public ActionResult Index()
         {
-            //var userWorkouts = db.UserWorkouts.Include(u => u.AspNetUser).Include(u => u.PlanWorkout);
+            var userWorkouts = db.UserWorkouts.Include(u => u.AspNetUser).Include(u => u.PlanWorkout);
             return View();
         }
 
