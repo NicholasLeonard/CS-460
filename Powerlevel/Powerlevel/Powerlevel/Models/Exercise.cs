@@ -6,7 +6,7 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Exercises")]
+    [Table("Exercise")]
     public partial class Exercise
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -18,7 +18,6 @@ namespace Powerlevel.Models
             WorkoutExercises = new HashSet<WorkoutExercise>();
         }
 
-        [Key]
         public int ExerciseId { get; set; }
 
         [Required]

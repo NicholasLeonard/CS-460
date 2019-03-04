@@ -6,6 +6,7 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("ExerciseImage")]
     public partial class ExerciseImage
     {
         [Key]
@@ -17,6 +18,6 @@ namespace Powerlevel.Models
         [StringLength(128)]
         public string ImageName { get; set; }
 
-        public virtual Exercise Exercis { get; set; }
+        public virtual Exercise Exercise { get; set; }
     }
 }

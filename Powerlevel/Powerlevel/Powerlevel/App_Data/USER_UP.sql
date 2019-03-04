@@ -12,5 +12,5 @@ CREATE TABLE [dbo].[User]
     [UserName] NVARCHAR(256) NOT NULL,
 )
 
-INSERT INTO [dbo].[User] (UserName) VALUES ('tester')
+INSERT INTO [dbo].[User] (Id, UserName) VALUES (0, 'tester')
 GO

@@ -18,8 +18,6 @@ namespace Powerlevel.Models
 
         public int UserCurrentPlan { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
-
-        public virtual WorkoutPlanWorkout PlanWorkout { get; set; }
+        public virtual WorkoutPlanWorkout WorkoutPlanWorkout { get; set; }
     }
 }
