@@ -6,11 +6,13 @@
 
 CREATE TABLE [dbo].[User]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT IDENTITY(0,1) NOT NULL, 
     [Height] INT NULL, 
     [Weight] INT NULL, 
     [UserName] NVARCHAR(256) NOT NULL,
+
+	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
 
-INSERT INTO [dbo].[User] (Id, UserName) VALUES (0, 'tester')
+/*INSERT INTO [dbo].[User] (Id, UserName) VALUES (0, 'tester')*/
 GO

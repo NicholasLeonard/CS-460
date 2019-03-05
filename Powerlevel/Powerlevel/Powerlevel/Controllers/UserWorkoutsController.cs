@@ -17,7 +17,7 @@ namespace Powerlevel.Controllers
         // GET: UserWorkouts
         public ActionResult Index()
         {
-            var userWorkouts = db.UserWorkouts.Include(u => u.AspNetUser).Include(u => u.PlanWorkout);
+            var userWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.PlanWorkout);
             return View();
         }
 
@@ -40,7 +40,7 @@ namespace Powerlevel.Controllers
         public ActionResult Create()
         {
             ViewBag.UsernameId = new SelectList(db.Users, "Id", "UserName");
-           // ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "PlanId");
+            ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "PlanId");
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace Powerlevel.Controllers
 
             // I messed around with this a little bit, I wanted to make the dropdown show the name of the workout plan, instead of a number
             // See: Notes in the UserWorkouts/Create View. (I failed, it is incomplete)
-           // ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "PlanId", userWorkout.PlanWorkout.PlanId);
+            ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "PlanId", userWorkout.PlanWorkout.PlanId);
             return View(userWorkout);
         }
 
@@ -79,7 +79,7 @@ namespace Powerlevel.Controllers
                 return HttpNotFound();
             }
             ViewBag.UsernameId = new SelectList(db.Users, "Id", "Email", userWorkout.UsernameId);
-            //ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "LinkID", userWorkout.UserCurrentPlan);
+            ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "LinkID", userWorkout.UserCurrentPlan);
             return View(userWorkout);
         }
 
@@ -97,7 +97,7 @@ namespace Powerlevel.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.UsernameId = new SelectList(db.Users, "Id", "Email", userWorkout.UsernameId);
-            //ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "LinkID", userWorkout.UserCurrentPlan);
+            ViewBag.UserCurrentPlan = new SelectList(db.PlanWorkouts, "LinkID", "LinkID", userWorkout.UserCurrentPlan);
             return View(userWorkout);
         }
 

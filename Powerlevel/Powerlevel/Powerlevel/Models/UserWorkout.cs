@@ -12,12 +12,12 @@ namespace Powerlevel.Models
         [Key]
         public int UWId { get; set; }
 
-        [Required]
-        [StringLength(128)]
-        public string UsernameId { get; set; }
+        public int UsernameId { get; set; }
 
         public int UserCurrentPlan { get; set; }
 
-        public virtual WorkoutPlanWorkout WorkoutPlanWorkout { get; set; }
+        public virtual PlanWorkout PlanWorkout { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

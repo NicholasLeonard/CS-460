@@ -284,13 +284,13 @@
     <Compile Include="Models\ExerciseImage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Plan.cs" />
+    <Compile Include="Models\PlanWorkout.cs" />
     <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserWorkout.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
-    <Compile Include="Models\WorkoutPlan.cs" />
-    <Compile Include="Models\WorkoutPlanWorkout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
