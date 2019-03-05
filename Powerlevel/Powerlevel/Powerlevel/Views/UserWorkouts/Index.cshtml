@@ -15,7 +15,7 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AspNetUser.UserName)
+                @Html.DisplayNameFor(model => model.User.UserName)
             </th>
             <th>
                 Current Plan
@@ -32,7 +32,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+                    @Html.DisplayFor(modelItem => item.User.UserName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PlanWorkout.Plan.Name)
