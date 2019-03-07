@@ -10,14 +10,14 @@ using Powerlevel.Models;
 
 namespace Powerlevel.Controllers
 {
-    public class PlanWorkoutsController : Controller
+    public class WorkoutPlanWorkoutController : Controller
     {
         private toasterContext db = new toasterContext();
 
         // GET: PlanWorkouts
         public ActionResult Index()
         {
-            var planWorkouts = db.PlanWorkouts.Include(p => p.Plan).Include(p => p.Workout);
+            var planWorkouts = db.WorkoutPlanWorkouts.Include(p => p.WorkoutPlan).Include(p => p.Workout);
             return View(planWorkouts.ToList());
         }
     }

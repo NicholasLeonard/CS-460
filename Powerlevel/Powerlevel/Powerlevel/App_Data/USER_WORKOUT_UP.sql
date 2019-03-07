@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[UserWorkout]
+﻿/*Not currently in use*/
+CREATE TABLE [dbo].[UserWorkout]
 (
 	[UWId] INT IDENTITY(1,1) NOT NULL,
 	[UsernameId] NVARCHAR(128) NOT NULL,

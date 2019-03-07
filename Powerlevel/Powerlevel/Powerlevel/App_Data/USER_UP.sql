@@ -6,8 +6,9 @@
 
 CREATE TABLE [dbo].[User]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[UserId] INT IDENTITY(1,1), 
     [Height] INT NULL, 
     [Weight] INT NULL, 
     [UserName] NVARCHAR(256) NOT NULL,
+	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 )

@@ -8,52 +8,22 @@ namespace Powerlevel.Models
     public partial class toasterContext : DbContext
     {
         public toasterContext()
-            : base("name=toaster")
+            : base("name=toasterContext")
         {
         }
 
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<ExerciseEquipment> ExerciseEquipments { get; set; }
         public virtual DbSet<ExerciseFlag> ExerciseFlags { get; set; }
         public virtual DbSet<ExerciseImage> ExerciseImages { get; set; }
-        public virtual DbSet<Exercise> Exercises { get; set; }
-        public virtual DbSet<WorkoutPlan> Plans { get; set; }
-        public virtual DbSet<WorkoutPlanWorkout> PlanWorkouts { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserWorkout> UserWorkouts { get; set; }
-        public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
+        public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
+        public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
+        public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetRole>()
-                .HasMany(e => e.AspNetUsers)
-                .WithMany(e => e.AspNetRoles)
-                .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
-
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.AspNetUserClaims)
-                .WithRequired(e => e.AspNetUser)
-                .HasForeignKey(e => e.UserId);
-
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.AspNetUserLogins)
-                .WithRequired(e => e.AspNetUser)
-                .HasForeignKey(e => e.UserId);
-
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.UserWorkouts)
-                .WithRequired(e => e.AspNetUser)
-                .HasForeignKey(e => e.UsernameId);
-
-            modelBuilder.Entity<ExerciseImage>()
-                .Property(e => e.ImageName)
-                .IsFixedLength();
-
             modelBuilder.Entity<Exercise>()
                 .Property(e => e.Name)
                 .IsFixedLength();
@@ -66,18 +36,17 @@ namespace Powerlevel.Models
                 .Property(e => e.MainMuscleWorked)
                 .IsFixedLength();
 
-            modelBuilder.Entity<WorkoutPlan>()
-                .Property(e => e.Name)
+            modelBuilder.Entity<ExerciseEquipment>()
+                .Property(e => e.EquipmentName)
                 .IsFixedLength();
 
-            modelBuilder.Entity<WorkoutPlan>()
-                .Property(e => e.Type)
+            modelBuilder.Entity<ExerciseFlag>()
+                .Property(e => e.FlagName)
                 .IsFixedLength();
 
-            modelBuilder.Entity<WorkoutPlanWorkout>()
-                .HasMany(e => e.UserWorkouts)
-                .WithRequired(e => e.PlanWorkout)
-                .HasForeignKey(e => e.UserCurrentPlan);
+            modelBuilder.Entity<ExerciseImage>()
+                .Property(e => e.ImageName)
+                .IsFixedLength();
 
             modelBuilder.Entity<Workout>()
                 .Property(e => e.Name)
@@ -93,6 +62,14 @@ namespace Powerlevel.Models
 
             modelBuilder.Entity<Workout>()
                 .Property(e => e.TimeEstimate)
+                .IsFixedLength();
+
+            modelBuilder.Entity<WorkoutPlan>()
+                .Property(e => e.Name)
+                .IsFixedLength();
+
+            modelBuilder.Entity<WorkoutPlan>()
+                .Property(e => e.Type)
                 .IsFixedLength();
         }
     }

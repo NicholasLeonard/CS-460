@@ -10,7 +10,7 @@ using Powerlevel.Models;
 
 namespace Powerlevel.Controllers
 {
-    public class ExercisController : Controller
+    public class ExerciseController : Controller
     {
         private toasterContext db = new toasterContext();
 
@@ -27,13 +27,13 @@ namespace Powerlevel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Exercise exercis = db.Exercises.Find(id);
-            ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == exercis.ExerciseId).ToList();
-            if (exercis == null)
+            Exercise exercise = db.Exercises.Find(id);
+            ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+            if (exercise == null)
             {
                 return HttpNotFound();
             }
-            return View(exercis);
+            return View(exercise);
         }
 
         // POST: Exercis/Delete/5
@@ -41,8 +41,8 @@ namespace Powerlevel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Exercise exercis = db.Exercises.Find(id);
-            db.Exercises.Remove(exercis);
+            Exercise exercise = db.Exercises.Find(id);
+            db.Exercises.Remove(exercise);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

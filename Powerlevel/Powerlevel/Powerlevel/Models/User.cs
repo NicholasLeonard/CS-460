@@ -6,6 +6,7 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("User")]
     public partial class User
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
