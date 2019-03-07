@@ -16,16 +16,27 @@ namespace Powerlevel.Models
 
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            }*/
+                      
             Workout workout = db.Workouts.Find(id);
             if (workout == null)
             {
                 return HttpNotFound();
             }
             return View(workout);
+        }
+
+        public ActionResult Index (int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var test = db.Workouts.Include(y => y.WorkoutExercises);
+            return View(test);
         }
     }
 }

@@ -1,0 +1,11 @@
+﻿@model Powerlevel.Models.Workout
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@{var test = Model.WorkoutExercises.Where(x => x.WorkoutId == 1).Select(x => x.Exercise);
+    test.First().
+    }
+

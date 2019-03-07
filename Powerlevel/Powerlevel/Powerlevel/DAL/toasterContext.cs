@@ -17,7 +17,6 @@ namespace Powerlevel.Models
         public virtual DbSet<ExerciseFlag> ExerciseFlags { get; set; }
         public virtual DbSet<ExerciseImage> ExerciseImages { get; set; }
         public virtual DbSet<Plan> Plans { get; set; }
-        public virtual DbSet<PlanWorkout> PlanWorkouts { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserWorkout> UserWorkouts { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
@@ -56,11 +55,6 @@ namespace Powerlevel.Models
             modelBuilder.Entity<Plan>()
                 .Property(e => e.Type)
                 .IsFixedLength();
-
-            modelBuilder.Entity<PlanWorkout>()
-                .HasMany(e => e.UserWorkouts)
-                .WithRequired(e => e.PlanWorkout)
-                .HasForeignKey(e => e.UserCurrentPlan);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.UserWorkouts)

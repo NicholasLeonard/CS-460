@@ -12,7 +12,6 @@ namespace Powerlevel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Workout()
         {
-            PlanWorkouts = new HashSet<PlanWorkout>();
             WorkoutExercises = new HashSet<WorkoutExercise>();
         }
 
@@ -33,9 +32,6 @@ namespace Powerlevel.Models
         [Required]
         [StringLength(64)]
         public string TimeEstimate { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanWorkout> PlanWorkouts { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkoutExercise> WorkoutExercises { get; set; }

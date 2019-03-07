@@ -17,8 +17,8 @@ namespace Powerlevel.Controllers
         // GET: PlanWorkouts
         public ActionResult Index()
         {
-            var planWorkouts = db.PlanWorkouts.Include(p => p.Plan).Include(p => p.Workout);
-            return View(planWorkouts.ToList());
+            var workoutPlans = db.Plans.Include(x => x.WorkoutExercises);
+            return View(workoutPlans);
         }
     }
 }

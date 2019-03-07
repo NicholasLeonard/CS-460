@@ -7,7 +7,7 @@
 	CONSTRAINT [FK_dbo.UserWorkout_User] FOREIGN KEY (UsernameId) REFERENCES [User](Id)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-	CONSTRAINT [FK_dbo.UserWorkout_WorkoutPlanWorkout] FOREIGN KEY (UserCurrentPlan) REFERENCES PlanWorkout(LinkId)
+	CONSTRAINT [FK_dbo.UserWorkout_WorkoutPlanWorkout] FOREIGN KEY (UserCurrentPlan) REFERENCES PlanWorkout(LinkId)/*probably need to change this to reference PlanId in the workoutExercise table to reestablish connection*/
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );

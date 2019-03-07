@@ -285,7 +285,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Plan.cs" />
-    <Compile Include="Models\PlanWorkout.cs" />
     <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserWorkout.cs" />
@@ -813,6 +812,7 @@
     <Content Include="Views\UserWorkouts\Edit.cshtml" />
     <Content Include="Views\UserWorkouts\Index.cshtml" />
     <Content Include="Views\UserWorkouts\Complete.cshtml" />
+    <Content Include="Views\Workouts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -16,8 +16,6 @@ namespace Powerlevel.Models
 
         public int UserCurrentPlan { get; set; }
 
-        public virtual PlanWorkout PlanWorkout { get; set; }
-
         public virtual User User { get; set; }
     }
 }
