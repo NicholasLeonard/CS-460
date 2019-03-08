@@ -247,10 +247,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-<<<<<<< HEAD
-    <Compile Include="Controllers\UserWorkoutsController.cs" />
-=======
->>>>>>> 72e0e573505120189e00032558cf9bc7517ff38e
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -287,10 +283,6 @@
     <Compile Include="Models\ExerciseImage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-<<<<<<< HEAD
-    <Compile Include="Models\Plan.cs" />
-=======
->>>>>>> 72e0e573505120189e00032558cf9bc7517ff38e
     <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Workout.cs" />
