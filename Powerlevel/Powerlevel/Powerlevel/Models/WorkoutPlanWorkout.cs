@@ -6,20 +6,20 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("WorkoutExercise")]
-    public partial class WorkoutExercise
+    [Table("WorkoutPlanWorkout")]
+    public partial class WorkoutPlanWorkout
     {
         [Key]
-        public int LinkId { get; set; }
-
-        public int WorkoutId { get; set; }
-
-        public int ExerciseId { get; set; }
+        public int LinkID { get; set; }
 
         public int PlanId { get; set; }
 
-        public int? OrderNumber { get; set; }
+        public int WorkoutId { get; set; }
+
+        public int DayOfPlan { get; set; }
 
         public virtual Workout Workout { get; set; }
+
+        public virtual WorkoutPlan WorkoutPlan { get; set; }
     }
 }

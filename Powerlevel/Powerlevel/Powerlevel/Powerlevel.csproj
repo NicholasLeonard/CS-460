@@ -245,9 +245,12 @@
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PlanWorkoutsController.cs" />
+    <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\UserWorkoutsController.cs" />
+=======
+>>>>>>> 72e0e573505120189e00032558cf9bc7517ff38e
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -284,12 +287,16 @@
     <Compile Include="Models\ExerciseImage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Plan.cs" />
+=======
+>>>>>>> 72e0e573505120189e00032558cf9bc7517ff38e
     <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserWorkout.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
+    <Compile Include="Models\WorkoutPlan.cs" />
+    <Compile Include="Models\WorkoutPlanWorkout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -304,9 +311,11 @@
     <Content Include="App_Data\Toaster_log.ldf">
       <DependentUpon>Toaster.mdf</DependentUpon>
     </Content>
-    <Content Include="App_Data\User_Up.sql" />
+    <Content Include="App_Data\USER_DOWN.sql" />
+    <Content Include="App_Data\USER_UP.sql" />
     <Content Include="App_Data\USER_WORKOUT_DOWN.sql" />
     <Content Include="App_Data\USER_WORKOUT_UP.sql" />
+    <Content Include="App_Data\WORKOUTPLAN_SEED.sql" />
     <Content Include="App_Data\WORKOUT_DOWN.sql" />
     <Content Include="App_Data\WORKOUT_SEED.sql" />
     <Content Include="App_Data\WORKOUT_UP.sql" />
@@ -800,7 +809,7 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Fitbit\Callback.cshtml" />
     <Content Include="Views\Fitbit\TestToken.cshtml" />
-    <Content Include="Views\PlanWorkouts\Index.cshtml" />
+    <Content Include="Views\WorkoutPlanWorkout\Index.cshtml" />
     <Content Include="Views\Workouts\Details.cshtml" />
     <Content Include="Views\Exercise\Details.cshtml" />
     <Content Include="Views\Exercise\Index.cshtml" />

@@ -1,4 +1,8 @@
+<<<<<<< HEAD:Powerlevel/Powerlevel/Powerlevel/Views/PlanWorkouts/Index.cshtml
 ﻿@model IEnumerable<Powerlevel.Models.Plan>
+=======
+﻿@model IEnumerable<Powerlevel.Models.WorkoutPlanWorkout>
+>>>>>>> 72e0e573505120189e00032558cf9bc7517ff38e:Powerlevel/Powerlevel/Powerlevel/Views/WorkoutPlanWorkout/Index.cshtml
 @using Microsoft.AspNet.Identity
 
 <!-- Displays the sample "Chest and Back Plan" and its workouts with links detailing the workouts,
@@ -16,7 +20,11 @@
     <!--Displays "Chest and Back Plan (3 Days)" but may need to be altered when multiple workout plans are added-->
     <h3>
         @{
+<<<<<<< HEAD:Powerlevel/Powerlevel/Powerlevel/Views/PlanWorkouts/Index.cshtml
             var result = Model.GroupBy(x => x.Name);
+=======
+            var result = Model.GroupBy(x => x.WorkoutPlan.Name);
+>>>>>>> 72e0e573505120189e00032558cf9bc7517ff38e:Powerlevel/Powerlevel/Powerlevel/Views/WorkoutPlanWorkout/Index.cshtml
         }
         @foreach (var item in result)
         {
