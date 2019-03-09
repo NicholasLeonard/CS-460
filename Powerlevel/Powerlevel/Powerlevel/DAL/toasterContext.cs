@@ -8,7 +8,7 @@ namespace Powerlevel.Models
     public partial class toasterContext : DbContext
     {
         public toasterContext()
-            : base("name=toasterContext")
+            : base("name=toaster")
         {
         }
 
@@ -21,6 +21,7 @@ namespace Powerlevel.Models
         public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
+        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

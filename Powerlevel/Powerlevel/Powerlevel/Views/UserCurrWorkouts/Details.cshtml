@@ -1,0 +1,34 @@
+﻿@model Powerlevel.Models.UserCurrWorkout
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserCurrWorkout</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserActivePlan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserActivePlan)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UCWId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
