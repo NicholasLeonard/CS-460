@@ -9,8 +9,7 @@ namespace Powerlevel.Models
     [Table("User")]
     public partial class User
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
         public int? Height { get; set; }
 

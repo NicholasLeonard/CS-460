@@ -15,6 +15,7 @@ namespace Powerlevel.Models
             ExerciseEquipments = new HashSet<ExerciseEquipment>();
             ExerciseFlags = new HashSet<ExerciseFlag>();
             ExerciseImages = new HashSet<ExerciseImage>();
+            WorkoutExercises = new HashSet<WorkoutExercise>();
         }
 
         public int ExerciseId { get; set; }
@@ -43,5 +44,8 @@ namespace Powerlevel.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExerciseImage> ExerciseImages { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkoutExercise> WorkoutExercises { get; set; }
     }
 }

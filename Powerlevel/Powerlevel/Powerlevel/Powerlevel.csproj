@@ -802,7 +802,6 @@
     <Content Include="Views\Fitbit\Callback.cshtml" />
     <Content Include="Views\Fitbit\TestToken.cshtml" />
     <Content Include="Views\WorkoutPlanWorkout\Index.cshtml" />
-    <Content Include="Views\Workouts\Details.cshtml" />
     <Content Include="Views\Exercise\Details.cshtml" />
     <Content Include="Views\Exercise\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
@@ -813,6 +812,8 @@
     <Content Include="Views\UserWorkouts\Edit.cshtml" />
     <Content Include="Views\UserWorkouts\Index.cshtml" />
     <Content Include="Views\UserWorkouts\Complete.cshtml" />
+    <Content Include="Views\Workouts\Index.cshtml" />
+    <Content Include="Views\Exercise\WorkoutList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

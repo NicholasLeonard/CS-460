@@ -18,6 +18,8 @@ namespace Powerlevel.Models
 
         public int? OrderNumber { get; set; }
 
+        public virtual Exercise Exercise { get; set; }
+
         public virtual Workout Workout { get; set; }
     }
 }

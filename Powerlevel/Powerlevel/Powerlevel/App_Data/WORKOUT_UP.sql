@@ -31,5 +31,3 @@ CREATE TABLE [dbo].[WorkoutExercise]
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
-
-

@@ -14,13 +14,22 @@ namespace Powerlevel.Controllers
     {
         private toasterContext db = new toasterContext();
 
-        // GET: Exercis
+        /// <summary>
+        /// Displays all exercises
+        /// </summary>
+        /// <returns></returns>
+        // GET: Exercise
         public ActionResult Index()
         {
             return View(db.Exercises.ToList());
         }
 
-        // GET: Exercis/Details/5
+        /// <summary>
+        /// Displays the details of a particular exercise
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        // GET: Exercise/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,17 +45,29 @@ namespace Powerlevel.Controllers
             return View(exercise);
         }
 
-        // POST: Exercis/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        /// <summary>
+        /// Returns a list of Exercises within a specific workout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult WorkoutList(int? id)
         {
-            Exercise exercise = db.Exercises.Find(id);
-            db.Exercises.Remove(exercise);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var exercises = db.WorkoutExercises.Where(x => x.WorkoutId == id).Include(x => x.Exercise).OrderBy(x => x.OrderNumber);
+            if(exercises != null)
+            {
+                return View(exercises);
+            }//returns bad status code if nothing was found in the db
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
+        /// <summary>
+        /// Disposes of db instance
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

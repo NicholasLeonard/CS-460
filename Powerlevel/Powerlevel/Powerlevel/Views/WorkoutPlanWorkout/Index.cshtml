@@ -20,12 +20,13 @@
         }
         @foreach (var item in result)
         {
-            @Html.DisplayFor(modelItem => item.Key)
+            @Html.ActionLink(item.Key, "Index", "Workouts", new { id = item.First().PlanId}, null)
         }
         (3 Days)
 
     </h3>
-    <table class="table">
+    
+    @*<table class="table">
         <tr>
             <th>
                 Workout
@@ -48,11 +49,11 @@
             </tr>
         }
 
-    </table>
+    </table>*@
 
     <br />
     <!-- Directs user to plan creation page -->
-    @Html.ActionLink("Start a New Plan!", "Create", "UserWorkouts")
+   @* @Html.ActionLink("Start a New Plan!", "Create", "UserWorkouts")*@
 
 }
 else
