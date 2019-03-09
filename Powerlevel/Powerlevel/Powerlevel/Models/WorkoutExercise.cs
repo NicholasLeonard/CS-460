@@ -16,9 +16,9 @@ namespace Powerlevel.Models
 
         public int ExerciseId { get; set; }
 
-        public int PlanId { get; set; }
-
         public int? OrderNumber { get; set; }
+
+        public virtual Exercise Exercise { get; set; }
 
         public virtual Workout Workout { get; set; }
     }

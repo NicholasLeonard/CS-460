@@ -16,13 +16,12 @@ CREATE TABLE [dbo].[Workout]
 	CONSTRAINT [PK_dbo.Workout] PRIMARY KEY CLUSTERED ([WorkoutId] ASC)
 );
 
-/*CREATE the table that links workouts to thier various exercises in an order and links workouts to plans*/
+/*CREATE the table that links workouts to thier various exercises in an order */
 CREATE TABLE [dbo].[WorkoutExercise]
 (
 	[LinkId] INT IDENTITY(1,1) NOT NULL,
 	[WorkoutId] INT NOT NULL,
 	[ExerciseId] INT NOT NULL,
-	[PlanId] INT NOT NULL,
 	[OrderNumber] INT,
 	CONSTRAINT [PK_dbo.WorkoutExercise] PRIMARY KEY CLUSTERED ([LinkId] ASC),
 	CONSTRAINT [FK_dbo.WorkoutExercise_Workout] FOREIGN KEY (WorkoutId) REFERENCES Workout(WorkoutId)
@@ -30,10 +29,5 @@ CREATE TABLE [dbo].[WorkoutExercise]
 		ON UPDATE CASCADE,
 	CONSTRAINT [FK_dbo.WorkoutExercise_Exercise] FOREIGN KEY (ExerciseId) REFERENCES Exercise(ExerciseId)
 		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	CONSTRAINT [FK_dbo.WorkoutExercise_Plan] FOREIGN KEY (PlanId) REFERENCES [Plan](PlanId)
-		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );
-
-

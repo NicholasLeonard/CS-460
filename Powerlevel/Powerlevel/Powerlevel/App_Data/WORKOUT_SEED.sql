@@ -7,7 +7,6 @@
 /* Create the table that contains various workouts, whether they are strength or cardio,
 the muscle group that it focuses on, and approximately how long the full workout takes to complete */
 INSERT INTO [dbo].[Workout] (Name, Type, MainMuscleFocus, TimeEstimate) VALUES
-
 ('Upper Body Hellhole', 'Strength', 'Chest', '30 Minutes'),
 ('Burning Back', 'Strength', 'Back', '45 Minutes')
 

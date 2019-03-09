@@ -9,7 +9,7 @@
 /* CREATE the table for workout plans
 	-Plan is a reserved word, needed to rename Plan to WorkoutPlan
 */
-CREATE TABLE [dbo].[Plan]
+CREATE TABLE [dbo].[WorkoutPlan]
 (
 	[PlanId] INT IDENTITY(1,1) NOT NULL,
 	[Name] NCHAR(128) NOT NULL,
@@ -17,37 +17,33 @@ CREATE TABLE [dbo].[Plan]
 	[Description] NVARCHAR(3000) NOT NULL,
 	[DaysToComplete] INT NOT NULL,
 	[NumberOfWorkouts] INT NOT NULL,
-	CONSTRAINT [PK_dbo.Plan] PRIMARY KEY CLUSTERED ([PlanId] ASC)
+	CONSTRAINT [PK_dbo.WorkoutPlan] PRIMARY KEY CLUSTERED ([PlanId] ASC)
 );
 
-/* CREATE the table for linking workout plans to workouts
-NOTE: May no longer need this table. Commenting it out for now.*/
-/*CREATE TABLE [dbo].[PlanWorkout]
+/* CREATE the table for linking workout plans to workouts */
+CREATE TABLE [dbo].[WorkoutPlanWorkout]
 (
 	[LinkID] INT IDENTITY(1,1) NOT NULL,
 	[PlanId] INT NOT NULL,
 	[WorkoutId] INT NOT NULL,
 	[DayOfPlan] INT NOT NULL
-	CONSTRAINT [PK_dbo.PlanWorkout] PRIMARY KEY CLUSTERED ([LinkId] ASC),
-	CONSTRAINT [FK_dbo.PlanWorkout_Plan] FOREIGN KEY (PlanId) REFERENCES [Plan]([PlanId])
+	CONSTRAINT [PK_dbo.WorkoutPlanWorkout] PRIMARY KEY CLUSTERED ([LinkId] ASC),
+	CONSTRAINT [FK_dbo.WorkoutPlanWorkout_WorkoutPlan] FOREIGN KEY (PlanId) REFERENCES WorkoutPlan(PlanId)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-	CONSTRAINT [FK_dbo.PlanWorkout_Workout] FOREIGN KEY (WorkoutId) REFERENCES Workout(WorkoutId)
+	CONSTRAINT [FK_dbo.WorkoutPlanWorkout_Workout] FOREIGN KEY (WorkoutId) REFERENCES Workout(WorkoutId)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
-);*/
-
+);
+/*
 /* Table for the name of a plan, the type of plan it is (working upper-body, back, legs, etc.), a description of the plan, 
 how many days it will take to complete, and the number of workouts in the plan */
-INSERT INTO [dbo].[Plan] (Name, Type, Description, DaysToComplete, NumberOfWorkouts) VALUES
+INSERT INTO [dbo].[WorkutPlan] (Name, Type, Description, DaysToComplete, NumberOfWorkouts) VALUES
 ('Chest and Back Plan', 'Upper-Body', 'The core of this plan works out your chest and back, with most of the workouts also 
-strengthening your triceps.', 3, 2),
-('Place holder plan', 'Replaceable', 'just holding space needs to be changed', 3, 2)
+strengthening your triceps.', 3, 10)
 
 /* Table to connect the plan to a workout via PlanID and WorkoutID, 
-as well as display which day of the plan the workout should be completed
-NOTE commented out the corresponding table because may no longer need it*/
-/*
+as well as display which day of the plan the workout should be completed */
 INSERT INTO [dbo].[PlanWorkout] (PlanId, WorkoutId, DayOfPlan) VALUES
 (1,1,1),
 (1,2,1),

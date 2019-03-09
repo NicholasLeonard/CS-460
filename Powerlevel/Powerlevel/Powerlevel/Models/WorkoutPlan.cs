@@ -6,17 +6,13 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-
     [Table("WorkoutPlan")]
     public partial class WorkoutPlan
-
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Plan()
+        public WorkoutPlan()
         {
-
             WorkoutPlanWorkouts = new HashSet<WorkoutPlanWorkout>();
-
         }
 
         [Key]
@@ -40,6 +36,5 @@ namespace Powerlevel.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
-
     }
 }

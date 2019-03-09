@@ -16,10 +16,10 @@ namespace Powerlevel.Models
 
         public ActionResult Details(int? id)
         {
-            /*if (id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
                       
             Workout workout = db.Workouts.Find(id);
             if (workout == null)
@@ -35,7 +35,7 @@ namespace Powerlevel.Models
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var test = db.Workouts.Include(y => y.WorkoutExercises);
+            var test = db.WorkoutPlanWorkouts.Where(x => x.PlanId == id).Include(x => x.Workout);
             return View(test);
         }
     }

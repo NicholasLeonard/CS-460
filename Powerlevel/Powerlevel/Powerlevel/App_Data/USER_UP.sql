@@ -12,4 +12,3 @@ CREATE TABLE [dbo].[User]
     [UserName] NVARCHAR(256) NOT NULL,
 	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 )
-

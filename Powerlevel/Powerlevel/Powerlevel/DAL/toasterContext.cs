@@ -22,7 +22,6 @@ namespace Powerlevel.Models
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Exercise>()
@@ -39,7 +38,6 @@ namespace Powerlevel.Models
 
             modelBuilder.Entity<ExerciseEquipment>()
                 .Property(e => e.EquipmentName)
-
                 .IsFixedLength();
 
             modelBuilder.Entity<ExerciseFlag>()
