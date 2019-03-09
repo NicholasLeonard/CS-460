@@ -42,13 +42,13 @@
                         @Html.DisplayFor(modelItem => item.MainMuscleWorked)
                     </td>
                     <td>
-                        
+                        <!--Here we have an O(n^2) due to going through all the equipment entries for all of the exercise, hope to reduce this sometime soon :<-->
                         @foreach (ExerciseEquipment equip in ViewBag.Equipment)
                         {
                             if (equip.ExerciseId == item.ExerciseId)
                             {
 
-                                @(equip.EquipmentName)
+                                @(equip.EquipmentName)<br>
 
                             }
                         }
