@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,7 +18,7 @@ namespace Powerlevel.Controllers
         // GET: UserCurrWorkouts
         public ActionResult Index()
         {
-            var userCurrWorkouts = db.UserCurrWorkouts.Include(u => u.User);
+            var userCurrWorkouts = db.UserCurrWorkouts.Include(u => u.User).Include(u => u.WorkoutExercise);
             return View(userCurrWorkouts.ToList());
         }
 
@@ -40,6 +41,7 @@ namespace Powerlevel.Controllers
         public ActionResult Create()
         {
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName");
+            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId");
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UCWId,UserId,UserActivePlan")] UserCurrWorkout userCurrWorkout)
+        public ActionResult Create([Bind(Include = "UCWId,UserId,UserActiveWorkout")] UserCurrWorkout userCurrWorkout)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +60,7 @@ namespace Powerlevel.Controllers
             }
 
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userCurrWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", userCurrWorkout.UserActiveWorkout);
             return View(userCurrWorkout);
         }
 
@@ -74,6 +77,7 @@ namespace Powerlevel.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userCurrWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", userCurrWorkout.UserActiveWorkout);
             return View(userCurrWorkout);
         }
 
@@ -82,7 +86,7 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UCWId,UserId,UserActivePlan")] UserCurrWorkout userCurrWorkout)
+        public ActionResult Edit([Bind(Include = "UCWId,UserId,UserActiveWorkout")] UserCurrWorkout userCurrWorkout)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +95,7 @@ namespace Powerlevel.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userCurrWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", userCurrWorkout.UserActiveWorkout);
             return View(userCurrWorkout);
         }
 
@@ -130,3 +135,4 @@ namespace Powerlevel.Controllers
         }
     }
 }
+*/

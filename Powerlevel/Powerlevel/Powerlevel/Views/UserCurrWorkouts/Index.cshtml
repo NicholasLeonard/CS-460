@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.User.UserName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserActivePlan)
+            @Html.DisplayNameFor(model => model.WorkoutExercise.LinkId)
         </th>
         <th></th>
     </tr>
@@ -26,7 +26,7 @@
             @Html.DisplayFor(modelItem => item.User.UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserActivePlan)
+            @Html.DisplayFor(modelItem => item.WorkoutExercise.LinkId)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.UCWId }) |

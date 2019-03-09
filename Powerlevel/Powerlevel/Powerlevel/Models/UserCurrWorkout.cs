@@ -14,7 +14,7 @@
 
         public int UserId { get; set; }
 
-        public int UserActivePlan { get; set; }
+        public int UserActiveWorkout { get; set; }
 
         public virtual User User { get; set; }
 
