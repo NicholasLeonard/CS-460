@@ -17,10 +17,12 @@ namespace Powerlevel.Controllers
         /// <summary>
         /// Displays all exercises
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View with list of all exercises and Viewbag with All equipment for exercises</returns>
         // GET: Exercise
         public ActionResult Index()
         {
+            //Grab all equipment to be displayed
+            ViewBag.Equipment = db.ExerciseEquipments.ToList();
             return View(db.Exercises.ToList());
         }
 
