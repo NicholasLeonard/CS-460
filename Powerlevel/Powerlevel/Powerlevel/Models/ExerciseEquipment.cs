@@ -14,18 +14,9 @@ namespace Powerlevel.Models
 
         public int ExerciseId { get; set; }
 
-        public bool? NoEquipment { get; set; }
+        [StringLength(64)]
+        public string EquipmentName { get; set; }
 
-        public bool? Bench { get; set; }
-
-        public bool? Dumbells { get; set; }
-
-        public bool? BarbellRack { get; set; }
-
-        public bool? PullupBar { get; set; }
-
-        public bool? Spotter { get; set; }
-
-        public virtual Exercis Exercis { get; set; }
+        public virtual Exercise Exercise { get; set; }
     }
 }

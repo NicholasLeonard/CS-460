@@ -37,11 +37,11 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include ="Id, Height, Weight, UserName")] User currentUserMetrics)
+        public ActionResult Index([Bind(Include ="UserId, Height, Weight, UserName")] User currentUserMetrics)
         {//this gets the field for the current user that is entering their metrics
             if (ModelState.IsValid)
             {//gets the entry from the db
-                User metrics = db.Users.Find(currentUserMetrics.Id);
+                User metrics = db.Users.Find(currentUserMetrics.UserId);
                 //updates the values in the entry
                 metrics.Height = currentUserMetrics.Height;
                 metrics.Weight = currentUserMetrics.Weight;

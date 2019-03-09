@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Powerlevel.Models.Exercis>
+﻿@model IEnumerable<Powerlevel.Models.Exercise>
 
 @{
     ViewBag.Title = "Index";
@@ -35,7 +35,7 @@
                         @Html.DisplayFor(modelItem => item.MainMuscleWorked)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id = item.ExerciseId })
+                        @Html.ActionLink("How to", "Details", new { id = item.ExerciseId })
                     </td>
                 </tr>
             }

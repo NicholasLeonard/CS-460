@@ -6,13 +6,14 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("Workout")]
     public partial class Workout
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Workout()
         {
-            PlanWorkouts = new HashSet<PlanWorkout>();
-            WorkoutExercises = new HashSet<WorkoutExercis>();
+            WorkoutExercises = new HashSet<WorkoutExercise>();
+            WorkoutPlanWorkouts = new HashSet<WorkoutPlanWorkout>();
         }
 
         public int WorkoutId { get; set; }
@@ -34,9 +35,9 @@ namespace Powerlevel.Models
         public string TimeEstimate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlanWorkout> PlanWorkouts { get; set; }
+        public virtual ICollection<WorkoutExercise> WorkoutExercises { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorkoutExercis> WorkoutExercises { get; set; }
+        public virtual ICollection<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
     }
 }

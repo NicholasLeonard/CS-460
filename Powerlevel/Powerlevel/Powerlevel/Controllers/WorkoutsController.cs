@@ -20,12 +20,23 @@ namespace Powerlevel.Models
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+                      
             Workout workout = db.Workouts.Find(id);
             if (workout == null)
             {
                 return HttpNotFound();
             }
             return View(workout);
+        }
+
+        public ActionResult Index (int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var test = db.WorkoutPlanWorkouts.Where(x => x.PlanId == id).Include(x => x.Workout);
+            return View(test);
         }
     }
 }

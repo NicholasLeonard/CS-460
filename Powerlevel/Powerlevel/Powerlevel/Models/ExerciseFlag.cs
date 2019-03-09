@@ -6,6 +6,7 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("ExerciseFlag")]
     public partial class ExerciseFlag
     {
         [Key]
@@ -13,16 +14,9 @@ namespace Powerlevel.Models
 
         public int ExerciseId { get; set; }
 
-        public bool? Sets { get; set; }
+        [StringLength(64)]
+        public string FlagName { get; set; }
 
-        public bool? Reps { get; set; }
-
-        public bool? Duration { get; set; }
-
-        public bool? Distance { get; set; }
-
-        public bool? Weight { get; set; }
-
-        public virtual Exercis Exercis { get; set; }
+        public virtual Exercise Exercise { get; set; }
     }
 }

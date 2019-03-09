@@ -186,12 +186,13 @@ namespace Powerlevel.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    
+
 
                     // Adding to the database for user stats that we need to track seperate from the standared template database table
-                    var our_user = new User { UserName = model.Username};
+                    var our_user = new User { UserName = model.Username };
                     db.Users.Add(our_user);
                     db.SaveChanges();
+                    
                     //  Comment the following line to prevent log in until the user is confirmed.
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 

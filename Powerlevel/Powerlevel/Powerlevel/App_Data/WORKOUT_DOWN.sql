@@ -1,18 +1,22 @@
-/* This code commented out so that the DOWN.sql worked for me
+/* Edit Log
+2/28/2019
+	-REFACTOR: Changed all Singlur instances for table names to Plural
+*/
 
 /*DOWN script for workout tables*/
 /* DROP FKs */
-ALTER TABLE [dbo].[WorkoutExercises] DROP CONSTRAINT [FK_dbo.WorkoutExercises_Workouts]
-ALTER TABLE [dbo].[WorkoutExercises] DROP CONSTRAINT [FK_dbo.WorkoutExercises_Exercises]
+ALTER TABLE [dbo].[WorkoutExercise] DROP CONSTRAINT [FK_dbo.WorkoutExercise_Workout]
+GO
 
+ALTER TABLE [dbo].[WorkoutExercise] DROP CONSTRAINT [FK_dbo.WorkoutExercise_Exercise]
+GO
 /* DROP PKs */
-ALTER TABLE [dbo].[Workouts] 			DROP CONSTRAINT [PK_dbo.Workouts]
-ALTER TABLE [dbo].[WorkoutExercises] 	DROP CONSTRAINT [PK_dbo.WorkoutExercises]
-
-*/
+ALTER TABLE [dbo].[Workout]             DROP CONSTRAINT [PK_dbo.Workout]
+ALTER TABLE [dbo].[WorkoutExercise]     DROP CONSTRAINT [PK_dbo.WorkoutExercise]
 
 /* DROP all tables */
-DROP TABLE IF EXISTS [dbo].[Workouts] 
-DROP TABLE IF EXISTS [dbo].[WorkoutExercises]
+DROP TABLE IF EXISTS [dbo].[Workout] 
+DROP TABLE IF EXISTS [dbo].[WorkoutExercise]
 
 GO
+

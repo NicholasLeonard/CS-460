@@ -1,16 +1,16 @@
-﻿@model IEnumerable<Powerlevel.Models.UserWorkout>
+﻿@model IEnumerable<Powerlevel.Models.UserCurrWorkout>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Workout Select";
 }
 
 @if (Request.IsAuthenticated)
 {
 
-    <h2>Active Plans</h2>
+    <h2>Active Workouts</h2>
 
     <p>
-        @Html.ActionLink("Start New Plan", "Create")
+        @Html.ActionLink("Start New Workout", "Create")
     </p>
     <table class="table">
         <tr>
@@ -18,10 +18,10 @@
                 @Html.DisplayNameFor(model => model.User.UserName)
             </th>
             <th>
-                Current Plan
+                Active Workout
             </th>
             <th>
-                Current Workout
+                Current Exercise in Workout
             </th>
             <th>
                 Stage
@@ -35,24 +35,24 @@
                     @Html.DisplayFor(modelItem => item.User.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PlanWorkout.Plan.Name)
+                    @Html.DisplayFor(modelItem => item.WorkoutExercise.Workout.Name)
                 </td>
                 <td>
-                    @Html.ActionLink(item.PlanWorkout.Workout.Name, "Details", "Workouts", new { id = item.PlanWorkout.WorkoutId }, null)
+                    @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PlanWorkout.LinkID)
+                    @Html.DisplayFor(modelItem => item.UserActiveWorkout)
                 </td>
                 <td>
                     @*
-                        We wont use these for now
+                                We wont use these for now
+                        @Html.ActionLink("Complete", "Complete", new { id = item.UCWId }) |
 
-                        @Html.ActionLink("Edit", "Edit", new { id = item.UWId }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.UWId }) |
                     *@
 
-                    @Html.ActionLink("Complete", "Complete", new { id = item.UWId }) |
-                    @Html.ActionLink("Abandon", "Abandon", new { id = item.UWId })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UCWId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
+                    @Html.ActionLink("Abandon", "Delete", new { id = item.UCWId })
 
                 </td>
             </tr>
