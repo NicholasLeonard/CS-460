@@ -72,5 +72,7 @@ namespace Powerlevel.Models
                 .Property(e => e.Type)
                 .IsFixedLength();
         }
+
+        public System.Data.Entity.DbSet<Powerlevel.Models.UserWorkoutPlan> UserWorkoutPlans { get; set; }
     }
 }

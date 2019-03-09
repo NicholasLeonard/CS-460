@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Powerlevel.Models.UserWorkoutPlan>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Personal Workout Plan";
+}
+
+<h2>Personal Workout Plan</h2>
+
+<p>
+    @Html.ActionLink("Choose Plans", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.ActionLink(@Html.DisplayNameFor(model => model.Type).ToString(), "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DaysToComplete)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfWorkouts)
+        </th>
+        <th></th>
+    </tr>
+
+    @*show only the user stuff*@
+    @foreach (var item in Model.Where(x => x.UserName == @User.Identity.GetUserName()))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysToComplete)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfWorkouts)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PlanId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PlanId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PlanId })
+            </td>
+        </tr>
+    }
+
+</table>
