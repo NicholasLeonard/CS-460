@@ -248,17 +248,6 @@
     <Compile Include="Controllers\UserCurrWorkoutsController.cs" />
     <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="FakeModels\Exercise.cs" />
-    <Compile Include="FakeModels\ExerciseEquipment.cs" />
-    <Compile Include="FakeModels\ExerciseFlag.cs" />
-    <Compile Include="FakeModels\ExerciseImage.cs" />
-    <Compile Include="FakeModels\FakeContext.cs" />
-    <Compile Include="FakeModels\User.cs" />
-    <Compile Include="FakeModels\UserCurrWorkout.cs" />
-    <Compile Include="FakeModels\Workout.cs" />
-    <Compile Include="FakeModels\WorkoutExercise.cs" />
-    <Compile Include="FakeModels\WorkoutPlan.cs" />
-    <Compile Include="FakeModels\WorkoutPlanWorkout.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

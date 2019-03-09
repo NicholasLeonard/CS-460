@@ -9,6 +9,12 @@ namespace Powerlevel.Models
     [Table("WorkoutExercise")]
     public partial class WorkoutExercise
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WorkoutExercise()
+        {
+            UserCurrWorkouts = new HashSet<UserCurrWorkout>();
+        }
+
         [Key]
         public int LinkId { get; set; }
 
@@ -20,6 +26,10 @@ namespace Powerlevel.Models
 
         public virtual Exercise Exercise { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserCurrWorkout> UserCurrWorkouts { get; set; }
+
         public virtual Workout Workout { get; set; }
     }
 }
+

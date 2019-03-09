@@ -21,7 +21,7 @@ namespace Powerlevel.Models
         public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
-        //public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
+        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -73,12 +73,10 @@ namespace Powerlevel.Models
                 .Property(e => e.Type)
                 .IsFixedLength();
 
-            /*
             modelBuilder.Entity<WorkoutExercise>()
                 .HasMany(e => e.UserCurrWorkouts)
                 .WithRequired(e => e.WorkoutExercise)
                 .HasForeignKey(e => e.UserActiveWorkout);
-            */
         }
     }
 }
