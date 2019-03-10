@@ -20,33 +20,43 @@ namespace Powerlevel.Controllers
         //    return View(db.UserWorkoutPlans.ToList());
         //}
 
-
         public ActionResult Index(string sortOrder)
         {
             //sorting function
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "plan_type" : "";
+            ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username" : "";
+            ViewBag.PlanNameSortParm = String.IsNullOrEmpty(sortOrder) ? "plan_name" : "";
+            ViewBag.TypeSortParm = String.IsNullOrEmpty(sortOrder) ? "plan_type" : "";
+            ViewBag.DescriptionSortParm = String.IsNullOrEmpty(sortOrder) ? "description" : "";
+            ViewBag.DaysSortParm = String.IsNullOrEmpty(sortOrder) ? "days" : "";
+            ViewBag.NumWorkoutsSortParm = String.IsNullOrEmpty(sortOrder) ? "numWorkouts" : "";
             var UserWorkoutPlan = from s in db.UserWorkoutPlans
                            select s;
             switch (sortOrder)
             {
-                case "plan_type":
-                    UserWorkoutPlan = UserWorkoutPlan.OrderByDescending(s => s.Type);
+                case "username":
+                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.UserName);
                     break;
-                //case "Date":
-                //    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Name);
-                //    break;
-                //case "date_desc":
-                //    UserWorkoutPlan = UserWorkoutPlan.OrderByDescending(s => s.Type);
-                //    break;
+                case "plan_name":
+                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Name);
+                    break;
+                case "plan_type":
+                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Type);
+                    break;
+                case "description":
+                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Description);
+                    break;
+                case "days":
+                  UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.DaysToComplete);
+                  break;
+                case "numWorkouts":
+                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.NumberOfWorkouts);
+                    break;
                 default:
                     UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.UserName);
                     break;
             }
             return View(UserWorkoutPlan.ToList());
         }
-
-
-
 
         // GET: UserWorkoutPlans/Details/5
         public ActionResult Details(int? id)
@@ -68,7 +78,10 @@ namespace Powerlevel.Controllers
         {
             //ViewBag.AvailablePlans = new SelectList(db.WorkoutPlanWorkouts, "WorkoutID", "WorkoutID");
 
-            ViewBag.AvailablePlans = new SelectList(db.WorkoutPlanWorkouts, "WorkoutId", "WorkoutId");
+            //ViewBag.AvailablePlans = new SelectList(db.WorkoutPlanWorkouts, "WorkoutId", "WorkoutId");
+
+            //get the list of plans from the db and pass into the viewbag
+            ViewBag.AvailablePlans = new SelectList(db.WorkoutPlans, "PlanId", "Name");
 
             return View();
         }

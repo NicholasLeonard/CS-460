@@ -29,10 +29,11 @@
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @* @Html.DropDownList("AvailablePlans",(SelectList)ViewBag.AvailablePlans, "Select your plan")*@
-
                 @* @Html.DropDownList("AvailablePlans", null, htmlAttributes: new { @class = "form-control" }) *@
-                @Html.DropDownListFor(model => model.Name, new SelectList(ViewBag.AvailablePlans), "Select your plan")
-
+                @*@ @Html.DropDownListFor(model => model.Name, new SelectList(ViewBag.AvailablePlans), "Select your plan")*@
+                @* @Html.DropDownList("AvailablePlans")*@
+                @*display dropdownlist for user to select*@
+                @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewBag.AvailablePlans, null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
