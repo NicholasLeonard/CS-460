@@ -14,12 +14,15 @@ namespace Powerlevel.Controllers
     {
         private toasterContext db = new toasterContext();
 
-        // GET: UserWorkoutPlans
-        //public ActionResult Index()
-        //{
-        //    return View(db.UserWorkoutPlans.ToList());
-        //}
+        //GET: UserWorkoutPlans
+        public ActionResult Index()
+        {
+            ViewBag.Workoutplans = db.WorkoutPlans.ToList();
+            return View(db.UserWorkoutPlans.ToList());
+        }
 
+        //REFACTOR:: Leaving this in for now incase I want to try and implement it again later, does not work with the current model
+        /*
         public ActionResult Index(string sortOrder)
         {
             //sorting function
@@ -55,23 +58,9 @@ namespace Powerlevel.Controllers
                     UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.UserName);
                     break;
             }
-            return View(UserWorkoutPlan.ToList());
+            return View(UserWorkoutPlan.ToList());  
         }
-
-        // GET: UserWorkoutPlans/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserWorkoutPlan userWorkoutPlan = db.UserWorkoutPlans.Find(id);
-            if (userWorkoutPlan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userWorkoutPlan);
-        }
+        */
 
         // GET: UserWorkoutPlans/Create
         public ActionResult Create()
@@ -94,75 +83,12 @@ namespace Powerlevel.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Create Database entry using given PlanId and Username and the entries in the WorkoutPlans table
-                userWorkoutPlan.Name = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().Name;
-                userWorkoutPlan.Type = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().Type;
-                userWorkoutPlan.Description = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().Description;
-                userWorkoutPlan.DaysToComplete = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().DaysToComplete;
-                userWorkoutPlan.NumberOfWorkouts = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().NumberOfWorkouts;
 
                 db.UserWorkoutPlans.Add(userWorkoutPlan);
                 db.SaveChanges();         
                 return RedirectToAction("Index");
             }
             return View(userWorkoutPlan);
-        }
-
-        // GET: UserWorkoutPlans/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserWorkoutPlan userWorkoutPlan = db.UserWorkoutPlans.Find(id);
-            if (userWorkoutPlan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userWorkoutPlan);
-        }
-
-        // POST: UserWorkoutPlans/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlanId,UserName,Name,Type,Description,DaysToComplete,NumberOfWorkouts")] UserWorkoutPlan userWorkoutPlan)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(userWorkoutPlan).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(userWorkoutPlan);
-        }
-
-        // GET: UserWorkoutPlans/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserWorkoutPlan userWorkoutPlan = db.UserWorkoutPlans.Find(id);
-            if (userWorkoutPlan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(userWorkoutPlan);
-        }
-
-        // POST: UserWorkoutPlans/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            UserWorkoutPlan userWorkoutPlan = db.UserWorkoutPlans.Find(id);
-            db.UserWorkoutPlans.Remove(userWorkoutPlan);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

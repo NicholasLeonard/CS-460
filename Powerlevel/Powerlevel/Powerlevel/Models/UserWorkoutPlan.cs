@@ -10,27 +10,17 @@ namespace Powerlevel.Models
     public partial class UserWorkoutPlan
     {
         [Key]
-        public int PlanId { get; set; }
+        public int LogId { get; set; }
 
         [Required]
         [StringLength(256)]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(64)]
-        public string Name { get; set; }
+        public int PlanId { get; set; }
 
-        [Required]
-        [StringLength(64)]
-        public string Type { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
-        public int DaysToComplete { get; set; }
-
-        public int NumberOfWorkouts { get; set; }
-
+        /* manually added by coder during refactor of additional constraint */
+        public virtual WorkoutPlan WorkoutPlan { get; set; }
 
       public List<WorkoutPlanWorkout> AvailableWorkoutPlan { get; set; }
 

@@ -797,9 +797,6 @@
     <Content Include="Views\UserWorkouts\Index.cshtml" />
     <Content Include="Views\UserWorkouts\Complete.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Create.cshtml" />
-    <Content Include="Views\UserWorkoutPlans\Delete.cshtml" />
-    <Content Include="Views\UserWorkoutPlans\Details.cshtml" />
-    <Content Include="Views\UserWorkoutPlans\Edit.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

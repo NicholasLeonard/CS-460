@@ -36,5 +36,9 @@ namespace Powerlevel.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
+
+        /* Added (by coder) during addition of UserWorkoutPlans */
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserWorkoutPlan> UserWorkoutPlans { get; set; }
     }
 }

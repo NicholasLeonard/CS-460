@@ -4,13 +4,56 @@
     ViewBag.Title = "Personal Workout Plan";
 }
 
-<h2>Personal Workout Plan</h2>
+<h2>Personal Workout Plans</h2>
 @*request the user to be logged-in. Else, ask go to login page*@
 @if (Request.IsAuthenticated)
 {
     <p>
         @Html.ActionLink("Choose Plans", "Create")
     </p>
+    <div id="maintable">
+        <table class="table" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkoutPlan.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkoutPlan.Type)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkoutPlan.NumberOfWorkouts)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkoutPlan.DaysToComplete)
+                    </th>
+                    @*Extra Header element to get the table to work in JS*@
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            @*show only the user stuff*@
+            @foreach (var item in Model.Where(x => x.UserName == @User.Identity.GetUserName()))
+            {
+                @*Use the ViewBag of all WorkoutPlans to place the userworkout plans *@
+                <tr>
+                    @foreach (var plan in ViewBag.WorkoutPlans) {
+                        if (plan.PlanId == item.PlanId) { 
+                            <td>@plan.Name</td>
+                            <td>@plan.Type</td>
+                            <td>@plan.NumberOfWorkouts</td>
+                            <td>@plan.DaysToComplete</td>
+                        }
+                    }
+                
+                </tr>
+
+            }
+        </table>
+
+</div>
+    /* REFACTOR: OLD TABLE LEFT IN INCASE REIMPLEMENTATION
     <table class="table">
         <tr>
             <th>
@@ -65,7 +108,11 @@
             </tr>
         }
     </table>
+    */
+
+
 }
+
 
 @*Else, ask them to login*@
 else
