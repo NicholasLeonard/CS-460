@@ -1,0 +1,28 @@
+﻿<!-- Allows the user to Compelete the workout, removing it from the UserCurrWorkout table -->
+
+@model Powerlevel.Models.UserCurrWorkout
+
+@{
+    ViewBag.Title = "Complete";
+}
+
+<h3>Did you successfully Complete this Workout?</h3>
+<div>
+    <hr />
+
+    <h4>
+        <b>@Html.DisplayFor(model => model.User.UserName)</b> will complete the
+        <b>@Html.DisplayFor(model => model.WorkoutExercise.Workout.Name)</b> Workout
+    </h4>
+    <br />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Complete!" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

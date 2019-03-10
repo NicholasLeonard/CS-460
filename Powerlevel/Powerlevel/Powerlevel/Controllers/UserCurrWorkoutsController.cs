@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
@@ -39,9 +40,27 @@ namespace Powerlevel.Controllers
         // GET: UserCurrWorkouts/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName");
+            var currentUser = HttpContext.User.Identity.Name;
+
+            var user = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault();
+            ViewBag.UserId = user.UserId;
+            //ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName");
             ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId");
+            ViewBag.AvailableWorkouts = new SelectList(db.Workouts, "WorkoutId", "Name");
+
             return View();
+
+            /*
+             * I want to be restricted from selecting different users when creating a workout, but as of now
+             * I could not figure out how to do this, here is some failed attempt code
+             * 
+            var currentUser = Thread.CurrentPrincipal.Identity.Name;
+            ViewBag.UserId = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault();
+            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "WorkoutId");
+            return View();
+
+            ViewBag.UserId = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault().UserId;
+            */
         }
 
         // POST: UserCurrWorkouts/Create
@@ -98,8 +117,8 @@ namespace Powerlevel.Controllers
             return View(userCurrWorkout);
         }
 
-        // GET: UserCurrWorkouts/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: UserCurrWorkouts/Abandon/5
+        public ActionResult Abandon(int? id)
         {
             if (id == null)
             {
@@ -113,10 +132,36 @@ namespace Powerlevel.Controllers
             return View(userCurrWorkout);
         }
 
-        // POST: UserCurrWorkouts/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: UserCurrWorkouts/Abandon/5
+        [HttpPost, ActionName("Abandon")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult AbandonConfirmed(int id)
+        {
+            UserCurrWorkout userCurrWorkout = db.UserCurrWorkouts.Find(id);
+            db.UserCurrWorkouts.Remove(userCurrWorkout);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: UserCurrWorkouts/Complete/5
+        public ActionResult Complete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserCurrWorkout userCurrWorkout = db.UserCurrWorkouts.Find(id);
+            if (userCurrWorkout == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userCurrWorkout);
+        }
+
+        // POST: UserCurrWorkouts/Complete/5
+        [HttpPost, ActionName("Complete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CompleteConfirmed(int id)
         {
             UserCurrWorkout userCurrWorkout = db.UserCurrWorkouts.Find(id);
             db.UserCurrWorkouts.Remove(userCurrWorkout);

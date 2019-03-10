@@ -1,0 +1,27 @@
+﻿<!-- Allows the user to "abandon" a workout by deleting the workout from the CurrWorkout table -->
+
+@model Powerlevel.Models.UserCurrWorkout
+
+@{
+    ViewBag.Title = "Abandon";
+}
+
+<h3>Are you sure you want to Abandon this Workout?</h3>
+<div>
+    <hr />
+
+        <h4>
+            <b>@Html.DisplayFor(model => model.User.UserName)</b> will abandon the 
+            <b>@Html.DisplayFor(model => model.WorkoutExercise.Workout.Name)</b> Workout
+        </h4>
+    <br />
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Confirm" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
