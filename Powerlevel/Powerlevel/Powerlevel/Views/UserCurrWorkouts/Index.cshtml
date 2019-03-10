@@ -7,7 +7,7 @@
 @if (Request.IsAuthenticated)
 {
 
-    <h2>Active Workouts</h2>
+    <h2>Active Workouts for @User.Identity.Name </h2>
 
     <p>
         @Html.ActionLink("Start New Workout", "Create")
@@ -31,11 +31,14 @@
         @foreach (var item in Model)
         {
             <tr>
+                @if (item.User.UserName == User.Identity.Name)
+                { 
                 <td>
+
                     @Html.DisplayFor(modelItem => item.User.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.WorkoutExercise.Workout.Name)
+                    @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId}, null)
                 </td>
                 <td>
                     @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
@@ -55,6 +58,7 @@
                     @Html.ActionLink("Abandon", "Delete", new { id = item.UCWId })
 
                 </td>
+                }
             </tr>
         }
 
