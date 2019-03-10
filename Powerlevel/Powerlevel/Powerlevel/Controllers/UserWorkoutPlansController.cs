@@ -68,7 +68,7 @@ namespace Powerlevel.Controllers
         {
             //ViewBag.AvailablePlans = new SelectList(db.WorkoutPlanWorkouts, "WorkoutID", "WorkoutID");
 
-            ViewBag.AvailablePlans = new SelectList(db.WorkoutPlanWorkouts, "WorkoutId", "WorkoutId");
+            ViewBag.AvailablePlans = new SelectList(db.WorkoutPlans, "PlanId", "Name");
 
             return View();
         }
@@ -78,10 +78,17 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PlanId,UserName,Name,Type,Description,DaysToComplete,NumberOfWorkouts")] UserWorkoutPlan userWorkoutPlan)
+        public ActionResult Create([Bind(Include = "PlanId,UserName")] UserWorkoutPlan userWorkoutPlan)
         {
             if (ModelState.IsValid)
             {
+                // Create Database entry using given PlanId and Username and the entries in the WorkoutPlans table
+                userWorkoutPlan.Name = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().Name;
+                userWorkoutPlan.Type = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().Type;
+                userWorkoutPlan.Description = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().Description;
+                userWorkoutPlan.DaysToComplete = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().DaysToComplete;
+                userWorkoutPlan.NumberOfWorkouts = db.WorkoutPlans.Where(x => x.PlanId == userWorkoutPlan.PlanId).First().NumberOfWorkouts;
+
                 db.UserWorkoutPlans.Add(userWorkoutPlan);
                 db.SaveChanges();         
                 return RedirectToAction("Index");

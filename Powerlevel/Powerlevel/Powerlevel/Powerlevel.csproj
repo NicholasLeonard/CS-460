@@ -271,27 +271,27 @@
     <Compile Include="Models\ViewModels\WorkoutPlanVM.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ASP_Users_UP.sql" />
-    <Content Include="App_Data\EXERCISE_DOWN.sql" />
-    <Content Include="App_Data\EXERCISE_SEED.sql" />
-    <Content Include="App_Data\EXERCISE_UP.sql" />
-    <Content Include="App_Data\PLAN_DOWN.sql" />
-    <Content Include="App_Data\PLAN_UP.sql" />
+    <Content Include="App_Data\UP\ASP_Users_UP.sql" />
+    <Content Include="App_Data\DOWN\EXERCISE_DOWN.sql" />
+    <Content Include="App_Data\SEED\EXERCISE_SEED.sql" />
+    <Content Include="App_Data\UP\EXERCISE_UP.sql" />
+    <Content Include="App_Data\DOWN\PLAN_DOWN.sql" />
+    <Content Include="App_Data\UP\PLAN_UP.sql" />
     <Content Include="App_Data\Toaster.mdf" />
     <Content Include="App_Data\Toaster_log.ldf">
       <DependentUpon>Toaster.mdf</DependentUpon>
     </Content>
-    <Content Include="App_Data\USER_DOWN.sql" />
-    <Content Include="App_Data\USER_UP.sql" />
-    <Content Include="App_Data\USER_WORKOUTPLAN_DOWN.sql" />
-    <Content Include="App_Data\USER_WORKOUT_DOWN.sql" />
-    <Content Include="App_Data\USER_WORKOUTPLAN_SEED.sql" />
-    <Content Include="App_Data\USER_WORKOUT_UP.sql" />
-    <Content Include="App_Data\WORKOUTPLAN_SEED.sql" />
-    <Content Include="App_Data\USER_WORKOUTPLAN_UP.sql" />
-    <Content Include="App_Data\WORKOUT_DOWN.sql" />
-    <Content Include="App_Data\WORKOUT_SEED.sql" />
-    <Content Include="App_Data\WORKOUT_UP.sql" />
+    <Content Include="App_Data\DOWN\USER_DOWN.sql" />
+    <Content Include="App_Data\UP\USER_UP.sql" />
+    <Content Include="App_Data\DOWN\USER_WORKOUTPLAN_DOWN.sql" />
+    <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\SEED\USER_WORKOUTPLAN_SEED.sql" />
+    <Content Include="App_Data\UP\USER_WORKOUT_UP.sql" />
+    <Content Include="App_Data\SEED\WORKOUTPLAN_SEED.sql" />
+    <Content Include="App_Data\UP\USER_WORKOUTPLAN_UP.sql" />
+    <Content Include="App_Data\DOWN\WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\SEED\WORKOUT_SEED.sql" />
+    <Content Include="App_Data\UP\WORKOUT_UP.sql" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />

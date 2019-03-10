@@ -17,7 +17,8 @@ namespace Powerlevel.Models
         public string UserName { get; set; }
 
         [Required]
-        public int Name { get; set; }
+        [StringLength(64)]
+        public string Name { get; set; }
 
         [Required]
         [StringLength(64)]
