@@ -32,8 +32,7 @@ namespace Powerlevel.Models
         public int NumberOfWorkouts { get; set; }
 
 
-       public List<WorkoutPlanWorkout> AvailableWorkoutPlan { get; set; }
-
+      public List<WorkoutPlanWorkout> AvailableWorkoutPlan { get; set; }
 
     }
 }
