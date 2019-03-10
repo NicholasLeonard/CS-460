@@ -33,38 +33,46 @@
             <tr>
                 <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
                 @if (item.User.UserName == User.Identity.Name)
-                { 
-                <td>
+                {
+                    <td>
 
-                    @Html.DisplayFor(modelItem => item.User.UserName)
-                </td>
-                <td>
-                    @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId}, null)
-                </td>
-                <td>
-                    @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserActiveWorkout)
-                </td>
-                <td>
-                    @*
-                        We wont use these for now
-                
-                @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
-                    *@
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber)
+                    </td>
+                    <td>
+                        @*
+                                    We wont use these for now:
+                            @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
+                        *@
 
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UCWId }) |
+                        @Html.ActionLink("Edit", "Edit", new { id = item.UCWId }) |
 
-                    @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId }) |
-                    @Html.ActionLink("Complete", "Complete", new { id = item.UCWId })
+                        @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId })
 
-                </td>
+                        <!-- Checks if the current Exercise is the third in the Workout before allowing completion, this is a temporary solution that
+                            assumes all Workouts include exactly 3 exercises -->
+                        @if(item.WorkoutExercise.OrderNumber == 3) {
+                            @:| <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b>
+                        }
+                    </td>
                 }
             </tr>
         }
 
     </table>
+
+    <script type="text/javascript">
+        x = 5;
+        
+    </script>
 }
 
 else
