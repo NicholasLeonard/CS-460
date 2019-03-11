@@ -40,27 +40,23 @@ namespace Powerlevel.Controllers
         // GET: UserCurrWorkouts/Create
         public ActionResult Create()
         {
-            var currentUser = HttpContext.User.Identity.Name;
+            // Sets the User that is creating a workout to the currently logged in User automatically
+            var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            ViewBag.UserId = CurrentUser.UserId;
 
-            var user = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault();
-            ViewBag.UserId = user.UserId;
-            //ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName");
-            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId");
-            ViewBag.AvailableWorkouts = new SelectList(db.Workouts, "WorkoutId", "Name");
-
-            return View();
-
-            /*
-             * I want to be restricted from selecting different users when creating a workout, but as of now
-             * I could not figure out how to do this, here is some failed attempt code
-             * 
-            var currentUser = Thread.CurrentPrincipal.Identity.Name;
-            ViewBag.UserId = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault();
-            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "WorkoutId");
-            return View();
-
-            ViewBag.UserId = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault().UserId;
+            /* These variables preset the selection of workouts to start so that the user starts at the beginning of a workout, not
+             * somewhere in the middle.
+             * The "Where" Statements in these two variables don't actually do anything, I just left them in there
+             * in an effort to review and understand LINQ better later on
             */
+            var WorkoutHellhole = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.Hellhole = WorkoutHellhole.LinkId;
+            
+            var WorkoutBurningBack = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BurningBack = WorkoutBurningBack.LinkId + 3; /* Adding "+ 3" to the LinkId was the best method I could find
+            in having the second "Burning Back" workout option start properly when selected by the user, can code this prettier later on */
+
+            return View();
         }
 
         // POST: UserCurrWorkouts/Create
