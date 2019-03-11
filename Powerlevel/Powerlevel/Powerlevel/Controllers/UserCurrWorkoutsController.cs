@@ -95,6 +95,9 @@ namespace Powerlevel.Controllers
             var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
 
+            //var WorkoutProgress = db.WorkoutExercises.Where(x => x.LinkId == id).First();
+            //ViewBag.Progress = WorkoutProgress.LinkId + 1;
+
             ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", userCurrWorkout.UserActiveWorkout);
             return View(userCurrWorkout);
         }
