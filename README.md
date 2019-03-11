@@ -55,3 +55,7 @@ It is important for every team to have a song and an anthem. [Here](https://www.
 
 For those who are contributing code. Please follow the guidelines listed in the guideline page. Follow the link below.
 [Processes and Guidelines](Milestone_5/processes_and_guidelines.md)
+
+## Node.js Presentation
+
+[Node.js](https://docs.google.com/presentation/d/1w6v8UUcAvWzoZQ_TJcF2Jstvfe7mZQhQqySSDWPtLGE/edit#slide=id.gcb9a0b074_1_0)
