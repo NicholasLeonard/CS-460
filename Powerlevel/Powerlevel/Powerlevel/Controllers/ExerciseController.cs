@@ -17,18 +17,20 @@ namespace Powerlevel.Controllers
         /// <summary>
         /// Displays all exercises
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View with list of all exercises and Viewbag with All equipment for exercises</returns>
         // GET: Exercise
         public ActionResult Index()
         {
+            //Grab all equipment to be displayed
+            ViewBag.Equipment = db.ExerciseEquipments.ToList();
             return View(db.Exercises.ToList());
         }
 
         /// <summary>
         /// Displays the details of a particular exercise
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">id in the exercise table of the particualr exercise</param>
+        /// <returns>exercise object</returns>
         // GET: Exercise/Details/5
         public ActionResult Details(int? id)
         {
@@ -36,8 +38,12 @@ namespace Powerlevel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //Get all subtables for the particular exercise's information
             Exercise exercise = db.Exercises.Find(id);
             ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+            ViewBag.Flags = db.ExerciseFlags.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+            ViewBag.Equipment = db.ExerciseEquipments.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+
             if (exercise == null)
             {
                 return HttpNotFound();
