@@ -31,7 +31,8 @@
         @foreach (var item in Model)
         {
             <tr>
-                @{ int finalStage = 0; }
+                <!-- finalStage variable set to 3 for now as I found a bug where it wont find length of stages in workout if no active workout are in final stage -->
+                @{ int finalStage = 3; }
                 <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
                 @if (item.User.UserName == User.Identity.Name)
                 {
