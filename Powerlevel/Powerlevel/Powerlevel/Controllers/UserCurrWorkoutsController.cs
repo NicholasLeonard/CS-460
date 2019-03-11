@@ -90,7 +90,11 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userCurrWorkout.UserId);
+
+            // Sets the User that is creating a workout to the currently logged in User automatically
+            var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            ViewBag.UserId = CurrentUser.UserId;
+
             ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", userCurrWorkout.UserActiveWorkout);
             return View(userCurrWorkout);
         }

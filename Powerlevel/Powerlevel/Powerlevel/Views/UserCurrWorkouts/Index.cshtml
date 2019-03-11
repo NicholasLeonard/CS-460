@@ -31,6 +31,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                @{ int finalStage = 0; }
                 <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
                 @if (item.User.UserName == User.Identity.Name)
                 {
@@ -45,7 +46,16 @@
                         @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber)
+                        @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
+                        @* This finds the highest value OrderNumber in a workout so that it displays how many stages are in the Users Workout*@
+                        @foreach (var item2 in Model)
+                        {
+                            if (item2.WorkoutExercise.OrderNumber.Value > finalStage)
+                            {
+                                finalStage = item2.WorkoutExercise.OrderNumber.Value;
+                            }
+                        }
+                        @finalStage
                     </td>
                     <td>
                         @*
@@ -53,15 +63,22 @@
                             @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
                         *@
 
-                        @Html.ActionLink("Edit", "Edit", new { id = item.UCWId }) |
+                        <!-- Checks if the current Exercise is in the final stage of the Workout before allowing Completion -->
+                        @if (item.WorkoutExercise.OrderNumber == finalStage)
+                        {
+                            <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b> @:   |
+                        }
+
+
+                        @if (item.WorkoutExercise.OrderNumber != finalStage)
+                        {
+                            @Html.ActionLink("Finish Stage", "Edit", new { id = item.UCWId }) @:|
+                        }
+
 
                         @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId })
 
-                        <!-- Checks if the current Exercise is the third in the Workout before allowing completion, this is a temporary solution that
-                            assumes all Workouts include exactly 3 exercises -->
-                        @if(item.WorkoutExercise.OrderNumber == 3) {
-                            @:| <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b>
-                        }
+
                     </td>
                 }
             </tr>
