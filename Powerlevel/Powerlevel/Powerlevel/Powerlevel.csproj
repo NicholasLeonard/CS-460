@@ -817,10 +817,11 @@
     <Content Include="Views\Workouts\Index.cshtml" />
     <Content Include="Views\Exercise\WorkoutList.cshtml" />
     <Content Include="Views\UserCurrWorkouts\Create.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Delete.cshtml" />
+    <Content Include="Views\UserCurrWorkouts\Abandon.cshtml" />
     <Content Include="Views\UserCurrWorkouts\Details.cshtml" />
     <Content Include="Views\UserCurrWorkouts\Edit.cshtml" />
     <Content Include="Views\UserCurrWorkouts\Index.cshtml" />
+    <Content Include="Views\UserCurrWorkouts\Complete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

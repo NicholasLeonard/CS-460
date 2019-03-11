@@ -7,7 +7,7 @@
 @if (Request.IsAuthenticated)
 {
 
-    <h2>Active Workouts</h2>
+    <h2>Active Workouts for @User.Identity.Name </h2>
 
     <p>
         @Html.ActionLink("Start New Workout", "Create")
@@ -31,30 +31,57 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WorkoutExercise.Workout.Name)
-                </td>
-                <td>
-                    @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserActiveWorkout)
-                </td>
-                <td>
-                    @*
-                                We wont use these for now
-                        @Html.ActionLink("Complete", "Complete", new { id = item.UCWId }) |
+                <!-- finalStage variable set to 3 for now as I found a bug where it wont find length of stages in workout if no active workout are in final stage -->
+                @{ int finalStage = 3; }
+                <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
+                @if (item.User.UserName == User.Identity.Name)
+                {
+                    <td>
 
-                    *@
+                        @Html.DisplayFor(modelItem => item.User.UserName)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
+                        @* This finds the highest value OrderNumber in a workout so that it displays how many stages are in the Users Workout*@
+                        @foreach (var item2 in Model)
+                        {
+                            if (item2.WorkoutExercise.OrderNumber.Value > finalStage)
+                            {
+                                finalStage = item2.WorkoutExercise.OrderNumber.Value;
+                            }
+                        }
+                        @finalStage
+                    </td>
+                    <td>
+                        @*
+                                    We wont use these for now:
+                            @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
+                        *@
 
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UCWId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
-                    @Html.ActionLink("Abandon", "Delete", new { id = item.UCWId })
+                        <!-- Checks if the current Exercise is in the final stage of the Workout before allowing Completion -->
+                        @if (item.WorkoutExercise.OrderNumber == finalStage)
+                        {
+                            <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b> @: |
+                        }
 
-                </td>
+
+                        @if (item.WorkoutExercise.OrderNumber != finalStage)
+                        {
+                            @Html.ActionLink("Finish Stage", "Edit", new { id = item.UCWId }) @:|
+                        }
+
+
+                        @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId })
+
+
+                    </td>
+                }
             </tr>
         }
 

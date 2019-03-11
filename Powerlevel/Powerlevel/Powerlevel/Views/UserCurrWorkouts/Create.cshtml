@@ -4,39 +4,47 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
-
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>UserCurrWorkout</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <h2>Select a Workout</h2>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserActiveWorkout, "UserActiveWorkout", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserActiveWorkout", null, htmlAttributes: new { @class = "form-control" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @* Controller logic sets the User connected to Workout to Currently logged in user so no need to give them option to set this  *@
+    <input type="hidden" name="UserId" value="@ViewBag.UserId" />
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Upper Body Hellhole", "WorkoutList", "Exercise", new { id = "1" }, null )
+            </th>
+            <th>
+                @Html.ActionLink("Burning Back", "WorkoutList", "Exercise", new { id = "2" }, null)
+            </th>
+        </tr>
+        <tr>
+            <!-- Controller logic sets the User to the first exercise in the selected Workout -->
+            <th>
+                <input type="radio" required checked="checked" name="UserActiveWorkout" value="@ViewBag.Hellhole" />
                 @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BurningBack" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+        </tr>
+    </table>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Start Workout!" class="btn btn-default" />
         </div>
     </div>
+</div>
 }
 
 <div>
