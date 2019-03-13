@@ -17,11 +17,12 @@ namespace Powerlevel.Models
         public virtual DbSet<ExerciseFlag> ExerciseFlags { get; set; }
         public virtual DbSet<ExerciseImage> ExerciseImages { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
+        public virtual DbSet<UserWorkoutPlan> UserWorkoutPlans { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
         public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
-        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -65,6 +66,11 @@ namespace Powerlevel.Models
                 .Property(e => e.TimeEstimate)
                 .IsFixedLength();
 
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasMany(e => e.UserCurrWorkouts)
+                .WithRequired(e => e.WorkoutExercise)
+                .HasForeignKey(e => e.UserActiveWorkout);
+
             modelBuilder.Entity<WorkoutPlan>()
                 .Property(e => e.Name)
                 .IsFixedLength();
@@ -72,13 +78,6 @@ namespace Powerlevel.Models
             modelBuilder.Entity<WorkoutPlan>()
                 .Property(e => e.Type)
                 .IsFixedLength();
-
-            modelBuilder.Entity<WorkoutExercise>()
-                .HasMany(e => e.UserCurrWorkouts)
-                .WithRequired(e => e.WorkoutExercise)
-                .HasForeignKey(e => e.UserActiveWorkout);
         }
-
-        public System.Data.Entity.DbSet<Powerlevel.Models.UserWorkoutPlan> UserWorkoutPlans { get; set; }
     }
 }
