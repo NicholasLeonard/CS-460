@@ -790,9 +790,7 @@
     <Content Include="Views\User\Display.cshtml" />
     <Content Include="Views\UserWorkouts\Create.cshtml" />
     <Content Include="Views\UserWorkouts\Details.cshtml" />
-    <Content Include="Views\UserWorkouts\Edit.cshtml" />
     <Content Include="Views\UserWorkouts\Index.cshtml" />
-    <Content Include="Views\UserWorkouts\Complete.cshtml" />
     <Content Include="Views\Workouts\Index.cshtml" />
     <Content Include="Views\Exercise\WorkoutList.cshtml" />
     <Content Include="Views\UserCurrWorkouts\Create.cshtml" />
