@@ -32,4 +32,3 @@ namespace Powerlevel.Models
         public virtual Workout Workout { get; set; }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿namespace Powerlevel.Models
+namespace Powerlevel.Models
 {
     using System;
     using System.Collections.Generic;
