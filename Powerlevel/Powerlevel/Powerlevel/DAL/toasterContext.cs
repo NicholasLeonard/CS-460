@@ -78,5 +78,7 @@ namespace Powerlevel.Models
                 .WithRequired(e => e.WorkoutExercise)
                 .HasForeignKey(e => e.UserActiveWorkout);
         }
+
+        public System.Data.Entity.DbSet<Powerlevel.Models.UserWorkoutPlan> UserWorkoutPlans { get; set; }
     }
 }

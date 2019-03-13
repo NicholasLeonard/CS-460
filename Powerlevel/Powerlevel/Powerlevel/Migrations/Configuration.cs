@@ -5,15 +5,14 @@ namespace Powerlevel.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Powerlevel.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Powerlevel.Models.toasterContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Powerlevel.Models.ApplicationDbContext";
         }
 
-        protected override void Seed(Powerlevel.Models.ApplicationDbContext context)
+        protected override void Seed(Powerlevel.Models.toasterContext context)
         {
             //  This method will be called after migrating to the latest version.
 
