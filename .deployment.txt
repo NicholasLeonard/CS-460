@@ -1,2 +1,2 @@
 [config]
-project = Powerlevel\Powerlevel\Powerlevel\Powerlevel.csproj
+project = Powerlevel/Powerlevel/Powerlevel/Powerlevel.csproj
