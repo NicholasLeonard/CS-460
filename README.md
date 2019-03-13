@@ -1,45 +1,61 @@
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+# Toaster Code
 
-When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
+## Motto
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+Delivering crisp slices of code
 
----
+## Team Description
 
-## Edit a file
+This is the repository for the Toaster Code development team. This repository houses all of our code for our Senior project as well as documents and files for each milestone we achieve
 
-You’ll start by editing this README file to learn how to edit a file in Bitbucket.
+## Power Level Vision Statement
 
-1. Click **Source** on the left side.
-2. Click the README.md link from the list of files.
-3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
-5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
-6. Go back to the **Source** page.
+For people who want to get in shape or work out, the RPG-lite workout is a workout planning platform that integrates RPG elements into a workout plan. The web-app gives the user a workout plan customized and curated by them while providing a gamified interface and spin to all fitness activities that resembles a role playing game. Unlike other gamified applications, our product will both focus only on a fitness experience and provide the user with state recommend workouts in a fun, social format.
 
----
+## Power Level Description
 
-## Create a file
+With this project, we aim to provide an RPG element to user's normal workout routine, which can help get their minds off of the workouts they are doing. We believe that working out is not fun for some individuals and we hope to change that. We hope to provide various workouts through dungeons that will earn you gear and experience for your character. Combined with proper workout tutorials for those unfamiliar with regular workout schedules and the ability to integrated your pre-existing fit-bit data, we hope to provide a fun and goal driven way to maintain your body while still meeting safety and national standards.
 
-Next, you’ll add a new file to this repository.
+## Current State
 
-1. Click the **New file** button at the top of the **Source** page.
-2. Give the file a filename of **contributors.txt**.
-3. Enter your name in the empty file space.
-4. Click **Commit** and then **Commit** again in the dialog.
-5. Go back to the **Source** page.
+We haven't started building yet. You eager adventurers will just have to wait until the monsters come.
 
-Before you move on, go ahead and explore the repository. You've already seen the **Source** page, but check out the **Commits**, **Branches**, and **Settings** pages.
+## How to access
 
----
+This is not something you have to build it is a website hosted on Microsoft Azure. Just follow the URL below and you are on your way to sleighing monsters and getting into shape.
 
-## Clone a repository
+*URL Coming Soon*
 
-Use these steps to clone from SourceTree, our client for using the repository command-line free. Cloning allows you to work on your files locally. If you don't yet have SourceTree, [download and install first](https://www.sourcetreeapp.com/). If you prefer to clone from the command line, see [Clone a repository](https://confluence.atlassian.com/x/4whODQ).
+## Designers and Inceptors
 
-1. You’ll see the clone button under the **Source** heading. Click that button.
-2. Now click **Check out in SourceTree**. You may need to create a SourceTree account or log in.
-3. When you see the **Clone New** dialog in SourceTree, update the destination path and name if you’d like to and then click **Clone**.
-4. Open the directory you just created to see your repository’s files.
+This project was conceived and built by the current members of Western Oregon University Senior Team Toaster Code. Those members are:
 
-Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
+* Alex Bishop
+* Chi Li
+* Jace Woods
+* Nicholas Leonard
+
+## Team Rules and Guidelines
+
+1. All problems will be brought up to those involved. No beating around the bush and no behind the back talk. We want to be productive here and we want to be friends. It is best just to get it in the open.
+
+2. COMMENT YOUR CODE!!!! Please comment your code. It matters so very much to Alex and we don't want to hurt him.
+    General Commenting Rules:
+		    -Standard Code Blocks at the start of all major functions  [see](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/xmldoc/recommended-tags-for-documentation-comments)
+
+3. Please follow the processes and guidelines listed on the processes and guidelines page for contributing code and understanding our formatting and coding standards. It is very important that we are consistent.
+
+4. Always finish your code on time to the best of your ability. We understand that life happens and you can't always meet your deadlines, but the point is to finish what you start. Do your absolute best.
+
+## Team Song
+
+It is important for every team to have a song and an anthem. [Here](https://www.youtube.com/watch?v=helzmv4sPH8) is ours.
+
+## Contributing
+
+For those who are contributing code. Please follow the guidelines listed in the guideline page. Follow the link below.
+[Processes and Guidelines](Milestone_5/processes_and_guidelines.md)
+
+## Node.js Presentation
+
+[Node.js](https://docs.google.com/presentation/d/1w6v8UUcAvWzoZQ_TJcF2Jstvfe7mZQhQqySSDWPtLGE/edit#slide=id.gcb9a0b074_1_0)
