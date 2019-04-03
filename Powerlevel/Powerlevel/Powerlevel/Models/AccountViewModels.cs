@@ -87,7 +87,7 @@ namespace Powerlevel.Models
 
 
         //must  install Bootstrap DatePicker through NuGet 
-        [Required]
+       /* [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:MM-dd-yyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
@@ -96,7 +96,7 @@ namespace Powerlevel.Models
         [Required]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
-
+        */
     }
 
     public class ResetPasswordViewModel
