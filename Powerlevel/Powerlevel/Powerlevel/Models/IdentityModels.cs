@@ -16,7 +16,7 @@ namespace Powerlevel.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
-        }
+        }//these were commented out becuase I had to move these fields to user table and take them out of aspnetuser table
         /*public DateTime BirthDate { get; set; }
         public string Gender { get; set; }*/
     }

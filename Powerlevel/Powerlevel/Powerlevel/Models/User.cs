@@ -21,6 +21,11 @@ namespace Powerlevel.Models
 
         public int? Weight { get; set; }
 
+        public DateTime? DOB { get; set; }
+
+        [StringLength(10)]
+        public string Gender { get; set; }
+
         [Required]
         [StringLength(256)]
         public string UserName { get; set; }

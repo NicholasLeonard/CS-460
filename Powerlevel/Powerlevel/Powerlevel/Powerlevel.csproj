@@ -255,10 +255,11 @@
     <Compile Include="Models\ExerciseFlag.cs" />
     <Compile Include="Models\ExerciseImage.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserCurrWorkout.cs" />
+    <Compile Include="Models\UserWorkout.cs" />
     <Compile Include="Models\UserWorkoutPlan.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
