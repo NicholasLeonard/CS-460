@@ -7,7 +7,8 @@
 @if (Request.IsAuthenticated)
 {
 
-    <h2>Active Workout for @User.Identity.Name </h2>
+    <h1>Workout Page for @User.Identity.Name </h1>
+    <br />
 
     //This segment of code checks if the logged in user has an active workout, if so, the "Start a New Workout" button will not appear
     int loggedInId = 0;
@@ -29,86 +30,68 @@
     if (startNewWorkout == true)
     {
         <p>
-            @Html.ActionLink("Start New Workout", "Create")
+            It looks like you don't have an Active Workout! @Html.ActionLink("Start a New Workout Now!", "Create")
         </p>
     }
     //End of segment of code checking if active workouts exist
 
+    if (startNewWorkout == false)
+    {
 
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User.UserName)
-            </th>
-            <th>
-                Active Workout
-            </th>
-            <th>
-                Current Exercise in Workout
-            </th>
-            <th>
-                Stage
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <!-- finalStage variable set to 3 for now as I found a bug where it wont find length of stages in workout if no active workout are in final stage -->
-                @{ int finalStage = 3; }
-                <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
-                @if (item.User.UserName == User.Identity.Name)
-                {
-                    <td>
 
-                        @Html.DisplayFor(modelItem => item.User.UserName)
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
-                        @* This finds the highest value OrderNumber in a workout so that it displays how many stages are in the Users Workout*@
-                        @foreach (var item2 in Model)
-                        {
-                            if (item2.WorkoutExercise.OrderNumber.Value > finalStage)
+            foreach (var item in Model)
+            {
+
+                    <!-- finalStage variable set to 3 for now as I found a bug where it wont find length of stages in workout if no active workout are in final stage -->
+                    int finalStage = 3;
+                    <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
+                    if (item.User.UserName == User.Identity.Name)
+                    {
+                        <h4>
+                            <b>Current Workout:</b> @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
+                        </h4>
+                        <h4>
+                            <b>Current Exercise in Workout:</b> @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
+                        </h4>
+                        <h4>
+                            <b>Stage:</b> @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
+                            @* This finds the highest value OrderNumber in a workout so that it displays how many stages are in the Users Workout*@
+                            @foreach (var item2 in Model)
                             {
-                                finalStage = item2.WorkoutExercise.OrderNumber.Value;
+                                if (item2.WorkoutExercise.OrderNumber.Value > finalStage)
+                                {
+                                    finalStage = item2.WorkoutExercise.OrderNumber.Value;
+                                }
                             }
-                        }
-                        @finalStage
-                    </td>
-                    <td>
-                        @*
-                                    We wont use these for now:
-                            @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
-                        *@
+                            @finalStage
+                        </h4>
+                        <h4>
+                            @*
+                                        We wont use these for now:
+                                @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
+                            *@
 
-                        <!-- Checks if the current Exercise is in the final stage of the Workout before allowing Completion -->
-                        @if (item.WorkoutExercise.OrderNumber == finalStage)
-                        {
-                            <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b> @: |
-                        }
-
-
-                        @if (item.WorkoutExercise.OrderNumber != finalStage)
-                        {
-                            @Html.ActionLink("Finish Stage", "Edit", new { id = item.UCWId }) @:|
-                        }
+                            <!-- Checks if the current Exercise is in the final stage of the Workout before allowing Completion -->
+                            @if (item.WorkoutExercise.OrderNumber == finalStage)
+                            {
+                                <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b> @: |
+                            }
 
 
-                        @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId })
+                            @if (item.WorkoutExercise.OrderNumber != finalStage)
+                            {
+                                @Html.ActionLink("Finish Stage", "Edit", new { id = item.UCWId }) @:|
+                            }
 
 
-                    </td>
-                }
-            </tr>
-        }
+                            @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId })
 
-    </table>
+
+                        </h4>
+                    }
+
+            }
+    }
 }
 
 else
