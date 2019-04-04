@@ -7,11 +7,34 @@
 @if (Request.IsAuthenticated)
 {
 
-    <h2>Active Workouts for @User.Identity.Name </h2>
+    <h2>Active Workout for @User.Identity.Name </h2>
 
-    <p>
-        @Html.ActionLink("Start New Workout", "Create")
-    </p>
+    //This segment of code checks if the logged in user has an active workout, if so, the "Start a New Workout" button will not appear
+    int loggedInId = 0;
+    foreach (var item in Model)
+    {
+        if (item.User.UserName == User.Identity.Name)
+        {
+            loggedInId = item.UserId;
+        }
+    }
+    bool startNewWorkout = true;
+    foreach (var item in Model)
+    {
+        if (loggedInId == item.User.UserId)
+        {
+            startNewWorkout = false;
+        }
+    }
+    if (startNewWorkout == true)
+    {
+        <p>
+            @Html.ActionLink("Start New Workout", "Create")
+        </p>
+    }
+    //End of segment of code checking if active workouts exist
+
+
     <table class="table">
         <tr>
             <th>
