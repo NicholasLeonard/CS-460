@@ -17,8 +17,8 @@ namespace Powerlevel.Models
             // Add custom user claims here
             return userIdentity;
         }
-        public DateTime BirthDate { get; set; }
-        public string Gender { get; set; }
+        /*public DateTime BirthDate { get; set; }
+        public string Gender { get; set; }*/
     }
 
 
