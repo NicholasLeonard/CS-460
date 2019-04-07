@@ -40,7 +40,11 @@
 
         foreach (var item in Model)
         {
-            int finalStage = 0;
+            //Initialize variables
+            double finalStage = 0;
+            double percentStage = 0.0;
+            string percentString;
+
             <!-- finalStage checks the current workout the user is on and is set to the number that is the last stage of the workout, so that
                 the user can complete it when they reach that point, this variable has to be coded based on how many steps each workout is-->
             <!--
@@ -72,7 +76,18 @@
                         }
                     }
                     @finalStage
+
+                    @if (1 == 1) //If-statement is just to get the C# code to work properly, math inside gets a percentage based on current stage User is on
+                    {
+                        percentStage = (item.WorkoutExercise.OrderNumber.Value - 1) / finalStage;
+                        percentString = percentStage.ToString("#0.##%");
+                    }
                 </h4>
+
+                <div id="wholeBar" style="width:100%; background-color:#E7E7E7; border-style:solid">
+                    <div id="percentBar" style="width:@percentString;height:30px; background-color:#38FF37;"><p style="text-align:center; font-size:20px; font-family:'Comic Sans MS'"><b>@percentString</b></p></div>
+                </div>
+
                 <h4>
                     @*
                                 We wont use these for now:
