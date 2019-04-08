@@ -467,6 +467,7 @@
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\design_images\cobblestone_path.jpg" />
     <Content Include="Content\images\exercise_examples\1_1.jpg" />
     <Content Include="Content\images\exercise_examples\1_2.jpg" />
     <Content Include="Content\images\exercise_examples\2_1.jpg" />
@@ -563,7 +564,7 @@
     <Content Include="Scripts\datepicker.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

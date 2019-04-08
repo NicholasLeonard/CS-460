@@ -33,23 +33,28 @@
                     </th>
                 </tr>
             </thead>
-            @*show only the user stuff*@
-            @foreach (var item in Model.Where(x => x.UserName == @User.Identity.GetUserName()))
-            {
-                @*Use the ViewBag of all WorkoutPlans to place the userworkout plans *@
-                <tr>
-                    @foreach (var plan in ViewBag.WorkoutPlans) {
-                        if (plan.PlanId == item.PlanId) { 
-                            <td>@plan.Name</td>
-                            <td>@plan.Type</td>
-                            <td>@plan.NumberOfWorkouts</td>
-                            <td>@plan.DaysToComplete</td>
+            <tbody>
+                @*show only the user stuff*@
+                @foreach (var item in Model.Where(x => x.UserName == @User.Identity.GetUserName()))
+                {
+                    @*Use the ViewBag of all WorkoutPlans to place the userworkout plans *@
+                    <tr>
+                        @foreach (var plan in ViewBag.WorkoutPlans)
+                        {
+                            if (plan.PlanId == item.PlanId)
+                            {
+                                <td>@plan.Name</td>
+                                <td>@plan.Type</td>
+                                <td>@plan.NumberOfWorkouts</td>
+                                <td>@plan.DaysToComplete</td>
+                            }
                         }
-                    }
-                
-                </tr>
 
-            }
+                    </tr>
+
+                }
+            </tbody>
+            
         </table>
 
 </div>
