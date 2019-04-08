@@ -241,6 +241,7 @@
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\StyleController.cs" />
     <Compile Include="Controllers\UserCurrWorkoutsController.cs" />
     <Compile Include="Controllers\UserWorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
@@ -837,6 +838,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Style\StyleGuide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
