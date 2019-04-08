@@ -257,12 +257,14 @@
     <Compile Include="Models\ExerciseEquipment.cs" />
     <Compile Include="Models\ExerciseFlag.cs" />
     <Compile Include="Models\ExerciseImage.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="DAL\toasterContext.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserCurrWorkout.cs" />
+    <Compile Include="Models\UserWorkoutHistory.cs" />
     <Compile Include="Models\UserWorkoutPlan.cs" />
+    <Compile Include="Models\ViewModels\WorkoutPlanVM.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
     <Compile Include="Models\WorkoutPlan.cs" />
@@ -288,6 +290,7 @@
     <Content Include="App_Data\DOWN\USER_WORKOUTPLAN_DOWN.sql" />
     <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
     <Content Include="App_Data\SEED\USER_WORKOUTPLAN_SEED.sql" />
+    <Content Include="App_Data\UP\USER_WORKOUT_HISTORY.sql" />
     <Content Include="App_Data\UP\USER_WORKOUT_UP.sql" />
     <Content Include="App_Data\SEED\WORKOUTPLAN_SEED.sql" />
     <Content Include="App_Data\UP\USER_WORKOUTPLAN_UP.sql" />
