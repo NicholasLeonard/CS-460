@@ -13,6 +13,9 @@ namespace Powerlevel.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        //to get access to the database
+        private toasterContext db = new toasterContext();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -64,6 +67,13 @@ namespace Powerlevel.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+            //get user level by their UserName, pass it into viewbag
+            ViewBag.userCurrentLevel = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Level).FirstOrDefault();
+
+            //get user exp points by their UserName, pass it into viewbag
+            ViewBag.userExperiencePoints = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),

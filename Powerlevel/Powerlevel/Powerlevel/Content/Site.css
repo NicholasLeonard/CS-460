@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*userInfos_navbar design*/
+#userInfos_navbar {
+    /*border-radius: 25px;*/
+    color: deepskyblue;
+    /*border: 1.5px solid #ffffff;*/
+    padding: 15px;
+}

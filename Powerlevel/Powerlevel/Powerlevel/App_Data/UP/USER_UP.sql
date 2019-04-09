@@ -10,5 +10,7 @@ CREATE TABLE [dbo].[User]
     [Height] INT NULL, 
     [Weight] INT NULL, 
     [UserName] NVARCHAR(256) NOT NULL,
+    [Experience] INT NOT NULL DEFAULT 0,
+    [Level] INT NOT NULL DEFAULT 1, 
 	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 )

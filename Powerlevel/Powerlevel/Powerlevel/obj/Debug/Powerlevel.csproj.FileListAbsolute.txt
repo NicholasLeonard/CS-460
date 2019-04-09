@@ -1,3 +1,6 @@
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csproj.App.config
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csprojAssemblyReference.cache
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csproj.CoreCompileInputs.cache
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\ApplicationInsights.config
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\Powerlevel.dll.config
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\Powerlevel.dll
@@ -135,11 +138,10 @@ C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Po
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.WebPages.xml
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.WebPages.Deployment.xml
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.WebPages.Razor.xml
-C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csproj.App.config
-C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csprojAssemblyReference.cache
-C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csproj.CoreCompileInputs.cache
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csproj.CopyComplete
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.dll
 C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.pdb
-C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.Migrations._2.resources
-C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\obj\Debug\Powerlevel.csproj.GenerateResource.cache
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.Http.dll
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.Http.WebHost.dll
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.Http.xml
+C:\Users\ERR0R\Desktop\bitbucket-CS461\toastercode_fork\Powerlevel\Powerlevel\Powerlevel\bin\System.Web.Http.WebHost.xml

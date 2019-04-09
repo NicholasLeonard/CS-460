@@ -25,6 +25,12 @@ namespace Powerlevel.Models
         [StringLength(256)]
         public string UserName { get; set; }
 
+        //user total experience points
+        public int Experience { get; set; }
+
+        //user level
+        public int Level { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserCurrWorkout> UserCurrWorkouts { get; set; }
     }
