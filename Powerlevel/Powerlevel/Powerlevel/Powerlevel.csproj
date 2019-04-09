@@ -297,6 +297,8 @@
     <Content Include="App_Data\DOWN\WORKOUT_DOWN.sql" />
     <Content Include="App_Data\SEED\WORKOUT_SEED.sql" />
     <Content Include="App_Data\UP\WORKOUT_UP.sql" />
+    <Content Include="App_Data\UP\USER_CURR_WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\UP\USER_CURR_WORKOUT_UP.sql" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />
