@@ -25,6 +25,9 @@ textarea {
     max-width: 280px;
 }
 
+table.dataTable tbody tr{
+    background: none !important;
+}
 /*Changing color scheme of jumbotron*/
 .jumbotron {
     background-image: url(images/design_images/cobblestone_path.jpg);
