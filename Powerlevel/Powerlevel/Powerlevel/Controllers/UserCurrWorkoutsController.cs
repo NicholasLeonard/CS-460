@@ -11,6 +11,7 @@ using Powerlevel.Models;
 
 namespace Powerlevel.Controllers
 {
+
     public class UserCurrWorkoutsController : Controller
     {
         private toasterContext db = new toasterContext();
