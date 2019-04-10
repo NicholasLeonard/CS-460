@@ -468,6 +468,8 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\design_images\cobblestone_path.jpg" />
+    <Content Include="Content\images\design_images\goblin_poison_blade.png" />
+    <Content Include="Content\images\design_images\goblin_swordsman.png" />
     <Content Include="Content\images\exercise_examples\1_1.jpg" />
     <Content Include="Content\images\exercise_examples\1_2.jpg" />
     <Content Include="Content\images\exercise_examples\2_1.jpg" />

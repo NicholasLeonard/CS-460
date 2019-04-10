@@ -43,3 +43,15 @@ table.dataTable tbody tr{
     color: inherit;
     background: inherit;  
 }
+
+/*Image sizing values for userCurrWorkout page*/
+#GoblinPoisonBlade{
+    float: left;
+    width: 433px;
+    height: 254px;
+}
+
+/*Causes copyright text to appear beneath images*/
+footer {
+    clear: both;
+}
