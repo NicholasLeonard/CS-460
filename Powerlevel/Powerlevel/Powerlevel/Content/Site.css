@@ -25,9 +25,11 @@ textarea {
     max-width: 280px;
 }
 
+/*Synchronizes colors on sortable dataTables with the rest of the site color scheme*/
 table.dataTable tbody tr{
     background: none !important;
 }
+
 /*Changing color scheme of jumbotron*/
 .jumbotron {
     background-image: url(images/design_images/cobblestone_path.jpg);
