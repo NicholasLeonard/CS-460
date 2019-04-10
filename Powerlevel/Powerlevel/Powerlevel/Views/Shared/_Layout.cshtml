@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - PowerLevel</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
+    @Styles.Render("~/Content/fullcalendar-4.0.2/packages/core/main.css")
+    @Styles.Render("~/Content/fullcalendar-4.0.2/packages/daygrid/main.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     
@@ -44,6 +46,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
     @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+    @Scripts.Render("~/Content/fullcalendar-4.0.2/packages/core/main.js")
+    @Scripts.Render("~/Content/fullcalendar-4.0.2/packages/daygrid/main.js")
     @Scripts.Render("~/Scripts/ToasterScripts.js")
     @RenderSection("scripts", required: false)
 </body>

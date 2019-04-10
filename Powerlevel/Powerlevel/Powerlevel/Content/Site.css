@@ -57,3 +57,9 @@ table.dataTable tbody tr{
 footer {
     clear: both;
 }
+
+/*Changing the color of the calendar specifically*/
+#calendar{
+    color: black;
+    background: white;
+}
