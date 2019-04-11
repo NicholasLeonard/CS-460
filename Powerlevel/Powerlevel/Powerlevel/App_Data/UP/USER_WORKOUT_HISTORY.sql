@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[UserWorkoutHistory]
+﻿  CREATE TABLE [dbo].[UserWorkoutHistory]
 (
 	[UWHId] INT IDENTITY(1,1) NOT NULL,
 	[CurrentTime] DATETIME NULL,
@@ -8,7 +8,7 @@
 	CONSTRAINT [FK_dbo.UserWorkoutHistory_User] FOREIGN KEY (UserId) REFERENCES [User](UserId) /* [User] referenced with brackets due to VS built-in "User" creating conflict */
 		ON DELETE CASCADE
 		ON UPDATE CASCADE,
-	CONSTRAINT [FK_dbo.UserOldWorkout_WorkoutExercise] FOREIGN KEY (UserOldWorkout) REFERENCES WorkoutExercise(LinkId)
+	CONSTRAINT [FK_dbo.UserWorkoutHistory_WorkoutExercise] FOREIGN KEY (UserOldWorkout) REFERENCES WorkoutExercise(LinkId)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE
 );

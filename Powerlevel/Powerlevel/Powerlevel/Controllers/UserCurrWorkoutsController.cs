@@ -168,6 +168,8 @@ namespace Powerlevel.Controllers
         public ActionResult CompleteConfirmed(int id)
         {
             UserCurrWorkout userCurrWorkout = db.UserCurrWorkouts.Find(id);
+            //var oldWorkouts = new UserWorkoutHistory { UserId = userCurrWorkout.UserId, UserOldWorkout = userCurrWorkout.UserActiveWorkout, WorkoutExerciseId = };
+            //db.UserWorkoutHistories.Add(oldWorkouts);
             db.UserCurrWorkouts.Remove(userCurrWorkout);
             db.SaveChanges();
             return RedirectToAction("Index");
