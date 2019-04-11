@@ -10,7 +10,8 @@ namespace Powerlevel
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/moment.js"  //added more date time picker
+                        "~/Scripts/moment.js",  //added more date time picker
+                        "~/Scripts/fullcalendar*"//add for calendar
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -28,7 +29,9 @@ namespace Powerlevel
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/bootstrap-datetimepicker.css")); //added more date time picker
+                      "~/Content/bootstrap-datetimepicker.css", //added more date time picker
+                      "~/Content/fullcalendar.css"  //added for calendar
+                      ));
 
 
         }

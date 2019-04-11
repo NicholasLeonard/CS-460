@@ -12,6 +12,7 @@ namespace Powerlevel.Models
         {
         }
 
+        public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<ExerciseEquipment> ExerciseEquipments { get; set; }
         public virtual DbSet<ExerciseFlag> ExerciseFlags { get; set; }
@@ -27,6 +28,10 @@ namespace Powerlevel.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Event>()
+                .Property(e => e.Title)
+                .IsFixedLength();
+
             modelBuilder.Entity<Exercise>()
                 .Property(e => e.Name)
                 .IsFixedLength();

@@ -8,7 +8,7 @@
 /*This builds and renders the workout calendar on the main page.
  Note: To add functionality you need to render additional .css and .js files on the layout page
  then add plugins to this function.*/
-$(document).ready(function () {
+/*$(document).ready(function () {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -29,4 +29,4 @@ $("#calendar").fullCalendar({
         title: 'testing',
         start: '2019-04-11'
     }]
-});
+});*/
