@@ -168,8 +168,12 @@ namespace Powerlevel.Controllers
         public ActionResult CompleteConfirmed(int id)
         {
             UserCurrWorkout userCurrWorkout = db.UserCurrWorkouts.Find(id);
-            //var oldWorkouts = new UserWorkoutHistory { UserId = userCurrWorkout.UserId, UserOldWorkout = userCurrWorkout.UserActiveWorkout, WorkoutExerciseId = };
-            //db.UserWorkoutHistories.Add(oldWorkouts);
+
+            //Marks the current workout as "Completed", moving it from the User's Active Workout tab to the Workout History tab
+            var completedWorkout = new UserCurrWorkout { UserId = userCurrWorkout.UserId, UserActiveWorkout = userCurrWorkout.UserActiveWorkout, WorkoutCompleted = true };
+            db.UserCurrWorkouts.Add(completedWorkout);
+
+            //"Removes" the old table, as the new one is essentially a duplicate with a WorkoutCompleted value of True, instead of False
             db.UserCurrWorkouts.Remove(userCurrWorkout);
             db.SaveChanges();
             return RedirectToAction("Index");

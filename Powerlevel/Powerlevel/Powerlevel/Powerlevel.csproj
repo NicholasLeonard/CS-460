@@ -262,7 +262,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserCurrWorkout.cs" />
-    <Compile Include="Models\UserWorkoutHistory.cs" />
     <Compile Include="Models\UserWorkoutPlan.cs" />
     <Compile Include="Models\ViewModels\WorkoutPlanVM.cs" />
     <Compile Include="Models\Workout.cs" />
