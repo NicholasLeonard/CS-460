@@ -811,6 +811,7 @@
     <Content Include="Views\UserCurrWorkouts\Complete.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Create.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Index.cshtml" />
+    <Content Include="Views\UserCurrWorkouts\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />

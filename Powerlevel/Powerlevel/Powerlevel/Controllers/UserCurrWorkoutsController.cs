@@ -23,6 +23,13 @@ namespace Powerlevel.Controllers
             return View(userCurrWorkouts.ToList());
         }
 
+        // GET: UserCurrWorkouts
+        public ActionResult History()
+        {
+            var userCurrWorkouts = db.UserCurrWorkouts.Include(u => u.User).Include(u => u.WorkoutExercise).OrderByDescending(u => u.CompletedTime);
+            return View(userCurrWorkouts.ToList());
+        }
+
         // GET: UserCurrWorkouts/Details/5
         public ActionResult Details(int? id)
         {

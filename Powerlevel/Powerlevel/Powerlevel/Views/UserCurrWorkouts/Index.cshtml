@@ -32,9 +32,9 @@
 
     if (startNewWorkout == true)
     {
-        <p>
-            It looks like you don't have an Active Workout! @Html.ActionLink("Start a New Workout Now!", "Create")
-        </p>
+        <h4>
+            It looks like you don't have an Active Workout! <b>@Html.ActionLink("Start a New Workout Now!", "Create")</b>
+        </h4>
     }
 
     if (startNewWorkout == false)
@@ -128,3 +128,5 @@ else
         to view or start your Workout.
     </p>
 }
+<br /><br />
+<p>Not working out right now? <b>@Html.ActionLink("View your Workout History!", "History")</b></p>
