@@ -13,7 +13,9 @@
     int loggedInId = 0;
     foreach (var item in Model)
     {
-        if (item.User.UserName == User.Identity.Name)
+        /* if the UserCurrWorkout table has a user whose name matches the logged in user AND the Workout has not been completed (I.E., is active) 
+         * then the loggedInId variable is set to that of the UserId so that the user is unable to start a new workout */
+        if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == false)
         {
             loggedInId = item.UserId;
         }
@@ -26,13 +28,14 @@
             startNewWorkout = false;
         }
     }
+    //End of segment of code checking if active workouts exist
+
     if (startNewWorkout == true)
     {
         <p>
             It looks like you don't have an Active Workout! @Html.ActionLink("Start a New Workout Now!", "Create")
         </p>
     }
-    //End of segment of code checking if active workouts exist
 
     if (startNewWorkout == false)
     {
@@ -57,7 +60,7 @@
                 finalStage = 3;
             }
             <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
-            if (item.User.UserName == User.Identity.Name)
+            if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == false)
             {
                 <h4>
                     <b>Current Workout:</b> @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
