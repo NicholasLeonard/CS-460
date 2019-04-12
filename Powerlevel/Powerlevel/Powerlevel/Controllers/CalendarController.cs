@@ -19,7 +19,7 @@ namespace Powerlevel.Controllers
         public JsonResult Events(DateTime start, DateTime end)
         {
             //calls method to get all of the workout days for the plan
-            List<Event> days = getWorkouts();
+            List<Event> days = GetWorkouts();
             
             //doesn't display anything if there is no active plan
             if(days == null)
@@ -32,7 +32,7 @@ namespace Powerlevel.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public List<Event> getWorkouts()
+        public List<Event> GetWorkouts()
         {//event list to be returned to the calendar            
             List<Event> result = new List<Event>();
 
@@ -55,11 +55,35 @@ namespace Powerlevel.Controllers
                     title = item.Workout.Name,
                     start = (item.DayOfPlan == 1) ? today : today.AddDays(2), //This is currently restricted to only having a 2 workout day plan
                     color = "red",
-                    extra = "will this break event render?"
+                    description = GetStateMessage(0) //currently defaulting to Not completed
                 });
             }
 
             return result;
+        }
+
+        //used to determine the progress of a workout
+        public string GetStateMessage(int completed)
+        {
+            string message;
+
+            if(completed == 0)
+            {
+                message = "Not started";
+            }
+            else if(completed == 1)
+            {
+                message = "In progress";
+            }
+            else if(completed == 2)
+            {
+                message = "Completed";
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            return message;
         }
     }
 }
