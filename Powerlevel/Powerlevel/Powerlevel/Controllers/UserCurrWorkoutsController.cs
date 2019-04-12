@@ -16,6 +16,53 @@ namespace Powerlevel.Controllers
     {
         private toasterContext db = new toasterContext();
 
+        //user leveling algorithm logic function
+        public void CheckUserLevel()
+        {
+            //get user current level
+            int userCurrentLevel = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Level).FirstOrDefault();
+
+            //get user current exp
+            int userCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+
+            //get the list of required exp for certain lv
+            var expReqList = db.LevelExps.Select(x => x.Exp).ToList();
+
+
+            //formula for calculating user lv
+            //if their exp is more than the current exp bracket of the level
+            for (int counter = userCurrentLevel; counter < expReqList.Count(); counter++)
+            {
+                if (userCurrentExp >= expReqList[userCurrentLevel])
+                {
+                    userCurrentLevel += 1; //increase their level by 1
+                }
+            }
+
+            //access user level info in the database
+            var userData = db.Users.First(x => x.UserName == User.Identity.Name);
+            userData.Level = userCurrentLevel;
+            db.SaveChanges();
+        }
+
+        //Function for accessing database to update user exp
+        public void AddExp(int expAmount)
+        {
+
+            //get the user current exp and add to it.
+            int getCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+            getCurrentExp += expAmount;
+
+            //find the user column in the database and modified the existing value
+            var userData = db.Users.First(x => x.UserName == User.Identity.Name);
+            userData.Experience = getCurrentExp;
+            db.SaveChanges();
+
+            //calcalate the user level by their exp
+            CheckUserLevel();
+        }
+
+
         // GET: UserCurrWorkouts
         public ActionResult Index()
         {
@@ -52,7 +99,7 @@ namespace Powerlevel.Controllers
             */
             var WorkoutHellhole = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
             ViewBag.Hellhole = WorkoutHellhole.LinkId;
-            
+
             var WorkoutBurningBack = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
             ViewBag.BurningBack = WorkoutBurningBack.LinkId + 3; /* Adding "+ 3" to the LinkId was the best method I could find
             in having the second "Burning Back" workout option start properly when selected by the user, can code this prettier later on */
@@ -150,6 +197,7 @@ namespace Powerlevel.Controllers
         // GET: UserCurrWorkouts/Complete/5
         public ActionResult Complete(int? id)
         {
+            ViewBag.workoutId = 0;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -170,6 +218,9 @@ namespace Powerlevel.Controllers
             UserCurrWorkout userCurrWorkout = db.UserCurrWorkouts.Find(id);
             db.UserCurrWorkouts.Remove(userCurrWorkout);
             db.SaveChanges();
+
+            //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
+            AddExp(50);
             return RedirectToAction("Index");
         }
 

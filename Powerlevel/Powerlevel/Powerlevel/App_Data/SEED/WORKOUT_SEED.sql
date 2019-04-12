@@ -6,20 +6,20 @@
 
 /* Create the table that contains various workouts, whether they are strength or cardio,
 the muscle group that it focuses on, and approximately how long the full workout takes to complete */
-INSERT INTO [dbo].[Workout] (Name, Type, MainMuscleFocus, TimeEstimate) VALUES
-('Upper Body Hellhole', 'Strength', 'Chest', '30 Minutes'),
-('Burning Back', 'Strength', 'Back', '45 Minutes'),
-('Beginner Full Body Gym', 'Strength', 'Full Body', '60 Minutes'),
-('Rest Day', 'None', 'Full Body', '24 Hours'),
-('Beginner Upper Body Gym', 'Strength', 'Upper Body', '60 Minutes'),
-('Beginner Lower Body Gym', 'Strength', 'Lower Body', '60 Minutes'),
-('Beginner Push Gym', 'Strength', 'Biceps', '60 Minutes'),
-('Beginner Pull Gym', 'Strength', 'Chest', '60 Minutes'),
-('Beginner Legs Gym', 'Strength', 'Legs', '60 Minutes'),
-('Beginner Chest, Triceps, Calves Gym', 'Strength', 'Chest, Triceps, Calves', '60 Minutes'),
-('Beginner Legs and Abs Gym', 'Strength', 'Legs, Abs', '60 Minutes'),
-('Beginner Sholders and Calves Gym', 'Strength','Sholders, Calves', '60 Minutes'),
-('Beginner Back, Biceps, Abs Gym', 'Strength', 'Back, Biceps, Abs', '60 Minutes')
+INSERT INTO [dbo].[Workout] (Name, Type, MainMuscleFocus, TimeEstimate, ExpReward) VALUES
+('Upper Body Hellhole', 'Strength', 'Chest', '30 Minutes', 50),
+('Burning Back', 'Strength', 'Back', '45 Minutes', 50),
+('Beginner Full Body Gym', 'Strength', 'Full Body', '60 Minutes', 50),
+('Rest Day', 'None', 'Full Body', '24 Hours', 50),
+('Beginner Upper Body Gym', 'Strength', 'Upper Body', '60 Minutes', 50),
+('Beginner Lower Body Gym', 'Strength', 'Lower Body', '60 Minutes', 50),
+('Beginner Push Gym', 'Strength', 'Biceps', '60 Minutes', 50),
+('Beginner Pull Gym', 'Strength', 'Chest', '60 Minutes', 50),
+('Beginner Legs Gym', 'Strength', 'Legs', '60 Minutes', 50),
+('Beginner Chest, Triceps, Calves Gym', 'Strength', 'Chest, Triceps, Calves', '60 Minutes', 50),
+('Beginner Legs and Abs Gym', 'Strength', 'Legs, Abs', '60 Minutes', 50),
+('Beginner Sholders and Calves Gym', 'Strength','Sholders, Calves', '60 Minutes', 50),
+('Beginner Back, Biceps, Abs Gym', 'Strength', 'Back, Biceps, Abs', '60 Minutes', 50)
 
 /* Links each workout exercise to a workout, an exercise, and an order to complete the workout */
 INSERT INTO [dbo].[WorkoutExercise] (WorkoutId, ExerciseId, OrderNumber) VALUES

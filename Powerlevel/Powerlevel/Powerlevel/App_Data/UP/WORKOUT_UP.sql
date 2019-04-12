@@ -13,6 +13,7 @@ CREATE TABLE [dbo].[Workout]
     [Type] NCHAR(64) NOT NULL, 
 	[MainMuscleFocus] NCHAR(64) NOT NULL,
 	[TimeEstimate] NCHAR(64) NOT NULL,
+	[ExpReward] INT NOT NULL DEFAULT 0, 
 	CONSTRAINT [PK_dbo.Workout] PRIMARY KEY CLUSTERED ([WorkoutId] ASC)
 );
 

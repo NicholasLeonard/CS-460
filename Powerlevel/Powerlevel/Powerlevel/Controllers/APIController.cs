@@ -43,5 +43,22 @@ namespace Powerlevel.Controllers
             //return the user result
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
+        //Summary: API to get current workout rewards (exp for now)
+        //Note: pass in workout id to make life easier
+        public JsonResult GetWorkoutRewards(int? id)
+        {
+            //initialize database access
+            toasterContext db = new toasterContext();
+
+            //quick fixes to the circular reference error
+            db.Configuration.ProxyCreationEnabled = false;
+
+            var result = db.Workouts.Where(x => x.WorkoutId == id).Select(reward => reward.ExpReward);
+
+            //return the rewards result
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

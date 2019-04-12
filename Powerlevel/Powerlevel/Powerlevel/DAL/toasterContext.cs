@@ -23,6 +23,8 @@ namespace Powerlevel.Models
         public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
+        public virtual DbSet<LevelExp> LevelExps { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -1,5 +1,5 @@
 ﻿function errorOnAjax() {
-    console.log("ERROR: Couldn't connect to the API.")
+    console.log("ERROR: Couldn't connect to the user API.")
 }
 
 
@@ -16,7 +16,7 @@ function ajax_getUserInfos() {
     });
 }
 
-
+//call this function when page fully loaded
 $(document).ready(function () {
 
     var interval = 1000 * 1; // call this refresh function every 1 seconds.

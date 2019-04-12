@@ -34,6 +34,8 @@ namespace Powerlevel.Models
         [StringLength(64)]
         public string TimeEstimate { get; set; }
 
+        public int ExpReward { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkoutExercise> WorkoutExercises { get; set; }
 

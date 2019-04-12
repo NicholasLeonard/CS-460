@@ -89,6 +89,19 @@
                 </div>
 
                 <h4>
+
+                    <!--Completion Rewards-->
+                    <hr />
+                    <h5>Completion Rewards:</h5>
+
+                    <!--temp variable used to hold the current workoutID to be used in API calls-->
+                    <div id="currentWorkoutID" style="visibility: hidden">@item.WorkoutExercise.WorkoutId</div>
+
+                    <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+                    <hr />
+                    <br />
+
+                    <!--Completion Rewards END-->
                     @*
                                 We wont use these for now:
                         @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
@@ -109,7 +122,7 @@
 
                     @Html.ActionLink("Abandon", "Abandon", new { id = item.UCWId })
 
-
+                    @ViewBag.Testings
                 </h4>
             }
 
@@ -125,3 +138,5 @@ else
         to view or start your Workout.
     </p>
 }
+
+@Scripts.Render("~/Scripts/workoutRewards.js")
