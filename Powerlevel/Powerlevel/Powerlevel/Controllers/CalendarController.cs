@@ -46,7 +46,7 @@ namespace Powerlevel.Controllers
                 return null;
             }
 
-            //gets the workouts in that active plan
+            //gets the workouts in the active plan
             var AllWorkouts = Workouts.WorkoutPlanWorkouts.Where(x => x.PlanId == WorkoutPlanId.FirstOrDefault()).Select(x => new { x.Workout, x.DayOfPlan}).ToList();
             foreach(var item in AllWorkouts)
             {

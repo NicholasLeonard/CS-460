@@ -6,19 +6,17 @@ namespace Powerlevel.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("UserCurrWorkout")]
-    public partial class UserCurrWorkout
+    [Table("UserWorkoutHistory")]
+    public partial class UserWorkoutHistory
     {
         [Key]
-        public int UCWId { get; set; }
+        public int UWHId { get; set; }
+
+        public DateTime? CurrentTime { get; set; }
 
         public int UserId { get; set; }
 
-        public int UserActiveWorkout { get; set; }
-
-        public bool WorkoutCompleted { get; set; }
-
-        public DateTime? CompletedTime { get; set; }
+        public int UserOldWorkout { get; set; }
 
         public virtual User User { get; set; }
 

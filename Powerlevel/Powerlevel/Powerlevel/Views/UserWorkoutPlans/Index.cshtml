@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Powerlevel.Models.UserWorkoutPlan>
 @using Microsoft.AspNet.Identity
+@using FullCalendar; @*Allows for fullcalendar helper method*@
 @{
     ViewBag.Title = "Personal Workout Plan";
 }
@@ -57,6 +58,20 @@
                 </h4>
             }
         }
+        @*Div section for the workout calendar*@
+        @Html.FullCalendar(settings =>
+    {
+        settings.Name = "calendar";
+        settings.Selectable = true;
+        settings.EventDurationEditable = true;
+        settings.Editable = true;
+        settings.Selectable = true;
+        settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
+        settings.AllDayDefault = true;
+        settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
+        settings.ClientSideEvents.EventClick = "function(event, element){ event.color = 'green'; $('#calendar').fullCalendar('updateEvent', event); console.log('clicked');}";
+        settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
+    })
     }
 }
 
