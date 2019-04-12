@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #2E3532;
+    color: #F9E9D9;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +23,43 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/*Synchronizes colors on sortable dataTables with the rest of the site color scheme*/
+table.dataTable tbody tr{
+    background: none !important;
+}
+
+/*Changing color scheme of jumbotron*/
+.jumbotron {
+    background-image: url(images/design_images/cobblestone_path.jpg);
+}
+
+/*Background image to navbar*/
+.navbar {
+    background: #1D7747
+}
+
+/*Set text color for tables the same as rest of site*/
+.table {
+    color: inherit;
+    background: inherit;  
+}
+
+/*Image sizing values for userCurrWorkout page*/
+#GoblinPoisonBlade{
+    float: left;
+    width: 433px;
+    height: 254px;
+}
+
+/*Causes copyright text to appear beneath images*/
+footer {
+    clear: both;
+}
+
+/*Changing the color of the calendar specifically*/
+#calendar{
+    color: black;
+    background: white;
 }

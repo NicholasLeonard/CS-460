@@ -1,19 +1,35 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
+@using FullCalendar; @*Allows for fullcalendar helper method*@
+<div class="jumbotron jumbotron-fluid">
     <h1>Powerlevel!</h1>
     <p class="lead">Welcome to the workout site that is all about becoming the healthiest you while defeating monsters and scouring dungeons for treasure, loot, and richs!</p>
-   
+
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
         <p>
-            @Html.ActionLink("Link Fitbit Account", "Authorize", "Fitbit", null, htmlAttributes:new { @class="btn btn-primary"})
+            @Html.ActionLink("Link Fitbit Account", "Authorize", "Fitbit", null, htmlAttributes: new { @class = "btn btn-primary" })
         </p>
     </div>
-    
+    <div class="col-md-8">
+        <img src="~/Content/images/design_images/goblin_swordsman.png" style="float: right;" width="368" height="403" />
+    </div>
 </div>
+        @*Div section for the workout calendar*@
+        @Html.FullCalendar(settings =>
+    {
+        settings.Name = "calendar";
+        settings.Selectable = true;
+        settings.EventDurationEditable = true;
+        settings.Editable = true;
+        settings.Selectable = true;
+        settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
+        settings.AllDayDefault = true;
+        settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
+        settings.ClientSideEvents.EventClick = "function(event, element){ event.color = 'green'; $('#calendar').fullCalendar('updateEvent', event); console.log('clicked');}";
+        settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
+    })

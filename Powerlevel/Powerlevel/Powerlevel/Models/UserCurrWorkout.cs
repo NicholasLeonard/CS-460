@@ -16,6 +16,10 @@ namespace Powerlevel.Models
 
         public int UserActiveWorkout { get; set; }
 
+        public bool WorkoutCompleted { get; set; }
+
+        public DateTime? CompletedTime { get; set; }
+
         public virtual User User { get; set; }
 
         public virtual WorkoutExercise WorkoutExercise { get; set; }
