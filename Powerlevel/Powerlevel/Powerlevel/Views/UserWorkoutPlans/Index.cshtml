@@ -4,124 +4,67 @@
     ViewBag.Title = "Personal Workout Plan";
 }
 
-<h2>Personal Workout Plans</h2>
+
+
 @*request the user to be logged-in. Else, ask go to login page*@
 @if (Request.IsAuthenticated)
 {
-    <p>
-        @Html.ActionLink("Choose Plans", "Create")
-    </p>
-    <div id="maintable">
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.WorkoutPlan.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.WorkoutPlan.Type)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.WorkoutPlan.NumberOfWorkouts)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.WorkoutPlan.DaysToComplete)
-                    </th>
-                    @*Extra Header element to get the table to work in JS*@
-                    <th>
+    <h2>Personal Workout Plan Page for @User.Identity.Name</h2>
+    <br />
 
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @*show only the user stuff*@
-                @foreach (var item in Model.Where(x => x.UserName == @User.Identity.GetUserName()))
-                {
-                    @*Use the ViewBag of all WorkoutPlans to place the userworkout plans *@
-                    <tr>
-                        @foreach (var plan in ViewBag.WorkoutPlans)
-                        {
-                            if (plan.PlanId == item.PlanId)
-                            {
-                                <td>@plan.Name</td>
-                                <td>@plan.Type</td>
-                                <td>@plan.NumberOfWorkouts</td>
-                                <td>@plan.DaysToComplete</td>
-                            }
-                        }
-
-                    </tr>
-
-                }
-            </tbody>
-            
-        </table>
-
-</div>
-    /* REFACTOR: OLD TABLE LEFT IN INCASE REIMPLEMENTATION
-    <table class="table">
-        <tr>
-            <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.UserName).ToString(), "Index", new { sortOrder = ViewBag.UserNameSortParm })
-            </th>
-            <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.Name).ToString(), "Index", new { sortOrder = ViewBag.PlanNameSortParm })
-            </th>
-            <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.Type).ToString(), "Index", new { sortOrder = ViewBag.TypeSortParm })
-            </th>
-            <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.Description).ToString(), "Index", new { sortOrder = ViewBag.DescriptionSortParm })
-            </th>
-            <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.DaysToComplete).ToString(), "Index", new { sortOrder = ViewBag.DaysSortParm })
-            </th>
-            <th>
-                @Html.ActionLink(@Html.DisplayNameFor(model => model.NumberOfWorkouts).ToString(), "Index", new { sortOrder = ViewBag.NumWorkoutsSortParm })
-
-            </th>
-            <th></th>
-        </tr>
-
-        @*show only the user stuff*@
-        @foreach (var item in Model.Where(x => x.UserName == @User.Identity.GetUserName()))
+    //This segment of code checks if the logged in user has an active workout, if so, the "Start a New Plan" button will not appear
+    string loggedInId = null;
+    foreach (var item in Model)
+    {
+        if (item.UserName == User.Identity.Name)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DaysToComplete)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfWorkouts)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.PlanId }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.PlanId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.PlanId })
-                </td>
-            </tr>
+            loggedInId = item.UserName;
         }
-    </table>
-    */
+    }
+    bool startNewPlan = true;
+    foreach (var item in Model)
+    {
+        if (loggedInId == item.UserName)
+        {
+            startNewPlan = false;
+        }
+    }
+    if (startNewPlan == true)
+    {
+        <p>
+            It looks like you don't have an Active Plan! @Html.ActionLink("Start a New Plan Now!", "Create")
+        </p>
+    }
+    //End of segment of code checking if active plan exists
 
-
+    if (startNewPlan == false)
+    {
+        foreach (var item in Model)
+        {
+            if (item.UserName == User.Identity.Name)
+            {
+                <h4>
+                    <b>Current Plan:</b> @Html.ActionLink(item.WorkoutPlan.Name, "Index", "Workouts", new { id = item.WorkoutPlan.PlanId }, null)
+                </h4>
+                <h4>
+                    <b>Plan Type:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.Type)
+                </h4>
+                <h4>
+                    <b>Number of Workouts:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.NumberOfWorkouts)
+                </h4>
+                <h4>
+                    <b>Days to Complete Plan:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.DaysToComplete)
+                </h4>
+            }
+        }
+    }
 }
 
 
 @*Else, ask them to login*@
 else
 {
+    <h1>User Plan Page</h1>
     <p>
         You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
         to view User Workout Plans.
