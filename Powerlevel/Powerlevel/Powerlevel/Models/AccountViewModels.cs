@@ -96,7 +96,7 @@ namespace Powerlevel.Models
         [Required]
         [Display(Name = "Gender")]
         public string Gender { get; set; }
-
+        
     }
 
     public class ResetPasswordViewModel

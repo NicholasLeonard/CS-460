@@ -17,11 +17,14 @@ namespace Powerlevel.Models
         public virtual DbSet<ExerciseFlag> ExerciseFlags { get; set; }
         public virtual DbSet<ExerciseImage> ExerciseImages { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
+        public virtual DbSet<UserWorkout> UserWorkouts { get; set; }
+        public virtual DbSet<UserWorkoutHistory> UserWorkoutHistories { get; set; }
+        public virtual DbSet<UserWorkoutPlan> UserWorkoutPlans { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
         public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
-        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -65,6 +68,16 @@ namespace Powerlevel.Models
                 .Property(e => e.TimeEstimate)
                 .IsFixedLength();
 
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasMany(e => e.UserCurrWorkouts)
+                .WithRequired(e => e.WorkoutExercise)
+                .HasForeignKey(e => e.UserActiveWorkout);
+
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasMany(e => e.UserWorkoutHistories)
+                .WithRequired(e => e.WorkoutExercise)
+                .HasForeignKey(e => e.UserOldWorkout);
+
             modelBuilder.Entity<WorkoutPlan>()
                 .Property(e => e.Name)
                 .IsFixedLength();
@@ -73,12 +86,10 @@ namespace Powerlevel.Models
                 .Property(e => e.Type)
                 .IsFixedLength();
 
-            modelBuilder.Entity<WorkoutExercise>()
-                .HasMany(e => e.UserCurrWorkouts)
-                .WithRequired(e => e.WorkoutExercise)
-                .HasForeignKey(e => e.UserActiveWorkout);
+            modelBuilder.Entity<WorkoutPlanWorkout>()
+                .HasMany(e => e.UserWorkouts)
+                .WithRequired(e => e.WorkoutPlanWorkout)
+                .HasForeignKey(e => e.UserCurrentPlan);
         }
-
-        public System.Data.Entity.DbSet<Powerlevel.Models.UserWorkoutPlan> UserWorkoutPlans { get; set; }
     }
 }

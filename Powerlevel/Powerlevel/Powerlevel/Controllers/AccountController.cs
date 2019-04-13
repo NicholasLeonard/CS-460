@@ -182,14 +182,14 @@ namespace Powerlevel.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Email, BirthDate = model.BirthDate, Gender = model.Gender };
+                var user = new ApplicationUser { UserName = model.Username, Email = model.Email};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
 
 
                     // Adding to the database for user stats that we need to track seperate from the standared template database table
-                    var our_user = new User { UserName = model.Username };
+                    var our_user = new User { UserName = model.Username, DOB = model.BirthDate, Gender = model.Gender };
                     db.Users.Add(our_user);
                     db.SaveChanges();
                     

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Powerlevel.Models.UserCurrWorkout>
+
+@{
+    ViewBag.Title = "Workout History";
+}
+
+<!-- This is essentially an Index page for all User Workouts that have been completed, identified by the
+    "WorkoutCompleted" boolean data field of the UserCurrWorkouts table being marked "true" -->
+@if (Request.IsAuthenticated)
+{
+
+    <h2>Workout History for @User.Identity.Name </h2>
+
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                Completed Workout
+            </th>
+
+            <th>
+                Date Completed
+            </th>
+
+        </tr>
+
+        <!-- takeTen prevents the table from showing anything past the Users last 10 completed workouts, I commented it out for now but implemention works -->
+        @*{int takeTen = 0;}*@
+        @foreach (var item in Model)
+        {
+            if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == true) // && takeTen < 10
+            {
+                //takeTen = takeTen + 1;
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
+                    </td>
+                    <td>
+                        @Convert.ToDateTime(item.CompletedTime).ToString("M/d/yyyy 'on' h:mm:ss tt")
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
+    <p>Done with History? <b>@Html.ActionLink("View your Current Workout!", "Index")</b></p>
+}

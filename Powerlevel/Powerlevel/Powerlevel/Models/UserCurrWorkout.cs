@@ -1,4 +1,4 @@
-﻿namespace Powerlevel.Models
+namespace Powerlevel.Models
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +15,10 @@
         public int UserId { get; set; }
 
         public int UserActiveWorkout { get; set; }
+
+        public bool WorkoutCompleted { get; set; }
+
+        public DateTime? CompletedTime { get; set; }
 
         public virtual User User { get; set; }
 
