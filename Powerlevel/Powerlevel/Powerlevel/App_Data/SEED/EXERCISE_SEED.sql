@@ -38,6 +38,16 @@
 	ID 29: Reverse Crunch
 	ID 30: Back Squat
 	ID 31: Romanian Deadlift
+	ID 32: Push-Ups
+	ID 33: Pylo Push-Ups
+	ID 34: Ab-Draw Leg Slides
+	ID 35: Air Bike
+	ID 36: Plank
+	ID 37: Lying Knee Raise
+	ID 38: Body-Weight Lunges
+	ID 39: Body-Weight Side Lunges
+	ID 40: Prisoner Squats
+	ID 41: Body-Weight Standing Calf Raise
 
 */
 /* Insert into main exercise table */
@@ -121,7 +131,43 @@ Pause at the top for a moment, then lower back down without allowing your lower 
 ('Back Squat', 'Strength', 'Glutes', 'Standing in a shoulder-width stance with feet slightly pointed out, rest a loaded barbell across the back of your shoulders holding it with an overhand grip.
 Descend into a squat position by pushing your hips back and bending at the knee. At the bottom of the squat, pause, and then drive your hips upward bringing you back to starting position.'),
 ('Romanian Deadlift', 'Strength', 'Hamstrings', 'Hold the bar in front of your thighs with a shoulder-width grip. Pull it in toward your body—don’t let it drift in front of you. 
-Drive your hips back and lower your torso, allowing your knees to bend as needed, until you feel a stretch in your hamstrings. Extend your hips to come back up.')
+Drive your hips back and lower your torso, allowing your knees to bend as needed, until you feel a stretch in your hamstrings. Extend your hips to come back up.'),
+('Push-Ups', 'Strength', 'Chest', 'Start off by lying face down on the floor or on a mat with your feet together and arms shoulder width apart. 
+Slowly draw your abs in, inhale and raise your body off of the floor until your arms are straight, keeping your head and neck level with your body as this will be your starting position.
+As you lower yourself down towards the ground, exhale until your chest almost touches the ground and you feel a stretch in your chest muscles.
+Hold for a count at the bottom position and then return back up to the starting position.'),
+('Pylo Push-Ups', 'Strength', 'Chest', 'Start off in a prone push up position on the floor with your arms fully extended at shoulder width and keeping your body straight.
+Slowly descend to the ground by flexing through your elbows, lowering your chest towards the ground until you feel a tension in your chest.
+As soon as you feel a stretch in your muscle quickly push yourself back up so that your hands leave the ground.
+Return back to the starting position and repeat for as many reps and sets as desired'),
+('Ab-Draw Leg Slides', 'Strength', 'Abs', 'Start off laying on your back with your knees bent at 90 degrees and keeping your arms at your sides, palms up.
+Maintaining slight pressure on your hands, extend your legs slowly forward so that you feel a stretch and squeeze on your abdominals.
+Return back to the starting position and repeat for as many reps and sets desired.'),
+('Air Bike', 'Strength', 'Abs', 'Start off lying flat as if you were going to perform a sit up putting your hands behind your your head and lifting your shoulders into a crunch position.
+Bring your knees up so that they are perpendicular with the floor and your lower legs are parallel with the ground as this will be your starting position.
+Slowly go through a cycle pedal motion kicking forward with your right leg and bringing in the knee of the left leg.
+Next bring your right elbow close to your left knee by crunching to the side.
+Return back to the starting position as you breathe in then crunch to the opposite side as you cycle your legs and bring your left elbow close to your right knee.
+Repeat with each side for as many reps and sets as desired.'),
+('Plank', 'Strength', 'Abs', 'Start off by kneeling on all fours and aligning both hands right below your shoulders keep your knees beneath your hips.
+Extend both of your feet out behind you and squeeze on your core muscles, making sure that your body is aligned straight 
+Hold this position for about 30 seconds to a minute (or longer depending on the workout).
+Release, return back to the starting position and repeat for as many times as you would like to perform this exercise.'),
+('Lying Knee Raise', 'Strength', 'Abs', 'Start off laying with your back flat on the floor, arms at your side and feet extended out straight in front of you.
+Slowly lift both of your knees up off of the floor and pull them towards your chest. Feel a stretch in your abdominals then return your knees back to the starting position.
+Repeat for as many reps and sets as desired.'),
+('Bodyweight Lunges', 'Strength', 'Glutes', 'Start off standing up straight with your knees slightly bent then get into a lunge position, and squat down through your hips.
+Squat down so that your front leg is parallel with the floor and hold for a count. Return back to the starting position. Repeat for as many reps and sets as desired.'),
+('Bodyweight Side Lunges', 'Strength', 'Glutes', 'Start off standing up straight with a slight bend in your knees. Step out to your side with your left leg and squat down through your hips.
+Lower yourself towards the floor so that your front leg is parallel with the floor and hold for a count. Return back to the starting position. 
+Repeat for as many reps and sets as desired.'),
+('Prisoner Squats', 'Strength', 'Upper Legs', 'Start off by standing up straight with wide feet and your hands behind your head.
+Slowly lower your body in a controlled squat, extending your hips and knees feeling a stretch in your thighs and glutes.
+Return back to the starting position and repeat for as many reps and sets as desired.'),
+('Bodyweight Standing Calf Raise', 'Strength', 'Lower Legs', 'Start off setting up either a step or a block next to either a support structure or smith machine.
+Place the balls of your feet on the edge of the block/step and let your heels drop down towards the floor as far as possible.
+Then slowly raise your heels up as high as possible, squeezing your calves and hold for a count. Return back to the starting position.
+Repeat for as many reps and sets as desired.')
 
 
 
@@ -158,7 +204,17 @@ INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (28, 'Sets'),(28, 'Reps'),(28, 'Weight'),
 (29, 'Sets'),(29, 'Reps'),
 (30, 'Sets'),(30, 'Reps'),(30, 'Weight'),
-(31, 'Sets'),(31, 'Reps'),(31, 'Weight')
+(31, 'Sets'),(31, 'Reps'),(31, 'Weight'),
+(32, 'Sets'),(32, 'Reps'),
+(33, 'Sets'),(33, 'Reps'),
+(34, 'Sets'),(34, 'Reps'),
+(35, 'Sets'),(35, 'Reps'),
+(36, 'Sets'),(36, 'Duration'),
+(37, 'Sets'),(37, 'Reps'),
+(38, 'Sets'),(38, 'Reps'),
+(39, 'Sets'),(39, 'Reps'),
+(40, 'Sets'),(40, 'Reps'),
+(41, 'Sets'),(41, 'Reps')
 
 
 /* Insert into Equipment table, all binary using NoEquipment, Bench, Dumbells, BarbellRack, PullupBar, Spotter*/
@@ -193,7 +249,17 @@ INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (28, 'Dumbells'),(28, 'Bench'),
 (29, 'No Equipment'),
 (30, 'Bench'), (30, 'Barbell'),
-(31, 'Barbell')
+(31, 'Barbell'),
+(32, 'No Equipment'),
+(33, 'No Equipment'),
+(34, 'No Equipment'),
+(35, 'No Equipment'),
+(36, 'No Equipment'),
+(37, 'No Equipment'),
+(38, 'No Equipment'),
+(39, 'No Equipment'),
+(40, 'No Equipment'),
+(41, 'No Equipment')
 
 
 /* Insert into Exercise Images table, lookup used for reference */

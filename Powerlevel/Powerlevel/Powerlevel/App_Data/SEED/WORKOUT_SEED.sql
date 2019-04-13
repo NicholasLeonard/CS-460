@@ -19,7 +19,10 @@ INSERT INTO [dbo].[Workout] (Name, Type, MainMuscleFocus, TimeEstimate) VALUES
 ('Beginner Chest, Triceps, Calves Gym', 'Strength', 'Chest, Triceps, Calves', '60 Minutes'),
 ('Beginner Legs and Abs Gym', 'Strength', 'Legs, Abs', '60 Minutes'),
 ('Beginner Sholders and Calves Gym', 'Strength','Sholders, Calves', '60 Minutes'),
-('Beginner Back, Biceps, Abs Gym', 'Strength', 'Back, Biceps, Abs', '60 Minutes')
+('Beginner Back, Biceps, Abs Gym', 'Strength', 'Back, Biceps, Abs', '60 Minutes'),
+('Beginner Body-Only Chest and Arms', 'Strength', 'Chest, Biceps, Triceps', '30 Minutes'),
+('Beginner Body-Only Core', 'Strength', 'Abs', '40 Minutes'),
+('Beginner Body-Only Legs', 'Strength', 'Glutes, Hamstrings', '30 Minutes')
 
 /* Links each workout exercise to a workout, an exercise, and an order to complete the workout */
 INSERT INTO [dbo].[WorkoutExercise] (WorkoutId, ExerciseId, OrderNumber) VALUES
@@ -35,5 +38,10 @@ INSERT INTO [dbo].[WorkoutExercise] (WorkoutId, ExerciseId, OrderNumber) VALUES
 (10,21,1),(10,17,2),(10,18,3),(10,12,4),(10,26,5),(10,21,6),(10,14,7),(10,23,8),
 (11,30,1),(11,10,2),(11,11,3),(11,31,4),(11,22,5),(11,29,6),(11,15,7),
 (12,6,1),(12,25,2),(12,19,3),(12,23,4),
-(13,2,1),(13,9,2),(13,27,3),(13,13,4),(13,28,5),(13,20,6),(13,15,7)
+(13,2,1),(13,9,2),(13,27,3),(13,13,4),(13,28,5),(13,20,6),(13,15,7),
+(14,32,1),(14,33,2),(14,5,3),(14,32,4),(14,33,5),(14,5,6),
+(15,15,1),(15,34,2),(15,35,3),(15,36,4),(15,37,5),(15,15,6),(15,36,7),
+(16,38,1),(16,39,2),(16,40,3),(16,41,4),(16,38,5),(16,39,6)
+
+
 
