@@ -51,9 +51,6 @@
 
 */
 /* Insert into main exercise table */
-
-/* NOTE:: The  + CHAR(13)+CHAR(10) + is for a line break and carriage return, will help in display of description */
-
 INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
 ('Bench Press', 'Strength', 'Chest',
 'Lie on a flat bench, holding a barbell with your hands slightly wider than shoulder-width apart using an overhand grip. 
@@ -80,7 +77,10 @@ Your arms should be completely straight and your torso upright. Pull your should
 Pause, then slowly return to the starting position.'),
 ('Leg Press', 'Strength', 'Legs', 'Adjust the seat of the machine so that you can sit comfortably with your hips beneath your knees and your knees in line with your feet.
 Remove the safeties and lower your knees toward your chest until they’re bent 90 degrees and then press back up.
-Be careful not to go too low or you risk your lower back coming off the seat (which can cause injury).'),
+Be careful not to go too low or you risk your lower back coming off the seat (which can cause injury).')
+GO
+
+INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
 ('Lying Leg Curl', 'Strength', 'Hamstrings', 'Lie face down on a leg curl machine and hold handles. 
 Curl your legs as far as possible, hold for a sec, then curl back down to the starting position.'),
 ('Rope Pressdown', 'Strength', 'Biceps', 'Facing an adjustable cable machine, grab the rope attachment from the high setting with a thumbs-up grip.
@@ -106,7 +106,10 @@ Once the dumbbells are almost in line with chest, reverse the movement back to t
 Raise your arms out to the sides until they are at shoulder level. Pause, then lower the weights back to the starting position.'),
 ('Preacher Curl With Cable', 'Strength', 'Biceps', 'Place a preacher bench in front of a cable machine with an EZ-Bar on the lowest setting.
 Resting your arms on the padding, hold the bar with both hands, palms facing away from you. Without moving your elbows, curl the bar toward your shoulders. 
-Pause, then slowly return the bar to the starting position.'),
+Pause, then slowly return the bar to the starting position.')
+GO
+
+INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
 ('Lying EZ-Bar Triceps Extension', 'Strength', 'Triceps', 'Lie on your back on a bench while holding a loaded EZ-Bar with an overhand grip, your hands almost shoulder-width apart.
 Hold the bar directly above your head with your arms fully extended. Keeping your elbows locked in place, lower the bar until it is about an inch above your forehead.
 Pause, then contract your triceps to return the bar to the starting position.'),
@@ -120,7 +123,7 @@ Make sure your palms are facing towards you and your hands are spaced about six 
 ('Dumbell Kickbacks', 'Strength', 'Deltoids', 'Kneel over one side of a weight bench by placing one knee and one hand on the bench. Position the standing leg slightly back and to the side with the foot firmly planted on the floor.
 The torso should be parallel to the floor. Grab a dumbbell with the free hand with an overhand grip and position the elbow at your side so the upper arm is parallel to the floor.
 Keeping the upper arm stationary, extend the arm behind you by contracting the triceps. Pause for one second at the top and then return to the start position.'),
-('Single-Arm Neutral-Grip Dumbell Row', 'Strength', 'Holding a dumbbell in one hand with arm fully extended, bend at the hips until your torso is at approximately a 30-degree angle to the floor.
+('Single-Arm Neutral-Grip Dumbell Row', 'Strength', 'Biceps', 'Holding a dumbbell in one hand with arm fully extended, bend at the hips until your torso is at approximately a 30-degree angle to the floor.
 Without moving your torso, row the dumbbell upward toward your shoulder until it touches your lower chest. Pause, then lower the dumbbell back to start.'),
 ('Incline Dumbell Bicep Curl', 'Strength', 'Biceps', 'Grab a pair of dumbbells and sit down on an incline bench positioned at a 45-degree angle. 
 Pull your shoulder blades back and let the dumbbells hang at your sides with your palms facing forward. Curl the dumbbells up, bending the elbows and bringing both weights to your shoulders. 
@@ -129,7 +132,11 @@ Pause, then lower your arms back to starting position.'),
 Place your palms face down on the floor for support. Tighten your abs to lift your hips off the floor as you crunch your knees inward to your chest. 
 Pause at the top for a moment, then lower back down without allowing your lower back to arch and lose contact with the floor.'),
 ('Back Squat', 'Strength', 'Glutes', 'Standing in a shoulder-width stance with feet slightly pointed out, rest a loaded barbell across the back of your shoulders holding it with an overhand grip.
-Descend into a squat position by pushing your hips back and bending at the knee. At the bottom of the squat, pause, and then drive your hips upward bringing you back to starting position.'),
+Descend into a squat position by pushing your hips back and bending at the knee. At the bottom of the squat, pause, and then drive your hips upward bringing you back to starting position.')
+GO
+
+
+INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
 ('Romanian Deadlift', 'Strength', 'Hamstrings', 'Hold the bar in front of your thighs with a shoulder-width grip. Pull it in toward your body—don’t let it drift in front of you. 
 Drive your hips back and lower your torso, allowing your knees to bend as needed, until you feel a stretch in your hamstrings. Extend your hips to come back up.'),
 ('Push-Ups', 'Strength', 'Chest', 'Start off by lying face down on the floor or on a mat with your feet together and arms shoulder width apart. 
@@ -163,12 +170,16 @@ Lower yourself towards the floor so that your front leg is parallel with the flo
 Repeat for as many reps and sets as desired.'),
 ('Prisoner Squats', 'Strength', 'Upper Legs', 'Start off by standing up straight with wide feet and your hands behind your head.
 Slowly lower your body in a controlled squat, extending your hips and knees feeling a stretch in your thighs and glutes.
-Return back to the starting position and repeat for as many reps and sets as desired.'),
+Return back to the starting position and repeat for as many reps and sets as desired.')
+GO
+
+INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
 ('Bodyweight Standing Calf Raise', 'Strength', 'Lower Legs', 'Start off setting up either a step or a block next to either a support structure or smith machine.
 Place the balls of your feet on the edge of the block/step and let your heels drop down towards the floor as far as possible.
 Then slowly raise your heels up as high as possible, squeezing your calves and hold for a count. Return back to the starting position.
 Repeat for as many reps and sets as desired.')
-
+GO
+GO
 
 
 
@@ -183,7 +194,10 @@ INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (7, 'Sets'),(7, 'Reps'),(7, 'Weight'),
 (8, 'Sets'),(8, 'Reps'),
 (9, 'Sets'),(9, 'Reps'),(9, 'Weight'),
-(10, 'Sets'),(10, 'Reps'),(10, 'Weight'),
+(10, 'Sets'),(10, 'Reps'),(10, 'Weight')
+GO
+
+INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (11, 'Sets'),(11, 'Reps'),
 (12, 'Sets'),(12, 'Reps'),(12, 'Weight'),
 (13, 'Sets'),(13, 'Reps'),(13, 'Weight'),
@@ -193,7 +207,10 @@ INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (17, 'Sets'),(17, 'Reps'),(17, 'Weight'),
 (18, 'Sets'),(18, 'Reps'),(18, 'Weight'),
 (19, 'Sets'),(19, 'Reps'),(19, 'Weight'),
-(20, 'Sets'),(20, 'Reps'),(20, 'Weight'),
+(20, 'Sets'),(20, 'Reps'),(20, 'Weight')
+GO
+
+INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (21, 'Sets'),(21, 'Reps'),(21, 'Weight'),
 (22, 'Sets'),(22, 'Reps'),(22, 'Weight'),
 (23, 'Sets'),(23, 'Reps'),
@@ -203,7 +220,10 @@ INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (27, 'Sets'),(27, 'Reps'),(27, 'Weight'),
 (28, 'Sets'),(28, 'Reps'),(28, 'Weight'),
 (29, 'Sets'),(29, 'Reps'),
-(30, 'Sets'),(30, 'Reps'),(30, 'Weight'),
+(30, 'Sets'),(30, 'Reps'),(30, 'Weight')
+GO
+
+INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (31, 'Sets'),(31, 'Reps'),(31, 'Weight'),
 (32, 'Sets'),(32, 'Reps'),
 (33, 'Sets'),(33, 'Reps'),
@@ -213,9 +233,12 @@ INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
 (37, 'Sets'),(37, 'Reps'),
 (38, 'Sets'),(38, 'Reps'),
 (39, 'Sets'),(39, 'Reps'),
-(40, 'Sets'),(40, 'Reps'),
-(41, 'Sets'),(41, 'Reps')
+(40, 'Sets'),(40, 'Reps')
+GO
 
+INSERT INTO [dbo].[ExerciseFlag] (ExerciseId, FlagName) VALUES
+(41, 'Sets'),(41, 'Reps')
+GO
 
 /* Insert into Equipment table, all binary using NoEquipment, Bench, Dumbells, BarbellRack, PullupBar, Spotter*/
 INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
@@ -228,7 +251,10 @@ INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (7, 'Bench'),(7, 'Dumbells'),
 (8, 'Dumbells'),
 (9, 'Ajustable Cable Machine'),
-(10, 'Leg Press Machine'),
+(10, 'Leg Press Machine')
+GO
+
+INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (11, 'Leg Curl Machine'),
 (12, 'Ajustable Cable Machine'),
 (13, 'Barbell'),
@@ -238,7 +264,10 @@ INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (17, 'Bench'),(17, 'Dumbells'),
 (18, 'Bench'),(18, 'Dumbells'),
 (19, 'Dumbells'),
-(20, 'Adjustable Cable Machine'),
+(20, 'Adjustable Cable Machine')
+GO
+
+INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (21, 'EZ-Bar'), (21, 'Bench'),
 (22, 'Leg Curl Machine'),
 (23, 'Bench'),
@@ -248,7 +277,10 @@ INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (27, 'Dumbells'),
 (28, 'Dumbells'),(28, 'Bench'),
 (29, 'No Equipment'),
-(30, 'Bench'), (30, 'Barbell'),
+(30, 'Bench'), (30, 'Barbell')
+GO
+
+INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (31, 'Barbell'),
 (32, 'No Equipment'),
 (33, 'No Equipment'),
@@ -258,8 +290,12 @@ INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (37, 'No Equipment'),
 (38, 'No Equipment'),
 (39, 'No Equipment'),
-(40, 'No Equipment'),
+(40, 'No Equipment')
+GO
+
+INSERT INTO [dbo].[ExerciseEquipment] (ExerciseId, EquipmentName) VALUES
 (41, 'No Equipment')
+GO
 
 
 /* Insert into Exercise Images table, lookup used for reference */
@@ -273,3 +309,4 @@ INSERT INTO [dbo].[ExerciseImage] (ExerciseId, ImageName) VALUES
 (6, '6_1.jpg'),
 (7, '7_1.jpg'),
 (8, '8_1.jpg')
+GO
