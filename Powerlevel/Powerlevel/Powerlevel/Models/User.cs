@@ -13,6 +13,7 @@ namespace Powerlevel.Models
         public User()
         {
             UserCurrWorkouts = new HashSet<UserCurrWorkout>();
+            UserWorkoutHistories = new HashSet<UserWorkoutHistory>();
         }
 
         public int UserId { get; set; }
@@ -20,6 +21,11 @@ namespace Powerlevel.Models
         public int? Height { get; set; }
 
         public int? Weight { get; set; }
+
+        public DateTime? DOB { get; set; }
+
+        [StringLength(10)]
+        public string Gender { get; set; }
 
         [Required]
         [StringLength(256)]
@@ -33,5 +39,8 @@ namespace Powerlevel.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserCurrWorkout> UserCurrWorkouts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserWorkoutHistory> UserWorkoutHistories { get; set; }
     }
 }
