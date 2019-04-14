@@ -10,12 +10,13 @@ namespace Powerlevel.Controllers
 {
     public class APIController : Controller
     {
+        //initialize database access
+        toasterContext db = new toasterContext();
+
         //Summary: API to get current logged-in user's infos
         //Note: Must NOT allow to accept any parameters
         public JsonResult GetUser()
         {
-            //initialize database access
-            toasterContext db = new toasterContext();
 
             //quick fixes to the circular reference error
             db.Configuration.ProxyCreationEnabled = false;
@@ -59,6 +60,19 @@ namespace Powerlevel.Controllers
 
             //return the rewards result
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Garbage collection method for disposing of database access when the controller has finished executing
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

@@ -71,3 +71,8 @@ footer {
     color: black;
     background: white;
 }
+
+/*stops text wrapping on the calendar so that it will show full event text*/
+.fc-day-grid-event > .fc-content {
+    white-space: unset !important;
+}
