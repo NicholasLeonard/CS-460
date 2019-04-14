@@ -25,6 +25,14 @@ textarea {
     max-width: 280px;
 }
 
+/*userInfos_navbar design*/
+#userInfos_navbar {
+    /*border-radius: 25px;*/
+    color: deepskyblue;
+    /*border: 1.5px solid #ffffff;*/
+    padding: 15px;
+}
+
 /*Synchronizes colors on sortable dataTables with the rest of the site color scheme*/
 table.dataTable tbody tr{
     background: none !important;
