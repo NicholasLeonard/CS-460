@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Powerlevel.Models.WorkoutExercise>
+
+@{
+    ViewBag.Title = "WorkoutList";
+}
+
+<h2>@Model.First().Workout.Name Exercises</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Exercise")
+        </th>
+        <th>
+            @Html.DisplayName("Order")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Exercise.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderNumber)
+        </td>
+        <td>
+            @Html.ActionLink("How to", "Details", new { id=item.LinkId })
+        </td>
+    </tr>
+}
+
+</table>

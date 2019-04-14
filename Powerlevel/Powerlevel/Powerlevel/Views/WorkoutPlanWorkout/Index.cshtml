@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Powerlevel.Models.WorkoutPlanWorkout>
+@using Microsoft.AspNet.Identity
+
+<!-- Displays the sample "Chest and Back Plan" and its workouts with links detailing the workouts,
+    will eventually display all available plans for the User to choose and select -->
+
+@{
+    ViewBag.Title = "Plans";
+}
+
+<!-- If the user is logged in, they will be able to view workout plans. Otherwise, they will be directed to log in -->
+@if (Request.IsAuthenticated)
+{
+    <h2>Current Workout Plans Available for @User.Identity.GetUserName()</h2>
+
+    <!--Displays "Chest and Back Plan (3 Days)" but may need to be altered when multiple workout plans are added-->
+    <h3>
+        @{
+            var result = Model.GroupBy(x => x.WorkoutPlan.Name);
+        }
+        @foreach (var item in result)
+        {
+            @Html.ActionLink(item.Key, "Index", "Workouts", new { id = item.First().PlanId}, null)
+        }
+        (3 Days)
+
+    </h3>
+    
+    @*<table class="table">
+        <tr>
+            <th>
+                Workout
+            </th>
+            <th>
+                Day in Plan
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Workout.Name, "Details", "Workouts", new { id = item.WorkoutId }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfPlan)
+                </td>
+            </tr>
+        }
+
+    </table>*@
+
+    <br />
+    <!-- Directs user to plan creation page -->
+   @* @Html.ActionLink("Start a New Plan!", "Create", "UserWorkouts")*@
+
+}
+else
+{
+    <h2>Workout Plans</h2>
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to view Workout Plans.
+    </p>
+}
