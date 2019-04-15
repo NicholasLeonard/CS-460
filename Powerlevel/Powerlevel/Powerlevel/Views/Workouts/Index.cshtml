@@ -4,16 +4,10 @@
 @{
     ViewBag.Title = "Index";
 }
+
 <h2>Workouts for @Html.DisplayName(Model.First().WorkoutPlan.Name)</h2>
-<!--
-    This just returns "Name", I will hardcode the name of the plan for now since there is only one workout plan,
-    but I could not figure out an efficient way to just display the name of the workout plan here
-
-    <h2>Workouts for @Html.DisplayNameFor(model => model.WorkoutPlan.Name)</h2>
--->
-
-<!--Display the Description of the Workout Plan-->
 <h4>Description: @ViewBag.Description</h4>
+
 
 <table class="table">
     <tr>

@@ -16,6 +16,53 @@ namespace Powerlevel.Controllers
     {
         private toasterContext db = new toasterContext();
 
+        //user leveling algorithm logic function
+        public void CheckUserLevel()
+        {
+            //get user current level
+            int userCurrentLevel = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Level).FirstOrDefault();
+
+            //get user current exp
+            int userCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+
+            //get the list of required exp for certain lv
+            var expReqList = db.LevelExps.Select(x => x.Exp).ToList();
+
+
+            //formula for calculating user lv
+            //if their exp is more than the current exp bracket of the level
+            for (int counter = userCurrentLevel; counter < expReqList.Count(); counter++)
+            {
+                if (userCurrentExp >= expReqList[userCurrentLevel])
+                {
+                    userCurrentLevel += 1; //increase their level by 1
+                }
+            }
+
+            //access user level info in the database
+            var userData = db.Users.First(x => x.UserName == User.Identity.Name);
+            userData.Level = userCurrentLevel;
+            db.SaveChanges();
+        }
+
+        //Function for accessing database to update user exp
+        public void AddExp(int expAmount)
+        {
+
+            //get the user current exp and add to it.
+            int getCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+            getCurrentExp += expAmount;
+
+            //find the user column in the database and modified the existing value
+            var userData = db.Users.First(x => x.UserName == User.Identity.Name);
+            userData.Experience = getCurrentExp;
+            db.SaveChanges();
+
+            //calcalate the user level by their exp
+            CheckUserLevel();
+        }
+
+
         // GET: UserCurrWorkouts
         public ActionResult Index()
         {
@@ -59,10 +106,52 @@ namespace Powerlevel.Controllers
             */
             var WorkoutHellhole = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
             ViewBag.Hellhole = WorkoutHellhole.LinkId;
-            
+
             var WorkoutBurningBack = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
             ViewBag.BurningBack = WorkoutBurningBack.LinkId + 3; /* Adding "+ 3" to the LinkId was the best method I could find
             in having the second "Burning Back" workout option start properly when selected by the user, can code this prettier later on */
+
+            var WorkoutFullBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.FullBodyGym = WorkoutFullBodyGym.LinkId + 6;
+
+            var WorkoutRestDay = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.RestDay = WorkoutRestDay.LinkId + 15;
+
+            var WorkoutUpperBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.UpperBodyGym = WorkoutUpperBodyGym.LinkId + 16;
+
+            var WorkoutLowerBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.LowerBodyGym = WorkoutLowerBodyGym.LinkId + 27;
+
+            var WorkoutPushGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.PushGym = WorkoutPushGym.LinkId + 32;
+
+            var WorkoutPullGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.PullGym = WorkoutPullGym.LinkId + 38;
+
+            var WorkoutLegsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.LegsGym = WorkoutLegsGym.LinkId + 44;
+
+            var WorkoutChestTricepsCalvesGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.ChestTricepsCalvesGym = WorkoutChestTricepsCalvesGym.LinkId + 50;
+
+            var WorkoutLegsAbsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.LegsAbsGym = WorkoutLegsAbsGym.LinkId + 58;
+
+            var WorkoutShouldersCalvesGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.ShouldersCalvesGym = WorkoutShouldersCalvesGym.LinkId + 65;
+
+            var WorkoutBackBicepsAbsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BackBicepsAbsGym = WorkoutBackBicepsAbsGym.LinkId + 69;
+
+            var WorkoutBodyOnlyChestArms = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BodyOnlyChestArms = WorkoutBodyOnlyChestArms.LinkId + 76;
+
+            var WorkoutBodyOnlyCore = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BodyOnlyCore = WorkoutBodyOnlyCore.LinkId + 82;
+
+            var WorkoutBodyOnlyLegs = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BodyOnlyLegs = WorkoutBodyOnlyLegs.LinkId + 89;
 
             return View();
         }
@@ -157,6 +246,7 @@ namespace Powerlevel.Controllers
         // GET: UserCurrWorkouts/Complete/5
         public ActionResult Complete(int? id)
         {
+            ViewBag.workoutId = 0;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -183,6 +273,9 @@ namespace Powerlevel.Controllers
             //"Removes" the old table, as the new one is essentially a duplicate with a WorkoutCompleted value of True, instead of False
             db.UserCurrWorkouts.Remove(userCurrWorkout);
             db.SaveChanges();
+
+            //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
+            AddExp(50);
             return RedirectToAction("Index");
         }
 
