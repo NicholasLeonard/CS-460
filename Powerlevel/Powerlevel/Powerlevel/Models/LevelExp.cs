@@ -1,4 +1,4 @@
-﻿namespace Powerlevel.Models
+namespace Powerlevel.Models
 {
     using System;
     using System.Collections.Generic;
@@ -9,12 +9,10 @@
     [Table("LevelExp")]
     public partial class LevelExp
     {
-        [Key]
         public int LevelExpId { get; set; }
 
         public int Level { get; set; }
 
         public int Exp { get; set; }
-
     }
 }

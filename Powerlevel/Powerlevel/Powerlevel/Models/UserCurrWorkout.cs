@@ -16,16 +16,9 @@ namespace Powerlevel.Models
 
         public int UserActiveWorkout { get; set; }
 
-        //This exists for Workout History; should not be completed upon creation/starting the workout, only upon "completion" on the site
-        public bool WorkoutCompleted { get; set; } = false;
+        public bool WorkoutCompleted { get; set; }
 
-        private DateTime Date = DateTime.Now;
-
-        public DateTime CompletedTime
-        {
-            get { return Date; }
-            set { Date = value; }
-        }
+        public DateTime? CompletedTime { get; set; }
 
         public virtual User User { get; set; }
 
