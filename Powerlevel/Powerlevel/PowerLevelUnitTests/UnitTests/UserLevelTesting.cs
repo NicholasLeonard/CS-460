@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Powerlevel.Models;
 using Powerlevel.Controllers;
-namespace S3_UnitTest_Chi
+namespace PowerLevelUnitTests.UnitTests
 {
     [TestClass]
     public class UserLevelAndExp
