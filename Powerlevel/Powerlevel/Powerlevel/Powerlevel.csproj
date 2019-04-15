@@ -287,10 +287,6 @@
     <Content Include="App_Data\DOWN\LEVEL_EXP_DOWN.sql" />
     <Content Include="App_Data\SEED\LEVEL_EXP_SEED.sql" />
     <Content Include="App_Data\DOWN\USER_CURR_WORKOUT_DOWN.sql" />
-    <Content Include="App_Data\toaster.mdf" />
-    <Content Include="App_Data\toaster_log.ldf">
-      <DependentUpon>toaster.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\UP\ASP_Users_UP.sql" />
     <Content Include="App_Data\DOWN\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\SEED\EXERCISE_SEED.sql" />
