@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Powerlevel.Models.UserCurrWorkout>
+@using Powerlevel.Models
 
 @{
     ViewBag.Title = "Workout Select";
@@ -133,6 +134,8 @@
                 <h4>
                     <b>Current Exercise in Workout:</b> @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
                 </h4>
+                <h3>How to do: @item.WorkoutExercise.Exercise.Instructions.ToString()</h3>
+                <h8>Reps and Sets</h8>
                 <h4>
                     <b>Stage:</b> @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
                     @* This finds the highest value OrderNumber in a workout so that it displays how many stages are in the Users Workout*@
