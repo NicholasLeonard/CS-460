@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<Powerlevel.Models.WorkoutPlanWorkout>
+@using Powerlevel.Models
 
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Workouts for @Html.DisplayName(Model.First().WorkoutPlan.Name)</h2>
+<h4>Description: @ViewBag.Description</h4>
+
 
 <table class="table">
     <tr>

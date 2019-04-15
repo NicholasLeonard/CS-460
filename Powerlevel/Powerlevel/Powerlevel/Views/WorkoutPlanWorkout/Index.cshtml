@@ -12,8 +12,6 @@
 @if (Request.IsAuthenticated)
 {
     <h2>Current Workout Plans Available for @User.Identity.GetUserName()</h2>
-
-    <!--Displays "Chest and Back Plan (3 Days)" but may need to be altered when multiple workout plans are added-->
     <h3>
         @{
             var result = Model.GroupBy(x => x.WorkoutPlan.Name);
@@ -21,9 +19,8 @@
         @foreach (var item in result)
         {
             @Html.ActionLink(item.Key, "Index", "Workouts", new { id = item.First().PlanId}, null)
+            <br />
         }
-        (3 Days)
-
     </h3>
     
     @*<table class="table">
