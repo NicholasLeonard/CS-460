@@ -48,12 +48,15 @@ namespace Powerlevel.Controllers
 
             //gets the workouts in the active plan
             var AllWorkouts = Workouts.WorkoutPlanWorkouts.Where(x => x.PlanId == WorkoutPlanId.FirstOrDefault()).Select(x => new { x.Workout, x.DayOfPlan}).ToList();
+
+            //creates calendar events off of the workouts for a plan
             foreach(var item in AllWorkouts)
             {
                 result.Add(new Event {
-                    id = item.Workout.WorkoutId,
+                    //id = item.Workout.WorkoutId,
+                    id = item.DayOfPlan, //sets a unique event id but is unable to send id to controller this way. May have to address this later
                     title = item.Workout.Name,
-                    start = (item.DayOfPlan == 1) ? today : today.AddDays(2), //This is currently restricted to only having a 2 workout day plan
+                    start = (item.DayOfPlan == 1) ? today : result.First().start.AddDays(item.DayOfPlan - 1),
                     color = "red",
                     description = GetStateMessage(0) //currently defaulting to Not completed
                 });
@@ -84,6 +87,19 @@ namespace Powerlevel.Controllers
                 throw new ArgumentOutOfRangeException();
             }
             return message;
+        }
+
+        /// <summary>
+        /// Garbage collection method for disposing of database access when the controller has finished executing
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

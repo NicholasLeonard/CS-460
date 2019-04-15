@@ -19,6 +19,12 @@ namespace Powerlevel.Models
 
         public DateTime? end { get; set; }
 
+        public int[] daysOfWeek { get; set; }
+
+        public DateTime startRecur { get; set; }
+
+        public DateTime endRecur { get; set; }
+
         public string url { get; set; }
 
         public string className { get; set; }
