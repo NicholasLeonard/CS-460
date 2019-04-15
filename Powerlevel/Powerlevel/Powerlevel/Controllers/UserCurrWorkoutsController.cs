@@ -111,6 +111,48 @@ namespace Powerlevel.Controllers
             ViewBag.BurningBack = WorkoutBurningBack.LinkId + 3; /* Adding "+ 3" to the LinkId was the best method I could find
             in having the second "Burning Back" workout option start properly when selected by the user, can code this prettier later on */
 
+            var WorkoutFullBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.FullBodyGym = WorkoutFullBodyGym.LinkId + 6;
+
+            var WorkoutRestDay = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.RestDay = WorkoutRestDay.LinkId + 15;
+
+            var WorkoutUpperBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.UpperBodyGym = WorkoutUpperBodyGym.LinkId + 16;
+
+            var WorkoutLowerBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.LowerBodyGym = WorkoutLowerBodyGym.LinkId + 27;
+
+            var WorkoutPushGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.PushGym = WorkoutPushGym.LinkId + 32;
+
+            var WorkoutPullGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.PullGym = WorkoutPullGym.LinkId + 38;
+
+            var WorkoutLegsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.LegsGym = WorkoutLegsGym.LinkId + 44;
+
+            var WorkoutChestTricepsCalvesGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.ChestTricepsCalvesGym = WorkoutChestTricepsCalvesGym.LinkId + 50;
+
+            var WorkoutLegsAbsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.LegsAbsGym = WorkoutLegsAbsGym.LinkId + 58;
+
+            var WorkoutShouldersCalvesGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.ShouldersCalvesGym = WorkoutShouldersCalvesGym.LinkId + 65;
+
+            var WorkoutBackBicepsAbsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BackBicepsAbsGym = WorkoutBackBicepsAbsGym.LinkId + 69;
+
+            var WorkoutBodyOnlyChestArms = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BodyOnlyChestArms = WorkoutBodyOnlyChestArms.LinkId + 76;
+
+            var WorkoutBodyOnlyCore = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BodyOnlyCore = WorkoutBodyOnlyCore.LinkId + 82;
+
+            var WorkoutBodyOnlyLegs = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
+            ViewBag.BodyOnlyLegs = WorkoutBodyOnlyLegs.LinkId + 89;
+
             return View();
         }
 

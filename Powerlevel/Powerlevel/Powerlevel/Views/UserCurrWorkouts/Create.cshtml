@@ -25,6 +25,12 @@
             <th>
                 @Html.ActionLink("Burning Back", "WorkoutList", "Exercise", new { id = "2" }, null)
             </th>
+            <th>
+                @Html.ActionLink("Beginner Full Body Gym", "WorkoutList", "Exercise", new { id = "3" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Rest Day", "WorkoutList", "Exercise", new { id = "4" }, null)
+            </th>
         </tr>
         <tr>
             <!-- Controller logic sets the User to the first exercise in the selected Workout -->
@@ -34,6 +40,110 @@
             </th>
             <th>
                 <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BurningBack" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.FullBodyGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.RestDay" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.ActionLink("Beginner Upper Body Gym", "WorkoutList", "Exercise", new { id = "5" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Lower Body Gym", "WorkoutList", "Exercise", new { id = "6" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Push Gym", "WorkoutList", "Exercise", new { id = "7" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Pull Gym", "WorkoutList", "Exercise", new { id = "8" }, null)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.UpperBodyGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.LowerBodyGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.PushGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.PullGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.ActionLink("Beginner Legs Gym", "WorkoutList", "Exercise", new { id = "9" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Chest, Triceps, Calves Gym", "WorkoutList", "Exercise", new { id = "10" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Legs & Abs Gym", "WorkoutList", "Exercise", new { id = "11" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Shoulders and Calves Gym", "WorkoutList", "Exercise", new { id = "12" }, null)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.LegsGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.ChestTricepsCalvesGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.LegsAbsGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.ShouldersCalvesGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+        </tr>
+        <tr>
+            <th>
+                @Html.ActionLink("Beginner Back, Biceps, Abs Gym", "WorkoutList", "Exercise", new { id = "13" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Body-Only Chest and Arms", "WorkoutList", "Exercise", new { id = "14" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Body-Only Core", "WorkoutList", "Exercise", new { id = "15" }, null)
+            </th>
+            <th>
+                @Html.ActionLink("Beginner Body-Only Legs", "WorkoutList", "Exercise", new { id = "16" }, null)
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BackBicepsAbsGym" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BodyOnlyChestArms" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BodyOnlyCore" />
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </th>
+            <th>
+                <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BodyOnlyLegs" />
                 @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
             </th>
         </tr>
