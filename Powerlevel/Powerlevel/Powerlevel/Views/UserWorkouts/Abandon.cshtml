@@ -1,6 +1,6 @@
 ﻿<!-- Allows the user to "abandon" a workout by deleting the workout from the CurrWorkout table -->
 
-@model Powerlevel.Models.UserCurrWorkout
+@model Powerlevel.Models.UserWorkout
 
 @{
     ViewBag.Title = "Abandon";
@@ -20,7 +20,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Confirm" class="btn btn-default" /> |
+            <input type="submit" value="Confirm" class="btn btn-primary" /> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

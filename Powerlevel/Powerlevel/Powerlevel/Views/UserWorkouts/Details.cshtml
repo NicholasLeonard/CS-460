@@ -11,7 +11,7 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Active Plan for:
+            @Html.DisplayNameFor(model => model.User.UserName)
         </dt>
 
         <dd>
@@ -19,23 +19,16 @@
         </dd>
 
         <dt>
-            Workout in Sequence:
+            @Html.DisplayNameFor(model => model.WorkoutExercise.LinkId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PlanWorkout.LinkID)
+            @Html.DisplayFor(model => model.WorkoutExercise.LinkId)
         </dd>
 
-        <dt>
-            Workout Name:
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlanWorkout.Workout.Name)
-        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UWId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UCWId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

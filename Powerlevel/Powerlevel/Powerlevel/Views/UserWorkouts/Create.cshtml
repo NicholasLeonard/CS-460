@@ -1,4 +1,4 @@
-﻿@model Powerlevel.Models.UserWorkout
+﻿@model Powerlevel.Models.Workout
 
 @{
     ViewBag.Title = "Create";
@@ -8,39 +8,199 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h2>Choose a New Plan!</h2>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.UsernameId, "UsernameId", htmlAttributes: new { @class = "control-label col-md-2" })
+<div class="form-horizontal">
+    <h2>Select a Workout</h2>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @* Controller logic sets the User connected to Workout to Currently logged in user so no need to give them option to set this  *@
+    @*<input type="hidden" name="UserId" value="@ViewBag.UserId" />*@
+    @*These are here for the form but are hidden and cannot be changed. Without these, the controller doesn't work. DO NOT REMOVE!!!!*@
+    <div class="form-group">
             <div class="col-md-10">
-                <!-- User shouldn't be able to select their username, rather it should be automatic based on who is logged in, but right now they can!-->
-                @Html.DropDownList("UsernameId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UsernameId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Type ="hidden", @Value="hereforvalidmodelstate" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Type ="hidden", @Value="hereforvalidmodelstate" } })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserCurrentPlan,"UserCurrentPlan", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <!-- Currently this shows 10 1's, each one indicating a stage in the workout plan, it SHOULD: A. only have the first "1", and
-                    B. instead of a "1" it would the name of the workout plan, I couldn't figure out how to implement this... -->
-                @Html.DropDownList("UserCurrentPlan", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserCurrentPlan, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.MainMuscleFocus, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Type ="hidden", @Value="hereforvalidmodelstate" } })
+                @Html.ValidationMessageFor(model => model.MainMuscleFocus, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Start Plan" class="btn btn-default" />
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimeEstimate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Type ="hidden", @Value = "hereforvalidmodelstate" } })
+                @Html.ValidationMessageFor(model => model.TimeEstimate, "", new { @class = "text-danger" })
             </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ExpReward, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Type ="hidden", @Value=5 } })
+                @Html.ValidationMessageFor(model => model.ExpReward, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    @*Gets available workouts and displays them as a dropdown list. Returns to the controller so the user can begin an active workout.*@
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("WorkoutId", (IEnumerable<SelectListItem>)ViewBag.AvailableWorkouts, null, new { @class = "form-control" })
         </div>
     </div>
+
+
+    @*<table class="table">
+            <tr>
+                <th>
+                    @Html.ActionLink("Upper Body Hellhole", "WorkoutList", "Exercise", new { id = "1" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Burning Back", "WorkoutList", "Exercise", new { id = "2" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Full Body Gym", "WorkoutList", "Exercise", new { id = "3" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Rest Day", "WorkoutList", "Exercise", new { id = "4" }, null)
+                </th>
+            </tr>
+            <tr>
+                <!-- Controller logic sets the User to the first exercise in the selected Workout -->
+                <th>
+                    <input type="radio" required checked="checked" name="UserActiveWorkout" value="@ViewBag.Hellhole" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BurningBack" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.FullBodyGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.RestDay" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    @Html.ActionLink("Beginner Upper Body Gym", "WorkoutList", "Exercise", new { id = "5" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Lower Body Gym", "WorkoutList", "Exercise", new { id = "6" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Push Gym", "WorkoutList", "Exercise", new { id = "7" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Pull Gym", "WorkoutList", "Exercise", new { id = "8" }, null)
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.UpperBodyGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.LowerBodyGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.PushGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.PullGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    @Html.ActionLink("Beginner Legs Gym", "WorkoutList", "Exercise", new { id = "9" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Chest, Triceps, Calves Gym", "WorkoutList", "Exercise", new { id = "10" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Legs & Abs Gym", "WorkoutList", "Exercise", new { id = "11" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Shoulders and Calves Gym", "WorkoutList", "Exercise", new { id = "12" }, null)
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.LegsGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.ChestTricepsCalvesGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.LegsAbsGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.ShouldersCalvesGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    @Html.ActionLink("Beginner Back, Biceps, Abs Gym", "WorkoutList", "Exercise", new { id = "13" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Body-Only Chest and Arms", "WorkoutList", "Exercise", new { id = "14" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Body-Only Core", "WorkoutList", "Exercise", new { id = "15" }, null)
+                </th>
+                <th>
+                    @Html.ActionLink("Beginner Body-Only Legs", "WorkoutList", "Exercise", new { id = "16" }, null)
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BackBicepsAbsGym" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BodyOnlyChestArms" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BodyOnlyCore" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+                <th>
+                    <input type="radio" required name="UserActiveWorkout" value="@ViewBag.BodyOnlyLegs" />
+                    @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+                </th>
+            </tr>
+        </table>*@
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Start Workout!" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
-    @Html.ActionLink("View Active Plans", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {

@@ -65,9 +65,6 @@ namespace Powerlevel.Controllers
         // GET: UserWorkoutPlans/Create
         public ActionResult Create()
         {
-            //ViewBag.AvailablePlans = new SelectList(db.WorkoutPlanWorkouts, "WorkoutID", "WorkoutID");
-
-
             //get the list of plans from the db and pass into the viewbag
             ViewBag.AvailablePlans = new SelectList(db.WorkoutPlans, "PlanId", "Name");
 
@@ -90,6 +87,32 @@ namespace Powerlevel.Controllers
             }
             return View(userWorkoutPlan);
         }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserWorkoutPlan ActiveUserPlan = db.UserWorkoutPlans.Find(id);
+            if (ActiveUserPlan  == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ActiveUserPlan);
+        }
+
+        // POST: UserWorkouts/Abandon/5
+        [HttpPost, ActionName("Abandon")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AbandonConfirmed(int id)
+        {
+            UserWorkout UserWorkout = db.UserWorkouts.Find(id);
+            db.UserWorkouts.Remove(UserWorkout);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
 
         protected override void Dispose(bool disposing)
         {

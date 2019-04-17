@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Powerlevel.Models.UserCurrWorkout>
+﻿@model IEnumerable<Powerlevel.Models.UserWorkout>
 
 @{
     ViewBag.Title = "Workout History";
 }
 
 <!-- This is essentially an Index page for all User Workouts that have been completed, identified by the
-    "WorkoutCompleted" boolean data field of the UserCurrWorkouts table being marked "true" -->
+    "WorkoutCompleted" boolean data field of the UserWorkouts table being marked "true" -->
 @if (Request.IsAuthenticated)
 {
 

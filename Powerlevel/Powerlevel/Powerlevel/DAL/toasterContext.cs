@@ -18,7 +18,6 @@ namespace Powerlevel.Models
         public virtual DbSet<ExerciseImage> ExerciseImages { get; set; }
         public virtual DbSet<LevelExp> LevelExps { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserCurrWorkout> UserCurrWorkouts { get; set; }
         public virtual DbSet<UserWorkout> UserWorkouts { get; set; }
         public virtual DbSet<UserWorkoutPlan> UserWorkoutPlans { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
@@ -69,7 +68,7 @@ namespace Powerlevel.Models
                 .IsFixedLength();
 
             modelBuilder.Entity<WorkoutExercise>()
-                .HasMany(e => e.UserCurrWorkouts)
+                .HasMany(e => e.UserWorkouts)
                 .WithRequired(e => e.WorkoutExercise)
                 .HasForeignKey(e => e.UserActiveWorkout);
 
@@ -80,11 +79,6 @@ namespace Powerlevel.Models
             modelBuilder.Entity<WorkoutPlan>()
                 .Property(e => e.Type)
                 .IsFixedLength();
-
-            modelBuilder.Entity<WorkoutPlanWorkout>()
-                .HasMany(e => e.UserWorkouts)
-                .WithRequired(e => e.WorkoutPlanWorkout)
-                .HasForeignKey(e => e.UserCurrentPlan);
         }
     }
 }

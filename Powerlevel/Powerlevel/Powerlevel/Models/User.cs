@@ -12,7 +12,7 @@ namespace Powerlevel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            UserCurrWorkouts = new HashSet<UserCurrWorkout>();
+            UserWorkouts = new HashSet<UserWorkout>();
         }
 
         public int UserId { get; set; }
@@ -35,6 +35,6 @@ namespace Powerlevel.Models
         public int Level { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserCurrWorkout> UserCurrWorkouts { get; set; }
+        public virtual ICollection<UserWorkout> UserWorkouts { get; set; }
     }
 }

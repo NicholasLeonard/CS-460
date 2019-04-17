@@ -14,7 +14,7 @@ namespace PowerLevelUnitTests.UnitTests
         public void Correct_Datetime()
         {
             //arrange
-            UserCurrWorkout WorkoutDate = new UserCurrWorkout();
+            UserWorkout WorkoutDate = new UserWorkout();
             DateTime RightNow = DateTime.Now;
 
             //act
@@ -28,7 +28,7 @@ namespace PowerLevelUnitTests.UnitTests
         public void Datetime_Is_Not_Past_Or_Future()
         {
             //arrange
-            UserCurrWorkout WorkoutDate = new UserCurrWorkout();
+            UserWorkout WorkoutDate = new UserWorkout();
             int CurrentYear = DateTime.Now.Year;
 
             //act
@@ -47,7 +47,7 @@ namespace PowerLevelUnitTests.UnitTests
         public void Workout_Completed_Starts_As_False()
         {
             //arrange
-            UserCurrWorkout WorkoutNotCompleteCheck = new UserCurrWorkout();
+            UserWorkout WorkoutNotCompleteCheck = new UserWorkout();
 
             //act
             bool NotComplete = WorkoutNotCompleteCheck.WorkoutCompleted;
@@ -57,10 +57,10 @@ namespace PowerLevelUnitTests.UnitTests
         }
 
         [TestMethod]
-        public void Remainder_Of_UserCurrWorkout_Is_Not_Null()
+        public void Remainder_Of_UserWorkout_Is_Not_Null()
         {
             //arrange
-            UserCurrWorkout WorkoutNullCheck = new UserCurrWorkout();
+            UserWorkout WorkoutNullCheck = new UserWorkout();
 
             //act
             var NotNullActive = WorkoutNullCheck.UserActiveWorkout;

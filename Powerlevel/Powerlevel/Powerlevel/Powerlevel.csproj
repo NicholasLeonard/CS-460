@@ -253,7 +253,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
-    <Compile Include="Controllers\UserCurrWorkoutsController.cs" />
+    <Compile Include="Controllers\UserWorkoutsController.cs" />
     <Compile Include="Controllers\UserWorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -272,7 +272,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="DAL\toasterContext.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserCurrWorkout.cs" />
     <Compile Include="Models\UserWorkout.cs" />
     <Compile Include="Models\UserWorkoutPlan.cs" />
     <Compile Include="Models\ViewModels\WorkoutPlanVM.cs" />
@@ -286,7 +285,7 @@
   <ItemGroup>
     <Content Include="App_Data\DOWN\LEVEL_EXP_DOWN.sql" />
     <Content Include="App_Data\SEED\LEVEL_EXP_SEED.sql" />
-    <Content Include="App_Data\DOWN\USER_CURR_WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
     <Content Include="App_Data\UP\ASP_Users_UP.sql" />
     <Content Include="App_Data\DOWN\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\SEED\EXERCISE_SEED.sql" />
@@ -300,12 +299,10 @@
     <Content Include="App_Data\toaster_log.ldf">
       <DependentUpon>toaster.mdf</DependentUpon>
     </Content>
-    <Content Include="App_Data\UP\USER_CURR_WORKOUT_UP.sql" />
+    <Content Include="App_Data\UP\USER_WORKOUT_UP.sql" />
     <Content Include="App_Data\UP\USER_UP.sql" />
     <Content Include="App_Data\DOWN\USER_WORKOUTPLAN_DOWN.sql" />
-    <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
     <Content Include="App_Data\SEED\USER_WORKOUTPLAN_SEED.sql" />
-    <Content Include="App_Data\UP\USER_WORKOUT_UP.sql" />
     <Content Include="App_Data\SEED\WORKOUTPLAN_SEED.sql" />
     <Content Include="App_Data\UP\USER_WORKOUTPLAN_UP.sql" />
     <Content Include="App_Data\DOWN\WORKOUT_DOWN.sql" />
@@ -1015,17 +1012,14 @@
     <Content Include="Views\Exercise\Index.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Display.cshtml" />
-    <Content Include="Views\UserWorkouts\Create.cshtml" />
-    <Content Include="Views\UserWorkouts\Details.cshtml" />
-    <Content Include="Views\UserWorkouts\Index.cshtml" />
     <Content Include="Views\Workouts\Index.cshtml" />
     <Content Include="Views\Exercise\WorkoutList.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Create.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Abandon.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Details.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Edit.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Index.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\Complete.cshtml" />
+    <Content Include="Views\UserWorkouts\Create.cshtml" />
+    <Content Include="Views\UserWorkouts\Abandon.cshtml" />
+    <Content Include="Views\UserWorkouts\Details.cshtml" />
+    <Content Include="Views\UserWorkouts\Edit.cshtml" />
+    <Content Include="Views\UserWorkouts\Index.cshtml" />
+    <Content Include="Views\UserWorkouts\Complete.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Create.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -1038,7 +1032,10 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Style\StyleGuide.cshtml" />
-    <Content Include="Views\UserCurrWorkouts\History.cshtml" />
+    <Content Include="Views\UserWorkouts\History.cshtml" />
+    <Content Include="Views\UserWorkoutPlans\Delete.cshtml" />
+    <Content Include="Views\UserWorkouts\View.cshtml" />
+    <Content Include="Views\UserWorkouts\Progress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
@@ -1050,9 +1047,6 @@
   <ItemGroup>
     <Folder Include="fonts\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Views\API\" />
-    <Folder Include="Views\Calendar\" />
-    <Folder Include="Views\Testing\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

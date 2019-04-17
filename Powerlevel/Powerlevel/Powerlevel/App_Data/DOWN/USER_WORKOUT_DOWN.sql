@@ -1,4 +1,4 @@
 ﻿/* DROP all User Workout tables */
-DROP TABLE IF EXISTS [dbo].[UserWorkoutPlan1] 
+DROP TABLE IF EXISTS [dbo].[UserWorkout] 
 
 GO

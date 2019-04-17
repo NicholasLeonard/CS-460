@@ -10,14 +10,20 @@ namespace Powerlevel.Models
     public partial class UserWorkout
     {
         [Key]
-        public int UWId { get; set; }
+        public int UCWId { get; set; }
 
-        [Required]
-        [StringLength(128)]
-        public string UsernameId { get; set; }
+        public int UserId { get; set; }
 
-        public int UserCurrentPlan { get; set; }
+        public int UserActiveWorkout { get; set; }
 
-        public virtual WorkoutPlanWorkout WorkoutPlanWorkout { get; set; }
+        public int ActiveWorkoutStage { get; set; }
+
+        public bool WorkoutCompleted { get; set; }
+
+        public DateTime? CompletedTime { get; set; }
+
+        public virtual User User { get; set; }
+
+        public virtual WorkoutExercise WorkoutExercise { get; set; }
     }
 }
