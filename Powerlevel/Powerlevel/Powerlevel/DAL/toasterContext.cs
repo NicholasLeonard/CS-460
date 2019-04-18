@@ -67,9 +67,9 @@ namespace Powerlevel.Models
                 .Property(e => e.TimeEstimate)
                 .IsFixedLength();
 
-            modelBuilder.Entity<WorkoutExercise>()
+            modelBuilder.Entity<Workout>()
                 .HasMany(e => e.UserWorkouts)
-                .WithRequired(e => e.WorkoutExercise)
+                .WithRequired(e => e.Workout)
                 .HasForeignKey(e => e.UserActiveWorkout);
 
             modelBuilder.Entity<WorkoutPlan>()

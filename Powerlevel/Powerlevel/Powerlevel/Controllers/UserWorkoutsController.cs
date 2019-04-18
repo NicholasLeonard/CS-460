@@ -67,14 +67,14 @@ namespace Powerlevel.Controllers
         // GET: UserWorkouts
         public ActionResult Index()
         {
-            var UserWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.WorkoutExercise);
+            var UserWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.Workout);
             return View(UserWorkouts.ToList());
         }
 
         // GET: UserWorkouts
         public ActionResult History()
         {
-            var UserWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.WorkoutExercise).OrderByDescending(u => u.CompletedTime);
+            var UserWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.Workout).OrderByDescending(u => u.CompletedTime);
             return View(UserWorkouts.ToList());
         }
 
@@ -100,68 +100,31 @@ namespace Powerlevel.Controllers
             // Sets the User that is creating a workout to the currently logged in User automatically
             var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
-
             
             ViewBag.AvailableWorkouts = new SelectList(db.Workouts, "WorkoutId", "Name");
-
-            /* These variables preset the selection of workouts to start so that the user starts at the beginning of a workout, not
-             * somewhere in the middle.
-             * The "Where" Statements in these two variables don't actually do anything, I just left them in there
-             * in an effort to review and understand LINQ better later on
-            */
-            /*var WorkoutHellhole = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.Hellhole = WorkoutHellhole.LinkId;
-
-            var WorkoutBurningBack = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.BurningBack = WorkoutBurningBack.LinkId + 3; /* Adding "+ 3" to the LinkId was the best method I could find
-            in having the second "Burning Back" workout option start properly when selected by the user, can code this prettier later on */
-            //var BurningBackTest = db.WorkoutExercises.Where(x => x.Workout.)
-
-            /*var WorkoutFullBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.FullBodyGym = WorkoutFullBodyGym.LinkId + 6;
-
-            var WorkoutRestDay = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.RestDay = WorkoutRestDay.LinkId + 15;
-
-            var WorkoutUpperBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.UpperBodyGym = WorkoutUpperBodyGym.LinkId + 16;
-
-            var WorkoutLowerBodyGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.LowerBodyGym = WorkoutLowerBodyGym.LinkId + 27;
-
-            var WorkoutPushGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.PushGym = WorkoutPushGym.LinkId + 32;
-
-            var WorkoutPullGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.PullGym = WorkoutPullGym.LinkId + 38;
-
-            var WorkoutLegsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.LegsGym = WorkoutLegsGym.LinkId + 44;
-
-            var WorkoutChestTricepsCalvesGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.ChestTricepsCalvesGym = WorkoutChestTricepsCalvesGym.LinkId + 50;
-
-            var WorkoutLegsAbsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.LegsAbsGym = WorkoutLegsAbsGym.LinkId + 58;
-
-            var WorkoutShouldersCalvesGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.ShouldersCalvesGym = WorkoutShouldersCalvesGym.LinkId + 65;
-
-            var WorkoutBackBicepsAbsGym = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.BackBicepsAbsGym = WorkoutBackBicepsAbsGym.LinkId + 69;
-
-            var WorkoutBodyOnlyChestArms = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.BodyOnlyChestArms = WorkoutBodyOnlyChestArms.LinkId + 76;
-
-            var WorkoutBodyOnlyCore = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.BodyOnlyCore = WorkoutBodyOnlyCore.LinkId + 82;
-
-            var WorkoutBodyOnlyLegs = db.WorkoutExercises.Where(x => x.WorkoutId == 1).First();
-            ViewBag.BodyOnlyLegs = WorkoutBodyOnlyLegs.LinkId + 89;*/
 
             return View();
         }
 
+        // POST: UserCurrWorkouts/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "WorkoutId,UserId")] UserWorkout userWorkout)
+        {
+            if (ModelState.IsValid)
+            {
+                db.UserWorkouts.Add(userWorkout);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(userWorkout);
+        }
+
+        /*
+         * 
         // POST: UserWorkouts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -178,17 +141,21 @@ namespace Powerlevel.Controllers
                     ActiveWorkoutStage = 0};
                 db.UserWorkouts.Add(ActiveUserWorkout);
                 db.SaveChanges();
-                //gets the UCWId for the routing id to track in progress workouts
-                var testucwid = db.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UCWId).ToList();
-                int ucwid = testucwid.First();
+                //gets the UWId for the routing id to track in progress workouts
+                var testuwid = db.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
+                int uwid = testuwid.First();
                 
-                return RedirectToAction("Progress", routeValues: new { id = ucwid });
+                return RedirectToAction("Progress", routeValues: new { id = uwid });
             }
+            *
+            */
 
-            /*ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", UserWorkout.UserId);
-            ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", UserWorkout.UserActiveWorkout);*/
-            return View(Workout);
-        }
+        /*ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", UserWorkout.UserId);
+        ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", UserWorkout.UserActiveWorkout);*/
+        /*
+        return View(Workout);
+    }
+    */
 
         /// <summary>
         /// Called when progressing forward through a workout
@@ -210,20 +177,7 @@ namespace Powerlevel.Controllers
             //gets the total number of exercises in the workout to determine the final stage of the workout.
             int maxStage = InProgressWorkout.WorkoutExercises.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Count();
 
-            if(CurrentWorkoutStage == 0)
-            {//gets the current exercise in the workout by querying the workout/exercise transaction table. This returns the first exercise in the workout
-                Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == 1).Select(x => x.Exercise).First();
-
-                //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise,  UCWID = UserWorkout.UCWId};
-
-                //changes the stage of the workout to the next exercise, 1 is forward
-                ChangeWorkoutStage(UserWorkout, 1);
-
-                //returns the current exercise
-                return View(CurrentExercise);
-            }
-            else if(CurrentWorkoutStage == maxStage)
+            if(CurrentWorkoutStage == maxStage)
             {
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
                 return RedirectToAction("Index");
@@ -234,7 +188,7 @@ namespace Powerlevel.Controllers
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UCWID = UserWorkout.UCWId};
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId};
 
                 //changes the stage of the workout to the next exercise, 1 is forward
                 ChangeWorkoutStage(UserWorkout, 1);
@@ -269,7 +223,7 @@ namespace Powerlevel.Controllers
             //redirects to normal Progress method to start from the beginning
             if (CurrentWorkoutStage == 0)
             {//gets the current exercise in the workout by querying the workout/exercise transaction table. This returns the first exercise in the workout
-                return RedirectToAction("Progress", new { id = UserWorkout.UCWId });
+                return RedirectToAction("Progress", new { id = UserWorkout.UWId });
             }
             else
             {
@@ -277,7 +231,7 @@ namespace Powerlevel.Controllers
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UCWID = UserWorkout.UCWId };
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId };
 
                 //changes the stage of the workout to the next exercise, -1 is backward
                 ChangeWorkoutStage(UserWorkout, -1);

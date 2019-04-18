@@ -10,7 +10,7 @@ namespace Powerlevel.Models
     public partial class UserWorkout
     {
         [Key]
-        public int UCWId { get; set; }
+        public int UWId { get; set; }
 
         public int UserId { get; set; }
 
@@ -31,6 +31,6 @@ namespace Powerlevel.Models
 
         public virtual User User { get; set; }
 
-        public virtual WorkoutExercise WorkoutExercise { get; set; }
+        public virtual Workout Workout { get; set; }
     }
 }

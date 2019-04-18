@@ -65,7 +65,7 @@ namespace PowerLevelUnitTests.UnitTests
             //act
             var NotNullActive = WorkoutNullCheck.UserActiveWorkout;
             var NotNullUserId = WorkoutNullCheck.UserId;
-            var NotNullPK = WorkoutNullCheck.UCWId;
+            var NotNullPK = WorkoutNullCheck.UWId;
 
             //assert
             Assert.IsNotNull(NotNullActive);

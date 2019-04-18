@@ -24,12 +24,11 @@
             
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Exercises", "Index", "Exercise", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("My Workouts", "Index", "UserWorkouts", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Workout History", "History", "UserWorkouts", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("My Plans", "Index", "UserWorkoutPlans", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("All Plans", "Index", "WorkoutPlanWorkout", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Workout Plans", "Index", "UserWorkoutPlans", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Workout History", "History", "UserWorkouts", null, new {@class = "nav-link"})</li>
 
                     @*display their level only once user is logged in, infos are updated using ajax*@
                     @if (User.Identity.IsAuthenticated == true)
