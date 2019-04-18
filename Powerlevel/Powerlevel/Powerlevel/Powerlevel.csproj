@@ -253,6 +253,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
+    <Compile Include="Controllers\UserTestWorkoutsController.cs" />
     <Compile Include="Controllers\UserWorkoutsController.cs" />
     <Compile Include="Controllers\UserWorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
@@ -1037,6 +1038,11 @@
     <Content Include="Views\UserWorkoutPlans\Delete.cshtml" />
     <Content Include="Views\UserWorkouts\View.cshtml" />
     <Content Include="Views\UserWorkouts\Progress.cshtml" />
+    <Content Include="Views\UserTestWorkouts\Create.cshtml" />
+    <Content Include="Views\UserTestWorkouts\Delete.cshtml" />
+    <Content Include="Views\UserTestWorkouts\Details.cshtml" />
+    <Content Include="Views\UserTestWorkouts\Edit.cshtml" />
+    <Content Include="Views\UserTestWorkouts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
@@ -1048,6 +1054,7 @@
   <ItemGroup>
     <Folder Include="fonts\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Views\UserWorkout\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

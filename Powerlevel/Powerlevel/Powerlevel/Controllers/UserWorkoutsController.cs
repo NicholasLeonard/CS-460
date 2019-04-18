@@ -93,33 +93,33 @@ namespace Powerlevel.Controllers
             return View(UserWorkout);
         }
 
-        // GET: UserWorkouts/Create
-        [HttpGet]
+        // GET: UserTestWorkouts/Create
         public ActionResult Create()
         {
-            // Sets the User that is creating a workout to the currently logged in User automatically
             var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
-            
-            ViewBag.AvailableWorkouts = new SelectList(db.Workouts, "WorkoutId", "Name");
 
+            ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name");
             return View();
         }
 
-        // POST: UserCurrWorkouts/Create
+        // POST: UserTestWorkouts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WorkoutId,UserId")] UserWorkout userWorkout)
+        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
         {
             if (ModelState.IsValid)
             {
+                userWorkout.ActiveWorkoutStage = 0;
                 db.UserWorkouts.Add(userWorkout);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name", userWorkout.UserActiveWorkout);
             return View(userWorkout);
         }
 
