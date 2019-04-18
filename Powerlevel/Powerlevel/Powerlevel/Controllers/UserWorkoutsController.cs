@@ -8,6 +8,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
+using Powerlevel.Models.ViewModels;
 
 namespace Powerlevel.Controllers
 {
@@ -189,6 +190,11 @@ namespace Powerlevel.Controllers
             return View(Workout);
         }
 
+        /// <summary>
+        /// Called when progressing forward through a workout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Progress(int? id)
         {
             if(id == null)
@@ -206,20 +212,80 @@ namespace Powerlevel.Controllers
 
             if(CurrentWorkoutStage == 0)
             {//gets the current exercise in the workout by querying the workout/exercise transaction table. This returns the first exercise in the workout
-                Exercise CurrentExercise = (Exercise)db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == 1).Select(x => x.Exercise);
-                //changes the stage of the workout to the next exercise
-                UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + 1;
-                //saves the changes in the db
-                db.Entry(UserWorkout).State = EntityState.Modified;
-                db.SaveChanges();
+                Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == 1).Select(x => x.Exercise).First();
+
+                //creates a view model that has the current exercise and the id for the currently active workout
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise,  UCWID = UserWorkout.UCWId};
+
+                //changes the stage of the workout to the next exercise, 1 is forward
+                ChangeWorkoutStage(UserWorkout, 1);
+
                 //returns the current exercise
                 return View(CurrentExercise);
             }
             else if(CurrentWorkoutStage == maxStage)
             {
-                //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code    
+                //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
+                return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
+                //gets the current exercise in the workout by querying the workout/exercise transaction table. This iterates and returns all exercise except the first one everytime the next button is clicked
+                Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
+
+                //creates a view model that has the current exercise and the id for the currently active workout
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UCWID = UserWorkout.UCWId};
+
+                //changes the stage of the workout to the next exercise, 1 is forward
+                ChangeWorkoutStage(UserWorkout, 1);
+
+                //returns the current exercise
+                return View(CurrentExercise);
+                
+            }
+        }
+
+        /// <summary>
+        /// Used to proceed backward in a workout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ProgressBack(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //gets the activeWorkout record for the user
+            var UserWorkout = db.UserWorkouts.Find(id);
+
+            //gets the active workout
+            Workout InProgressWorkout = db.Workouts.Find(UserWorkout.UserActiveWorkout);
+
+            //gets the stage of the active workout
+            int CurrentWorkoutStage = UserWorkout.ActiveWorkoutStage;
+
+            //redirects to normal Progress method to start from the beginning
+            if (CurrentWorkoutStage == 0)
+            {//gets the current exercise in the workout by querying the workout/exercise transaction table. This returns the first exercise in the workout
+                return RedirectToAction("Progress", new { id = UserWorkout.UCWId });
+            }
+            else
+            {
+                //gets the current exercise in the workout by querying the workout/exercise transaction table. This iterates and returns all exercise except the first one everytime the next button is clicked
+                Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
+
+                //creates a view model that has the current exercise and the id for the currently active workout
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UCWID = UserWorkout.UCWId };
+
+                //changes the stage of the workout to the next exercise, -1 is backward
+                ChangeWorkoutStage(UserWorkout, -1);
+
+                //returns the current exercise
+                return View(CurrentExercise);
+
+            }
         }
 
         // GET: UserWorkouts/Abandon/5
@@ -282,6 +348,21 @@ namespace Powerlevel.Controllers
             //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
             AddExp(50);
             return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Used to change the stage in a workout
+        /// </summary>
+        /// <param name="UserWorkout"></param>
+        /// <param name="direction"></param>
+        public void ChangeWorkoutStage(UserWorkout UserWorkout, int direction)
+        {
+            //changes the stage of the workout to the next exercise
+            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + direction;
+
+            //saves the changes in the db
+            db.Entry(UserWorkout).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         protected override void Dispose(bool disposing)

@@ -275,6 +275,7 @@
     <Compile Include="Models\UserWorkout.cs" />
     <Compile Include="Models\UserWorkoutPlan.cs" />
     <Compile Include="Models\ViewModels\WorkoutPlanVM.cs" />
+    <Compile Include="Models\ViewModels\WorkoutVM.cs" />
     <Compile Include="Models\Workout.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
     <Compile Include="Models\WorkoutPlan.cs" />

@@ -1,8 +1,15 @@
-﻿@model Powerlevel.Models.Exercise
+﻿@model Powerlevel.Models.ViewModels.WorkoutVM
 
 @{
     ViewBag.Title = "Progress";
 }
 
-<h2>Progress</h2>
+<h2>@Model.CurrentExercise.Name</h2>
 
+<h2>@Model.CurrentExercise.Instructions</h2>
+
+<h2>@Model.CurrentExercise.Type</h2>
+
+@Html.ActionLink("Next", "Progress", new { id = Model.UCWID }, new { @class = "btn btn-primary" })
+
+@Html.ActionLink("Previous", "ProgressBack", new { id = Model.UCWID }, new { @class = "btn btn-primary"})
