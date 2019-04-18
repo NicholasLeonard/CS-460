@@ -110,12 +110,19 @@ namespace Powerlevel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
         {
+            var currentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.First();
+
             if (ModelState.IsValid)
             {
                 userWorkout.ActiveWorkoutStage = 0;
                 db.UserWorkouts.Add(userWorkout);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //gets the UWId for the routing id to track in progress workouts
+                var testuwid = db.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
+                int uwid = testuwid.First();
+
+                return RedirectToAction("Progress", routeValues: new { id = uwid });
             }
 
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userWorkout.UserId);
