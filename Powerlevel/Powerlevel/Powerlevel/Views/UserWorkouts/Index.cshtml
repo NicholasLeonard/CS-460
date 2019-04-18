@@ -10,207 +10,209 @@
     <h1>Workout Page for @User.Identity.Name </h1>
     <br />
 
-    //This segment of code checks if the logged in user has an active workout, if so, the "Start a New Workout" button will not appear
-    int loggedInId = 0;
-    foreach (var item in Model)
-    {
-        /* if the UserWorkout table has a user whose name matches the logged in user AND the Workout has not been completed (I.E., is active)
-         * then the loggedInId variable is set to that of the UserId so that the user is unable to start a new workout */
-        if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == false)
-        {
-            loggedInId = item.UserId;
-        }
-    }
-    bool startNewWorkout = true;
-    foreach (var item in Model)
-    {
-        if (loggedInId == item.User.UserId)
-        {
-            startNewWorkout = false;
-        }
-    }
-    //End of segment of code checking if active workouts exist
-
-    if (startNewWorkout == true)
-    {
-        <h4>
-            It looks like you don't have an Active Workout! <b>@Html.ActionLink("Start a New Workout Now!", "Create")</b>
-        </h4>
-    }
-
-    if (startNewWorkout == false)
-    {
-
-
+    <!-- Temporary Code while Index page is rebuilt -->
+    <h4>
+        It looks like you don't have an Active Workout! <b>@Html.ActionLink("Start a New Workout Now!", "Create")</b>
+    </h4>
+    @*
+        //This segment of code checks if the logged in user has an active workout, if so, the "Start a New Workout" button will not appear
+        int loggedInId = 0;
         foreach (var item in Model)
         {
-            //Initialize variables
-            double finalStage = 0;
-            double percentStage = 0.0;
-            string percentString;
-
-            <!-- finalStage checks the current workout the user is on and is set to the number that is the last stage of the workout, so that
-                the user can complete it when they reach that point, this variable has to be coded based on how many steps each workout is-->
-            <!--
-                CURRENT WORKOUTS:
-                UPPER-BODY HELLHOLE: ActiveWorkouts 1-3, Total of 3 Stages
-                BURNING BACK: ActiveWorkouts 4-6, Total of 3 Stages
-                BEG FULL BODY GYM: ActiveWorkouts 7-15, Total of 9 Stages
-                REST DAY: Active Workouts 16, Total of 1 Stage
-                BEG UPPER BODY GYM: Active Workouts 17-27, Total of 11 Stages
-                BEG LOWER BODY GYM: Active Workouts 28-32, Total of 5 Stages
-                BEG PUSH GYM: Active Workouts 33-38, Total of 6 Stages
-                BEG PULL GYM: Active Workouts 39-44, Total of 6 Stages
-                BEG LEGS GYM: Active Workouts 45-50, Total of 6 Stages
-                BEG CHEST: Active Workouts 51-58, Total of 8 Stages
-                BEG LEGS AND ABS GYM: Active Workouts 59-65, Total of 7 Stages
-                BEG SHOULDERS AND CALVES GYM: Active Workouts 66-69, Total of 4 Stages
-                BEG BACK BICEPS ABS GYM: Active Workouts 70-76, Total of 7 Stages
-                BEG BODYONLY CHEST ARMS: Active Workouts 77-82, Total of 6 Stages
-                BEG BODYONLY CORE: Active Workouts 83-89, Total of 7 Stages
-                BEG BODYONLY LEGS: Active Workouts 90-95, Total of 6 Stages
-            -->
-
-                if (item.UserActiveWorkout >= 1 && item.UserActiveWorkout <= 6)
-                {
-                    finalStage = 3;
-                }
-                else if (item.UserActiveWorkout >= 7 && item.UserActiveWorkout <= 15)
-                {
-                    finalStage = 9;
-                }
-                else if (item.UserActiveWorkout == 16)
-                {
-                    finalStage = 1;
-                }
-                else if (item.UserActiveWorkout >= 17 && item.UserActiveWorkout <= 27)
-                {
-                    finalStage = 11;
-                }
-                else if (item.UserActiveWorkout >= 28 && item.UserActiveWorkout <= 32)
-                {
-                    finalStage = 5;
-                }
-                else if (item.UserActiveWorkout >= 33 && item.UserActiveWorkout <= 50)
-                {
-                    finalStage = 6;
-                }
-                else if (item.UserActiveWorkout >= 51 && item.UserActiveWorkout <= 58)
-                {
-                    finalStage = 8;
-                }
-                else if (item.UserActiveWorkout >= 59 && item.UserActiveWorkout <= 65)
-                {
-                    finalStage = 7;
-                }
-                else if (item.UserActiveWorkout >= 66 && item.UserActiveWorkout <= 69)
-                {
-                    finalStage = 4;
-                }
-                else if (item.UserActiveWorkout >= 70 && item.UserActiveWorkout <= 76)
-                {
-                    finalStage = 7;
-                }
-                else if (item.UserActiveWorkout >= 77 && item.UserActiveWorkout <= 82)
-                {
-                    finalStage = 6;
-                }
-                else if (item.UserActiveWorkout >= 83 && item.UserActiveWorkout <= 89)
-                {
-                    finalStage = 7;
-                }
-                else if (item.UserActiveWorkout >= 90 && item.UserActiveWorkout <= 95)
-                {
-                    finalStage = 6;
-                }
-
-
-            <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
+            /* if the UserWorkout table has a user whose name matches the logged in user AND the Workout has not been completed (I.E., is active)
+             * then the loggedInId variable is set to that of the UserId so that the user is unable to start a new workout */
             if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == false)
             {
-                <h4>
-                    <b>Current Workout:</b> @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
-                </h4>
-                <h4>
-                    <b>Current Exercise in Workout:</b> @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
-                </h4>
-                <h3>How to do: @item.WorkoutExercise.Exercise.Instructions.ToString()</h3>
-                <h8>Reps and Sets</h8>
-                <h4>
-                    <b>Stage:</b> @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
-                    @* This finds the highest value OrderNumber in a workout so that it displays how many stages are in the Users Workout*@
-                    @foreach (var item2 in Model)
-                    {
-                        if (item2.WorkoutExercise.OrderNumber.Value > finalStage && item2.WorkoutCompleted == false)
-                        {
-                            finalStage = item2.WorkoutExercise.OrderNumber.Value;
-                        }
-                    }
-                    @finalStage
-
-                    @if (1 == 1) //If-statement is just to get the C# code to work properly, math inside gets a percentage based on current stage User is on
-                    {
-                        percentStage = (item.WorkoutExercise.OrderNumber.Value - 1) / finalStage;
-                        percentString = percentStage.ToString("#0.##%");
-                    }
-                </h4>
-
-                <div id="wholeBar" style="width:100%; background-color:#E7E7E7; border-style:solid">
-                    <div id="percentBar" style="width:@percentString;height:30px; background-color:#38FF37;"><p style="text-align:center; font-size:20px; font-family:'Comic Sans MS'; color:black"><b>@percentString</b></p></div>
-                </div>
-
-                <h4>
-
-                    <!--Completion Rewards-->
-                    <hr />
-                    <h5>Completion Rewards:</h5>
-
-                    <!--temp variable used to hold the current workoutID to be used in API calls-->
-                    <div id="currentWorkoutID" style="visibility: hidden">@item.WorkoutExercise.WorkoutId</div>
-
-                    <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
-                    <hr />
-                    <br />
-
-                    <!--Completion Rewards END-->
-                    @*
-                                We wont use these for now:
-                        @Html.ActionLink("Details", "Details", new { id = item.UCWId }) |
-                    *@
-
-                    <!-- Checks if the current Exercise is in the final stage of the Workout before allowing Completion -->
-                    @if (item.WorkoutExercise.OrderNumber == finalStage)
-                    {
-                        <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b> @: |
-                    }
-
-
-                    @if (item.WorkoutExercise.OrderNumber != finalStage)
-                    {
-                        @Html.ActionLink("Finish Stage", "Edit", new { id = item.UCWId }) @:|
-                    }
-
-
-                    @Html.ActionLink("Abandon Workout", "Abandon", new { id = item.UCWId })
-
-                    @ViewBag.Testings
-                </h4>
+                loggedInId = item.UserId;
             }
-
         }
-    }
+        bool startNewWorkout = true;
+        foreach (var item in Model)
+        {
+            if (loggedInId == item.User.UserId)
+            {
+                startNewWorkout = false;
+            }
+        }
+        //End of segment of code checking if active workouts exist
+
+        if (startNewWorkout == true)
+        {
+            <h4>
+                It looks like you don't have an Active Workout! <b>@Html.ActionLink("Start a New Workout Now!", "Create")</b>
+            </h4>
+        }
+
+        if (startNewWorkout == false)
+        {
+
+
+            foreach (var item in Model)
+            {
+                //Initialize variables
+                double finalStage = 0;
+                double percentStage = 0.0;
+                string percentString;
+
+                <!-- finalStage checks the current workout the user is on and is set to the number that is the last stage of the workout, so that
+                    the user can complete it when they reach that point, this variable has to be coded based on how many steps each workout is-->
+                <!--
+                    CURRENT WORKOUTS:
+                    UPPER-BODY HELLHOLE: ActiveWorkouts 1-3, Total of 3 Stages
+                    BURNING BACK: ActiveWorkouts 4-6, Total of 3 Stages
+                    BEG FULL BODY GYM: ActiveWorkouts 7-15, Total of 9 Stages
+                    REST DAY: Active Workouts 16, Total of 1 Stage
+                    BEG UPPER BODY GYM: Active Workouts 17-27, Total of 11 Stages
+                    BEG LOWER BODY GYM: Active Workouts 28-32, Total of 5 Stages
+                    BEG PUSH GYM: Active Workouts 33-38, Total of 6 Stages
+                    BEG PULL GYM: Active Workouts 39-44, Total of 6 Stages
+                    BEG LEGS GYM: Active Workouts 45-50, Total of 6 Stages
+                    BEG CHEST: Active Workouts 51-58, Total of 8 Stages
+                    BEG LEGS AND ABS GYM: Active Workouts 59-65, Total of 7 Stages
+                    BEG SHOULDERS AND CALVES GYM: Active Workouts 66-69, Total of 4 Stages
+                    BEG BACK BICEPS ABS GYM: Active Workouts 70-76, Total of 7 Stages
+                    BEG BODYONLY CHEST ARMS: Active Workouts 77-82, Total of 6 Stages
+                    BEG BODYONLY CORE: Active Workouts 83-89, Total of 7 Stages
+                    BEG BODYONLY LEGS: Active Workouts 90-95, Total of 6 Stages
+                -->
+
+                    if (item.UserActiveWorkout >= 1 && item.UserActiveWorkout <= 6)
+                    {
+                        finalStage = 3;
+                    }
+                    else if (item.UserActiveWorkout >= 7 && item.UserActiveWorkout <= 15)
+                    {
+                        finalStage = 9;
+                    }
+                    else if (item.UserActiveWorkout == 16)
+                    {
+                        finalStage = 1;
+                    }
+                    else if (item.UserActiveWorkout >= 17 && item.UserActiveWorkout <= 27)
+                    {
+                        finalStage = 11;
+                    }
+                    else if (item.UserActiveWorkout >= 28 && item.UserActiveWorkout <= 32)
+                    {
+                        finalStage = 5;
+                    }
+                    else if (item.UserActiveWorkout >= 33 && item.UserActiveWorkout <= 50)
+                    {
+                        finalStage = 6;
+                    }
+                    else if (item.UserActiveWorkout >= 51 && item.UserActiveWorkout <= 58)
+                    {
+                        finalStage = 8;
+                    }
+                    else if (item.UserActiveWorkout >= 59 && item.UserActiveWorkout <= 65)
+                    {
+                        finalStage = 7;
+                    }
+                    else if (item.UserActiveWorkout >= 66 && item.UserActiveWorkout <= 69)
+                    {
+                        finalStage = 4;
+                    }
+                    else if (item.UserActiveWorkout >= 70 && item.UserActiveWorkout <= 76)
+                    {
+                        finalStage = 7;
+                    }
+                    else if (item.UserActiveWorkout >= 77 && item.UserActiveWorkout <= 82)
+                    {
+                        finalStage = 6;
+                    }
+                    else if (item.UserActiveWorkout >= 83 && item.UserActiveWorkout <= 89)
+                    {
+                        finalStage = 7;
+                    }
+                    else if (item.UserActiveWorkout >= 90 && item.UserActiveWorkout <= 95)
+                    {
+                        finalStage = 6;
+                    }
+
+
+                <!-- If-statement checks currently logged in user with each user workout to prevent other users from seeing/editing anothers workout -->
+                if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == false)
+                {
+                    <h4>
+                        <b>Current Workout:</b> @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
+                    </h4>
+                    <h4>
+                        <b>Current Exercise in Workout:</b> @Html.ActionLink(item.WorkoutExercise.Exercise.Name, "Details", "Exercise", new { id = item.WorkoutExercise.ExerciseId }, null)
+                    </h4>
+                    <h3>How to do: @item.WorkoutExercise.Exercise.Instructions.ToString()</h3>
+                    <h8>Reps and Sets</h8>
+                    <h4>
+                        <b>Stage:</b> @Html.DisplayFor(modelItem => item.WorkoutExercise.OrderNumber) of
+                        @foreach (var item2 in Model)
+                        {
+                            if (item2.WorkoutExercise.OrderNumber.Value > finalStage && item2.WorkoutCompleted == false)
+                            {
+                                finalStage = item2.WorkoutExercise.OrderNumber.Value;
+                            }
+                        }
+                        @finalStage
+
+                        @if (1 == 1) //If-statement is just to get the C# code to work properly, math inside gets a percentage based on current stage User is on
+                        {
+                            percentStage = (item.WorkoutExercise.OrderNumber.Value - 1) / finalStage;
+                            percentString = percentStage.ToString("#0.##%");
+                        }
+                    </h4>
+
+                    <div id="wholeBar" style="width:100%; background-color:#E7E7E7; border-style:solid">
+                        <div id="percentBar" style="width:@percentString;height:30px; background-color:#38FF37;"><p style="text-align:center; font-size:20px; font-family:'Comic Sans MS'; color:black"><b>@percentString</b></p></div>
+                    </div>
+
+                    <h4>
+
+                        <!--Completion Rewards-->
+                        <hr />
+                        <h5>Completion Rewards:</h5>
+
+                        <!--temp variable used to hold the current workoutID to be used in API calls-->
+                        <div id="currentWorkoutID" style="visibility: hidden">@item.WorkoutExercise.WorkoutId</div>
+
+                        <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+                        <hr />
+                        <br />
+
+                        <!--Completion Rewards END-->
+
+                        <!-- Checks if the current Exercise is in the final stage of the Workout before allowing Completion -->
+                        @if (item.WorkoutExercise.OrderNumber == finalStage)
+                        {
+                            <b>@Html.ActionLink("Complete", "Complete", new { id = item.UCWId })</b> @: |
+                        }
+
+
+                        @if (item.WorkoutExercise.OrderNumber != finalStage)
+                        {
+                            @Html.ActionLink("Finish Stage", "Edit", new { id = item.UCWId }) @:|
+                        }
+
+
+                        @Html.ActionLink("Abandon Workout", "Abandon", new { id = item.UCWId })
+
+                        @ViewBag.Testings
+                    </h4>
+                }
+
+            }
+        }
+    *@
     <img src="~/Content/images/design_images/goblin_poison_blade.png" id="GoblinPoisonBlade" />
 
 }
-
-else
-{
-    <h1>User Workout Page</h1>
-    <p>
-        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        to view or start your Workout.
-    </p>
-}
+@*
+    else
+    {
+        <h1>User Workout Page</h1>
+        <p>
+            You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            to view or start your Workout.
+        </p>
+    }
+*@
 
 <br /><br />
 <p>Not working out right now? <b>@Html.ActionLink("View your Workout History!", "History")</b></p>
