@@ -16,6 +16,9 @@ namespace Powerlevel.Models.ViewModels
         //Max Workout Stage passed into Progress view to determine when the last workout will appear
         public int MaxWorkoutStage { get; set; }
 
+        //Gets the Users Active Workout to the view
+        public int UserActiveWorkout { get; set; }
+
         //Workout Name passed into Progress view to display on top of page
         public string WorkoutName { get; set; }
 

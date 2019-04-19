@@ -165,7 +165,8 @@ namespace Powerlevel.Controllers
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage, WorkoutName = UserWorkout.Workout.Name, MaxWorkoutStage = maxStage};
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage,
+                    WorkoutName = UserWorkout.Workout.Name, MaxWorkoutStage = maxStage, UserActiveWorkout = UserWorkout.UserActiveWorkout};
 
                 //returns the current exercise
                 return View(CurrentExercise);

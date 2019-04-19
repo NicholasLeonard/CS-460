@@ -4,7 +4,51 @@
     ViewBag.Title = "Progress";
 }
 
-<h1>Current Workout: <b>@Model.WorkoutName</b></h1>
+<h1>Current Workout: <b>@Html.ActionLink(Model.WorkoutName, "WorkoutList", "Exercise", new { id = Model.UserActiveWorkout }, null)</b></h1>
+
+<!-- Get the Active stage and Max stage in order to determine which buttons may be pressed below -->
+@{ int PrevNextCheck = Model.ActiveWorkoutStage;}
+@{ int LastStage = Model.MaxWorkoutStage;}
+
+<table>
+    <tr>
+        <td>
+            <!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
+            @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
+            {
+                @Html.AntiForgeryToken()
+                <!-- Prevents user from going back a workout if they are on the first stage -->
+                if (PrevNextCheck == 0)
+                {
+                    <input type="submit" disabled="disabled" title="PrevWorkout" value="Previous Stage" />
+                }
+                else
+                {
+                    <input type="submit" title="PrevWorkout" value="Previous Stage" />
+                }
+            }
+        </td>
+        <td>
+            <div style="margin:50px; margin-left:800px;">
+                <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
+                @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
+                {
+                    @Html.AntiForgeryToken()
+                    <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
+                    what is displayed for the name of the textbox -->
+                    if (PrevNextCheck + 1 == LastStage)
+                    {
+                        <input type="submit" title="CompleteWorkout" value="Complete Workout" />
+                    }
+                    else
+                    {
+                        <input type="submit" title="NextWorkout" value="Next Stage" />
+                    }
+                }
+            </div>
+        </td>
+    </tr>
+</table>
 
 <h2>@Model.CurrentExercise.Name</h2>
 
@@ -12,38 +56,5 @@
 
 <h2>@Model.CurrentExercise.Type</h2>
 
-<!-- Get the Active stage and Max stage in order to determine which buttons may be pressed below -->
-@{ int PrevNextCheck = Model.ActiveWorkoutStage;}
-@{ int LastStage = Model.MaxWorkoutStage;}
 
-<!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
-@using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
-{
-    @Html.AntiForgeryToken()
-    <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
-        what is displayed for the name of the textbox -->
-    if (PrevNextCheck + 1 == LastStage)
-    {
-        <input type="submit" title="NextWorkout" value="Complete Workout" />
-    }
-    else
-    {
-        <input type="submit" title="NextWorkout" value="Next Stage" />
-    }
 
-}
-
-<!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
-@using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
-{
-    @Html.AntiForgeryToken()
-    <!-- Prevents user from going back a workout if they are on the first stage -->
-    if (PrevNextCheck == 0)
-    {
-        <input type="submit" disabled="disabled" title="PrevWorkout" value="Previous Stage" />
-    }
-    else
-    {
-        <input type="submit" title="PrevWorkout" value="Previous Stage" />
-    }
-}
