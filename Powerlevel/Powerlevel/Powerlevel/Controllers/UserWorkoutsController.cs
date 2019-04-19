@@ -130,42 +130,8 @@ namespace Powerlevel.Controllers
             return View(userWorkout);
         }
 
-        /*
-         * 
-        // POST: UserWorkouts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Workout Workout)
-        {//gets the current userid to be added to the userworkout table
-            var currentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
-            int userId = currentUser.First();
-
-            if (ModelState.IsValid)
-            {//uses the returned workout to start to create a new active entry in the userworkout table
-                UserWorkout ActiveUserWorkout = new UserWorkout { UserId = userId, UserActiveWorkout = Workout.WorkoutId, WorkoutCompleted = false,
-                    ActiveWorkoutStage = 0};
-                db.UserWorkouts.Add(ActiveUserWorkout);
-                db.SaveChanges();
-                //gets the UWId for the routing id to track in progress workouts
-                var testuwid = db.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
-                int uwid = testuwid.First();
-                
-                return RedirectToAction("Progress", routeValues: new { id = uwid });
-            }
-            *
-            */
-
-        /*ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", UserWorkout.UserId);
-        ViewBag.UserActiveWorkout = new SelectList(db.WorkoutExercises, "LinkId", "LinkId", UserWorkout.UserActiveWorkout);*/
-        /*
-        return View(Workout);
-    }
-    */
-
         /// <summary>
-        /// Called when progressing forward through a workout
+        /// The view that handles loading the Progress page to move through exercises in a workout
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -175,6 +141,7 @@ namespace Powerlevel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             //gets the activeWorkout record for the user
             var UserWorkout = db.UserWorkouts.Find(id);
             //gets the active workout
@@ -186,6 +153,9 @@ namespace Powerlevel.Controllers
 
             if(CurrentWorkoutStage == maxStage)
             {
+                //Marks workout as complete by setting WorkoutCompleted bool in table to true, *eventually* dispersing rewards like user exp
+                FinishedWorkout(UserWorkout);
+
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
                 return RedirectToAction("Index");
             }
@@ -195,22 +165,47 @@ namespace Powerlevel.Controllers
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId};
-
-                //changes the stage of the workout to the next exercise, 1 is forward
-                ChangeWorkoutStage(UserWorkout, 1);
+                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage, WorkoutName = UserWorkout.Workout.Name, MaxWorkoutStage = maxStage};
 
                 //returns the current exercise
                 return View(CurrentExercise);
-                
             }
         }
 
         /// <summary>
-        /// Used to proceed backward in a workout
+        /// Used to move forward in a workout
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProgressForward(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var UserWorkout = db.UserWorkouts.Find(id);
+
+            //changes the stage of the workout to the next exercise
+            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + 1;
+
+            //saves the changes in the db
+            db.Entry(UserWorkout).State = EntityState.Modified;
+            db.SaveChanges();
+
+            //returns to the progress function to reload the progress view
+            return RedirectToAction("Progress", new { id = UserWorkout.UWId });
+        }
+
+        /// <summary>
+        /// Used to move backward in a workout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ProgressBack(int? id)
         {
             if (id == null)
@@ -218,35 +213,17 @@ namespace Powerlevel.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //gets the activeWorkout record for the user
             var UserWorkout = db.UserWorkouts.Find(id);
 
-            //gets the active workout
-            Workout InProgressWorkout = db.Workouts.Find(UserWorkout.UserActiveWorkout);
+            //changes the stage of the workout to the previous exercise
+            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage - 1;
 
-            //gets the stage of the active workout
-            int CurrentWorkoutStage = UserWorkout.ActiveWorkoutStage;
+            //saves the changes in the db
+            db.Entry(UserWorkout).State = EntityState.Modified;
+            db.SaveChanges();
 
-            //redirects to normal Progress method to start from the beginning
-            if (CurrentWorkoutStage == 0)
-            {//gets the current exercise in the workout by querying the workout/exercise transaction table. This returns the first exercise in the workout
-                return RedirectToAction("Progress", new { id = UserWorkout.UWId });
-            }
-            else
-            {
-                //gets the current exercise in the workout by querying the workout/exercise transaction table. This iterates and returns all exercise except the first one everytime the next button is clicked
-                Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
-
-                //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId };
-
-                //changes the stage of the workout to the next exercise, -1 is backward
-                ChangeWorkoutStage(UserWorkout, -1);
-
-                //returns the current exercise
-                return View(CurrentExercise);
-
-            }
+            //returns to the progress function to reload the progress view
+            return RedirectToAction("Progress", new { id = UserWorkout.UWId });
         }
 
         // GET: UserWorkouts/Abandon/5
@@ -310,7 +287,9 @@ namespace Powerlevel.Controllers
             AddExp(50);
             return RedirectToAction("Index");
         }
-
+        
+        //This was replaced in favor of "ProgressForward" and "ProgressBack" functions, but left the code here for now
+        /*
         /// <summary>
         /// Used to change the stage in a workout
         /// </summary>
@@ -322,6 +301,21 @@ namespace Powerlevel.Controllers
             UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + direction;
 
             //saves the changes in the db
+            db.Entry(UserWorkout).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+        */
+        
+
+        /// <summary>
+        /// Sets the boolean value in UserWorkout to true
+        /// </summary>
+        /// <param name="UserWorkout"></param>
+        public void FinishedWorkout(UserWorkout UserWorkout)
+        {
+            UserWorkout.WorkoutCompleted = true;
+
+            //saves change to db
             db.Entry(UserWorkout).State = EntityState.Modified;
             db.SaveChanges();
         }
