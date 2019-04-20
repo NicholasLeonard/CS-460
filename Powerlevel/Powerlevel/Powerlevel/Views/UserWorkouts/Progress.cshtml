@@ -14,8 +14,8 @@
         text-decoration: none;
         font-size: 16px;
         font-family: 'Comic Sans MS';
-        height:50px;
-        width:200px;
+        height: 50px;
+        width: 200px;
     }
 
     #PrevWorkoutDis {
@@ -111,3 +111,18 @@
 <h2>Exercise Type: <b>@Model.CurrentExercise.Type</b></h2>
 <br />
 <h2>Exercise Instructions: @Model.CurrentExercise.Instructions</h2>
+
+
+<!--Chi's XP Code-->
+<!--Completion Rewards-->
+<hr />
+<h5>Completion Rewards:</h5>
+
+<!--temp variable used to hold the current workoutID to be used in API calls-->
+<div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
+
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<hr />
+<br />
+
+@Scripts.Render("~/Scripts/workoutRewards.js")

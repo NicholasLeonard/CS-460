@@ -290,6 +290,9 @@ namespace Powerlevel.Controllers
             return View(UserWorkout);
         }
 
+        /* This is no longer a function that changes the database, but rather just acts as a view that displays to the user 
+         * what changes were made,  the function that actually changes the database is below titled "FinishedWorkout"
+         * 
         // POST: UserWorkouts/Complete/5
         [HttpPost, ActionName("Complete")]
         [ValidateAntiForgeryToken]
@@ -309,6 +312,8 @@ namespace Powerlevel.Controllers
             AddExp(50);
             return RedirectToAction("Index");
         }
+        */
+
         
         //This was replaced in favor of "ProgressForward" and "ProgressBack" functions, but left the code here for now
         /*
@@ -336,6 +341,9 @@ namespace Powerlevel.Controllers
         public void FinishedWorkout(UserWorkout UserWorkout)
         {
             UserWorkout.WorkoutCompleted = true;
+
+            //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
+            AddExp(50);
 
             //saves change to db
             db.Entry(UserWorkout).State = EntityState.Modified;
