@@ -59,22 +59,23 @@
                 <h4>
                   @* <b>Current Plan Id:</b> @Html.DisplayFor(modelItem => item.)*@
                 </h4>
+                @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId}, new { @class = "btn btn-danger"})
             }
         }
         @*Div section for the workout calendar*@
         @Html.FullCalendar(settings =>
-    {
-        settings.Name = "calendar";
-        settings.Selectable = true;
-        settings.EventDurationEditable = true;
-        settings.Editable = true;
-        settings.Selectable = true;
-        settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
-        settings.AllDayDefault = true;
-        settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
-        settings.ClientSideEvents.EventClick = "function(event, element){ event.color = 'green'; $('#calendar').fullCalendar('updateEvent', event); console.log('clicked');}";
-        settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
-    })
+   {
+       settings.Name = "calendar";
+       settings.Selectable = true;
+       settings.EventDurationEditable = true;
+       settings.Editable = true;
+       settings.Selectable = true;
+       settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
+       settings.AllDayDefault = true;
+       settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
+       settings.ClientSideEvents.EventClick = "function(event, element){ event.color = 'green'; $('#calendar').fullCalendar('updateEvent', event); console.log('clicked');}";
+       settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
+   })
     }
 }
 

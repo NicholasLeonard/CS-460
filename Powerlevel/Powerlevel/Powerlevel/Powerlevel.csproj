@@ -252,7 +252,6 @@
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\StyleController.cs" />
     <Compile Include="Controllers\UserWorkoutsController.cs" />
     <Compile Include="Controllers\UserWorkoutPlansController.cs" />
     <Compile Include="Controllers\WorkoutPlanWorkoutController.cs" />
@@ -1034,8 +1033,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Style\StyleGuide.cshtml" />
     <Content Include="Views\UserWorkouts\History.cshtml" />
-    <Content Include="Views\UserWorkoutPlans\Delete.cshtml" />
-    <Content Include="Views\UserWorkouts\View.cshtml" />
+    <Content Include="Views\UserWorkoutPlans\Abandon.cshtml" />
     <Content Include="Views\UserWorkouts\Progress.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1048,7 +1046,6 @@
   <ItemGroup>
     <Folder Include="fonts\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Views\UserWorkout\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

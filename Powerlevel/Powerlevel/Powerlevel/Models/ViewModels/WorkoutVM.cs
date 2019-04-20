@@ -24,5 +24,8 @@ namespace Powerlevel.Models.ViewModels
 
         //this is the current exercise in the current workout that the user is doing
         public virtual Exercise CurrentExercise { get; set; }
+
+        //Determines if the workout was started by a workout plan or not
+        public bool FromPlan { get; set; }
     }
 }

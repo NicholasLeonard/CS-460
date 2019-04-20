@@ -53,12 +53,12 @@ namespace Powerlevel.Controllers
             foreach(var item in AllWorkouts)
             {
                 result.Add(new Event {
-                    //id = item.Workout.WorkoutId,
-                    id = item.DayOfPlan, //sets a unique event id but is unable to send id to controller this way. May have to address this later
+                    id = item.DayOfPlan, //sets a unique event id for fullcalendar to use
                     title = item.Workout.Name,
                     start = (item.DayOfPlan == 1) ? today : result.First().start.AddDays(item.DayOfPlan - 1),
                     color = "red",
-                    description = GetStateMessage(0) //currently defaulting to Not completed
+                    description = GetStateMessage(0), //currently defaulting to Not completed
+                    url = "UserWorkouts/Create/" + item.Workout.WorkoutId
                 });
             }
 

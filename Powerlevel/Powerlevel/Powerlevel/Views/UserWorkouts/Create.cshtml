@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
+<h1>@ViewBag.WorkoutId</h1>
 
 @using (Html.BeginForm()) 
 {
@@ -18,9 +19,16 @@
 
     @*get the workout name, using a dropdownlist*@
     <div class="form-group">
-        @Html.LabelFor(model => model.UserActiveWorkout, "UserActiveWorkout", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.UserActiveWorkout, "Workouts", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownList("UserActiveWorkout", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">@*This is used to determine if the workout was started from a workout plan or as an individual workout*@
+            @Html.CheckBox("FromPlan",(ViewBag.FromPlan == true)? true : false, new { @class = "form-control", @hidden="hidden", @readonly="readonly"})
             @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
         </div>
     </div>
