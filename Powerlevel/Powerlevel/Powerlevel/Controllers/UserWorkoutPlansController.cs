@@ -76,11 +76,11 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PlanId,UserName")] UserWorkoutPlan userWorkoutPlan)
+        public ActionResult Create([Bind(Include = "PlanId,UserName,PlanStage")] UserWorkoutPlan userWorkoutPlan)
         {
             if (ModelState.IsValid)
             {
-
+                userWorkoutPlan.MaxStage = db.WorkoutPlanWorkouts.Where(x => x.PlanId == userWorkoutPlan.PlanId).Count();
                 db.UserWorkoutPlans.Add(userWorkoutPlan);
                 db.SaveChanges();         
                 return RedirectToAction("Index");
@@ -88,7 +88,8 @@ namespace Powerlevel.Controllers
             return View(userWorkoutPlan);
         }
 
-        public ActionResult Delete(int? id)
+        [HttpGet]
+        public ActionResult Abandon(int? id)
         {
             if (id == null)
             {
@@ -107,8 +108,8 @@ namespace Powerlevel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AbandonConfirmed(int id)
         {
-            UserWorkout UserWorkout = db.UserWorkouts.Find(id);
-            db.UserWorkouts.Remove(UserWorkout);
+            UserWorkoutPlan UserWorkoutPlan = db.UserWorkoutPlans.Find(id);
+            db.UserWorkoutPlans.Remove(UserWorkoutPlan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

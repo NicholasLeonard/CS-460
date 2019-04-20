@@ -18,6 +18,10 @@ namespace Powerlevel.Models
 
         public int PlanId { get; set; }
 
+        public int PlanStage { get; set; }
+
+        public int MaxStage { get; set; }
+
         public virtual WorkoutPlan WorkoutPlan { get; set; }
     }
 }

@@ -94,12 +94,29 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserTestWorkouts/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            //0 is not from workout plan
+            int WorkoutFromPlan = 0;
+
+            /*sets the default value for the dropdown list. If the view is being rendered from a workout plan call, then it sets default to id, else just 
+             displays the first item in the dropdown list. It also sets FromPlan bool for recording plan stages after workout completion*/
+            if(id == null)
+            {
+                ViewBag.FromPlan = false;
+            }
+            else
+            {
+                ViewBag.FromPlan = true;
+                WorkoutFromPlan = (int)id;
+            }
+
+            //gets the current user of the application
             var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
+     
 
-            ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name");
+            ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
             return View();
         }
 
@@ -108,7 +125,7 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
+        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout, bool fromPlan)
         {
             var currentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
             int userId = currentUser.First();
@@ -122,7 +139,7 @@ namespace Powerlevel.Controllers
                 var testuwid = db.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                 int uwid = testuwid.First();
 
-                return RedirectToAction("Progress", routeValues: new { id = uwid });
+                return RedirectToAction("Progress", routeValues: new { id = uwid, fromPlan });
             }
 
             ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userWorkout.UserId);
@@ -135,7 +152,7 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Progress(int? id)
+        public ActionResult Progress(int? id, bool fromPlan)
         {
             if(id == null)
             {
@@ -156,6 +173,9 @@ namespace Powerlevel.Controllers
                 //Marks workout as complete by setting WorkoutCompleted bool in table to true, *eventually* dispersing rewards like user exp
                 FinishedWorkout(UserWorkout);
 
+                //Updates the current stage of the plan
+                UpdatePlan(fromPlan);
+
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
                 return RedirectToAction("Index");
             }
@@ -166,9 +186,10 @@ namespace Powerlevel.Controllers
 
                 //creates a view model that has the current exercise and the id for the currently active workout
                 WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage,
-                    WorkoutName = UserWorkout.Workout.Name, MaxWorkoutStage = maxStage, UserActiveWorkout = UserWorkout.UserActiveWorkout};
+                    WorkoutName = UserWorkout.Workout.Name, MaxWorkoutStage = maxStage, UserActiveWorkout = UserWorkout.UserActiveWorkout, FromPlan = fromPlan};
 
-                //returns the current exercise
+                //returns the current exercise and if the plan was started from a workout plan or not
+                
                 return View(CurrentExercise);
             }
         }
@@ -180,7 +201,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProgressForward(int? id)
+        public ActionResult ProgressForward(int? id, bool fromPlan)
         {
             if (id == null)
             {
@@ -197,7 +218,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //returns to the progress function to reload the progress view
-            return RedirectToAction("Progress", new { id = UserWorkout.UWId });
+            return RedirectToAction("Progress", new { id = UserWorkout.UWId, fromPlan });
         }
 
         /// <summary>
@@ -207,7 +228,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProgressBack(int? id)
+        public ActionResult ProgressBack(int? id, bool fromPlan)
         {
             if (id == null)
             {
@@ -224,7 +245,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //returns to the progress function to reload the progress view
-            return RedirectToAction("Progress", new { id = UserWorkout.UWId });
+            return RedirectToAction("Progress", new { id = UserWorkout.UWId, fromPlan });
         }
 
         // GET: UserWorkouts/Abandon/5
@@ -319,6 +340,25 @@ namespace Powerlevel.Controllers
             //saves change to db
             db.Entry(UserWorkout).State = EntityState.Modified;
             db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Updates the current workout plan if there is one
+        /// </summary>
+        /// <param name="fromPlan"></param>
+        public void UpdatePlan(bool fromPlan)
+        {
+            if(fromPlan == true)
+            {
+                //gets the active plan
+                var userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
+
+                //updates the current stage of the plan
+                userPlan.PlanStage = userPlan.PlanStage + 1;
+
+                db.Entry(userPlan).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         protected override void Dispose(bool disposing)

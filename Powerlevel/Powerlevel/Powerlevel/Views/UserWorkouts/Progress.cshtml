@@ -14,7 +14,7 @@
     <tr>
         <td>
             <!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
-            @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
+            @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
             {
                 @Html.AntiForgeryToken()
                 <!-- Prevents user from going back a workout if they are on the first stage -->
@@ -31,7 +31,7 @@
         <td>
             <div style="margin:50px; margin-left:800px;">
                 <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
-                @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
+                @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
                 {
                     @Html.AntiForgeryToken()
                     <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
