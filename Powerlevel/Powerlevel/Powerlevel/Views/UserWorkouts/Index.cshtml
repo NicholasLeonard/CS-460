@@ -2,7 +2,7 @@
 @using Powerlevel.Models
 
 <style>
-    .IndexButton {
+    #IndexButton {
         border: solid;
         color: black;
         padding: 12px 32px;
@@ -10,6 +10,8 @@
         text-decoration: none;
         font-size: 16px;
         font-family: 'Comic Sans MS';
+        height: 50px;
+        width: 260px;
     }
 
     #CurrWorkout {
@@ -23,7 +25,7 @@
 
 @if (Request.IsAuthenticated)
 {
-    <h1>Workout Page for @User.Identity.Name </h1>
+    <h1><span style="color:#FDFFAF">@User.Identity.Name</span>'s Workout</h1>
     <br />
 
 
@@ -56,20 +58,30 @@
     //Link to start a new workout if startNewWorkout is true
     if (startNewWorkout == true)
     {
+        @Html.ActionLink("Start New Workout", "Create", "UserWorkout", new { @class = "btn btn-success", id = "IndexButton" })
+
+        /* This is an alternative text option for starting new workouts
+         * 
         <h4>
             It looks like you don't have an Active Workout! <b>@Html.ActionLink("Start a New Workout Now!", "Create", null, new { @class = "LinkColor" })</b>
         </h4>
+        */
     }
 
     //Button to resume workout if startNewWorkout is false
     else
     {
+        @Html.ActionLink("Resume Current Workout", "Progress", "UserWorkouts", new { id = currentWorkoutId }, new { @class = "btn btn-success", id = "IndexButton" })
+        
+        /* This is an alternative button for resuming workouts
+         * 
         using (Html.BeginForm("Progress", "UserWorkouts", new { id = currentWorkoutId }))
         {
             @Html.AntiForgeryToken()
             <!-- Takes the user back to their current workout in the progress view -->
             <input type="submit" id="CurrWorkout" class="IndexButton" title="CurrWorkout" value="Resume Current Workout" />
         }
+        */
     }
 
     @*
@@ -178,6 +190,8 @@
             }
         }
     *@
+    <br />
+    <br />
     <img src="~/Content/images/design_images/goblin_poison_blade.png" id="GoblinPoisonBlade" />
 
 }
