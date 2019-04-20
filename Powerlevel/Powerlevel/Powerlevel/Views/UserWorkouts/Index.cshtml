@@ -25,7 +25,7 @@
 
 @if (Request.IsAuthenticated)
 {
-    <h1><span style="color:#FDFFAF">@User.Identity.Name</span>'s Workout</h1>
+    <h1><span style="color:#FDFFAF">@User.Identity.Name</span>'s Workout Page</h1>
     <br />
 
 
@@ -71,17 +71,8 @@
     //Button to resume workout if startNewWorkout is false
     else
     {
-        @Html.ActionLink("Resume Current Workout", "Progress", "UserWorkouts", new { id = currentWorkoutId }, new { @class = "btn btn-success", id = "IndexButton" })
-        
-        /* This is an alternative button for resuming workouts
-         * 
-        using (Html.BeginForm("Progress", "UserWorkouts", new { id = currentWorkoutId }))
-        {
-            @Html.AntiForgeryToken()
-            <!-- Takes the user back to their current workout in the progress view -->
-            <input type="submit" id="CurrWorkout" class="IndexButton" title="CurrWorkout" value="Resume Current Workout" />
-        }
-        */
+        //Passes in the id of a users current workout and a false boolean value to the Progress function, since this is the workout button not attached to a plan
+        @Html.ActionLink("Resume Current Workout", "Progress", "UserWorkouts", new { id = currentWorkoutId,fromPlan=false }, new { @class = "btn btn-success", id = "IndexButton" })
     }
 
     @*

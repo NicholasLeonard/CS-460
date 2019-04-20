@@ -93,7 +93,7 @@ namespace Powerlevel.Controllers
             return View(UserWorkout);
         }
 
-        // GET: UserTestWorkouts/Create
+        // GET: UserWorkouts/Create
         public ActionResult Create(int? id)
         {
             //0 is not from workout plan
