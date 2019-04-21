@@ -120,7 +120,7 @@ namespace Powerlevel.Controllers
             return View();
         }
 
-        // POST: UserTestWorkouts/Create
+        // POST: UserWorkouts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -177,7 +177,7 @@ namespace Powerlevel.Controllers
                 UpdatePlan(fromPlan);
 
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
-                return RedirectToAction("Index");
+                return RedirectToAction("Complete", routeValues: new { id, fromPlan });
             }
             else
             {
@@ -275,9 +275,8 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserWorkouts/Complete/5
-        public ActionResult Complete(int? id)
+        public ActionResult Complete(int? id, bool fromPlan)
         {
-            ViewBag.workoutId = 0;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

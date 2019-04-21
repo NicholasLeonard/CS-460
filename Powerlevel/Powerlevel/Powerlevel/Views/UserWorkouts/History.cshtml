@@ -8,7 +8,7 @@
     "WorkoutCompleted" boolean data field of the UserWorkouts table being marked "true" -->
 @if (Request.IsAuthenticated)
 {
-
+    <br />
     <h2>Workout History for @User.Identity.Name </h2>
 
     <br />
@@ -28,12 +28,13 @@
         @*{int takeTen = 0;}*@
         @foreach (var item in Model)
         {
+            <!--Ensures both that the logged in user is the same as the user in the table and the workout is not currently active-->
             if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == true) // && takeTen < 10
             {
                 //takeTen = takeTen + 1;
                 <tr>
                     <td>
-                        @Html.ActionLink(item.WorkoutExercise.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutExercise.WorkoutId }, null)
+                        @Html.ActionLink(item.Workout.Name, "WorkoutList", "Exercise", new { id = item.UserActiveWorkout }, null)
                     </td>
                     <td>
                         @Convert.ToDateTime(item.CompletedTime).ToString("M/d/yyyy 'on' h:mm:ss tt")
@@ -44,5 +45,5 @@
 
     </table>
 
-    <p>Done with History? <b>@Html.ActionLink("View your Current Workout!", "Index")</b></p>
+    <p>Done with History? <b>@Html.ActionLink("View your Current Workout!", "Index", null, new { @class = "LinkColor" })</b></p>
 }

@@ -1,32 +1,45 @@
-﻿<!-- Allows the user to Compelete the workout, removing it from the UserWorkout table -->
-
-@model Powerlevel.Models.UserWorkout
+﻿@model Powerlevel.Models.UserWorkout
 
 @{
     ViewBag.Title = "Complete";
 }
 
-<h3>Congratulations for successfully completing this Workout!</h3>
-<div>
-    <hr />
-
-    <h4>
-        <b>@Html.DisplayFor(model => model.User.UserName)</b> will complete the
-        <b>@Html.DisplayFor(model => model.WorkoutExercise.Workout.Name)</b> Workout
-        
-    </h4>
-    <h6>Check the box to confirm completion.</h6>
-    <br />
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-    <div class="form-actions no-color">
-        <!-- User must "Confirm" completion of the workout by checking the box -->
-        @Html.CheckBox("Confirm Complete", new { @required = "required" })
-        <input type="submit" value="Complete!" class="btn btn-primary" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<style>
+    #RedirectButton {
+        border: solid;
+        color: black;
+        padding: 12px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        font-family: 'Comic Sans MS';
+        height: 50px;
+        width: 260px;
+        margin-right:30px;
     }
-</div>
+</style>
+
+<!-- Completion page is a receipt showing what the User has earned, the actual rewards have already been saved to the database -->
+<br />
+<h3>Congratulations on successfully conquering the <b>@Html.DisplayFor(model => model.Workout.Name)</b> Workout!</h3>
+<br />
+
+<!-- Displays XP, items and other things the user may have earned after Workout completion-->
+<h3 style="color:#FDFFAF">Your Rewards:</h3>
+<div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<hr />
+
+<!-- Since the user will always level up every 100 XP they will be congratulated upon reaching a new level
+    if they met the requirement of earning enough XP after a completed workout (this code will need to be updated
+    if there are changes to the distributed amount of XP for workouts and/or the XP required to level up changes) -->
+@if (Model.User.Experience % 100 == 0 && Model.User.Level != 20)
+{
+    <h2><span style="color:#FFEC3C">Level Up!</span> You've reached Level @Model.User.Level!</h2>
+}
+<br />
+
+@Html.ActionLink("Return Home", "Index", "Home", null, new { @class = "btn btn-success", id = "RedirectButton" })
+@Html.ActionLink("View Workout History", "History", null, new { @class = "btn btn-success", id = "RedirectButton" })
+
+@Scripts.Render("~/Scripts/workoutRewards.js")
