@@ -168,19 +168,22 @@ namespace Powerlevel.Controllers
             //gets the total number of exercises in the workout to determine the final stage of the workout.
             int maxStage = InProgressWorkout.WorkoutExercises.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Count();
 
+            //determines if the plan was completed
+            bool PlanComplete = false;
+
             if(CurrentWorkoutStage == maxStage)
             {
                 //Marks workout as complete by setting WorkoutCompleted bool in table to true, *eventually* dispersing rewards like user exp
                 FinishedWorkout(UserWorkout);
 
-                //Updates the current stage of the plan
+                //Updates the current stage of the plan, it is passing in the current workout id for plan completion
                 if (fromPlan == true)
                 {
-                    UpdatePlan(fromPlan);
+                    PlanComplete = UpdatePlan();
                 }
                 
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
-                return RedirectToAction("Complete", routeValues: new { id, fromPlan });
+                return RedirectToAction("Complete", routeValues: new { id, planComplete = PlanComplete });
             }
             else
             {
@@ -278,7 +281,7 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserWorkouts/Complete/5
-        public ActionResult Complete(int? id, bool fromPlan)
+        public ActionResult Complete(int? id, bool? planComplete)
         {
             if (id == null)
             {
@@ -289,6 +292,8 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
         }
 
@@ -353,7 +358,7 @@ namespace Powerlevel.Controllers
         }
 
         /// <summary>
-        /// Checks to see if the plan was completed. If so it deletes it from the db.
+        /// Deletes user plan from the db
         /// </summary>
         public void FinishPlan(UserWorkoutPlan userPlan)
         {
@@ -362,27 +367,35 @@ namespace Powerlevel.Controllers
         }
 
         /// <summary>
-        /// Updates the current workout plan if there is one
+        /// Updates the current workout plan if there is one and returns if the plan is completed
         /// </summary>
         /// <param name="fromPlan"></param>
-        public void UpdatePlan(bool fromPlan)
+        public bool UpdatePlan()
         {
-            
             //gets the active plan
             var userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
 
             //updates the current stage of the plan
             userPlan.PlanStage = userPlan.PlanStage + 1;
 
+            //saves changes to the db
             db.Entry(userPlan).State = EntityState.Modified;
             db.SaveChanges();
             
+            //checks if the plan has been completed
             if(userPlan.PlanStage == userPlan.MaxStage)
             {
                 FinishPlan(userPlan);
+                return (true);
             }
+
+            return (false);
         }
 
+        /// <summary>
+        /// Used to dispose of instances of the database when the controller exits
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
