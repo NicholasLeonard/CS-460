@@ -93,7 +93,7 @@ namespace Powerlevel.Controllers
             return View(UserWorkout);
         }
 
-        // GET: UserTestWorkouts/Create
+        // GET: UserWorkouts/Create
         public ActionResult Create(int? id)
         {
             //0 is not from workout plan
@@ -120,7 +120,7 @@ namespace Powerlevel.Controllers
             return View();
         }
 
-        // POST: UserTestWorkouts/Create
+        // POST: UserWorkouts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -180,7 +180,7 @@ namespace Powerlevel.Controllers
                 }
                 
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
-                return RedirectToAction("Index");
+                return RedirectToAction("Complete", routeValues: new { id, fromPlan });
             }
             else
             {
@@ -278,9 +278,8 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserWorkouts/Complete/5
-        public ActionResult Complete(int? id)
+        public ActionResult Complete(int? id, bool fromPlan)
         {
-            ViewBag.workoutId = 0;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -293,6 +292,9 @@ namespace Powerlevel.Controllers
             return View(UserWorkout);
         }
 
+        /* This is no longer a function that changes the database, but rather just acts as a view that displays to the user 
+         * what changes were made,  the function that actually changes the database is below titled "FinishedWorkout"
+         * 
         // POST: UserWorkouts/Complete/5
         [HttpPost, ActionName("Complete")]
         [ValidateAntiForgeryToken]
@@ -312,6 +314,8 @@ namespace Powerlevel.Controllers
             AddExp(50);
             return RedirectToAction("Index");
         }
+        */
+
         
         //This was replaced in favor of "ProgressForward" and "ProgressBack" functions, but left the code here for now
         /*
@@ -339,6 +343,9 @@ namespace Powerlevel.Controllers
         public void FinishedWorkout(UserWorkout UserWorkout)
         {
             UserWorkout.WorkoutCompleted = true;
+
+            //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
+            AddExp(50);
 
             //saves change to db
             db.Entry(UserWorkout).State = EntityState.Modified;

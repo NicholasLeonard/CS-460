@@ -14,6 +14,8 @@
         text-decoration: none;
         font-size: 16px;
         font-family: 'Comic Sans MS';
+        height: 50px;
+        width: 200px;
     }
 
     #PrevWorkoutDis {
@@ -33,6 +35,17 @@
     #CompletedWorkout {
         background-color: #6EFF69;
     }
+
+    #wholeBar {
+        width: 100%;
+        background-color: #E7E7E7;
+        border-style: solid;
+    }
+
+    #percentBar {
+        height: 30px;
+        background-color: #38FF37;
+    }
 </style>
 
 <br />
@@ -46,8 +59,8 @@
 @{ double percentStage = PrevNextCheck / LastStage; }
 @{ string percentString = percentStage.ToString("#0.##%"); }
 <h3 style="text-align:center">Workout Progress</h3>
-<div id="wholeBar" style="width:100%; background-color:#E7E7E7; border-style:solid">
-    <div id="percentBar" style="width:@percentString;height:30px; background-color:#38FF37;"><p style="text-align:center; font-size:20px; font-family:'Comic Sans MS'; color:black"><b>@percentString</b></p></div>
+<div id="wholeBar">
+    <div id="percentBar" style="width:@percentString;"><p style="text-align:center; font-size:20px; font-family:'Comic Sans MS'; color:black"><b>@percentString</b></p></div>
 </div>
 
 <table>
@@ -71,7 +84,7 @@
             </div>
         </td>
         <td>
-            <div style="margin:20px 0px 50px 700px;">
+            <div style="margin:20px 0px 50px 708px;">
                 <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
                 @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
                 {
@@ -98,3 +111,18 @@
 <h2>Exercise Type: <b>@Model.CurrentExercise.Type</b></h2>
 <br />
 <h2>Exercise Instructions: @Model.CurrentExercise.Instructions</h2>
+
+
+<!--Chi's XP Code-->
+<!--Completion Rewards-->
+<hr />
+<h5>Completion Rewards:</h5>
+
+<!--temp variable used to hold the current workoutID to be used in API calls-->
+<div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
+
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<hr />
+<br />
+
+@Scripts.Render("~/Scripts/workoutRewards.js")
