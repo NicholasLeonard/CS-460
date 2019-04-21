@@ -348,17 +348,10 @@ namespace Powerlevel.Controllers
         /// <summary>
         /// Checks to see if the plan was completed. If so it deletes it from the db.
         /// </summary>
-        public void FinishedPlan()
+        public void FinishPlan(UserWorkoutPlan userPlan)
         {
-            //gets the current workout plan 
-            var CurrentPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x).First();
-
-            if(CurrentPlan.MaxStage == CurrentPlan.PlanStage)
-            {
-                db.UserWorkoutPlans.Remove(CurrentPlan);
-                db.SaveChanges();
-                //possibly redirect to plan completion screen.
-            }
+            db.UserWorkoutPlans.Remove(userPlan);
+            db.SaveChanges();
         }
 
         /// <summary>
@@ -368,14 +361,19 @@ namespace Powerlevel.Controllers
         public void UpdatePlan(bool fromPlan)
         {
             
-                //gets the active plan
-                var userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
+            //gets the active plan
+            var userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
 
-                //updates the current stage of the plan
-                userPlan.PlanStage = userPlan.PlanStage + 1;
+            //updates the current stage of the plan
+            userPlan.PlanStage = userPlan.PlanStage + 1;
 
-                db.Entry(userPlan).State = EntityState.Modified;
-                db.SaveChanges();
+            db.Entry(userPlan).State = EntityState.Modified;
+            db.SaveChanges();
+            
+            if(userPlan.PlanStage == userPlan.MaxStage)
+            {
+                FinishPlan(userPlan);
+            }
         }
 
         protected override void Dispose(bool disposing)
