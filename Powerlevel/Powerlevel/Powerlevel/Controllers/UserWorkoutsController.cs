@@ -174,8 +174,11 @@ namespace Powerlevel.Controllers
                 FinishedWorkout(UserWorkout);
 
                 //Updates the current stage of the plan
-                UpdatePlan(fromPlan);
-
+                if (fromPlan == true)
+                {
+                    UpdatePlan(fromPlan);
+                }
+                
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
                 return RedirectToAction("Index");
             }
@@ -330,7 +333,7 @@ namespace Powerlevel.Controllers
         
 
         /// <summary>
-        /// Sets the boolean value in UserWorkout to true
+        /// Sets the boolean value of WorkoutCompleted in UserWorkout to true
         /// </summary>
         /// <param name="UserWorkout"></param>
         public void FinishedWorkout(UserWorkout UserWorkout)
@@ -343,13 +346,28 @@ namespace Powerlevel.Controllers
         }
 
         /// <summary>
+        /// Checks to see if the plan was completed. If so it deletes it from the db.
+        /// </summary>
+        public void FinishedPlan()
+        {
+            //gets the current workout plan 
+            var CurrentPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x).First();
+
+            if(CurrentPlan.MaxStage == CurrentPlan.PlanStage)
+            {
+                db.UserWorkoutPlans.Remove(CurrentPlan);
+                db.SaveChanges();
+                //possibly redirect to plan completion screen.
+            }
+        }
+
+        /// <summary>
         /// Updates the current workout plan if there is one
         /// </summary>
         /// <param name="fromPlan"></param>
         public void UpdatePlan(bool fromPlan)
         {
-            if(fromPlan == true)
-            {
+            
                 //gets the active plan
                 var userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
 
@@ -358,7 +376,6 @@ namespace Powerlevel.Controllers
 
                 db.Entry(userPlan).State = EntityState.Modified;
                 db.SaveChanges();
-            }
         }
 
         protected override void Dispose(bool disposing)
