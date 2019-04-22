@@ -57,11 +57,14 @@
                     <b>Days to Complete Plan:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.DaysToComplete)
                 </h4>
                 <h4>
-                  @* <b>Current Plan Id:</b> @Html.DisplayFor(modelItem => item.)*@
+                    @* <b>Current Plan Id:</b> @Html.DisplayFor(modelItem => item.)*@
                 </h4>
-                @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId}, new { @class = "btn btn-danger"})
+                @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId }, new { @class = "btn btn-danger" })
+                <br />
+                <br />
             }
         }
+
         @*Div section for the workout calendar*@
         @Html.FullCalendar(settings =>
    {

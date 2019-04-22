@@ -31,6 +31,7 @@
 <br />
 
 @Html.ActionLink("Return Home", "Index", "Home", null, new { @class = "btn btn-success", id = "RedirectButton" })
-@Html.ActionLink("View Workout History", "History", null, new { @class = "btn btn-success", id = "RedirectButton" })
+@Html.ActionLink("View History", "History", null, new { @class = "btn btn-success", id = "RedirectButton" })
+@Html.ActionLink("View Plan", "Index", "UserWorkoutPlans", null, new { @class = "btn btn-success", id = "RedirectButton" })
 
 @Scripts.Render("~/Scripts/workoutRewards.js")

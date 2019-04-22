@@ -1,37 +1,29 @@
-﻿@model Powerlevel.Models.UserWorkoutPlan
+﻿<!-- Allows the user to "abandon" a plan by deleting the workout from the UserWorkout table -->
+
+@model Powerlevel.Models.UserWorkoutPlan
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Abandon";
 }
 
-<h3>Are you sure you want to abandon this plan?</h3>
+<br />
+<h3>Are you sure you want to Abandon this Plan?</h3>
 <div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WorkoutPlan.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.WorkoutPlan.Name)
-        </dd>
+    <h4>
+        <b>@Html.DisplayFor(model => model.UserName)</b> will abandon the
+        <b>@Html.DisplayFor(model => model.WorkoutPlan.Name)</b>
+    </h4>
+    <br />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back to List", "Index")
+        <div>
+            <input type="submit" value="Confirm" class="btn btn-primary" style="background-color: #FF7869; color:black; border-color:black;" /> |
+            @Html.ActionLink("Back to Plans", "Index", null, new { @class = "LinkColor" })
         </div>
     }
 </div>

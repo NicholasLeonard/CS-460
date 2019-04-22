@@ -11,8 +11,8 @@
         font-size: 16px;
         font-family: 'Comic Sans MS';
         height: 50px;
-        width: 260px;
-        margin-right: 30px;
+        width: 300px;
+        background-color: #6EFF69
     }
 
     #CurrWorkout {
@@ -30,7 +30,8 @@
 
 @if (Request.IsAuthenticated)
 {
-    <h1><span style="color:#FDFFAF">@User.Identity.Name</span>'s Workout Page</h1>
+    <br />
+    <h1 style="text-align:center">Welcome, <span style="color:#FDFFAF">@User.Identity.Name</span>! Select a Workout method!</h1>
     <br />
 
 
@@ -63,7 +64,9 @@
     //Link to start a new workout if startNewWorkout is true
     if (startNewWorkout == true)
     {
-        @Html.ActionLink("Start Free Workout", "Create", null, new { @class = "btn btn-success", id = "IndexButton" })
+        @Html.ActionLink("Free Workout", "Create", null, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
+
+        @Html.ActionLink("Workout from Plan", "Index", "UserWorkoutPlans", null, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:310px;" })
 
         /* This is an alternative text option for starting new workouts
          *
@@ -73,39 +76,39 @@
         */
     }
 
-    //Button to resume workout if startNewWorkout is false
-    if (startNewWorkout == false)
-    {
-        //Passes in the id of a users current workout and a false boolean value to the Progress function, since this is the workout button not attached to a plan
-        @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId, fromPlan = false }, new { @class = "btn btn-success", id = "IndexButton" })
-
+        //Button to resume workout if startNewWorkout is false
+        if (startNewWorkout == false)
+        {
+            //Passes in the id of a users current workout and a false boolean value to the Progress function, since this is the workout button not attached to a plan
+            @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId, fromPlan = false }, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;"})
+    
         //Allows user to abandon their workout if there is one currently active
-        @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "btn btn-success", id = "IndexButton", style = "background-color:#FF7869;" })
-    }
+            @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "btn btn-success", id = "IndexButton", style = "background-color:#FF7869; margin-left:310px;" })
+        }
 
     @*
-                    *Stuff that isnt needed but kept some of the code here as implementations may be added elsewhere*
+        *Stuff that isnt needed but kept some of the code here as implementations may be added elsewhere*
 
 
 
-                    <h3>How to do: @item.WorkoutExercise.Exercise.Instructions.ToString()</h3>
-                    <h8>Reps and Sets</h8>
+        <h3>How to do: @item.WorkoutExercise.Exercise.Instructions.ToString()</h3>
+        <h8>Reps and Sets</h8>
 
-                        <!--Completion Rewards-->
-                        <hr />
-                        <h5>Completion Rewards:</h5>
+            <!--Completion Rewards-->
+            <hr />
+            <h5>Completion Rewards:</h5>
 
-                        <!--temp variable used to hold the current workoutID to be used in API calls-->
-                        <div id="currentWorkoutID" style="visibility: hidden">@item.WorkoutExercise.WorkoutId</div>
+            <!--temp variable used to hold the current workoutID to be used in API calls-->
+            <div id="currentWorkoutID" style="visibility: hidden">@item.WorkoutExercise.WorkoutId</div>
 
-                        <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
-                        <hr />
-                        <br />
+            <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+            <hr />
+            <br />
 
-                        <!--Completion Rewards END-->
+            <!--Completion Rewards END-->
 
-                        @ViewBag.Testings
-                    </h4>
+            @ViewBag.Testings
+        </h4>
     *@
 
     <br />
