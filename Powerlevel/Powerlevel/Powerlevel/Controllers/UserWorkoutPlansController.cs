@@ -7,12 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
+using System.Threading;
 
 namespace Powerlevel.Controllers
 {
     public class UserWorkoutPlansController : Controller
     {
+        //db access
         private toasterContext db = new toasterContext();
+
+        //used for making workout events for calendar workout plans
+        private static DateTime today = DateTime.Now;
+        private string currentUser = Thread.CurrentPrincipal.Identity.Name;
 
         //GET: UserWorkoutPlans
         public ActionResult Index()
@@ -20,47 +26,6 @@ namespace Powerlevel.Controllers
             ViewBag.Workoutplans = db.WorkoutPlans.ToList();
             return View(db.UserWorkoutPlans.ToList());
         }
-
-        //REFACTOR:: Leaving this in for now incase I want to try and implement it again later, does not work with the current model
-        /*
-        public ActionResult Index(string sortOrder)
-        {
-            //sorting function
-            ViewBag.UserNameSortParm = String.IsNullOrEmpty(sortOrder) ? "username" : "";
-            ViewBag.PlanNameSortParm = String.IsNullOrEmpty(sortOrder) ? "plan_name" : "";
-            ViewBag.TypeSortParm = String.IsNullOrEmpty(sortOrder) ? "plan_type" : "";
-            ViewBag.DescriptionSortParm = String.IsNullOrEmpty(sortOrder) ? "description" : "";
-            ViewBag.DaysSortParm = String.IsNullOrEmpty(sortOrder) ? "days" : "";
-            ViewBag.NumWorkoutsSortParm = String.IsNullOrEmpty(sortOrder) ? "numWorkouts" : "";
-            var UserWorkoutPlan = from s in db.UserWorkoutPlans
-                           select s;
-            switch (sortOrder)
-            {
-                case "username":
-                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.UserName);
-                    break;
-                case "plan_name":
-                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Name);
-                    break;
-                case "plan_type":
-                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Type);
-                    break;
-                case "description":
-                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.Description);
-                    break;
-                case "days":
-                  UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.DaysToComplete);
-                  break;
-                case "numWorkouts":
-                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.NumberOfWorkouts);
-                    break;
-                default:
-                    UserWorkoutPlan = UserWorkoutPlan.OrderBy(s => s.UserName);
-                    break;
-            }
-            return View(UserWorkoutPlan.ToList());  
-        }
-        */
 
         // GET: UserWorkoutPlans/Create
         public ActionResult Create()
@@ -82,7 +47,10 @@ namespace Powerlevel.Controllers
             {
                 userWorkoutPlan.MaxStage = db.WorkoutPlanWorkouts.Where(x => x.PlanId == userWorkoutPlan.PlanId).Count();
                 db.UserWorkoutPlans.Add(userWorkoutPlan);
-                db.SaveChanges();         
+                db.SaveChanges();
+
+                //calls a method to add all workouts in plan to workoutEvents table
+                AddWorkoutEvents(userWorkoutPlan.PlanId);
                 return RedirectToAction("Index");
             }
             return View(userWorkoutPlan);
@@ -111,10 +79,61 @@ namespace Powerlevel.Controllers
             UserWorkoutPlan UserWorkoutPlan = db.UserWorkoutPlans.Find(id);
             db.UserWorkoutPlans.Remove(UserWorkoutPlan);
             db.SaveChanges();
+
+            //deletes workout events associated with the plan
+            var WorkoutEvents = db.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x);
+            db.WorkoutEvents.RemoveRange(WorkoutEvents);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Adds workoutEvents to the db for event persistence
+        /// </summary>
+        /// <param name="planId"></param>
+        public void AddWorkoutEvents(int planId)
+        {
+            //list of workouts to be added to the events table to feed the calendar
+            List<WorkoutEvent> Events = new List<WorkoutEvent>();
 
+            //gets the userId of the current user so we can link it in the workout event table
+            int user = db.Users.Where(x => x.UserName == currentUser).Select(x => x.UserId).ToArray().First();
+
+            //gets the workout plan that the user is doing
+            var Workouts = db.WorkoutPlans.Find(planId);
+
+            //gets all of the workouts in the workout plan
+            var AllWorkouts = Workouts.WorkoutPlanWorkouts.Where(x => x.PlanId == planId).Select(x => new { x.Workout, x.DayOfPlan }).ToList();
+
+            //adds each workout as a workout event to be added to the events table in db
+            foreach(var item in AllWorkouts)
+            {
+                Events.Add(new WorkoutEvent
+                {
+                    Title = item.Workout.Name,
+                    Start = (item.DayOfPlan == 1) ? today : Events.First().Start.Value.AddDays(item.DayOfPlan - 1), //this is determining the day on calendar for workout based on day of plan and the first workout in the plan
+                    StatusColor = "red",
+                    UserId = user,
+                    WorkoutId = item.Workout.WorkoutId
+                });
+            }
+
+            //adds records to the db assuming that the events list is valid
+            if(Events != null)
+            {
+                db.WorkoutEvents.AddRange(Events);
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        /// <summary>
+        /// Garbage collection method for disposing of database access when the controller has finished executing
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)

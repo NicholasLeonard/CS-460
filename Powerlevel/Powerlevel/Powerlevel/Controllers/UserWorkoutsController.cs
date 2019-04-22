@@ -241,7 +241,7 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserWorkouts/Abandon/5
-        public ActionResult Abandon(int? id)
+        public ActionResult Abandon(int? id, bool fromPlan)
         {
             if (id == null)
             {
@@ -252,17 +252,19 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.FromPlan = fromPlan;
             return View(UserWorkout);
         }
 
         // POST: UserWorkouts/Abandon/5
         [HttpPost, ActionName("Abandon")]
         [ValidateAntiForgeryToken]
-        public ActionResult AbandonConfirmed(int id)
+        public ActionResult AbandonConfirmed(int id, bool fromPlan)
         {
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
             db.UserWorkouts.Remove(UserWorkout);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -281,51 +283,7 @@ namespace Powerlevel.Controllers
 
             ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
-        }
-
-        /* This is no longer a function that changes the database, but rather just acts as a view that displays to the user 
-         * what changes were made,  the function that actually changes the database is below titled "FinishedWorkout"
-         * 
-        // POST: UserWorkouts/Complete/5
-        [HttpPost, ActionName("Complete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult CompleteConfirmed(int id)
-        {
-            UserWorkout UserWorkout = db.UserWorkouts.Find(id);
-
-            //Marks the current workout as "Completed", moving it from the User's Active Workout tab to the Workout History tab
-            var completedWorkout = new UserWorkout { UserId = UserWorkout.UserId, UserActiveWorkout = UserWorkout.UserActiveWorkout, WorkoutCompleted = true };
-            db.UserWorkouts.Add(completedWorkout);
-
-            //"Removes" the old table, as the new one is essentially a duplicate with a WorkoutCompleted value of True, instead of False
-            db.UserWorkouts.Remove(UserWorkout);
-            db.SaveChanges();
-
-            //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
-            AddExp(50);
-            return RedirectToAction("Index");
-        }
-        */
-
-        
-        //This was replaced in favor of "ProgressForward" and "ProgressBack" functions, but left the code here for now
-        /*
-        /// <summary>
-        /// Used to change the stage in a workout
-        /// </summary>
-        /// <param name="UserWorkout"></param>
-        /// <param name="direction"></param>
-        public void ChangeWorkoutStage(UserWorkout UserWorkout, int direction)
-        {
-            //changes the stage of the workout to the next exercise
-            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + direction;
-
-            //saves the changes in the db
-            db.Entry(UserWorkout).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-        */
-        
+        }        
 
         /// <summary>
         /// Sets the boolean value of WorkoutCompleted in UserWorkout to true
@@ -350,6 +308,9 @@ namespace Powerlevel.Controllers
         {
             db.UserWorkoutPlans.Remove(userPlan);
             db.SaveChanges();
+
+            //removes workout events for active plan once plan is complete so they are not displayed on the calendar
+            RemoveWorkoutEvents();
         }
 
         /// <summary>
@@ -376,6 +337,16 @@ namespace Powerlevel.Controllers
             }
 
             return (false);
+        }
+
+        public void RemoveWorkoutEvents()
+        {
+            //gets all of the associated workout events
+            var Events = db.WorkoutEvents.Where(x => x.User.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x);
+
+            //removes all of the associated workout events from the db
+            db.WorkoutEvents.RemoveRange(Events);
+            db.SaveChanges();
         }
 
         /// <summary>
