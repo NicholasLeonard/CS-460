@@ -78,20 +78,6 @@ namespace Powerlevel.Controllers
             return View(UserWorkouts.ToList());
         }
 
-        // GET: UserWorkouts/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UserWorkout UserWorkout = db.UserWorkouts.Find(id);
-            if (UserWorkout == null)
-            {
-                return HttpNotFound();
-            }
-            return View(UserWorkout);
-        }
 
         // GET: UserWorkouts/Create
         public ActionResult Create(int? id)
