@@ -6,13 +6,21 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using Powerlevel.Models;
 using System.Threading;
+using Powerlevel.Infastructure;
+using Ninject;
+
 
 namespace Powerlevel.Controllers
 {
     public class CalendarController : Controller
     {//db access and current user 
-        private toasterContext db = new toasterContext();
+        private IToasterRepository db;
         private string currentUser = Thread.CurrentPrincipal.Identity.Name;
+
+        public CalendarController(IToasterRepository repository)
+        {
+            this.db = repository;
+        }
 
         //Used to display workout schedule to calendar
         public JsonResult Events(DateTime start, DateTime end)
@@ -101,8 +109,7 @@ namespace Powerlevel.Controllers
             CurrentEvent.Description = GetStateMessage(2);
 
             //saves changes to the db
-            db.Entry(CurrentEvent).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChangesAsync();
+            db.Update(CurrentEvent);
             
             return null;
         }
