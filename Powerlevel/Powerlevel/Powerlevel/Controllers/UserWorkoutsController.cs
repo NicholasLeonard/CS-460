@@ -175,6 +175,10 @@ namespace Powerlevel.Controllers
             {
                 //gets the current exercise in the workout by querying the workout/exercise transaction table. This iterates and returns all exercise except the first one everytime the next button is clicked
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
+                //Get all subtables for the particular exercise's information
+                ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == ActiveExercise.ExerciseId).ToList();
+                ViewBag.Flags = db.ExerciseFlags.Where(x => x.ExerciseId == ActiveExercise.ExerciseId).ToList();
+                ViewBag.Equipment = db.ExerciseEquipments.Where(x => x.ExerciseId == ActiveExercise.ExerciseId).ToList();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
                 WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage,

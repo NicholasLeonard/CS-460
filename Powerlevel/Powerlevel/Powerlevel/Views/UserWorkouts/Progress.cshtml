@@ -1,4 +1,5 @@
 ﻿@model Powerlevel.Models.ViewModels.WorkoutVM
+@using Powerlevel.Models
 
 @{
     ViewBag.Title = "Progress";
@@ -110,14 +111,46 @@
 <br />
 <h2>Exercise Type: <b>@Model.CurrentExercise.Type</b></h2>
 <br />
-<h2>Exercise Instructions: @Model.CurrentExercise.Instructions</h2>
+<h2>Exercise Instructions:</h2> <h4>@Model.CurrentExercise.Instructions</h4>
+<br />
+<h2>
+    Exercise Equipment Required:<br />
+    @foreach (ExerciseEquipment equip in ViewBag.Equipment)
+    {
+        <b>@equip.EquipmentName<br></b>
+    }
+</h2>
+<br />
+<!-- This block of code takes in the Viewbag list of ExerciseFlag objects and displays all of them-->
+<h2>
+    Exercise Recorded By: <br />
+    @foreach (ExerciseFlag flag in ViewBag.Flags)
+    {
+        <b>@flag.FlagName<br /></b>
+    }
+</h2>
+<br />
+<!-- This block of code takes in the Viewbag list of ExerciseImage objects and displays the image for each one-->
+@{ int imageCheck = 0;} @* Reports "no images found" if there are no images *@
+<h2>Exercise Images:</h2>
+@foreach (ExerciseImage image in ViewBag.Images)
+{
+    imageCheck++;
+    <!--Using the ImageName field, we can display all of the exercise images-->
+    <img src="~/Content/images/exercise_examples/@image.ImageName" alt="ExerciseImage" style="height:400px;" />
+}
+<!-- Makes report of no images where applicable -->
+@if (imageCheck == 0)
+{
+    <h2><b>None found</b></h2>
+}
 
 
-<!--Chi's XP Code-->
 <!--Completion Rewards-->
 <hr />
-<h5>Completion Rewards:</h5>
+<h5>Rewards upon Workout Completion:</h5>
 
+<!--Chi's XP Code-->
 <!--temp variable used to hold the current workoutID to be used in API calls-->
 <div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
 
