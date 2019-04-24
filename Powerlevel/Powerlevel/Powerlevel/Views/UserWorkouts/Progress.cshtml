@@ -111,7 +111,8 @@
 <br />
 <h2>Exercise Type: <b>@Model.CurrentExercise.Type</b></h2>
 <br />
-<h2>Exercise Instructions:</h2> <h4>@Model.CurrentExercise.Instructions</h4>
+<h2>Exercise Instructions:</h2>
+<h4>@Model.CurrentExercise.Instructions</h4>
 <br />
 <h2>
     Exercise Equipment Required:<br />
@@ -146,14 +147,14 @@
 }
 
 
-<!--Completion Rewards-->
+<!--Completion Rewards that user can earn if the workout is finished-->
 <hr />
 <h5>Rewards upon Workout Completion:</h5>
 
-<!--Chi's XP Code-->
 <!--temp variable used to hold the current workoutID to be used in API calls-->
 <div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
 
+<!--Chi's XP Code-->
 <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
 <hr />
 <br />
