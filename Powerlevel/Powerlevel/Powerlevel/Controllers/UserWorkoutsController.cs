@@ -17,6 +17,121 @@ namespace Powerlevel.Controllers
     {
         private toasterContext db = new toasterContext();
 
+        //random exercise generator
+        public void GenRandomExercise(double BMI)
+        {
+            //random exercise generator engine
+            //Underweight = < 18.5
+            //Normal weight = 18.5–24.9
+            //Overweight = 25–29.9
+            //Obesity = BMI of 30 or greater
+
+            //select multiple column example:
+   //         var muscleGroupAbs = db.Exercises.Where(x => x.MainMuscleWorked == "Abs")
+   //.Select(y => new List<string> { y.ExerciseId.ToString(), y.MainMuscleWorked }).ToList();
+
+            //inital number/normal weight is 5, Underweight/OverWeight +1, Obesity +2
+            int NumOfExercises = 5;
+
+            if (BMI >= 25 && BMI <= 29.9)
+            {
+                NumOfExercises += 1;
+            }
+            if (BMI > 30)
+            {
+                NumOfExercises += 2;
+            }
+
+            Random randomMuscleGroupPicker = new Random();
+            Random randomExercisePicker = new Random();
+            int exercisePicker = 0;
+
+            //inital List, for storing exercises
+            List<int> exerciseList = new List<int>();
+
+            //pick exercises
+            for (int counter = 0; counter < NumOfExercises; counter++)
+            {
+                //random picker on choosing which muscleGroup to add
+                int muscleGroup = randomMuscleGroupPicker.Next(0, 8);
+                if (muscleGroup == 0)
+                {
+                    //grab all the exercises' id from db by muscle groups
+                    var muscleGroupAbs = db.Exercises.Where(x => x.MainMuscleWorked == "Abs")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupAbs.Count);
+                    exerciseList.Add(exercisePicker); //append to list
+                }
+                if (muscleGroup == 1)
+                {
+                    var muscleGroupChest = db.Exercises.Where(x => x.MainMuscleWorked == "Chest")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupChest.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 2)
+                {
+                    var muscleGroupLegs = db.Exercises.Where(x => x.MainMuscleWorked == "Legs")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupLegs.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 3)
+                {
+                    var muscleGroupBiceps = db.Exercises.Where(x => x.MainMuscleWorked == "Biceps")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupBiceps.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 4)
+                {
+                    var muscleGroupGlutes = db.Exercises.Where(x => x.MainMuscleWorked == "Glutes")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupGlutes.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 5)
+                {
+                    var muscleGroupCalves = db.Exercises.Where(x => x.MainMuscleWorked == "Calves")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupCalves.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 6)
+                {
+                    var muscleGroupUpperLegs = db.Exercises.Where(x => x.MainMuscleWorked == "Upper Legs")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupUpperLegs.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 7)
+                {
+                    var muscleGroupLowerLegs = db.Exercises.Where(x => x.MainMuscleWorked == "Lower Legs")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupLowerLegs.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+                if (muscleGroup == 8)
+                {
+                    var muscleGroupUpperThighs = db.Exercises.Where(x => x.MainMuscleWorked == "Thighs")
+                       .Select(y => y.ExerciseId).ToList();
+                    exercisePicker = randomExercisePicker.Next(0, muscleGroupUpperThighs.Count);
+                    exerciseList.Add(exercisePicker);
+                }
+            }
+
+
+            //add the database as random workout plan
+
+           // db.WorkoutPlans.Add()
+            int test43 = 434;
+
+        }
+
+
+
+
+
         //user leveling algorithm logic function
         public void CheckUserLevel()
         {
@@ -64,6 +179,24 @@ namespace Powerlevel.Controllers
         }
 
 
+        // GET: Random
+        public ActionResult Random()
+        {
+
+            double userBMI = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.BMI).FirstOrDefault();
+            if (userBMI <= 0)
+            {
+                //return error if user didn't enter their infos
+                ViewBag.BMI_Empty = "Error: You must enter your height and weight first before you can choose this workout option.";
+                return View();
+            }
+            GenRandomExercise(userBMI);
+
+
+            return View();
+        }
+
+
         // GET: UserWorkouts
         public ActionResult Index()
         {
@@ -87,7 +220,7 @@ namespace Powerlevel.Controllers
 
             /*sets the default value for the dropdown list. If the view is being rendered from a workout plan call, then it sets default to id, else just 
              displays the first item in the dropdown list. It also sets FromPlan bool for recording plan stages after workout completion*/
-            if(id == null)
+            if (id == null)
             {
                 ViewBag.FromPlan = false;
             }
@@ -100,7 +233,7 @@ namespace Powerlevel.Controllers
             //gets the current user of the application
             var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
-     
+
 
             ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
             return View();
@@ -140,7 +273,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public ActionResult Progress(int? id, bool fromPlan)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -157,7 +290,7 @@ namespace Powerlevel.Controllers
             //determines if the plan was completed
             bool PlanComplete = false;
 
-            if(CurrentWorkoutStage == maxStage)
+            if (CurrentWorkoutStage == maxStage)
             {
                 //Marks workout as complete by setting WorkoutCompleted bool in table to true, *eventually* dispersing rewards like user exp
                 FinishedWorkout(UserWorkout);
@@ -167,7 +300,7 @@ namespace Powerlevel.Controllers
                 {
                     PlanComplete = UpdatePlan();
                 }
-                
+
                 //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
                 return RedirectToAction("Complete", routeValues: new { id, planComplete = PlanComplete });
             }
@@ -177,11 +310,19 @@ namespace Powerlevel.Controllers
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
-                WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage,
-                    WorkoutName = UserWorkout.Workout.Name, MaxWorkoutStage = maxStage, UserActiveWorkout = UserWorkout.UserActiveWorkout, FromPlan = fromPlan};
+                WorkoutVM CurrentExercise = new WorkoutVM
+                {
+                    CurrentExercise = ActiveExercise,
+                    UWId = UserWorkout.UWId,
+                    ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage,
+                    WorkoutName = UserWorkout.Workout.Name,
+                    MaxWorkoutStage = maxStage,
+                    UserActiveWorkout = UserWorkout.UserActiveWorkout,
+                    FromPlan = fromPlan
+                };
 
                 //returns the current exercise and if the plan was started from a workout plan or not
-                
+
                 return View(CurrentExercise);
             }
         }
@@ -307,7 +448,7 @@ namespace Powerlevel.Controllers
         }
         */
 
-        
+
         //This was replaced in favor of "ProgressForward" and "ProgressBack" functions, but left the code here for now
         /*
         /// <summary>
@@ -325,7 +466,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
         }
         */
-        
+
 
         /// <summary>
         /// Sets the boolean value of WorkoutCompleted in UserWorkout to true
@@ -367,9 +508,9 @@ namespace Powerlevel.Controllers
             //saves changes to the db
             db.Entry(userPlan).State = EntityState.Modified;
             db.SaveChanges();
-            
+
             //checks if the plan has been completed
-            if(userPlan.PlanStage == userPlan.MaxStage)
+            if (userPlan.PlanStage == userPlan.MaxStage)
             {
                 FinishPlan(userPlan);
                 return (true);

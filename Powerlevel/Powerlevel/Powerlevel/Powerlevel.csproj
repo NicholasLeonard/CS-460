@@ -1034,6 +1034,7 @@
     <Content Include="Views\UserWorkouts\History.cshtml" />
     <Content Include="Views\UserWorkoutPlans\Abandon.cshtml" />
     <Content Include="Views\UserWorkouts\Progress.cshtml" />
+    <Content Include="Views\UserWorkouts\Random.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />

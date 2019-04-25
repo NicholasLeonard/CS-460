@@ -18,14 +18,27 @@
         <dd>
             @ViewBag.userExperiencePoints
         </dd>
+        <dt>Height:</dt>
+        <dd>
+            @ViewBag.userHeightFeet ft. @ViewBag.userHeightInch in.
+        </dd>
+        <dt>Weight:</dt>
+        <dd>
+            @ViewBag.userWeight lb.
+        </dd>
+        <dt>Fitness Level(BMI):</dt>
+        <dd>
+            @ViewBag.userBMI (@ViewBag.BMIdecs)
+        </dd>
         <dt>Adjust Metrics:</dt>
         <dd>
             @Html.ActionLink("Metrics", "Index", "User")
         </dd>
-        <dt>Display Metrics:</dt>
+
+        @*<dt>Display Metrics:</dt>
         <dd>
             @Html.ActionLink("Display", "Display", "User")
-        </dd>
+        </dd>*@
 
         <hr />
 
@@ -42,11 +55,13 @@
             }
             ]
         </dd>
-        <dt>External Logins:</dt>
+
+        @*<dt>External Logins:</dt>
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
+        </dd>*@
+
         @*
         Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
@@ -75,12 +90,14 @@
             }
         </dd>
         *@
-        <dt>Two-Factor Authentication:</dt>
+
+        @*<dt>Two-Factor Authentication:</dt>
         <dd>
             <p>
                 There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
+            </p>*@
+
             @*@if (Model.TwoFactor)
             {
                 using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
