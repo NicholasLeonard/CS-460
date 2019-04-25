@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Powerlevel.Models;
 using System.Threading;
 using Powerlevel.Infastructure;
-using Ninject;
+
 
 
 namespace Powerlevel.Controllers
@@ -21,7 +21,7 @@ namespace Powerlevel.Controllers
         {
             this.db = repository;
         }
-
+        //private toasterContext db = new toasterContext();
         //Used to display workout schedule to calendar
         public JsonResult Events(DateTime start, DateTime end)
         {
@@ -102,7 +102,7 @@ namespace Powerlevel.Controllers
         public ActionResult UpdateEvents(int id)
         {
             //gets the WorkoutEvent that needs to be modified
-            WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
+            WorkoutEvent CurrentEvent = db.Find(id);
 
             //updates the workoutevent
             CurrentEvent.StatusColor = "green";

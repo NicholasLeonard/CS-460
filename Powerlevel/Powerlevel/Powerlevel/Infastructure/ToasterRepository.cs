@@ -13,7 +13,7 @@ namespace Powerlevel.Infastructure
         private toasterContext db = new toasterContext();
 
         
-        public IDbSet<WorkoutEvent> WorkoutEvents
+        public IQueryable<WorkoutEvent> WorkoutEvents
         {
             get
             {
@@ -24,8 +24,14 @@ namespace Powerlevel.Infastructure
         public void Update(object tableObject)
         {
             db.Entry(tableObject).State = EntityState.Modified;
-            db.SaveChangesAsync();
+            db.SaveChanges();
         }
+
+        public WorkoutEvent Find(int id)
+        {
+            return db.WorkoutEvents.Find(id);
+        }
+        
 
        public void Dispose()
         {

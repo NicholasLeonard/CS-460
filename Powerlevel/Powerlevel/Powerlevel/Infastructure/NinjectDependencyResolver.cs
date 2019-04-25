@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Http.Dependencies;
+using System.Web.Mvc;
 using Ninject;
-using Powerlevel.Models;
 
 namespace Powerlevel.Infastructure
 {
@@ -31,17 +30,6 @@ namespace Powerlevel.Infastructure
         private void AddBindings()
         {
             kernel.Bind<IToasterRepository>().To<ToasterRepository>();
-        }
-
-        public void Dispose()
-        {
-
-        }
-
-        public IDependencyScope BeginScope()
-        {
-            IDependencyScope temp;
-            return temp;
         }
     }
 }

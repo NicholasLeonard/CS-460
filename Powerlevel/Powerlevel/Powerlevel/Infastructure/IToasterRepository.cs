@@ -11,10 +11,11 @@ namespace Powerlevel.Infastructure
      public interface IToasterRepository
     {
           
-        IDbSet<WorkoutEvent> WorkoutEvents { get; }
+        IQueryable<WorkoutEvent> WorkoutEvents { get; }
         void Dispose();
         void Update(object tableObject);
-
+        WorkoutEvent Find(int id);
+        
         
     }
 }
