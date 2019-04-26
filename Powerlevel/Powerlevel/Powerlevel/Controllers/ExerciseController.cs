@@ -7,12 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
     public class ExerciseController : Controller
     {
         private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public ExerciseController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         /// <summary>
         /// Displays all exercises
@@ -22,8 +29,8 @@ namespace Powerlevel.Controllers
         public ActionResult Index()
         {
             //Grab all equipment to be displayed
-            ViewBag.Equipment = db.ExerciseEquipments.ToList();
-            return View(db.Exercises.ToList());
+            ViewBag.Equipment = repo.ExerciseEquipments.ToList();
+            return View(repo.Exercises.ToList());
         }
 
         /// <summary>
@@ -40,9 +47,9 @@ namespace Powerlevel.Controllers
             }
             //Get all subtables for the particular exercise's information
             Exercise exercise = db.Exercises.Find(id);
-            ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
-            ViewBag.Flags = db.ExerciseFlags.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
-            ViewBag.Equipment = db.ExerciseEquipments.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+            ViewBag.Images = repo.ExerciseImages.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+            ViewBag.Flags = repo.ExerciseFlags.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
+            ViewBag.Equipment = repo.ExerciseEquipments.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
 
             if (exercise == null)
             {
@@ -62,7 +69,7 @@ namespace Powerlevel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var exercises = db.WorkoutExercises.Where(x => x.WorkoutId == id).Include(x => x.Exercise).OrderBy(x => x.OrderNumber);
+            var exercises = repo.WorkoutExercises.Where(x => x.WorkoutId == id).Include(x => x.Exercise).OrderBy(x => x.OrderNumber);
             if(exercises != null)
             {
                 return View(exercises);

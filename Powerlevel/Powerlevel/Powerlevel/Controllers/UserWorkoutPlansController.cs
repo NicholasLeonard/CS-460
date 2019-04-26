@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
 using System.Threading;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
@@ -15,6 +16,12 @@ namespace Powerlevel.Controllers
     {
         //db access
         private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public UserWorkoutPlansController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         //used for making workout events for calendar workout plans
         private static DateTime today = DateTime.Now;
@@ -23,15 +30,15 @@ namespace Powerlevel.Controllers
         //GET: UserWorkoutPlans
         public ActionResult Index()
         {
-            ViewBag.Workoutplans = db.WorkoutPlans.ToList();
-            return View(db.UserWorkoutPlans.ToList());
+            ViewBag.Workoutplans = repo.WorkoutPlans.ToList();
+            return View(repo.UserWorkoutPlans.ToList());
         }
 
         // GET: UserWorkoutPlans/Create
         public ActionResult Create()
         {
             //get the list of plans from the db and pass into the viewbag
-            ViewBag.AvailablePlans = new SelectList(db.WorkoutPlans, "PlanId", "Name");
+            ViewBag.AvailablePlans = new SelectList(repo.WorkoutPlans, "PlanId", "Name");
 
             return View();
         }
@@ -45,7 +52,7 @@ namespace Powerlevel.Controllers
         {
             if (ModelState.IsValid)
             {
-                userWorkoutPlan.MaxStage = db.WorkoutPlanWorkouts.Where(x => x.PlanId == userWorkoutPlan.PlanId).Count();
+                userWorkoutPlan.MaxStage = repo.WorkoutPlanWorkouts.Where(x => x.PlanId == userWorkoutPlan.PlanId).Count();
                 db.UserWorkoutPlans.Add(userWorkoutPlan);
                 db.SaveChanges();
 
@@ -81,7 +88,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //deletes workout events associated with the plan
-            var WorkoutEvents = db.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x);
+            var WorkoutEvents = repo.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x);
             db.WorkoutEvents.RemoveRange(WorkoutEvents);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -97,7 +104,7 @@ namespace Powerlevel.Controllers
             List<WorkoutEvent> Events = new List<WorkoutEvent>();
 
             //gets the userId of the current user so we can link it in the workout event table
-            int user = db.Users.Where(x => x.UserName == currentUser).Select(x => x.UserId).ToArray().First();
+            int user = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).Select(x => x.UserId).ToArray().First();
 
             //gets the workout plan that the user is doing
             var Workouts = db.WorkoutPlans.Find(planId);

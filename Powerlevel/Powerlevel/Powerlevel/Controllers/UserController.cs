@@ -7,12 +7,19 @@ using System.Diagnostics;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Powerlevel.Models;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
     public class UserController : Controller
     {//for database access
         private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public UserController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         /// <summary>
         /// Gets the current user and displays a page for them to enter height and weight
@@ -21,8 +28,7 @@ namespace Powerlevel.Controllers
         // GET: User
         public ActionResult Index()
         {
-            var currentUser = Thread.CurrentPrincipal.Identity.Name;
-            User user = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault();
+            User user = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             if(user == null)
             {
                 return RedirectToAction("Index", "Home", null);
@@ -59,7 +65,7 @@ namespace Powerlevel.Controllers
         [HttpGet]
         public ActionResult Display()
         {//gets the metrics of the current user
-            var currentUser = Thread.CurrentPrincipal.Identity.Name;
+            var currentUser = HttpContext.User.Identity.Name;
 
             if(currentUser != null)
             {//displays the current user metrics

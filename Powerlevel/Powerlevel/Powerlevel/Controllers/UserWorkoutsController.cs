@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
 using Powerlevel.Models.ViewModels;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
@@ -16,18 +17,24 @@ namespace Powerlevel.Controllers
     public class UserWorkoutsController : Controller
     {
         private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public UserWorkoutsController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         //user leveling algorithm logic function
         public void CheckUserLevel()
         {
             //get user current level
-            int userCurrentLevel = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Level).FirstOrDefault();
+            int userCurrentLevel = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Level).FirstOrDefault();
 
             //get user current exp
-            int userCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+            int userCurrentExp = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
 
             //get the list of required exp for certain lv
-            var expReqList = db.LevelExps.Select(x => x.Exp).ToList();
+            var expReqList = repo.LevelExps.Select(x => x.Exp).ToList();
 
 
             //formula for calculating user lv
@@ -67,14 +74,14 @@ namespace Powerlevel.Controllers
         // GET: UserWorkouts
         public ActionResult Index()
         {
-            var UserWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.Workout);
+            var UserWorkouts = repo.UserWorkouts.Include(u => u.User).Include(u => u.Workout);
             return View(UserWorkouts.ToList());
         }
 
         // GET: UserWorkouts
         public ActionResult History()
         {
-            var UserWorkouts = db.UserWorkouts.Include(u => u.User).Include(u => u.Workout).OrderByDescending(u => u.CompletedTime);
+            var UserWorkouts = repo.UserWorkouts.Include(u => u.User).Include(u => u.Workout).OrderByDescending(u => u.CompletedTime);
             return View(UserWorkouts.ToList());
         }
 
@@ -98,11 +105,11 @@ namespace Powerlevel.Controllers
             }
 
             //gets the current user of the application
-            var CurrentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            var CurrentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
      
 
-            ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
             return View();
         }
 
@@ -113,7 +120,7 @@ namespace Powerlevel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout, bool fromPlan)
         {
-            var currentUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
             int userId = currentUser.First();
 
             if (ModelState.IsValid)
@@ -122,14 +129,14 @@ namespace Powerlevel.Controllers
                 db.UserWorkouts.Add(userWorkout);
                 db.SaveChanges();
                 //gets the UWId for the routing id to track in progress workouts
-                var testuwid = db.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
+                var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                 int uwid = testuwid.First();
 
                 return RedirectToAction("Progress", routeValues: new { id = uwid, fromPlan });
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "UserName", userWorkout.UserId);
-            ViewBag.UserActiveWorkout = new SelectList(db.Workouts, "WorkoutId", "Name", userWorkout.UserActiveWorkout);
+            ViewBag.UserId = new SelectList(repo.Users, "UserId", "UserName", userWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", userWorkout.UserActiveWorkout);
             return View(userWorkout);
         }
 
@@ -174,7 +181,7 @@ namespace Powerlevel.Controllers
             else
             {
                 //gets the current exercise in the workout by querying the workout/exercise transaction table. This iterates and returns all exercise except the first one everytime the next button is clicked
-                Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
+                Exercise ActiveExercise = repo.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
 
                 //creates a view model that has the current exercise and the id for the currently active workout
                 WorkoutVM CurrentExercise = new WorkoutVM { CurrentExercise = ActiveExercise, UWId = UserWorkout.UWId, ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage,
@@ -320,7 +327,7 @@ namespace Powerlevel.Controllers
         public bool UpdatePlan()
         {
             //gets the active plan
-            var userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
+            var userPlan = repo.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
 
             //updates the current stage of the plan
             userPlan.PlanStage = userPlan.PlanStage + 1;
@@ -342,7 +349,7 @@ namespace Powerlevel.Controllers
         public void RemoveWorkoutEvents()
         {
             //gets all of the associated workout events
-            var Events = db.WorkoutEvents.Where(x => x.User.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x);
+            var Events = repo.WorkoutEvents.Where(x => x.User.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x);
 
             //removes all of the associated workout events from the db
             db.WorkoutEvents.RemoveRange(Events);

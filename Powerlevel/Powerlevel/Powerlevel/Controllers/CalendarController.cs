@@ -7,19 +7,19 @@ using Newtonsoft.Json;
 using Powerlevel.Models;
 using System.Threading;
 using Powerlevel.Infastructure;
-
-
+using System.Data.Entity;
 
 namespace Powerlevel.Controllers
 {
     public class CalendarController : Controller
-    {//db access and current user 
-        private IToasterRepository db;
-        private string currentUser = Thread.CurrentPrincipal.Identity.Name;
+    {//db access and repo access
+        private IToasterRepository repo;
+        
+        private toasterContext db = new toasterContext();
 
         public CalendarController(IToasterRepository repository)
         {
-            this.db = repository;
+            this.repo = repository;
         }
         //private toasterContext db = new toasterContext();
         //Used to display workout schedule to calendar
@@ -36,6 +36,19 @@ namespace Powerlevel.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public bool TestingMockObjectFeed()
+        {
+            List<WorkoutEvent> AllWorkoutEvents = repo.WorkoutEvents.Select(x => x).ToList();
+            if(AllWorkoutEvents.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Returns a list of Event Workouts to be displayed on the workout calendar
         /// </summary>
@@ -46,7 +59,7 @@ namespace Powerlevel.Controllers
             List<Event> result = new List<Event>();
 
             //gets all workout events to feed to the calendar
-            List<WorkoutEvent> AllWorkoutEvents = db.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x).ToList();
+            List<WorkoutEvent> AllWorkoutEvents = repo.WorkoutEvents.Where(x => x.User.UserName == User.Identity.Name).Select(x => x).ToList();
 
             //if there are no workout events, then it sends empty list to calendar
             if(AllWorkoutEvents.Count == 0)
@@ -102,15 +115,15 @@ namespace Powerlevel.Controllers
         public ActionResult UpdateEvents(int id)
         {
             //gets the WorkoutEvent that needs to be modified
-            WorkoutEvent CurrentEvent = db.Find(id);
-
+            //WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
+            WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
             //updates the workoutevent
             CurrentEvent.StatusColor = "green";
             CurrentEvent.Description = GetStateMessage(2);
 
             //saves changes to the db
-            db.Update(CurrentEvent);
-            
+            db.Entry(CurrentEvent).State = EntityState.Modified;
+            db.SaveChanges();
             return null;
         }
 

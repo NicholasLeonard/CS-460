@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
-
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
@@ -12,6 +12,12 @@ namespace Powerlevel.Controllers
     {
         //initialize database access
         toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        APIController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         //Summary: API to get current logged-in user's infos
         //Note: Must NOT allow to accept any parameters
