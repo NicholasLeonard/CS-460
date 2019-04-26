@@ -24,5 +24,6 @@ namespace Powerlevel.Infastructure
         IQueryable<WorkoutExercise> WorkoutExercises { get;  }
         IQueryable<WorkoutPlan> WorkoutPlans { get;  }
         IQueryable<WorkoutPlanWorkout> WorkoutPlanWorkouts { get;  }
+        void Dispose(bool disposing);
     }
 }

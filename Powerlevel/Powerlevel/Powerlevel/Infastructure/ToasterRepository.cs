@@ -26,5 +26,12 @@ namespace Powerlevel.Infastructure
         public IQueryable<WorkoutExercise> WorkoutExercises { get { return db.WorkoutExercises; } }
         public IQueryable<WorkoutPlan> WorkoutPlans { get { return db.WorkoutPlans; } }
         public IQueryable<WorkoutPlanWorkout> WorkoutPlanWorkouts { get { return db.WorkoutPlanWorkouts; } }
+        public void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+        }
     }
 }

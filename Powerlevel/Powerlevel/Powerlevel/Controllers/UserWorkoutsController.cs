@@ -248,7 +248,7 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserWorkouts/Abandon/5
-        public ActionResult Abandon(int? id, bool fromPlan)
+        public ActionResult Abandon(int? id, bool? fromPlan)
         {
             if (id == null)
             {
@@ -266,7 +266,7 @@ namespace Powerlevel.Controllers
         // POST: UserWorkouts/Abandon/5
         [HttpPost, ActionName("Abandon")]
         [ValidateAntiForgeryToken]
-        public ActionResult AbandonConfirmed(int id, bool fromPlan)
+        public ActionResult AbandonConfirmed(int id, bool? fromPlan)
         {
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
             db.UserWorkouts.Remove(UserWorkout);
@@ -327,17 +327,17 @@ namespace Powerlevel.Controllers
         public bool UpdatePlan()
         {
             //gets the active plan
-            var userPlan = repo.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).First();
+            UserWorkoutPlan userPlan = db.UserWorkoutPlans.Where(x => x.UserName == HttpContext.User.Identity.Name).First();
 
             //updates the current stage of the plan
-            userPlan.PlanStage = userPlan.PlanStage + 1;
+            userPlan.PlanStage = AdvanceStage(userPlan.PlanStage);
 
             //saves changes to the db
             db.Entry(userPlan).State = EntityState.Modified;
             db.SaveChanges();
             
             //checks if the plan has been completed
-            if(userPlan.PlanStage == userPlan.MaxStage)
+            if(IsPlanFinished(userPlan) == true)
             {
                 FinishPlan(userPlan);
                 return (true);
@@ -346,10 +346,39 @@ namespace Powerlevel.Controllers
             return (false);
         }
 
+
+        /// <summary>
+        /// Tests whether the workout plan has been finished or not.
+        /// </summary>
+        /// <param name="userPlan"></param>
+        /// <returns></returns>
+        public bool IsPlanFinished(UserWorkoutPlan userPlan)
+        {
+            if(userPlan.PlanStage == userPlan.MaxStage)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Used to advance the stage of a plan
+        /// </summary>
+        /// <param name="planStage"></param>
+        /// <returns></returns>
+        public int AdvanceStage(int planStage)
+        {
+            planStage += 1;
+            return planStage;
+        }
+
+        /// <summary>
+        /// Removes WorkoutEvents from db after workout plan completetion
+        /// </summary>
         public void RemoveWorkoutEvents()
         {
             //gets all of the associated workout events
-            var Events = repo.WorkoutEvents.Where(x => x.User.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x);
+            var Events = db.WorkoutEvents.Where(x => x.User.UserName == HttpContext.User.Identity.Name).Select(x => x);
 
             //removes all of the associated workout events from the db
             db.WorkoutEvents.RemoveRange(Events);

@@ -22,6 +22,7 @@ namespace PowerLevelUnitTests.UnitTests
 
             //assert
             Assert.AreEqual(RightNow, getCurrentTime);
+            
         }
 
         [TestMethod]

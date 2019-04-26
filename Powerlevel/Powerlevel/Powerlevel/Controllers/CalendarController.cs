@@ -36,19 +36,6 @@ namespace Powerlevel.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public bool TestingMockObjectFeed()
-        {
-            List<WorkoutEvent> AllWorkoutEvents = repo.WorkoutEvents.Select(x => x).ToList();
-            if(AllWorkoutEvents.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         /// <summary>
         /// Returns a list of Event Workouts to be displayed on the workout calendar
         /// </summary>
@@ -115,16 +102,28 @@ namespace Powerlevel.Controllers
         public ActionResult UpdateEvents(int id)
         {
             //gets the WorkoutEvent that needs to be modified
-            //WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
             WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
             //updates the workoutevent
-            CurrentEvent.StatusColor = "green";
-            CurrentEvent.Description = GetStateMessage(2);
+            CurrentEvent = ChangeEventStatus(CurrentEvent);
 
             //saves changes to the db
             db.Entry(CurrentEvent).State = EntityState.Modified;
             db.SaveChanges();
             return null;
+        }
+
+        /// <summary>
+        /// Used to update the fields of the workout event to show status.
+        /// </summary>
+        /// <param name="CurrentEvent"></param>
+        /// <returns></returns>
+        public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent)
+        {
+            //updates the workoutevent
+            CurrentEvent.StatusColor = "green";
+            CurrentEvent.Description = GetStateMessage(2);
+
+            return CurrentEvent;
         }
 
         /// <summary>
