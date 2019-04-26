@@ -18,7 +18,7 @@ namespace Powerlevel.Controllers
         private toasterContext db = new toasterContext();
 
         //random exercise generator
-        public void GenRandomExercise(double BMI)
+        public int GenRandomExercise(double BMI)
         {
             //random exercise generator engine
             //Underweight = < 18.5
@@ -27,8 +27,8 @@ namespace Powerlevel.Controllers
             //Obesity = BMI of 30 or greater
 
             //select multiple column example:
-   //         var muscleGroupAbs = db.Exercises.Where(x => x.MainMuscleWorked == "Abs")
-   //.Select(y => new List<string> { y.ExerciseId.ToString(), y.MainMuscleWorked }).ToList();
+            //         var muscleGroupAbs = db.Exercises.Where(x => x.MainMuscleWorked == "Abs")
+            //.Select(y => new List<string> { y.ExerciseId.ToString(), y.MainMuscleWorked }).ToList();
 
             //inital number/normal weight is 5, Underweight/OverWeight +1, Obesity +2
             int NumOfExercises = 5;
@@ -60,49 +60,49 @@ namespace Powerlevel.Controllers
                     var muscleGroupAbs = db.Exercises.Where(x => x.MainMuscleWorked == "Abs")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupAbs.Count);
-                    exerciseList.Add(exercisePicker); //append to list
+                    exerciseList.Add(muscleGroupAbs[exercisePicker]); //append to list
                 }
                 if (muscleGroup == 1)
                 {
                     var muscleGroupChest = db.Exercises.Where(x => x.MainMuscleWorked == "Chest")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupChest.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupChest[exercisePicker]);
                 }
                 if (muscleGroup == 2)
                 {
                     var muscleGroupLegs = db.Exercises.Where(x => x.MainMuscleWorked == "Legs")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupLegs.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupLegs[exercisePicker]);
                 }
                 if (muscleGroup == 3)
                 {
                     var muscleGroupBiceps = db.Exercises.Where(x => x.MainMuscleWorked == "Biceps")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupBiceps.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupBiceps[exercisePicker]);
                 }
                 if (muscleGroup == 4)
                 {
                     var muscleGroupGlutes = db.Exercises.Where(x => x.MainMuscleWorked == "Glutes")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupGlutes.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupGlutes[exercisePicker]);
                 }
                 if (muscleGroup == 5)
                 {
                     var muscleGroupCalves = db.Exercises.Where(x => x.MainMuscleWorked == "Calves")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupCalves.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupCalves[exercisePicker]);
                 }
                 if (muscleGroup == 6)
                 {
                     var muscleGroupUpperLegs = db.Exercises.Where(x => x.MainMuscleWorked == "Upper Legs")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupUpperLegs.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupUpperLegs[exercisePicker]);
                 }
                 if (muscleGroup == 7)
                 {
@@ -116,16 +116,44 @@ namespace Powerlevel.Controllers
                     var muscleGroupUpperThighs = db.Exercises.Where(x => x.MainMuscleWorked == "Thighs")
                        .Select(y => y.ExerciseId).ToList();
                     exercisePicker = randomExercisePicker.Next(0, muscleGroupUpperThighs.Count);
-                    exerciseList.Add(exercisePicker);
+                    exerciseList.Add(muscleGroupUpperThighs[exercisePicker]);
                 }
             }
 
+            //User testing = new User();     
+            // testing.UserId = 2;
+            //testing.UserName = "testing";
+            //db.Users.Add(testing);
 
-            //add the database as random workout plan
+            //create new workout object
+            Workout randomizeWorkout = new Workout();
+            randomizeWorkout.Name = "Random Workouts";
+            randomizeWorkout.Type = "Mixed";
+            randomizeWorkout.MainMuscleFocus = "Mixed";
+            randomizeWorkout.TimeEstimate = "60 Minutes";
+            randomizeWorkout.ExpReward = 50;
+            //insert a new record into the database
+            db.Workouts.Add(randomizeWorkout);
+            db.SaveChanges();
 
-           // db.WorkoutPlans.Add()
-            int test43 = 434;
+            //get randomizeWorkout WorkoutId
+            var randWorkoutId = db.Workouts.Where(x => x.Name == "Random Workouts").Select(y => y.WorkoutId).FirstOrDefault();
 
+            //create a new excise based on the generator engine
+            WorkoutExercise randomizeWorkoutExercise = new WorkoutExercise();
+            randomizeWorkoutExercise.WorkoutId = randWorkoutId;
+
+            // insert data into database based on number of exercises generated
+            for (int i = 0; i < NumOfExercises; i++)
+            {
+                randomizeWorkoutExercise.ExerciseId = exerciseList[i]; //add exercises based on the generated result
+                randomizeWorkoutExercise.OrderNumber = i+1; //the order to do them in
+                db.WorkoutExercises.Add(randomizeWorkoutExercise);
+                db.SaveChanges();
+            }
+
+            //return the new random Workout Id back, in order to pass it as a parameters to start workouts
+            return randWorkoutId;
         }
 
 
@@ -180,6 +208,7 @@ namespace Powerlevel.Controllers
 
 
         // GET: Random
+        [Authorize]
         public ActionResult Random()
         {
 
@@ -190,10 +219,21 @@ namespace Powerlevel.Controllers
                 ViewBag.BMI_Empty = "Error: You must enter your height and weight first before you can choose this workout option.";
                 return View();
             }
-            GenRandomExercise(userBMI);
 
+            //remove existing/old random workouts
+            var oldRandWorkout = db.Workouts.Where(x => x.Name == "Random Workouts").FirstOrDefault();
+            if (oldRandWorkout != null)
+            {
+                //remove old random workouts
+                db.Workouts.Remove(oldRandWorkout);
+                db.SaveChanges();
+            }           
 
-            return View();
+            //generate random workouts
+            int newRanWorkoutId = GenRandomExercise(userBMI);
+         
+            //start random workouts      
+            return RedirectToAction("Create", new { id = newRanWorkoutId });
         }
 
 

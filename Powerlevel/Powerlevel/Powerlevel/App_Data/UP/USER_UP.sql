@@ -7,7 +7,7 @@
 CREATE TABLE [dbo].[User]
 (
 	[UserId] INT IDENTITY(1,1), 
-    [Height] INT NULL, 
+    [HeightFeet] INT            NULL,
     [Weight] INT NULL,
 	[DOB] DATETIME,
 	[Gender] NVARCHAR(10),
