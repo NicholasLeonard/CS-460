@@ -77,5 +77,35 @@ namespace PowerLevelUnitTests.UnitTests
             Assert.IsNotNull(NotNullPK);
         }
 
+        [TestMethod]
+        public void test_stuff()
+        {
+            Mock<IToasterRepository> mock = new Mock<IToasterRepository>();
+            mock.Setup(x => x.UserWorkouts).Returns(new UserWorkout[]
+            {
+                new UserWorkout { UWId = 1, UserId = 1, UserActiveWorkout = 2, ActiveWorkoutStage = 3, WorkoutCompleted = true }
+            }.AsQueryable);
+            UserWorkoutsController controller = new UserWorkoutsController(mock.Object);
+
+            var result = controller.Create(1) as ViewResult;
+
+            Assert.IsNotNull(result);
+
+            /*
+            Mock<IToasterRepository> mock = new Mock<IToasterRepository>();
+            mock.Setup(x => x.UserWorkouts).Returns(new UserWorkout[]
+            {
+                new UserWorkout { UWId = 1, UserId = 1, UserActiveWorkout = 2, ActiveWorkoutStage = 3, WorkoutCompleted = true },
+            new UserWorkout { UWId = 2, UserId = 1, UserActiveWorkout = 2, ActiveWorkoutStage = 2, WorkoutCompleted = false },
+            new UserWorkout { UWId = 3, UserId = 2, UserActiveWorkout = 8, ActiveWorkoutStage = 5, WorkoutCompleted = false }
+            }.AsQueryable());
+
+            UserWorkoutsController controller = new UserWorkoutsController(mock.Object);
+
+            controller.FinishedWorkout(mock.Object.UserWorkouts.First());
+
+            Assert.AreEqual();
+            */
+        }
     }
 }

@@ -395,7 +395,7 @@ namespace Powerlevel.Controllers
             var UserWorkout = db.UserWorkouts.Find(id);
 
             //changes the stage of the workout to the next exercise
-            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + 1;
+            UserWorkout.ActiveWorkoutStage = StageMover(UserWorkout.ActiveWorkoutStage, 1);
 
             //saves the changes in the db
             db.Entry(UserWorkout).State = EntityState.Modified;
@@ -422,7 +422,7 @@ namespace Powerlevel.Controllers
             var UserWorkout = db.UserWorkouts.Find(id);
 
             //changes the stage of the workout to the previous exercise
-            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage - 1;
+            UserWorkout.ActiveWorkoutStage = StageMover(UserWorkout.ActiveWorkoutStage, -1);
 
             //saves the changes in the db
             db.Entry(UserWorkout).State = EntityState.Modified;
@@ -430,6 +430,17 @@ namespace Powerlevel.Controllers
 
             //returns to the progress function to reload the progress view
             return RedirectToAction("Progress", new { id = UserWorkout.UWId, fromPlan });
+        }
+
+        /// <summary>
+        /// Moves the ActiveWorkoutStage based on the incrementer passed in
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="incrementer"></param>
+        /// <returns></returns>
+        public int StageMover(int id, int incrementer)
+        {
+            return (id + incrementer);
         }
 
         // GET: UserWorkouts/Abandon/5
