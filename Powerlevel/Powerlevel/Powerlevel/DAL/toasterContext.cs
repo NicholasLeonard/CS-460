@@ -21,6 +21,7 @@ namespace Powerlevel.Models
         public virtual DbSet<UserWorkout> UserWorkouts { get; set; }
         public virtual DbSet<UserWorkoutPlan> UserWorkoutPlans { get; set; }
         public virtual DbSet<Workout> Workouts { get; set; }
+        public virtual DbSet<WorkoutEvent> WorkoutEvents { get; set; }
         public virtual DbSet<WorkoutExercise> WorkoutExercises { get; set; }
         public virtual DbSet<WorkoutPlan> WorkoutPlans { get; set; }
         public virtual DbSet<WorkoutPlanWorkout> WorkoutPlanWorkouts { get; set; }
@@ -51,6 +52,11 @@ namespace Powerlevel.Models
                 .Property(e => e.ImageName)
                 .IsFixedLength();
 
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.WorkoutEvents)
+                .WithRequired(e => e.User)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Workout>()
                 .Property(e => e.Name)
                 .IsFixedLength();
@@ -71,6 +77,15 @@ namespace Powerlevel.Models
                 .HasMany(e => e.UserWorkouts)
                 .WithRequired(e => e.Workout)
                 .HasForeignKey(e => e.UserActiveWorkout);
+
+            modelBuilder.Entity<Workout>()
+                .HasMany(e => e.WorkoutEvents)
+                .WithRequired(e => e.Workout)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<WorkoutEvent>()
+                .Property(e => e.Title)
+                .IsFixedLength();
 
             modelBuilder.Entity<WorkoutPlan>()
                 .Property(e => e.Name)

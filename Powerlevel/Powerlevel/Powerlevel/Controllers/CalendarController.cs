@@ -6,59 +6,64 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using Powerlevel.Models;
 using System.Threading;
+using Powerlevel.Infastructure;
+using System.Data.Entity;
 
 namespace Powerlevel.Controllers
 {
     public class CalendarController : Controller
-    {//db access and reference day for scheduling workouts
+    {//db access and repo access
+        private IToasterRepository repo;
+        
         private toasterContext db = new toasterContext();
-        private static DateTime today = DateTime.Now;
-        private string currentUser = Thread.CurrentPrincipal.Identity.Name;
 
+        public CalendarController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
+        //private toasterContext db = new toasterContext();
         //Used to display workout schedule to calendar
         public JsonResult Events(DateTime start, DateTime end)
         {
-            //calls method to get all of the workout days for the plan
-            List<Event> days = GetWorkouts();
-            
-            //doesn't display anything if there is no active plan
-            if(days == null)
-            {
-                return Json(days, JsonRequestBehavior.AllowGet); //Shouldn't display any events
-            }
+            //list containing the events for the calendar
+            List<Event> days = new List<Event>();
+
+            //gets the workout events if there are any
+            days = GetWorkouts();
 
             //needs to be an array to display.
             var result = days.ToArray();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Returns a list of Event Workouts to be displayed on the workout calendar
+        /// </summary>
+        /// <returns></returns>
         public List<Event> GetWorkouts()
-        {//event list to be returned to the calendar            
+        {
+            //event list to be returned to the calendar            
             List<Event> result = new List<Event>();
 
-            //gets the plan id for the user, may need to change this if we allow multiple plans at a time
-            var WorkoutPlanId = db.UserWorkoutPlans.Where(x => x.UserName == currentUser).Select(x => x.PlanId).ToList();
-            
-            //gets the users active plan, if there are no active plans then it is null and returns null to the caller
-            var Workouts = db.WorkoutPlans.Find(WorkoutPlanId.FirstOrDefault());
-            if(Workouts == null)
+            //gets all workout events to feed to the calendar
+            List<WorkoutEvent> AllWorkoutEvents = repo.WorkoutEvents.Where(x => x.User.UserName == User.Identity.Name).Select(x => x).ToList();
+
+            //if there are no workout events, then it sends empty list to calendar
+            if(AllWorkoutEvents.Count == 0)
             {
-                return null;
+                return result;
             }
 
-            //gets the workouts in the active plan
-            var AllWorkouts = Workouts.WorkoutPlanWorkouts.Where(x => x.PlanId == WorkoutPlanId.FirstOrDefault()).Select(x => new { x.Workout, x.DayOfPlan}).ToList();
-
             //creates calendar events off of the workouts for a plan
-            foreach(var item in AllWorkouts)
+            foreach(var item in AllWorkoutEvents)
             {
                 result.Add(new Event {
-                    id = item.DayOfPlan, //sets a unique event id for fullcalendar to use
-                    title = item.Workout.Name,
-                    start = (item.DayOfPlan == 1) ? today : result.First().start.AddDays(item.DayOfPlan - 1),
-                    color = "red",
-                    description = GetStateMessage(0), //currently defaulting to Not completed
-                    url = "UserWorkouts/Create/" + item.Workout.WorkoutId
+                    id = item.EventId, //sets a unique event id for fullcalendar to use
+                    title = item.Title,
+                    start = (DateTime)item.Start,
+                    color = item.StatusColor,
+                    description = item.Description,
+                    url = "UserWorkouts/Create/" + item.WorkoutId
                 });
             }
 
@@ -87,6 +92,38 @@ namespace Powerlevel.Controllers
                 throw new ArgumentOutOfRangeException();
             }
             return message;
+        }
+
+        /// <summary>
+        /// Used to update information about the workout events and make it persistent
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult UpdateEvents(int id)
+        {
+            //gets the WorkoutEvent that needs to be modified
+            WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
+            //updates the workoutevent
+            CurrentEvent = ChangeEventStatus(CurrentEvent);
+
+            //saves changes to the db
+            db.Entry(CurrentEvent).State = EntityState.Modified;
+            db.SaveChanges();
+            return null;
+        }
+
+        /// <summary>
+        /// Used to update the fields of the workout event to show status.
+        /// </summary>
+        /// <param name="CurrentEvent"></param>
+        /// <returns></returns>
+        public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent)
+        {
+            //updates the workoutevent
+            CurrentEvent.StatusColor = "green";
+            CurrentEvent.Description = GetStateMessage(2);
+
+            return CurrentEvent;
         }
 
         /// <summary>

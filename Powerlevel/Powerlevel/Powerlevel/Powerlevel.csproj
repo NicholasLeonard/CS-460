@@ -141,6 +141,15 @@
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.0.0.7\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -230,6 +239,12 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
+    <Reference Include="WebActivator, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivator.1.5\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -243,6 +258,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -260,6 +276,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Controllers\WorkoutsController.cs" />
+    <Compile Include="Infastructure\IToasterRepository.cs" />
+    <Compile Include="Infastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Infastructure\ToasterRepository.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Exercise.cs" />
@@ -276,6 +295,7 @@
     <Compile Include="Models\ViewModels\WorkoutPlanVM.cs" />
     <Compile Include="Models\ViewModels\WorkoutVM.cs" />
     <Compile Include="Models\Workout.cs" />
+    <Compile Include="Models\WorkoutEvent.cs" />
     <Compile Include="Models\WorkoutExercise.cs" />
     <Compile Include="Models\WorkoutPlan.cs" />
     <Compile Include="Models\WorkoutPlanWorkout.cs" />
@@ -284,21 +304,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\DOWN\LEVEL_EXP_DOWN.sql" />
+    <Content Include="App_Data\DOWN\WORKOUT_EVENT_DOWN.sql" />
     <Content Include="App_Data\SEED\LEVEL_EXP_SEED.sql" />
     <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\toaster.mdf" />
+    <Content Include="App_Data\toaster_log.ldf">
+      <DependentUpon>toaster.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\UP\ASP_Users_UP.sql" />
     <Content Include="App_Data\DOWN\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\SEED\EXERCISE_SEED.sql" />
-    <Content Include="App_Data\UP\EVENTS_UP.sql" />
+    <Content Include="App_Data\UP\WORKOUT_EVENTS_UP.sql" />
     <Content Include="App_Data\UP\EXERCISE_UP.sql" />
     <Content Include="App_Data\DOWN\PLAN_DOWN.sql" />
     <Content Include="App_Data\UP\LEVEL_EXP_UP.sql" />
     <Content Include="App_Data\UP\PLAN_UP.sql" />
     <Content Include="App_Data\DOWN\USER_DOWN.sql" />
-    <Content Include="App_Data\toaster.mdf" />
-    <Content Include="App_Data\toaster_log.ldf">
-      <DependentUpon>toaster.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\UP\USER_WORKOUT_UP.sql" />
     <Content Include="App_Data\UP\USER_UP.sql" />
     <Content Include="App_Data\DOWN\USER_WORKOUTPLAN_DOWN.sql" />

@@ -7,12 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Models
 {
     public class WorkoutsController : Controller
     {
         private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public WorkoutsController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         public ActionResult Details(int? id)
         {
@@ -40,8 +47,8 @@ namespace Powerlevel.Models
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Store the description to be displayed for the given workoutplan
-            ViewBag.Description = db.WorkoutPlans.Where(x => x.PlanId == id).First().Description;
-            var test = db.WorkoutPlanWorkouts.Where(x => x.PlanId == id).Include(x => x.Workout);
+            ViewBag.Description = repo.WorkoutPlans.Where(x => x.PlanId == id).First().Description;
+            var test = repo.WorkoutPlanWorkouts.Where(x => x.PlanId == id).Include(x => x.Workout);
             return View(test);
         }
     }
