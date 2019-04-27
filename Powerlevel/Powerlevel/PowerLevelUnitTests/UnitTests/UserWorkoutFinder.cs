@@ -46,20 +46,6 @@ namespace PowerLevelUnitTests.UnitTests
             Assert.AreNotEqual(NextYear, CurrentYear);
         }
 
-        // User Story ID: 164
-        [TestMethod]
-        public void Workout_Completed_Starts_As_False()
-        {
-            //arrange
-            UserWorkout WorkoutNotCompleteCheck = new UserWorkout();
-
-            //act
-            bool NotComplete = WorkoutNotCompleteCheck.WorkoutCompleted;
-
-            //assert
-            Assert.IsFalse(NotComplete);
-        }
-
         [TestMethod]
         public void Remainder_Of_UserWorkout_Is_Not_Null()
         {
@@ -77,35 +63,57 @@ namespace PowerLevelUnitTests.UnitTests
             Assert.IsNotNull(NotNullPK);
         }
 
+        //PBI 225
         [TestMethod]
-        public void test_stuff()
+        public void Check_StageMover_Progress_Moves_Properly()
         {
-            Mock<IToasterRepository> mock = new Mock<IToasterRepository>();
-            mock.Setup(x => x.UserWorkouts).Returns(new UserWorkout[]
-            {
-                new UserWorkout { UWId = 1, UserId = 1, UserActiveWorkout = 2, ActiveWorkoutStage = 3, WorkoutCompleted = true }
-            }.AsQueryable);
-            UserWorkoutsController controller = new UserWorkoutsController(mock.Object);
-
-            var result = controller.Create(1) as ViewResult;
-
-            Assert.IsNotNull(result);
-
-            /*
+            //arrange
             Mock<IToasterRepository> mock = new Mock<IToasterRepository>();
             mock.Setup(x => x.UserWorkouts).Returns(new UserWorkout[]
             {
                 new UserWorkout { UWId = 1, UserId = 1, UserActiveWorkout = 2, ActiveWorkoutStage = 3, WorkoutCompleted = true },
-            new UserWorkout { UWId = 2, UserId = 1, UserActiveWorkout = 2, ActiveWorkoutStage = 2, WorkoutCompleted = false },
-            new UserWorkout { UWId = 3, UserId = 2, UserActiveWorkout = 8, ActiveWorkoutStage = 5, WorkoutCompleted = false }
-            }.AsQueryable());
-
+                new UserWorkout { UWId = 2, UserId = 1, UserActiveWorkout = 9, ActiveWorkoutStage = 2, WorkoutCompleted = true }
+            }.AsQueryable);
             UserWorkoutsController controller = new UserWorkoutsController(mock.Object);
 
-            controller.FinishedWorkout(mock.Object.UserWorkouts.First());
+            //act
+            int forward = controller.StageMover(mock.Object.UserWorkouts.First().ActiveWorkoutStage, 1);
+            int backward = controller.StageMover(mock.Object.UserWorkouts.Skip(1).First().ActiveWorkoutStage, -1);
 
-            Assert.AreEqual();
-            */
+            //assert
+            Assert.AreNotEqual(forward, 3);
+            Assert.AreEqual(forward, 4);
+            Assert.AreEqual(backward, 1);
+        }
+
+        //PBI 231
+        [TestMethod]
+        public void Verify_View_Return_on_Workout_History()
+        {
+            //arrange
+            Mock<IToasterRepository> mock = new Mock<IToasterRepository>();
+            UserWorkoutsController controller = new UserWorkoutsController(mock.Object);
+
+            //act
+            var result = controller.History() as ViewResult;
+
+            //assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Model);
+        }
+
+        //PBI 263
+        [TestMethod]
+        public void Created_Workout_Starts_As_False()
+        {
+            //arrange
+            UserWorkout WorkoutNotCompleteCheck = new UserWorkout();
+
+            //act
+            bool NotComplete = WorkoutNotCompleteCheck.WorkoutCompleted;
+
+            //assert
+            Assert.IsFalse(NotComplete);
         }
     }
 }

@@ -42,7 +42,7 @@
     //Link to start a new workout if startNewWorkout is true
     if (startNewWorkout == true)
     {
-        @Html.ActionLink("Free Workout", "Create", null, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
+        @Html.ActionLink("Free Workout", "Create", null, new {fromPlan = false }, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
 
         @Html.ActionLink("Workout from Plan", "Index", "UserWorkoutPlans", null, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:310px;" })
 
