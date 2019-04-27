@@ -5,7 +5,7 @@ strengthening your triceps.', 2, 2),
 In this plan, your first month of training will be demanding, but not so demanding as to cause injury. 
 This program isn’t just for the true beginner who has never touched a weight before;
 it’s also suitable for anyone who has taken an extended leave of absence from training.', 28, 18),
-('3 Week Beginner Bodyweeight Plan', 'Full Body', 'This plan is for those who need help getting back into a fitness plan or simply do not have access to any equipment to
+('3 Week Beginner Bodyweight Plan', 'Full Body', 'This plan is for those who need help getting back into a fitness plan or simply do not have access to any equipment to
 work out with. All exercises in the plan require nothing more than your own motivation to complete. The plan takes places over the course of 3 weeks with a minor spike in
 intensity in the third week.', 21, 14)
 

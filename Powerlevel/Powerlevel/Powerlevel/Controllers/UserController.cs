@@ -30,6 +30,8 @@ namespace Powerlevel.Controllers
             return View(user);
         }
 
+
+
         /// <summary>
         /// Used to adjust metrics after they have been entered
         /// </summary>
@@ -37,19 +39,32 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index([Bind(Include = "UserId, Height, Weight, UserName")] User currentUserMetrics)
+        public ActionResult Index([Bind(Include = "UserId, HeightFeet, HeightInch, Weight, UserName")] User currentUserMetrics)
         {//this gets the field for the current user that is entering their metrics
             if (ModelState.IsValid)
             {//gets the entry from the db
                 User metrics = db.Users.Find(currentUserMetrics.UserId);
                 //updates the values in the entry
-                metrics.Height = currentUserMetrics.Height;
+                metrics.HeightFeet = currentUserMetrics.HeightFeet;
+
+                if (currentUserMetrics.HeightInch > 9){// SAFETY CHECK
+                    currentUserMetrics.HeightInch = 9; //currently if user set their inch > 10, BMI will get bug out. 
+                }
+                else { metrics.HeightInch = currentUserMetrics.HeightInch; }
                 metrics.Weight = currentUserMetrics.Weight;
                 //saves the changes to the db
                 db.Entry(metrics).State = EntityState.Modified;
+
+
+                //calculate user BMI on submit
+                //BMI Formula: ( (lbs * 703) / inch^2 )
+                //convert inch to decimal, then to inches
+                double tempHeight = (metrics.HeightFeet + (metrics.HeightInch / 10)) * 12;
+                metrics.BMI = Math.Round(((metrics.Weight * 703) / Math.Pow(tempHeight, 2.00)), 2); //round to 2 decimal places
                 db.SaveChanges();
             }
-            return RedirectToAction("Display", "User", null);
+            // return RedirectToAction("Display", "User", null);
+             return RedirectToAction("Index", "Manage", null);
         }
 
         /// <summary>

@@ -74,6 +74,34 @@ namespace Powerlevel.Controllers
             //get user exp points by their UserName, pass it into viewbag
             ViewBag.userExperiencePoints = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
 
+            //get user fitness level(BMI), pass into viewbag
+            ViewBag.userBMI = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.BMI).FirstOrDefault();
+
+            //get user height, pass into viewbag
+            ViewBag.userHeightFeet = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.HeightFeet).FirstOrDefault();
+            ViewBag.userHeightInch = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.HeightInch).FirstOrDefault();
+
+            //get user weight, pass into viewbag
+            ViewBag.userWeight = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Weight).FirstOrDefault();
+
+            //get BMI description
+            if (ViewBag.userBMI < 18.5)
+            {
+                ViewBag.BMIdecs = "Underweight";
+            }
+            if (ViewBag.userBMI > 18.5 && ViewBag.userBMI <= 24.9)
+            {
+                ViewBag.BMIdecs = "Normal weight";
+            }
+            if (ViewBag.userBMI >= 25 && ViewBag.userBMI <= 29.9)
+            {
+                ViewBag.BMIdecs = "Overweight";
+            }
+            if (ViewBag.userBMI >= 30)
+            {
+                ViewBag.BMIdecs = "Obesity";
+            }
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),

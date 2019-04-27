@@ -7,12 +7,14 @@
 CREATE TABLE [dbo].[User]
 (
 	[UserId] INT IDENTITY(1,1), 
-    [Height] INT NULL, 
+    [HeightFeet] INT            NULL,
     [Weight] INT NULL,
 	[DOB] DATETIME,
 	[Gender] NVARCHAR(10),
     [UserName] NVARCHAR(256) NOT NULL,
     [Experience] INT NOT NULL DEFAULT 0,
     [Level] INT NOT NULL DEFAULT 1, 
+    [BMI]        FLOAT            DEFAULT 0 NOT NULL,
+    [HeightInch] INT            NULL,
 	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 )
