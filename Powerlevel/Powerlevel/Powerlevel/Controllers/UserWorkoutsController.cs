@@ -153,7 +153,7 @@ namespace Powerlevel.Controllers
             // insert data into database based on number of exercises generated
             for (int i = 0; i < NumOfExercises; i++)
             {
-                randomizeWorkoutExercise.ExerciseId = exerciseList[i]; //add exercises based on the generated result
+                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0)? 1 : exerciseList[i]; //add exercises based on the generated result
                 randomizeWorkoutExercise.OrderNumber = i+1; //the order to do them in
                 db.WorkoutExercises.Add(randomizeWorkoutExercise);
                 db.SaveChanges();
@@ -231,6 +231,8 @@ namespace Powerlevel.Controllers
             var oldRandWorkout = db.Workouts.Where(x => x.Name == "Random Workouts").FirstOrDefault();
             if (oldRandWorkout != null)
             {
+                //remove the workoutexerise links associated with that random workout
+                RemoveOldRandomWorkout(oldRandWorkout);
                 //remove old random workouts
                 db.Workouts.Remove(oldRandWorkout);
                 db.SaveChanges();
@@ -240,9 +242,19 @@ namespace Powerlevel.Controllers
             int newRanWorkoutId = GenRandomExercise(userBMI);
          
             //start random workouts      
-            return RedirectToAction("Create", new { id = newRanWorkoutId });
+            return RedirectToAction("Create", new { id = newRanWorkoutId, fromPlan = false });
         }
 
+        /// <summary>
+        /// Used to remove the old links with the randomly generated workout
+        /// </summary>
+        /// <param name="oldRandomWorkout"></param>
+        public void RemoveOldRandomWorkout(Workout oldRandomWorkout)
+        {
+            var links = db.WorkoutExercises.Where(x => x.WorkoutId == oldRandomWorkout.WorkoutId).Select(x => x).ToList();
+            db.WorkoutExercises.RemoveRange(links);
+            db.SaveChanges();
+        }
 
         // GET: UserWorkouts
         public ActionResult Index()
@@ -260,16 +272,16 @@ namespace Powerlevel.Controllers
 
 
         // GET: UserWorkouts/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(int? id, bool fromPlan)
         {
-            //0 is not from workout plan
-            int WorkoutFromPlan = 0;
-
+            //-1 is not from workout plan
+            int WorkoutFromPlan = -1;
             /*sets the default value for the dropdown list. If the view is being rendered from a workout plan call, then it sets default to id, else just 
              displays the first item in the dropdown list. It also sets FromPlan bool for recording plan stages after workout completion*/
-            if (id == null)
+            if (fromPlan == false)
             {
                 ViewBag.FromPlan = false;
+                
             }
             else
             {
@@ -533,7 +545,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //checks if the plan has been completed
-            if (userPlan.PlanStage == userPlan.MaxStage)
+            if(IsPlanFinished(userPlan) == true)
             {
                 FinishPlan(userPlan);
                 return (true);
