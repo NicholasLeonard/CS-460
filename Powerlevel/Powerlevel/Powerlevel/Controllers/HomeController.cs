@@ -13,21 +13,5 @@ namespace Powerlevel.Controllers
             //Added this code to make sure the test is passing correctly
             return View("Index");
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        //only show to logged in users
-        [Authorize]
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }

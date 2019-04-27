@@ -13,6 +13,7 @@ namespace Powerlevel.Models
         public User()
         {
             UserWorkouts = new HashSet<UserWorkout>();
+            WorkoutEvents = new HashSet<WorkoutEvent>();
         }
 
         public int UserId { get; set; }
@@ -40,5 +41,8 @@ namespace Powerlevel.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserWorkout> UserWorkouts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkoutEvent> WorkoutEvents { get; set; }
     }
 }

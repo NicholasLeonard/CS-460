@@ -7,17 +7,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
     public class WorkoutPlanWorkoutController : Controller
     {
         private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public WorkoutPlanWorkoutController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
 
         // GET: PlanWorkouts
         public ActionResult Index()
         {
-            var planWorkouts = db.WorkoutPlanWorkouts.Include(p => p.WorkoutPlan).Include(p => p.Workout);
+            var planWorkouts = repo.WorkoutPlanWorkouts.Include(p => p.WorkoutPlan).Include(p => p.Workout);
             return View(planWorkouts.ToList());
         }
     }

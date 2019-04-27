@@ -1,24 +1,6 @@
 ﻿<!DOCTYPE html>
 
 <!--ActionLinks that have the LinkColor class declared will turn green-->
-<style>
-    .LinkColor {
-        color: #0AC122
-    }
-
-        .LinkColor:active {
-            color: #0AC122
-        }
-
-        .LinkColor:link {
-            color: #0AC122
-        }
-
-        .LinkColor:visited {
-            color: #0AC122
-        }
-</style>
-
 <html>
 <head>
     <meta charset="utf-8" />
@@ -49,7 +31,7 @@
                     <li class="nav-item">@Html.ActionLink("Workout History", "History", "UserWorkouts", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("My Plans", "Index", "UserWorkoutPlans", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("All Plans", "Index", "WorkoutPlanWorkout", null, new { @class = "nav-link" })</li>
-
+                    
                     @*display their level only once user is logged in, infos are updated using ajax*@
                     @if (User.Identity.IsAuthenticated == true)
                     {
