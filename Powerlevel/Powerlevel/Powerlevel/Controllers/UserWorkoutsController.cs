@@ -354,15 +354,11 @@ namespace Powerlevel.Controllers
             else
             {
                 //gets the current exercise in the workout by querying the workout/exercise transaction table. This iterates and returns all exercise except the first one everytime the next button is clicked
-<<<<<<< HEAD
                 Exercise ActiveExercise = db.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
                 //Get all subtables for the particular exercise's information
                 ViewBag.Images = db.ExerciseImages.Where(x => x.ExerciseId == ActiveExercise.ExerciseId).ToList();
                 ViewBag.Flags = db.ExerciseFlags.Where(x => x.ExerciseId == ActiveExercise.ExerciseId).ToList();
                 ViewBag.Equipment = db.ExerciseEquipments.Where(x => x.ExerciseId == ActiveExercise.ExerciseId).ToList();
-=======
-                Exercise ActiveExercise = repo.WorkoutExercises.Where(x => x.WorkoutId == InProgressWorkout.WorkoutId && x.OrderNumber == UserWorkout.ActiveWorkoutStage + 1).Select(x => x.Exercise).First();
->>>>>>> b4c0154f5dda83c630ae8bf5d0cbfde372e33c42
 
                 //creates a view model that has the current exercise and the id for the currently active workout
                 WorkoutVM CurrentExercise = new WorkoutVM
@@ -479,55 +475,7 @@ namespace Powerlevel.Controllers
 
             ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
-<<<<<<< HEAD
-        }
-
-        /* This is no longer a function that changes the database, but rather just acts as a view that displays to the user 
-         * what changes were made,  the function that actually changes the database is below titled "FinishedWorkout"
-         * 
-        // POST: UserWorkouts/Complete/5
-        [HttpPost, ActionName("Complete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult CompleteConfirmed(int id)
-        {
-            UserWorkout UserWorkout = db.UserWorkouts.Find(id);
-
-            //Marks the current workout as "Completed", moving it from the User's Active Workout tab to the Workout History tab
-            var completedWorkout = new UserWorkout { UserId = UserWorkout.UserId, UserActiveWorkout = UserWorkout.UserActiveWorkout, WorkoutCompleted = true };
-            db.UserWorkouts.Add(completedWorkout);
-
-            //"Removes" the old table, as the new one is essentially a duplicate with a WorkoutCompleted value of True, instead of False
-            db.UserWorkouts.Remove(UserWorkout);
-            db.SaveChanges();
-
-            //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
-            AddExp(50);
-            return RedirectToAction("Index");
-        }
-        */
-
-
-        //This was replaced in favor of "ProgressForward" and "ProgressBack" functions, but left the code here for now
-        /*
-        /// <summary>
-        /// Used to change the stage in a workout
-        /// </summary>
-        /// <param name="UserWorkout"></param>
-        /// <param name="direction"></param>
-        public void ChangeWorkoutStage(UserWorkout UserWorkout, int direction)
-        {
-            //changes the stage of the workout to the next exercise
-            UserWorkout.ActiveWorkoutStage = UserWorkout.ActiveWorkoutStage + direction;
-
-            //saves the changes in the db
-            db.Entry(UserWorkout).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-        */
-
-=======
         }        
->>>>>>> b4c0154f5dda83c630ae8bf5d0cbfde372e33c42
 
         /// <summary>
         /// Sets the boolean value of WorkoutCompleted in UserWorkout to true
@@ -574,11 +522,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //checks if the plan has been completed
-<<<<<<< HEAD
             if (userPlan.PlanStage == userPlan.MaxStage)
-=======
-            if(IsPlanFinished(userPlan) == true)
->>>>>>> b4c0154f5dda83c630ae8bf5d0cbfde372e33c42
             {
                 FinishPlan(userPlan);
                 return (true);

@@ -52,7 +52,7 @@
                         //takeTen = takeTen + 1;
                         <tr>
                             <td>
-                                @Html.ActionLink(item.Workout.Name, "WorkoutList", "Exercise", new { id = item.UserActiveWorkout }, null)
+                                @Html.ActionLink(item.Workout.Name, "WorkoutList", "Exercise", new { id = item.UserActiveWorkout }, new { @class = "LinkColor" })
                             </td>
                             <td>
                                 @Convert.ToDateTime(item.CompletedTime).ToString("M/d/yyyy 'on' h:mm:ss tt")

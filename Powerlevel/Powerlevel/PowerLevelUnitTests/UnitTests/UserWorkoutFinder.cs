@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Powerlevel.Infastructure;
 using Powerlevel.Models;
 using Powerlevel.Controllers;
+using Moq;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace PowerLevelUnitTests.UnitTests
@@ -21,8 +24,8 @@ namespace PowerLevelUnitTests.UnitTests
             DateTime getCurrentTime = WorkoutDate.CompletedTime;
 
             //assert
-            Assert.AreEqual(RightNow, getCurrentTime);
-            
+            Assert.AreEqual(RightNow.Day, getCurrentTime.Day);
+
         }
 
         [TestMethod]
@@ -73,5 +76,6 @@ namespace PowerLevelUnitTests.UnitTests
             Assert.IsNotNull(NotNullUserId);
             Assert.IsNotNull(NotNullPK);
         }
+
     }
 }
