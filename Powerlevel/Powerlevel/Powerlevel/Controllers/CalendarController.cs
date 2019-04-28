@@ -63,7 +63,7 @@ namespace Powerlevel.Controllers
                     start = (DateTime)item.Start,
                     color = item.StatusColor,
                     description = item.Description,
-                    url = "UserWorkouts/Create/" + item.WorkoutId
+                    url = "UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True"
                 });
             }
 
