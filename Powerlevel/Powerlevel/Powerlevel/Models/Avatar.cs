@@ -10,22 +10,14 @@ namespace Powerlevel.Models
     public partial class Avatar
     {
         [Key]
-        public int UAId { get; set; }
-
-        public int UserId { get; set; }
+        public int AvaId { get; set; }
 
         [Required]
         [StringLength(64)]
-        public string Body { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [StringLength(64)]
-        public string Armor { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string Weapon { get; set; }
-
-        public virtual User User { get; set; }
+        public string Type { get; set; }
     }
 }

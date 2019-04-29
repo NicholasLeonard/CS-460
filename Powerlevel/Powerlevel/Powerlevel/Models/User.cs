@@ -12,7 +12,7 @@ namespace Powerlevel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            Avatars = new HashSet<Avatar>();
+            UserAvatars = new HashSet<UserAvatar>();
             UserWorkouts = new HashSet<UserWorkout>();
             WorkoutEvents = new HashSet<WorkoutEvent>();
         }
@@ -41,7 +41,7 @@ namespace Powerlevel.Models
         public int? HeightInch { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Avatar> Avatars { get; set; }
+        public virtual ICollection<UserAvatar> UserAvatars { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserWorkout> UserWorkouts { get; set; }
