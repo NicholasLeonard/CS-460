@@ -12,6 +12,7 @@ namespace Powerlevel.Models
         {
         }
 
+        public virtual DbSet<Avatar> Avatars { get; set; }
         public virtual DbSet<Exercise> Exercises { get; set; }
         public virtual DbSet<ExerciseEquipment> ExerciseEquipments { get; set; }
         public virtual DbSet<ExerciseFlag> ExerciseFlags { get; set; }
