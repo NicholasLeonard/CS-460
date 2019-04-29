@@ -24,6 +24,8 @@ namespace Powerlevel.Infastructure
         IQueryable<WorkoutExercise> WorkoutExercises { get;  }
         IQueryable<WorkoutPlan> WorkoutPlans { get;  }
         IQueryable<WorkoutPlanWorkout> WorkoutPlanWorkouts { get;  }
+        IQueryable<Avatar> Avatars { get; }
+        IQueryable<UserAvatar> UserAvatars { get; }
         void Dispose(bool disposing);
     }
 }

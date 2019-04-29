@@ -99,6 +99,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\CalendarWorkoutEvents.cs" />
     <Compile Include="UnitTests\PlanProgression.cs" />
+    <Compile Include="UnitTests\AvatarTesting.cs" />
     <Compile Include="UnitTests\UserLevelTesting.cs" />
     <Compile Include="UnitTests\UserWorkoutFinder.cs" />
     <Compile Include="UnitTests\CheckThatRoutesHaveProperIncomingRequests.cs" />

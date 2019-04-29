@@ -7,12 +7,21 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Powerlevel.Models;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        //This is for testing
+        private IToasterRepository repo;
+
+        public ManageController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
+
         //to get access to the database
         private toasterContext db = new toasterContext();
 
@@ -325,10 +334,10 @@ namespace Powerlevel.Controllers
         {
             //check if user have avatar
             //get the current logged-in user ID
-            int userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
             //check & see if the user already have an avatar
-            var userValid = db.UserAvatars.Where(x => x.UserId == userId).FirstOrDefault();
+            var userValid = repo.UserAvatars.Where(x => x.UserId == userId).FirstOrDefault();
             //if user doesn't have an avatar
             if (userValid == null)
             {
@@ -344,7 +353,7 @@ namespace Powerlevel.Controllers
                 db.SaveChanges();
             }
 
-            var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+            var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);
         }
@@ -368,6 +377,7 @@ namespace Powerlevel.Controllers
 
             return RedirectToAction("Index");
         }
+
 
         //
         // GET: /Manage/ManageLogins
