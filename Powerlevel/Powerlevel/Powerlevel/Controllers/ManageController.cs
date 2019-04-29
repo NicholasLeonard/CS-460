@@ -314,6 +314,15 @@ namespace Powerlevel.Controllers
             return View(model);
         }
 
+        // GET: /Manage/SetAvatar
+        public ActionResult SetAvatar()
+        {
+            return View();
+        }
+
+
+
+
         //
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)

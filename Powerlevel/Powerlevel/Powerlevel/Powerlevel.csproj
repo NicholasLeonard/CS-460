@@ -307,6 +307,10 @@
     <Content Include="App_Data\DOWN\WORKOUT_EVENT_DOWN.sql" />
     <Content Include="App_Data\SEED\LEVEL_EXP_SEED.sql" />
     <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
+    <Content Include="App_Data\toaster.mdf" />
+    <Content Include="App_Data\toaster_log.ldf">
+      <DependentUpon>toaster.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\UP\ASP_Users_UP.sql" />
     <Content Include="App_Data\DOWN\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\SEED\EXERCISE_SEED.sql" />
@@ -1051,6 +1055,7 @@
     <Content Include="Views\UserWorkoutPlans\Abandon.cshtml" />
     <Content Include="Views\UserWorkouts\Progress.cshtml" />
     <Content Include="Views\UserWorkouts\Random.cshtml" />
+    <Content Include="Views\Manage\SetAvatar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
