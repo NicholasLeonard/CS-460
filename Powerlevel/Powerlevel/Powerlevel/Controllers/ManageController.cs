@@ -320,6 +320,8 @@ namespace Powerlevel.Controllers
             return View();
         }
 
+        // POST: /Manage/SetAvatar
+
 
 
 

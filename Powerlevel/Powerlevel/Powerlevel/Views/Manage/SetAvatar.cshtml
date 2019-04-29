@@ -3,5 +3,20 @@
     ViewBag.Title = "SetAvatar";
 }
 
-<h2>SetAvatar</h2>
+<h2>Set Avatar</h2>
+
+<!--I will need to start by setting up the logic for checking if the user is even logged in-->
+@if (Request.IsAuthenticated)
+{
+
+
+
+}
+else
+{
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to change your avatar.
+    </p>
+}
 
