@@ -1,14 +1,21 @@
-﻿
-@{
-    ViewBag.Title = "SetAvatar";
-}
-
+﻿@model IEnumerable<Powerlevel.Models.Avatar>
+@using Powerlevel.Models
 <h2>Set Avatar</h2>
 
 <!--I will need to start by setting up the logic for checking if the user is even logged in-->
 @if (Request.IsAuthenticated)
 {
-
+    foreach (var item in Model)
+    {
+        <input type="radio" required name="avatar image" value="@item.Name.ToString()" />
+        <img src="~/Content/images/avatars/@item.Name.ToString()" , alt="avatar image" />
+    }
+    </br>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Select Avatar" class="btn btn-primary" />
+        </div>
+    </div>
 
 
 }

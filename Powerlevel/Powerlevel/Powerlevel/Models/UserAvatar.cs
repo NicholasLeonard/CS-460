@@ -14,15 +14,12 @@ namespace Powerlevel.Models
 
         public int UserId { get; set; }
 
-        [Required]
         [StringLength(64)]
         public string Body { get; set; }
 
-        [Required]
         [StringLength(64)]
         public string Armor { get; set; }
 
-        [Required]
         [StringLength(64)]
         public string Weapon { get; set; }
 

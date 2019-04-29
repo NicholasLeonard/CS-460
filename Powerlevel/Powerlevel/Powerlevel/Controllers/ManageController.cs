@@ -317,13 +317,31 @@ namespace Powerlevel.Controllers
         // GET: /Manage/SetAvatar
         public ActionResult SetAvatar()
         {
-            return View();
+            //check if user have avatar
+            //get the current logged-in user ID
+            int userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //check & see if the user already have an avatar
+            var userValid = db.UserAvatars.Where(x => x.UserId == userId).FirstOrDefault();
+            //if user doesn't have an avatar
+            if (userValid == null)
+            {
+                //populate the table with default values
+                UserAvatar userAvatars = new UserAvatar();
+                userAvatars.UserId = userId;
+                userAvatars.Body = "human1";
+                userAvatars.Armor = "none";
+                userAvatars.Weapon = "none";
+
+                //create a new row in the UserAvatars database
+                db.UserAvatars.Add(userAvatars);
+                db.SaveChanges();
+            }
+
+            var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+
+            return View(avatarBodies);
         }
-
-        // POST: /Manage/SetAvatar
-
-
-
 
         //
         // GET: /Manage/ManageLogins
