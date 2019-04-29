@@ -5,25 +5,29 @@
 <!--I will need to start by setting up the logic for checking if the user is even logged in-->
 @if (Request.IsAuthenticated)
 {
-    foreach (var item in Model)
+
+
+    using (Html.BeginForm("SetAvatar", "Manage", FormMethod.Post))
     {
-        <input type="radio" required name="avatar image" value="@item.Name.ToString()" />
-        <img src="~/Content/images/avatars/@item.Name.ToString()" , alt="avatar image" />
-    }
-    </br>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Select Avatar" class="btn btn-primary" />
+        foreach (var item in Model)
+        {
+            @Html.RadioButton("selected_avatar", item.Name);
+            <img src="~/Content/images/avatars/@item.Name.ToString()" , alt="avatar image" />
+        }
+        <br>
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Select Avatar" class="btn btn-primary" />
+            </div>
         </div>
-    </div>
 
-
+    }
 }
 else
 {
-    <p>
-        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        to change your avatar.
-    </p>
+<p>
+You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+to change your avatar.
+</p>
 }
 

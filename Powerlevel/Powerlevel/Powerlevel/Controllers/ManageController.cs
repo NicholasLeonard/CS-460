@@ -101,6 +101,11 @@ namespace Powerlevel.Controllers
             {
                 ViewBag.BMIdecs = "Obesity";
             }
+            //get the current logged-in user ID as an integer
+            int userIdInt = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //get user avatar
+            ViewBag.userAvatarBody = db.UserAvatars.Where(x => x.UserId == userIdInt).First().Body.ToString();
 
             var model = new IndexViewModel
             {
@@ -110,6 +115,7 @@ namespace Powerlevel.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
+
             return View(model);
         }
 
@@ -341,6 +347,26 @@ namespace Powerlevel.Controllers
             var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);
+        }
+
+
+        //
+        // POST: /Manage/SetAvatar
+        [HttpPost]
+        public ActionResult SetAvatar(string selected_avatar)
+        {
+            var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+
+            //get the current logged-in user's id
+            var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //update the user selected avatar to the database
+            UserAvatar userAvatars = new UserAvatar();
+            userAvatars = db.UserAvatars.Find(userId); //find the user column in the database table
+            userAvatars.Body = selected_avatar; //change their avatar body
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         //

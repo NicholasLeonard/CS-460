@@ -34,6 +34,10 @@
         <dd>
             @Html.ActionLink("Metrics", "Index", "User")
         </dd>
+        <dt>Current Avatar</dt>
+        <dd>
+            <img src="~/Content/images/avatars/@ViewBag.userAvatarBody", alt="avatar" />
+        </dd>
         <dt>Change Avatar:</dt>
         <dd>
             @Html.ActionLink("Change", "SetAvatar")
