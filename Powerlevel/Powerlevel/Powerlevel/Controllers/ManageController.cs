@@ -7,12 +7,21 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Powerlevel.Models;
+using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
     [Authorize]
     public class ManageController : Controller
     {
+        //This is for testing
+        private IToasterRepository repo;
+
+        public ManageController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
+
         //to get access to the database
         private toasterContext db = new toasterContext();
 
@@ -325,28 +334,36 @@ namespace Powerlevel.Controllers
         {
             //check if user have avatar
             //get the current logged-in user ID
-            int userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
             //check & see if the user already have an avatar
-            var userValid = db.UserAvatars.Where(x => x.UserId == userId).FirstOrDefault();
+            var userValid = repo.UserAvatars.Where(x => x.UserId == userId).FirstOrDefault();
             //if user doesn't have an avatar
             if (userValid == null)
             {
                 //populate the table with default values
-                UserAvatar userAvatars = new UserAvatar();
-                userAvatars.UserId = userId;
-                userAvatars.Body = "human1";
-                userAvatars.Armor = "none";
-                userAvatars.Weapon = "none";
+                UserAvatar userAvatars = CreateDefaultAvatar(userId);
 
                 //create a new row in the UserAvatars database
                 db.UserAvatars.Add(userAvatars);
                 db.SaveChanges();
             }
 
-            var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+            var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);
+        }
+
+        //Used to create the default user avatar for a given user id, useful in testing
+        public UserAvatar CreateDefaultAvatar(int userId)
+        {
+            //populate the table with default values
+            UserAvatar userAvatars = new UserAvatar();
+            userAvatars.UserId = userId;
+            userAvatars.Body = "human1.PNG";
+            userAvatars.Armor = "none";
+            userAvatars.Weapon = "none";
+            return userAvatars;
         }
 
 
