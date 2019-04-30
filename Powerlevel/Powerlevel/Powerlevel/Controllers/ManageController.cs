@@ -342,11 +342,7 @@ namespace Powerlevel.Controllers
             if (userValid == null)
             {
                 //populate the table with default values
-                UserAvatar userAvatars = new UserAvatar();
-                userAvatars.UserId = userId;
-                userAvatars.Body = "human1";
-                userAvatars.Armor = "none";
-                userAvatars.Weapon = "none";
+                UserAvatar userAvatars = CreateDefaultAvatar(userId);
 
                 //create a new row in the UserAvatars database
                 db.UserAvatars.Add(userAvatars);
@@ -356,6 +352,18 @@ namespace Powerlevel.Controllers
             var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);
+        }
+
+        //Used to create the default user avatar for a given user id, useful in testing
+        public UserAvatar CreateDefaultAvatar(int userId)
+        {
+            //populate the table with default values
+            UserAvatar userAvatars = new UserAvatar();
+            userAvatars.UserId = userId;
+            userAvatars.Body = "human1.PNG";
+            userAvatars.Armor = "none";
+            userAvatars.Weapon = "none";
+            return userAvatars;
         }
 
 
@@ -377,7 +385,6 @@ namespace Powerlevel.Controllers
 
             return RedirectToAction("Index");
         }
-
 
         //
         // GET: /Manage/ManageLogins
