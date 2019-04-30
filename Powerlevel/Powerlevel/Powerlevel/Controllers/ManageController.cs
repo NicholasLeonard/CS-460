@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -113,8 +114,16 @@ namespace Powerlevel.Controllers
             //get the current logged-in user ID as an integer
             int userIdInt = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
+            //check & see if the user already have an avatar
+            var userValid = repo.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault();
+            //if user doesn't have an avatar
+            if (userValid == null)
+            {
+                GiveUserAvatar(userIdInt);
+            }
+
             //get user avatar
-            ViewBag.userAvatarBody = db.UserAvatars.Where(x => x.UserId == userIdInt).First().Body.ToString();
+            ViewBag.userAvatarBody = db.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault().Body.ToString();
 
             var model = new IndexViewModel
             {
@@ -334,24 +343,23 @@ namespace Powerlevel.Controllers
         {
             //check if user have avatar
             //get the current logged-in user ID
-            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+            //int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
-            //check & see if the user already have an avatar
-            var userValid = repo.UserAvatars.Where(x => x.UserId == userId).FirstOrDefault();
-            //if user doesn't have an avatar
-            if (userValid == null)
-            {
-                //populate the table with default values
-                UserAvatar userAvatars = CreateDefaultAvatar(userId);
-
-                //create a new row in the UserAvatars database
-                db.UserAvatars.Add(userAvatars);
-                db.SaveChanges();
-            }
+           
 
             var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);
+        }
+
+        public void GiveUserAvatar(int userId)
+        {
+            //populate the table with default values
+            UserAvatar userAvatars = CreateDefaultAvatar(userId);
+
+            //create a new row in the UserAvatars database
+            db.UserAvatars.Add(userAvatars);
+            db.SaveChanges();
         }
 
         //Used to create the default user avatar for a given user id, useful in testing
@@ -378,9 +386,10 @@ namespace Powerlevel.Controllers
             var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
             //update the user selected avatar to the database
-            UserAvatar userAvatars = new UserAvatar();
-            userAvatars = db.UserAvatars.Find(userId); //find the user column in the database table
+            //UserAvatar userAvatars = new UserAvatar();
+            UserAvatar userAvatars = db.UserAvatars.Where(x => x.UserId == userId).Select(x => x).ToList().FirstOrDefault(); //find the user column in the database table
             userAvatars.Body = selected_avatar; //change their avatar body
+            db.Entry(userAvatars).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("Index");
