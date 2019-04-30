@@ -320,10 +320,6 @@
     <Content Include="App_Data\Up\PLAN_UP.sql" />
     <Content Include="App_Data\SEED\LEVEL_EXP_SEED.sql" />
     <Content Include="App_Data\DOWN\USER_WORKOUT_DOWN.sql" />
-    <Content Include="App_Data\toaster.mdf" />
-    <Content Include="App_Data\toaster_log.ldf">
-      <DependentUpon>toaster.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\DOWN\EXERCISE_DOWN.sql" />
     <Content Include="App_Data\SEED\EXERCISE_SEED.sql" />
     <Content Include="App_Data\DOWN\PLAN_DOWN.sql" />
