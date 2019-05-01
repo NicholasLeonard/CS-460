@@ -117,5 +117,6 @@
 <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
 <hr />
 <br />
+@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId, Model.FromPlan}, new { @class="btn btn-danger"})
 
 @Scripts.Render("~/Scripts/workoutRewards.js")

@@ -467,19 +467,33 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.FromPlan = fromPlan;
+            //checks if it is a workout from a plan that is being abandoned
+            if(fromPlan == null)
+            {
+                ViewBag.FromPlan = false;
+            }
+            else
+            {
+                ViewBag.FromPlan = true;
+            }
             return View(UserWorkout);
         }
 
         // POST: UserWorkouts/Abandon/5
         [HttpPost, ActionName("Abandon")]
         [ValidateAntiForgeryToken]
-        public ActionResult AbandonConfirmed(int id, bool? fromPlan)
+        public ActionResult AbandonConfirmed(int id, bool fromPlan)
         {
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
-            db.UserWorkouts.Remove(UserWorkout);
-            db.SaveChanges();
 
+            if (fromPlan == true)
+            {
+                int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Select(x => x.EventId).FirstOrDefault();
+                RemoveUserWorkout(UserWorkout);
+                return RedirectToAction("UpdateEvents", "Calendar", new { id = WorkoutEventId, abandon = fromPlan });
+            }
+
+            RemoveUserWorkout(UserWorkout);
             return RedirectToAction("Index");
         }
 
@@ -499,6 +513,12 @@ namespace Powerlevel.Controllers
             ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
         }        
+
+        public void RemoveUserWorkout(UserWorkout userWorkout)
+        {
+            db.UserWorkouts.Remove(userWorkout);
+            db.SaveChanges();
+        }
 
         /// <summary>
         /// Sets the boolean value of WorkoutCompleted in UserWorkout to true

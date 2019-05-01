@@ -88,7 +88,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //deletes workout events associated with the plan
-            var WorkoutEvents = repo.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x);
+            var WorkoutEvents = db.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x);
             db.WorkoutEvents.RemoveRange(WorkoutEvents);
             db.SaveChanges();
             return RedirectToAction("Index");

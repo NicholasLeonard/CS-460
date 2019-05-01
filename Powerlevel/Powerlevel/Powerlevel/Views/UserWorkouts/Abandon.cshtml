@@ -23,6 +23,7 @@
         <div>
             <input type="submit" value="Confirm" class="btn btn-primary" style="background-color: #FF7869; color:black; border-color:black;" /> |
             @Html.ActionLink("Back to Workouts", "Index", null, new { @class = "LinkColor" })
+            @Html.CheckBox("fromPlan", (bool)ViewBag.FromPlan, new { @Hidden="hidden"})
         </div>
     }
 </div>
