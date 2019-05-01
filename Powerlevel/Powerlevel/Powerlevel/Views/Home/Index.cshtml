@@ -19,17 +19,18 @@
         <img src="~/Content/images/design_images/goblin_swordsman.png" style="float: right;" width="368" height="403" />
     </div>
 </div>
-        @*Div section for the workout calendar*@
-        @Html.FullCalendar(settings =>
-    {
-        settings.Name = "calendar";
-        settings.Selectable = true;
-        settings.EventDurationEditable = true;
-        settings.Editable = true;
-        settings.Selectable = true;
-        settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
-        settings.AllDayDefault = true;
-        settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
-        settings.ClientSideEvents.EventClick = "function(event, element){ event.color = 'green'; $('#calendar').fullCalendar('updateEvent', event); $.ajax('/Calendar/UpdateEvents/' + event.id); console.log('clicked');}";
-        settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
-    })
+@*Div section for the workout calendar*@
+@Html.FullCalendar(settings =>
+{
+settings.Name = "calendar";
+settings.Selectable = true;
+settings.EventDurationEditable = true;
+settings.Editable = true;
+settings.Selectable = true;
+settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
+settings.AllDayDefault = true;
+settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
+settings.ClientSideEvents.EventClick = "function(event, element){ $.ajax('/Calendar/UpdateEvents/' + event.id); console.log('clicked');}";
+settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
+})
+@*function(event, element){ event.color = 'green'; $('#calendar').fullCalendar('updateEvent', event); $.ajax('/Calendar/UpdateEvents/' + event.id); console.log('clicked');}*@

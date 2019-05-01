@@ -63,11 +63,28 @@ namespace Powerlevel.Controllers
                     start = (DateTime)item.Start,
                     color = item.StatusColor,
                     description = item.Description,
-                    url = "UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True"
+                    url = EventUrl(item)
                 });
             }
 
             return result;
+        }
+
+        public string EventUrl(WorkoutEvent item)
+        {
+            //if the status color is green meaning it has already been done, then make the url empty so you can't do it again and advance the plan
+            //May need to change this when messing with abandon for a workout in a plan
+            if(item.StatusColor == "green")
+            {
+                return "";
+            }
+            //if the start date for the workout event is today or earlier, than return the redirection url
+            else if(item.Start.Value.Date == DateTime.Today || item.Start.Value.Date < DateTime.Today)
+            {
+                return ("UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True");
+            }
+            //otherwise return an empty string so it won't redirect
+            return ("");
         }
 
         //used to determine the progress of a workout
@@ -103,12 +120,18 @@ namespace Powerlevel.Controllers
         {
             //gets the WorkoutEvent that needs to be modified
             WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
-            //updates the workoutevent
-            CurrentEvent = ChangeEventStatus(CurrentEvent);
 
-            //saves changes to the db
-            db.Entry(CurrentEvent).State = EntityState.Modified;
-            db.SaveChanges();
+            if(CurrentEvent.Start.Value.Date == DateTime.Today.Date || CurrentEvent.Start.Value.Date < DateTime.Today.Date)
+            {
+                //updates the workoutevent
+                CurrentEvent = ChangeEventStatus(CurrentEvent);
+
+                //saves changes to the db
+                db.Entry(CurrentEvent).State = EntityState.Modified;
+                db.SaveChanges();
+                return null;
+            }
+            
             return null;
         }
 
