@@ -4,6 +4,9 @@
 # Calendar ignores
 demos/
 
+#generated backup files
+*.orig
+
 # User-specific files
 *.suo
 *.user

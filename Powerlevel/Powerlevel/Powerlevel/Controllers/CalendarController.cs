@@ -21,8 +21,13 @@ namespace Powerlevel.Controllers
         {
             this.repo = repository;
         }
-        //private toasterContext db = new toasterContext();
-        //Used to display workout schedule to calendar
+
+        /// <summary>
+        /// Used to display workout schedule to calendar
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
         public JsonResult Events(DateTime start, DateTime end)
         {
             //list containing the events for the calendar
@@ -63,14 +68,40 @@ namespace Powerlevel.Controllers
                     start = (DateTime)item.Start,
                     color = item.StatusColor,
                     description = item.Description,
-                    url = "UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True"
+                    url = EventUrl(item)
                 });
             }
 
             return result;
         }
 
-        //used to determine the progress of a workout
+        /// <summary>
+        /// Sets the url for the clickable calendar event
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public string EventUrl(WorkoutEvent item)
+        {
+            //if the status color is green meaning it has already been done, then make the url empty so you can't do it again and advance the plan
+            //May need to change this when messing with abandon for a workout in a plan
+            if(item.StatusColor == "green")
+            {
+                return "";
+            }
+            //if the start date for the workout event is today or earlier, than return the redirection url
+            else if(item.Start.Value.Date == DateTime.Today || item.Start.Value.Date < DateTime.Today)
+            {
+                return ("UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True");
+            }
+            //otherwise return an empty string so it won't redirect
+            return ("");
+        }
+
+        /// <summary>
+        /// Determines the description message for a workout event
+        /// </summary>
+        /// <param name="completed"></param>
+        /// <returns></returns>
         public string GetStateMessage(int completed)
         {
             string message;
@@ -99,16 +130,36 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult UpdateEvents(int id)
+        public ActionResult UpdateEvents(int id, bool? abandon)
         {
             //gets the WorkoutEvent that needs to be modified
             WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
-            //updates the workoutevent
-            CurrentEvent = ChangeEventStatus(CurrentEvent);
 
-            //saves changes to the db
-            db.Entry(CurrentEvent).State = EntityState.Modified;
-            db.SaveChanges();
+            //adjusts the event back to not done if abandoned
+            if(abandon == true)
+            {
+                //updates the workoutevent
+                CurrentEvent = ChangeEventStatus(CurrentEvent);
+
+                //saves changes to the db
+                db.Entry(CurrentEvent).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //redirects to the plan page
+                return RedirectToAction("Index", "UserWorkoutPlans", null);
+            }
+
+            if(CurrentEvent.Start.Value.Date == DateTime.Today.Date || CurrentEvent.Start.Value.Date < DateTime.Today.Date)
+            {
+                //updates the workoutevent
+                CurrentEvent = ChangeEventStatus(CurrentEvent);
+
+                //saves changes to the db
+                db.Entry(CurrentEvent).State = EntityState.Modified;
+                db.SaveChanges();
+                return null;
+            }
+            
             return null;
         }
 
@@ -117,12 +168,19 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="CurrentEvent"></param>
         /// <returns></returns>
-        public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent)
+        public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent, bool abandon = false)
         {
-            //updates the workoutevent
-            CurrentEvent.StatusColor = "green";
-            CurrentEvent.Description = GetStateMessage(2);
-
+            if (abandon == false)
+            {
+                //updates the workoutevent
+                CurrentEvent.StatusColor = "green";
+                CurrentEvent.Description = GetStateMessage(2);
+            }
+            else
+            {
+                CurrentEvent.StatusColor = "red";
+                CurrentEvent.Description = GetStateMessage(0);
+            }
             return CurrentEvent;
         }
 
