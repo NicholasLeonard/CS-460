@@ -153,8 +153,8 @@ namespace Powerlevel.Controllers
             // insert data into database based on number of exercises generated
             for (int i = 0; i < NumOfExercises; i++)
             {
-                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0)? 1 : exerciseList[i]; //add exercises based on the generated result
-                randomizeWorkoutExercise.OrderNumber = i+1; //the order to do them in
+                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0) ? 1 : exerciseList[i]; //add exercises based on the generated result
+                randomizeWorkoutExercise.OrderNumber = i + 1; //the order to do them in
                 db.WorkoutExercises.Add(randomizeWorkoutExercise);
                 db.SaveChanges();
             }
@@ -162,9 +162,6 @@ namespace Powerlevel.Controllers
             //return the new random Workout Id back, in order to pass it as a parameters to start workouts
             return randWorkoutId;
         }
-
-
-
 
 
         //user leveling algorithm logic function
@@ -236,11 +233,11 @@ namespace Powerlevel.Controllers
                 //remove old random workouts
                 db.Workouts.Remove(oldRandWorkout);
                 db.SaveChanges();
-            }           
+            }
 
             //generate random workouts
             int newRanWorkoutId = GenRandomExercise(userBMI);
-         
+
             //start random workouts      
             return RedirectToAction("Create", new { id = newRanWorkoutId, fromPlan = false });
         }
@@ -281,7 +278,7 @@ namespace Powerlevel.Controllers
             if (fromPlan == false)
             {
                 ViewBag.FromPlan = false;
-                
+
             }
             else
             {
@@ -317,12 +314,38 @@ namespace Powerlevel.Controllers
                 var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                 int uwid = testuwid.First();
 
-                return RedirectToAction("Progress", routeValues: new { id = uwid, fromPlan });
+                return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid, fromPlan });
             }
 
             ViewBag.UserId = new SelectList(repo.Users, "UserId", "UserName", userWorkout.UserId);
             ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", userWorkout.UserActiveWorkout);
             return View(userWorkout);
+        }
+
+        /// <summary>
+        /// Checks with the user if they want to confirm starting a workout, detailing rewards they can earn by doing so
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fromPlan"></param>
+        /// <returns></returns>
+        public ActionResult ConfirmWorkout(int? id, bool fromPlan)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //gets the activeWorkout record for the user
+            var UserWorkout = db.UserWorkouts.Find(id);
+
+            WorkoutVM ConfirmStart = new WorkoutVM
+            {
+                UWId = UserWorkout.UWId,
+                UserActiveWorkout = UserWorkout.UserActiveWorkout,
+                WorkoutName = UserWorkout.Workout.Name,
+                FromPlan = fromPlan
+            };
+            return View(ConfirmStart);
         }
 
         /// <summary>
@@ -468,7 +491,7 @@ namespace Powerlevel.Controllers
                 return HttpNotFound();
             }
             //checks if it is a workout from a plan that is being abandoned
-            if(fromPlan == null)
+            if (fromPlan == null)
             {
                 ViewBag.FromPlan = false;
             }
@@ -512,7 +535,7 @@ namespace Powerlevel.Controllers
 
             ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
-        }        
+        }
 
         public void RemoveUserWorkout(UserWorkout userWorkout)
         {
@@ -565,7 +588,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //checks if the plan has been completed
-            if(IsPlanFinished(userPlan) == true)
+            if (IsPlanFinished(userPlan) == true)
             {
                 FinishPlan(userPlan);
                 return (true);
@@ -582,7 +605,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public bool IsPlanFinished(UserWorkoutPlan userPlan)
         {
-            if(userPlan.PlanStage == userPlan.MaxStage)
+            if (userPlan.PlanStage == userPlan.MaxStage)
             {
                 return true;
             }
