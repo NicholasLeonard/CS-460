@@ -24,13 +24,19 @@
 <!--Chi's XP Code-->
 <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
 <hr />
-<br />
-@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId, Model.FromPlan }, new { @class = "btn btn-danger" })
 
 @Scripts.Render("~/Scripts/workoutRewards.js")
+
+<br />
 
 @using (Html.BeginForm("Progress", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
 {
     @Html.AntiForgeryToken()
     <input type="submit" style="background-color:#6EFF69;" class="StageButton" title="ConfirmWorkout" value="Begin Workout" />
+}
+<br />
+@using (Html.BeginForm("QuickAbandon", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" style="background-color:#FF7869;" class="StageButton" title="AbandonWorkout" value="Cancel Workout" />
 }

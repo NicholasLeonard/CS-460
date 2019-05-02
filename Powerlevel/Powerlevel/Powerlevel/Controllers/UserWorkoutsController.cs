@@ -520,6 +520,32 @@ namespace Powerlevel.Controllers
             return RedirectToAction("Index");
         }
 
+
+        /// <summary>
+        /// Allows user to abandon a workout without a confirmation page, when called upon with a button
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="fromPlan"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult QuickAbandon(int? id, bool fromPlan)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var UserWorkout = db.UserWorkouts.Find(id);
+
+            //deletes the specific workout in the db
+            db.UserWorkouts.Remove(UserWorkout);
+            db.SaveChanges();
+
+            //returns to the index page
+            return RedirectToAction("Index");
+        }
+
         // GET: UserWorkouts/Complete/5
         public ActionResult Complete(int? id, bool? planComplete)
         {
