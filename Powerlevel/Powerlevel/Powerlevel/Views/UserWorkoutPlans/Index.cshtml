@@ -61,11 +61,16 @@
                 </h4>
                 @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId }, new { @class = "btn btn-danger" })
                 <br />
+                if (ViewBag.WorkoutInProgress == true)
+                {
+                    <br />
+                    <h2 style="color:orange">It looks like you have an Active Workout! You must @Html.ActionLink("finish or abandon", "Index", "UserWorkouts") it before continuing with the plan!</h2>
+                }
                 <br />
             }
         }
-        
-            @*Div section for the workout calendar*@
+
+        @*Div section for the workout calendar*@
         @Html.FullCalendar(settings =>
    {
        settings.Name = "calendar";
