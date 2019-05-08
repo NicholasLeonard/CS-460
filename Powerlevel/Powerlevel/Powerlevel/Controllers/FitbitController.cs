@@ -8,11 +8,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using UnitsNet;
+using UnitsNet.Units;
+using Powerlevel.Models;
+using Powerlevel.Infastructure;
+using System.Data.Entity;
+using System.Threading;
 
 namespace Powerlevel.Controllers
 {
     public class FitbitController : Controller
     {
+        private toasterContext db = new toasterContext();
+        private IToasterRepository repo;
+
+        public FitbitController(IToasterRepository repository)
+        {
+            this.repo = repository;
+        }
         //
         // GET: /Fitbit/
 
@@ -42,12 +55,32 @@ namespace Powerlevel.Controllers
 
             string authUrl = authenticator.GenerateAuthUrl(scopes, null);
 
+            var User = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            if (User != null && User.FitbitLinked != true)
+            {
+                RecordFitbitLink(User);
+            }
+            
+
             return Redirect(authUrl);
+        }
+
+        /// <summary>
+        /// Records that fitbit account is linked in user table for user
+        /// </summary>
+        /// <param name="user"></param>
+        void RecordFitbitLink(User user)
+        {
+            user.FitbitLinked = true;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
         }
 
         //Final step. Take this authorization information and use it in the app
         public async Task<ActionResult> Callback()
         {
+            //User CurrentUser = db.Users.Where(x => x.UserName == Thread.CurrentPrincipal.Identity.Name).FirstOrDefault();
+
             FitbitAppCredentials appCredentials = (FitbitAppCredentials)Session["AppCredentials"];
 
             var authenticator = new OAuth2Helper(appCredentials, Request.Url.GetLeftPart(UriPartial.Authority) + "/Fitbit/Callback");
@@ -59,12 +92,49 @@ namespace Powerlevel.Controllers
             //Store credentials in FitbitClient. The client in its default implementation manages the Refresh process
             var fitbitClient = GetFitbitClient(accessToken);
 
+            //gets the current user profile from fitbit
+            UserProfile FitBitProfile = await fitbitClient.GetUserProfileAsync();
+
+            FitBitProfile = ConvertMeasurments(FitBitProfile);
+
+            //sets height and weight in db based on fitbit profile           
+            StoreCredentials(fitbitClient, FitBitProfile);
+            
             ViewBag.AccessToken = accessToken;
 
-            return View();
+            return View("~/Views/Home/GettingStarted.cshtml");
 
         }
 
+        /// <summary>
+        /// Gets the FitBitProfile for the current session
+        /// </summary>
+        /// <param name="fitbitClient"></param>
+        /// <returns></returns>
+        public async Task<UserProfile> GetFitBitProfile(FitbitClient fitbitClient)
+        {
+            UserProfile FitBitProfile = await fitbitClient.GetUserProfileAsync();
+            FitBitProfile = ConvertMeasurments(FitBitProfile);
+            return (FitBitProfile);
+        }
+
+        /// <summary>
+        /// Stores the api access tokens in the db
+        /// </summary>
+        /// <param name="accessToken"></param>
+        void StoreCredentials(FitbitClient fitbitClient, UserProfile userProfile)
+        {//stores the fitbit api tokens in the user table
+            User ourUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            
+            if (ourUser.Weight == null || ourUser.HeightFeet == null)
+            {
+                ourUser.HeightFeet = (int)userProfile.Height;
+                ourUser.Weight = (int)userProfile.Weight;
+                db.Entry(ourUser).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+        
         /// <summary>
         /// In this example we show how to explicitly request a token refresh. However, FitbitClient V2 on its default implementation provide an OOB automatic token refresh.
         /// </summary>
@@ -80,15 +150,33 @@ namespace Powerlevel.Controllers
 
         public async Task<ActionResult> TestToken()
         {
+            //gets a new fitbit client instances
             var fitbitClient = GetFitbitClient();
 
-            ViewBag.AccessToken = fitbitClient.AccessToken;
+            //gets the current user profile from fitbit
+            UserProfile FitBitProfile = await fitbitClient.GetUserProfileAsync();
 
-            UserProfile test = await fitbitClient.GetUserProfileAsync();
+            FitBitProfile = ConvertMeasurments(FitBitProfile);
 
-            return View(test);
+            return View(FitBitProfile);
         }
 
+        /// <summary>
+        /// Converts from kg to lb and cm to ft for user height and weight
+        /// </summary>
+        /// <param name="fitBitUser"></param>
+        /// <returns></returns>
+        UserProfile ConvertMeasurments(UserProfile fitBitUser)
+        {//converst weight from kg to lb and rounds to 2 decimal places
+            Mass Weight = Mass.FromKilograms(fitBitUser.Weight);
+            fitBitUser.Weight = Math.Round(Weight.ToUnit(MassUnit.Pound).Pounds, 2);
+
+            //converts height from cm to ft and rounds to 2 decimal places
+            Length Height = Length.FromCentimeters(fitBitUser.Height);
+            fitBitUser.Height = Math.Round(Height.ToUnit(LengthUnit.Foot).Feet, 2);
+            
+            return (fitBitUser);
+        }
         /*
         public string TestTimeSeries()
         {

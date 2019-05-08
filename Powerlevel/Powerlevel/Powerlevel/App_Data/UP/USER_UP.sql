@@ -16,5 +16,7 @@ CREATE TABLE [dbo].[User]
     [Level] INT NOT NULL DEFAULT 1, 
     [BMI]        FLOAT            DEFAULT 0 NOT NULL,
     [HeightInch] INT            NULL,
+	[FitbitLinked] BIT NOT NULL DEFAULT (0),
+	[FirstTimeLogin] BIT NOT NULL DEFAULT (1),
 	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 )

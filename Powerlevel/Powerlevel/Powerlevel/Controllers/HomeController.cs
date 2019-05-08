@@ -13,5 +13,10 @@ namespace Powerlevel.Controllers
             //Added this code to make sure the test is passing correctly
             return View("Index");
         }
+
+        public ActionResult GettingStarted()
+        {
+            return View();
+        }
     }
 }
