@@ -295,27 +295,81 @@ namespace Powerlevel.Controllers
         }
 
 
-        // GET: UserWorkouts/Create
-        public ActionResult Create(int? id, bool fromPlan)
+        /// <summary>
+        /// Creates a workout NOT from plan (i.e., a "Free Workout")
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Create(int? id)
         {
-            //-1 is not from workout plan
-            int WorkoutFromPlan = -1;
-            /*sets the default value for the dropdown list. If the view is being rendered from a workout plan call, then it sets default to id, else just 
-             displays the first item in the dropdown list. It also sets FromPlan bool for recording plan stages after workout completion*/
-            if (fromPlan == false)
+            //-1 is not a random workout id
+            int RandWorkout = -1;
+
+            //Random Workouts will have an id passed in where Free Workout will not, if random, the id is set here
+            if (id != null)
             {
-                ViewBag.FromPlan = false;
-                //Adding this here for random workout routing
-                if (id != null)
+                RandWorkout = (int)id;
+            }
+
+            ViewBag.FromPlan = false;
+
+            //gets the current user of the application
+            var CurrentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            ViewBag.UserId = CurrentUser.UserId;
+
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", RandWorkout);
+
+            Workout workoutName = new Workout();
+            ViewBag.PlannedWorkoutName = repo.Workouts.Where(x => x.WorkoutId == id).Select(x => x.Name).FirstOrDefault();
+
+            return View();
+        }
+
+        // POST: UserWorkouts/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
+        {
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.First();
+
+            if (ModelState.IsValid)
+            {
+                //Checks to ensure there is not an active workout to prevent if the user were to go back in browser to "start" a second workout
+                if (VerifyActiveWorkout() == false)
                 {
-                    WorkoutFromPlan = (int)id;
+                    userWorkout.ActiveWorkoutStage = 0;
+                    userWorkout.FromPlan = false;
+                    db.UserWorkouts.Add(userWorkout);
+                    db.SaveChanges();
+                    //gets the UWId for the routing id to track in progress workouts
+                    var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
+                    int uwid = testuwid.First();
+
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid, fromPlan = false });
+                }
+                else
+                {
+                    return RedirectToAction("Index");
                 }
             }
-            else
-            {
-                ViewBag.FromPlan = true;
-                WorkoutFromPlan = (int)id;
-            }
+
+            ViewBag.UserId = new SelectList(repo.Users, "UserId", "UserName", userWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", userWorkout.UserActiveWorkout);
+            return View(userWorkout);
+        }
+
+        /// <summary>
+        /// Create page for planned workouts, passed in from the string in the Workout plans calendar
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult CreatePlanWO(int id)
+        {
+            //Gets the passed in id from the Workout Plan calendar
+            int WorkoutFromPlan = id;
 
             //gets the current user of the application
             var CurrentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
@@ -334,7 +388,7 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout, bool fromPlan)
+        public ActionResult CreatePlanWO([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
         {
             var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
             int userId = currentUser.First();
@@ -345,13 +399,14 @@ namespace Powerlevel.Controllers
                 if (VerifyActiveWorkout() == false)
                 {
                     userWorkout.ActiveWorkoutStage = 0;
+                    userWorkout.FromPlan = true;
                     db.UserWorkouts.Add(userWorkout);
                     db.SaveChanges();
-                    //gets the UWId for the routing id to track in progress workouts
+                    //gets the UWId to be the routing id for ConfirmWorkouts page
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
 
-                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid, fromPlan });
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid, fromPlan = true });
                 }
                 else
                 {

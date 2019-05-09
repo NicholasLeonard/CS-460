@@ -100,7 +100,7 @@ namespace Powerlevel.Controllers
                     return ("");
                 }
 
-                return ("UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True");
+                return ("UserWorkouts/CreatePlanWO/" + item.WorkoutId);
             }
             //otherwise return an empty string so it won't redirect
             return ("");

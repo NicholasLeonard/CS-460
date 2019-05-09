@@ -1078,6 +1078,7 @@
     <Content Include="Views\Manage\SetAvatar.cshtml" />
     <Content Include="Views\UserWorkouts\ConfirmWorkout.cshtml" />
     <Content Include="Views\UserWorkouts\QuickCreate.cshtml" />
+    <Content Include="Views\UserWorkouts\CreatePlanWO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
