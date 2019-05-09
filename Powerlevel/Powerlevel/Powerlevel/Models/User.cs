@@ -19,9 +19,9 @@ namespace Powerlevel.Models
 
         public int UserId { get; set; }
 
-        public int? HeightFeet { get; set; }
+        public double? HeightFeet { get; set; }
 
-        public int? Weight { get; set; }
+        public double? Weight { get; set; }
 
         public DateTime? DOB { get; set; }
 

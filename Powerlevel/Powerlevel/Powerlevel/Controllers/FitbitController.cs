@@ -98,8 +98,13 @@ namespace Powerlevel.Controllers
             FitBitProfile = ConvertMeasurments(FitBitProfile);
 
             //sets height and weight in db based on fitbit profile           
-            StoreCredentials(fitbitClient, FitBitProfile);
+            bool redirect = StoreCredentials(fitbitClient, FitBitProfile);
             
+            if(redirect != true)
+            {
+                return View("~/Views/Home/Index.cshtml");
+            }
+
             ViewBag.AccessToken = accessToken;
 
             return View("~/Views/Home/GettingStarted.cshtml");
@@ -119,20 +124,22 @@ namespace Powerlevel.Controllers
         }
 
         /// <summary>
-        /// Stores the api access tokens in the db
+        /// Stores the api access tokens in the db and returns bool based on storage success
         /// </summary>
         /// <param name="accessToken"></param>
-        void StoreCredentials(FitbitClient fitbitClient, UserProfile userProfile)
+        bool StoreCredentials(FitbitClient fitbitClient, UserProfile userProfile)
         {//stores the fitbit api tokens in the user table
             User ourUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             
             if (ourUser.Weight == null || ourUser.HeightFeet == null)
             {
-                ourUser.HeightFeet = (int)userProfile.Height;
-                ourUser.Weight = (int)userProfile.Weight;
+                ourUser.HeightFeet = userProfile.Height;
+                ourUser.Weight = userProfile.Weight;
                 db.Entry(ourUser).State = EntityState.Modified;
                 db.SaveChanges();
+                return true;
             }
+            return false;
         }
         
         /// <summary>
