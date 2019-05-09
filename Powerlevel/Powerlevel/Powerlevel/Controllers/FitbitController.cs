@@ -159,11 +159,11 @@ namespace Powerlevel.Controllers
         {
             //gets a new fitbit client instances
             var fitbitClient = GetFitbitClient();
-
+            await fitbitClient.SetGoalsAsync(caloriesOut: 5, steps: 5000);
             //gets the current user profile from fitbit
             UserProfile FitBitProfile = await fitbitClient.GetUserProfileAsync();
-
-            FitBitProfile = ConvertMeasurments(FitBitProfile);
+            
+            //FitBitProfile = ConvertMeasurments(FitBitProfile);
 
             return View(FitBitProfile);
         }
