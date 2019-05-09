@@ -42,7 +42,7 @@
     //Link to start a new workout if startNewWorkout is true
     if (startNewWorkout == true)
     {
-        @Html.ActionLink("Free Workout", "Create", new { fromPlan = false }, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
+        @Html.ActionLink("Free Workout", "Create", null, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
 
         @Html.ActionLink("Workout from Plan", "Index", "UserWorkoutPlans", null, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:310px;" })
 
@@ -60,7 +60,7 @@
     if (startNewWorkout == false)
     {
         //Passes in the id of a users current workout and a false boolean value to the Progress function, since this is the workout button not attached to a plan
-        @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId, fromPlan = false }, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
+        @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId }, new { @class = "btn btn-success", id = "IndexButton", style = "margin-left:100px;" })
 
         //Allows user to abandon their workout if there is one currently active
         @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "btn btn-success", id = "IndexButton", style = "background-color:#FF7869; margin-left:310px;" })
@@ -101,6 +101,7 @@
 
 else
 {
+    <br />
     <p>
         You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
         to view or start your Workout.
