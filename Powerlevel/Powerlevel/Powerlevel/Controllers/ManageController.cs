@@ -344,9 +344,6 @@ namespace Powerlevel.Controllers
             //check if user have avatar
             //get the current logged-in user ID
             //int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
-
-           
-
             var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);

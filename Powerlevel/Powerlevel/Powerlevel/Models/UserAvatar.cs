@@ -23,6 +23,10 @@ namespace Powerlevel.Models
         [StringLength(64)]
         public string Weapon { get; set; }
 
+        [Required]
+        [StringLength(64)]
+        public string Race { get; set; }
+
         public virtual User User { get; set; }
     }
 }
