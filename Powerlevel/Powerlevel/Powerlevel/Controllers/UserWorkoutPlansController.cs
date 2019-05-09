@@ -30,6 +30,15 @@ namespace Powerlevel.Controllers
         //GET: UserWorkoutPlans
         public ActionResult Index()
         {
+            ViewBag.WorkoutInProgress = false;
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.FirstOrDefault();
+            var existingWorkoutCheck = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.WorkoutCompleted).ToList().DefaultIfEmpty(true).First();
+            if (existingWorkoutCheck == false)
+            {
+                ViewBag.WorkoutInProgress = true;
+            }
+
             ViewBag.Workoutplans = repo.WorkoutPlans.ToList();
             return View(repo.UserWorkoutPlans.ToList());
         }

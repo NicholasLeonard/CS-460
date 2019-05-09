@@ -4,6 +4,7 @@
 	[UserId] INT NOT NULL,
 	[UserActiveWorkout] INT NOT NULL,
 	[ActiveWorkoutStage] INT NOT NULL,
+	[FromPlan] BIT NOT NULL, /*Refactoring so that FromPlan is saved within the database, instead of URL based*/
 	[WorkoutCompleted] BIT NOT NULL, /* This is for checking Workout History, if a workout is marked completed, it will appear in the user's workout history view */
 	[CompletedTime] DATETIME NULL
 	CONSTRAINT [PK_dbo.UserWorkout] PRIMARY KEY CLUSTERED ([UWId] ASC),

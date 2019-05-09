@@ -72,3 +72,11 @@
         <h4>You don't have a Workout History! @Html.ActionLink("Begin your PowerLevel Journey!", "Index", null, new { @class = "LinkColor" })</h4>
     }
 }
+else
+{
+    <br />
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to view your Workout History.
+    </p>
+}

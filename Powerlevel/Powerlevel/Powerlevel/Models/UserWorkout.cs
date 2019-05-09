@@ -18,6 +18,8 @@ namespace Powerlevel.Models
 
         public int ActiveWorkoutStage { get; set; }
 
+        public bool FromPlan { get; set; }
+
         //This exists for Workout History; should not be completed upon creation/starting the workout, only upon "completion" on the site
         public bool WorkoutCompleted { get; set; } = false;
 

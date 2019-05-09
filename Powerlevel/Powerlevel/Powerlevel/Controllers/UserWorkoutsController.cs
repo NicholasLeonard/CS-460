@@ -153,8 +153,8 @@ namespace Powerlevel.Controllers
             // insert data into database based on number of exercises generated
             for (int i = 0; i < NumOfExercises; i++)
             {
-                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0)? 1 : exerciseList[i]; //add exercises based on the generated result
-                randomizeWorkoutExercise.OrderNumber = i+1; //the order to do them in
+                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0) ? 1 : exerciseList[i]; //add exercises based on the generated result
+                randomizeWorkoutExercise.OrderNumber = i + 1; //the order to do them in
                 db.WorkoutExercises.Add(randomizeWorkoutExercise);
                 db.SaveChanges();
             }
@@ -162,9 +162,6 @@ namespace Powerlevel.Controllers
             //return the new random Workout Id back, in order to pass it as a parameters to start workouts
             return randWorkoutId;
         }
-
-
-
 
 
         //user leveling algorithm logic function
@@ -236,13 +233,40 @@ namespace Powerlevel.Controllers
                 //remove old random workouts
                 db.Workouts.Remove(oldRandWorkout);
                 db.SaveChanges();
-            }           
+            }
 
             //generate random workouts
             int newRanWorkoutId = GenRandomExercise(userBMI);
-         
+
+
+            //Creates the userWorkout table and passes it into "RandomCreate" to create the table
+            UserWorkout userWorkout = new UserWorkout();
+            RandomCreate(userWorkout, newRanWorkoutId);
+
+            //Gets the UWId to redirect to correct id in "ConfirmWorkout" view
+            int userId = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList().First();
+            int uwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList().First();
+
             //start random workouts      
-            return RedirectToAction("Create", new { id = newRanWorkoutId, fromPlan = false });
+            return RedirectToAction("ConfirmWorkout", new { id = uwid });
+        }
+
+        /// <summary>
+        /// Creates the random UserWorkout table when called in the Random function
+        /// </summary>
+        /// <param name="userWorkout"></param>
+        /// <param name="uwid"></param>
+        public void RandomCreate(UserWorkout userWorkout, int ranWorkoutId)
+        {
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.First();
+
+            userWorkout.UserId = userId;
+            userWorkout.UserActiveWorkout = ranWorkoutId;
+            userWorkout.ActiveWorkoutStage = 0;
+
+            db.UserWorkouts.Add(userWorkout);
+            db.SaveChanges();
         }
 
         /// <summary>
@@ -271,30 +295,33 @@ namespace Powerlevel.Controllers
         }
 
 
-        // GET: UserWorkouts/Create
-        public ActionResult Create(int? id, bool fromPlan)
+        /// <summary>
+        /// Creates a workout NOT from plan (i.e., a "Free Workout")
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Create(int? id)
         {
-            //-1 is not from workout plan
-            int WorkoutFromPlan = -1;
-            /*sets the default value for the dropdown list. If the view is being rendered from a workout plan call, then it sets default to id, else just 
-             displays the first item in the dropdown list. It also sets FromPlan bool for recording plan stages after workout completion*/
-            if (fromPlan == false)
+            //-1 is not a random workout id
+            int RandWorkout = -1;
+
+            //Random Workouts will have an id passed in where Free Workout will not, if random, the id is set here
+            if (id != null)
             {
-                ViewBag.FromPlan = false;
-                
+                RandWorkout = (int)id;
             }
-            else
-            {
-                ViewBag.FromPlan = true;
-                WorkoutFromPlan = (int)id;
-            }
+
+            ViewBag.FromPlan = false;
 
             //gets the current user of the application
             var CurrentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             ViewBag.UserId = CurrentUser.UserId;
 
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", RandWorkout);
 
-            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
+            Workout workoutName = new Workout();
+            ViewBag.PlannedWorkoutName = repo.Workouts.Where(x => x.WorkoutId == id).Select(x => x.Name).FirstOrDefault();
+
             return View();
         }
 
@@ -303,21 +330,30 @@ namespace Powerlevel.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout, bool fromPlan)
+        public ActionResult Create([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
         {
             var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
             int userId = currentUser.First();
 
             if (ModelState.IsValid)
             {
-                userWorkout.ActiveWorkoutStage = 0;
-                db.UserWorkouts.Add(userWorkout);
-                db.SaveChanges();
-                //gets the UWId for the routing id to track in progress workouts
-                var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
-                int uwid = testuwid.First();
+                //Checks to ensure there is not an active workout to prevent if the user were to go back in browser to "start" a second workout
+                if (VerifyActiveWorkout() == false)
+                {
+                    userWorkout.ActiveWorkoutStage = 0;
+                    userWorkout.FromPlan = false;
+                    db.UserWorkouts.Add(userWorkout);
+                    db.SaveChanges();
+                    //gets the UWId for the routing id to track in progress workouts
+                    var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
+                    int uwid = testuwid.First();
 
-                return RedirectToAction("Progress", routeValues: new { id = uwid, fromPlan });
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid});
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
 
             ViewBag.UserId = new SelectList(repo.Users, "UserId", "UserName", userWorkout.UserId);
@@ -326,11 +362,100 @@ namespace Powerlevel.Controllers
         }
 
         /// <summary>
+        /// Create page for planned workouts, passed in from the string in the Workout plans calendar
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult CreatePlanWO(int id)
+        {
+            //Gets the passed in id from the Workout Plan calendar
+            int WorkoutFromPlan = id;
+
+            //gets the current user of the application
+            var CurrentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
+            ViewBag.UserId = CurrentUser.UserId;
+
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
+
+            Workout workoutName = new Workout();
+            ViewBag.PlannedWorkoutName = repo.Workouts.Where(x => x.WorkoutId == id).Select(x => x.Name).FirstOrDefault();
+
+            return View();
+        }
+
+        // POST: UserWorkouts/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePlanWO([Bind(Include = "UWId,UserId,UserActiveWorkout")] UserWorkout userWorkout)
+        {
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.First();
+
+            if (ModelState.IsValid)
+            {
+                //Checks to ensure there is not an active workout to prevent if the user were to go back in browser to "start" a second workout
+                if (VerifyActiveWorkout() == false)
+                {
+                    userWorkout.ActiveWorkoutStage = 0;
+                    userWorkout.FromPlan = true;
+                    db.UserWorkouts.Add(userWorkout);
+                    db.SaveChanges();
+                    //gets the UWId to be the routing id for ConfirmWorkouts page
+                    var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
+                    int uwid = testuwid.First();
+
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid});
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            ViewBag.UserId = new SelectList(repo.Users, "UserId", "UserName", userWorkout.UserId);
+            ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", userWorkout.UserActiveWorkout);
+            return View(userWorkout);
+        }
+
+        /// <summary>
+        /// Checks with the user if they want to confirm starting a workout, detailing rewards they can earn by doing so
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ConfirmWorkout(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //gets the activeWorkout record for the user
+            var UserWorkout = db.UserWorkouts.Find(id);
+
+            if (id != null)
+            {
+                int WorkoutById = (int)id;
+            }
+
+            WorkoutVM ConfirmStart = new WorkoutVM
+            {
+                UWId = UserWorkout.UWId,
+                UserActiveWorkout = UserWorkout.UserActiveWorkout,
+                WorkoutName = UserWorkout.Workout.Name,
+                FromPlan = UserWorkout.FromPlan,
+            };
+
+            return View(ConfirmStart);
+        }
+
+        /// <summary>
         /// The view that handles loading the Progress page to move through exercises in a workout
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Progress(int? id, bool fromPlan)
+        public ActionResult Progress(int? id)
         {
             if (id == null)
             {
@@ -355,13 +480,14 @@ namespace Powerlevel.Controllers
                 FinishedWorkout(UserWorkout);
 
                 //Updates the current stage of the plan, it is passing in the current workout id for plan completion
-                if (fromPlan == true)
+                if (UserWorkout.FromPlan == true)
                 {
                     PlanComplete = UpdatePlan();
+                    return RedirectToAction("Complete", routeValues: new { id, planComplete = PlanComplete });
                 }
 
-                //go to completed screen and distribute awards. Probably call the completed actionmethod here so it links in with Chi's exp code
-                return RedirectToAction("Complete", routeValues: new { id, planComplete = PlanComplete });
+                //go to completed screen and distribute rewards. Probably call the completed actionmethod here so it links in with Chi's exp code
+                return RedirectToAction("Complete", routeValues: new { id });
             }
             else
             {
@@ -381,7 +507,7 @@ namespace Powerlevel.Controllers
                     WorkoutName = UserWorkout.Workout.Name,
                     MaxWorkoutStage = maxStage,
                     UserActiveWorkout = UserWorkout.UserActiveWorkout,
-                    FromPlan = fromPlan
+                    FromPlan = UserWorkout.FromPlan
                 };
 
                 //returns the current exercise and if the plan was started from a workout plan or not
@@ -397,7 +523,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProgressForward(int? id, bool fromPlan)
+        public ActionResult ProgressForward(int? id)
         {
             if (id == null)
             {
@@ -414,7 +540,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //returns to the progress function to reload the progress view
-            return RedirectToAction("Progress", new { id = UserWorkout.UWId, fromPlan });
+            return RedirectToAction("Progress", new { id = UserWorkout.UWId });
         }
 
         /// <summary>
@@ -424,7 +550,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ProgressBack(int? id, bool fromPlan)
+        public ActionResult ProgressBack(int? id)
         {
             if (id == null)
             {
@@ -441,7 +567,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //returns to the progress function to reload the progress view
-            return RedirectToAction("Progress", new { id = UserWorkout.UWId, fromPlan });
+            return RedirectToAction("Progress", new { id = UserWorkout.UWId });
         }
 
         /// <summary>
@@ -456,7 +582,7 @@ namespace Powerlevel.Controllers
         }
 
         // GET: UserWorkouts/Abandon/5
-        public ActionResult Abandon(int? id, bool? fromPlan)
+        public ActionResult Abandon(int? id)
         {
             if (id == null)
             {
@@ -467,33 +593,57 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
-            //checks if it is a workout from a plan that is being abandoned
-            if(fromPlan == null)
-            {
-                ViewBag.FromPlan = false;
-            }
-            else
-            {
-                ViewBag.FromPlan = true;
-            }
             return View(UserWorkout);
         }
 
         // POST: UserWorkouts/Abandon/5
         [HttpPost, ActionName("Abandon")]
         [ValidateAntiForgeryToken]
-        public ActionResult AbandonConfirmed(int id, bool fromPlan)
+        public ActionResult AbandonConfirmed(int id)
         {
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
 
-            if (fromPlan == true)
+            if (UserWorkout.FromPlan == true)
             {
                 int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Select(x => x.EventId).FirstOrDefault();
                 RemoveUserWorkout(UserWorkout);
-                return RedirectToAction("UpdateEvents", "Calendar", new { id = WorkoutEventId, abandon = fromPlan });
+                return RedirectToAction("UpdateEvents", "Calendar", new { id = WorkoutEventId, abandon = true });
             }
 
             RemoveUserWorkout(UserWorkout);
+            return RedirectToAction("Index");
+        }
+
+
+        /// <summary>
+        /// Allows user to abandon a workout without a confirmation page, when called upon with a button
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult QuickAbandon(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            UserWorkout UserWorkout = db.UserWorkouts.Find(id);
+
+            if (UserWorkout.FromPlan == true)
+            {
+                int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Select(x => x.EventId).FirstOrDefault();
+                db.UserWorkouts.Remove(UserWorkout);
+                db.SaveChanges();
+                return RedirectToAction("UpdateEvents", "Calendar", new { id = WorkoutEventId, abandon = true });
+            }
+
+            //deletes the specific workout in the db
+            db.UserWorkouts.Remove(UserWorkout);
+            db.SaveChanges();
+
+            //returns to the index page
             return RedirectToAction("Index");
         }
 
@@ -510,9 +660,12 @@ namespace Powerlevel.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.PlanComplete = planComplete;
+            if (planComplete != null)
+            {
+                ViewBag.PlanComplete = planComplete;
+            }
             return View(UserWorkout);
-        }        
+        }
 
         public void RemoveUserWorkout(UserWorkout userWorkout)
         {
@@ -551,7 +704,6 @@ namespace Powerlevel.Controllers
         /// <summary>
         /// Updates the current workout plan if there is one and returns if the plan is completed
         /// </summary>
-        /// <param name="fromPlan"></param>
         public bool UpdatePlan()
         {
             //gets the active plan
@@ -565,7 +717,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //checks if the plan has been completed
-            if(IsPlanFinished(userPlan) == true)
+            if (IsPlanFinished(userPlan) == true)
             {
                 FinishPlan(userPlan);
                 return (true);
@@ -582,7 +734,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public bool IsPlanFinished(UserWorkoutPlan userPlan)
         {
-            if(userPlan.PlanStage == userPlan.MaxStage)
+            if (userPlan.PlanStage == userPlan.MaxStage)
             {
                 return true;
             }
@@ -598,6 +750,26 @@ namespace Powerlevel.Controllers
         {
             planStage += 1;
             return planStage;
+        }
+
+        /// <summary>
+        /// Returns True if the logged in user has an active workout, else returns False
+        /// </summary>
+        /// <returns></returns>
+        public bool VerifyActiveWorkout()
+        {
+            //Assume there is no active workout
+            bool ActiveWorkout = false;
+
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.First();
+            //Check db for active workouts of current user, if there is none then "ActiveWorkout" variable remains false
+            var existingWorkoutCheck = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.WorkoutCompleted).ToList().DefaultIfEmpty(true).First();
+            if (existingWorkoutCheck == false)
+            {
+                ActiveWorkout = true;
+            }
+            return ActiveWorkout;
         }
 
         /// <summary>

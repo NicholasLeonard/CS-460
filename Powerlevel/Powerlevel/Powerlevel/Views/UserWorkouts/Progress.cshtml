@@ -28,7 +28,7 @@
         <td>
             <div style="margin:20px 0px 50px 0px;">
                 <!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
-                @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
+                @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
                 {
                     @Html.AntiForgeryToken()
                     <!-- Prevents user from going back a workout if they are on the first stage -->
@@ -46,7 +46,7 @@
         <td>
             <div style="margin:20px 0px 50px 708px;">
                 <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
-                @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId, Model.FromPlan }))
+                @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
                 {
                     @Html.AntiForgeryToken()
                     <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
@@ -117,6 +117,6 @@
 <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
 <hr />
 <br />
-@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId, Model.FromPlan}, new { @class="btn btn-danger"})
+@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId }, new { @class="btn btn-danger"})
 
 @Scripts.Render("~/Scripts/workoutRewards.js")
