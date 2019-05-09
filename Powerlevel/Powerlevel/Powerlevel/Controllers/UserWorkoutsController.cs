@@ -324,7 +324,7 @@ namespace Powerlevel.Controllers
             ViewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
 
             Workout workoutName = new Workout();
-            ViewBag.PlannedWorkoutName = repo.Workouts.Where(x => x.WorkoutId == id).Select(x => x.Name).First();
+            ViewBag.PlannedWorkoutName = repo.Workouts.Where(x => x.WorkoutId == id).Select(x => x.Name).FirstOrDefault();
 
             return View();
         }
