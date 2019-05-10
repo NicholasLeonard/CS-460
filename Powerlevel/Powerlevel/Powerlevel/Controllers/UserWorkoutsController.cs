@@ -153,8 +153,8 @@ namespace Powerlevel.Controllers
             // insert data into database based on number of exercises generated
             for (int i = 0; i < NumOfExercises; i++)
             {
-                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0)? 1 : exerciseList[i]; //add exercises based on the generated result
-                randomizeWorkoutExercise.OrderNumber = i+1; //the order to do them in
+                randomizeWorkoutExercise.ExerciseId = (exerciseList[i] == 0) ? 1 : exerciseList[i]; //add exercises based on the generated result
+                randomizeWorkoutExercise.OrderNumber = i + 1; //the order to do them in
                 db.WorkoutExercises.Add(randomizeWorkoutExercise);
                 db.SaveChanges();
             }
@@ -199,15 +199,48 @@ namespace Powerlevel.Controllers
         //Function for accessing database to update user exp
         public void AddExp(int expAmount)
         {
+            //get current Logged-in user Id
+            var currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
-            //get the user current exp and add to it.
-            int getCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
-            getCurrentExp += expAmount;
+            //check if user is in a team
+            var teamMembers = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).ToArray();
 
-            //find the user column in the database and modified the existing value
-            var userData = db.Users.First(x => x.UserName == User.Identity.Name);
-            userData.Experience = getCurrentExp;
-            db.SaveChanges();
+            //if user have team members 1.5x exp bonus & all team members get 50% exp
+            if (teamMembers.Count() != 0)
+            {
+                //in a team, the current user get 200% bonus exp
+                //get the user current exp and add to it.
+                int getCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+                getCurrentExp += (expAmount * 2);
+
+                //find the user column in the database and modified the existing value
+                var userData = db.Users.First(x => x.UserName == User.Identity.Name);
+                userData.Experience = getCurrentExp;
+                db.SaveChanges();
+
+                //all team members get 50% of exp
+                for (int i = 0; i < teamMembers.Count(); i++)
+                {
+                    User teamMemberObject = new User();
+                    teamMemberObject = db.Users.Find(teamMembers[i]);
+                    teamMemberObject.Experience += (expAmount / 2);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                //not in a team, get only 100% of exp, no bonus 
+                //get the user current exp and add to it.
+                int getCurrentExp = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.Experience).FirstOrDefault();
+                getCurrentExp += expAmount;
+
+                //find the user column in the database and modified the existing value
+                var userData = db.Users.First(x => x.UserName == User.Identity.Name);
+                userData.Experience = getCurrentExp;
+                db.SaveChanges();
+            }
+
+
 
             //calcalate the user level by their exp
             CheckUserLevel();
@@ -236,11 +269,11 @@ namespace Powerlevel.Controllers
                 //remove old random workouts
                 db.Workouts.Remove(oldRandWorkout);
                 db.SaveChanges();
-            }           
+            }
 
             //generate random workouts
             int newRanWorkoutId = GenRandomExercise(userBMI);
-         
+
             //start random workouts      
             return RedirectToAction("Create", new { id = newRanWorkoutId, fromPlan = false });
         }
@@ -281,7 +314,7 @@ namespace Powerlevel.Controllers
             if (fromPlan == false)
             {
                 ViewBag.FromPlan = false;
-                
+
             }
             else
             {
@@ -468,7 +501,7 @@ namespace Powerlevel.Controllers
                 return HttpNotFound();
             }
             //checks if it is a workout from a plan that is being abandoned
-            if(fromPlan == null)
+            if (fromPlan == null)
             {
                 ViewBag.FromPlan = false;
             }
@@ -512,7 +545,7 @@ namespace Powerlevel.Controllers
 
             ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
-        }        
+        }
 
         public void RemoveUserWorkout(UserWorkout userWorkout)
         {
@@ -530,6 +563,14 @@ namespace Powerlevel.Controllers
 
             //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
             AddExp(50);
+
+            //get current loggedin User ID
+            var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+            //increase their total workout completation count by 1
+            User userObject = new User();
+            userObject = db.Users.Find(userId);
+            userObject.TotalWorkoutsCompleted += 1;
+
 
             //saves change to db
             db.Entry(UserWorkout).State = EntityState.Modified;
@@ -565,7 +606,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //checks if the plan has been completed
-            if(IsPlanFinished(userPlan) == true)
+            if (IsPlanFinished(userPlan) == true)
             {
                 FinishPlan(userPlan);
                 return (true);
@@ -582,7 +623,7 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public bool IsPlanFinished(UserWorkoutPlan userPlan)
         {
-            if(userPlan.PlanStage == userPlan.MaxStage)
+            if (userPlan.PlanStage == userPlan.MaxStage)
             {
                 return true;
             }
