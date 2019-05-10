@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Powerlevel", "Powerlevel\Po
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerLevelUnitTests", "PowerLevelUnitTests\PowerLevelUnitTests.csproj", "{07A3A968-BB36-48CF-9FBE-12B82081479F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fitbit.Portable", "Fitbit.Portable\Fitbit.Portable.csproj", "{1358D3B4-0698-4003-97EB-B6D489E04138}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{07A3A968-BB36-48CF-9FBE-12B82081479F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07A3A968-BB36-48CF-9FBE-12B82081479F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07A3A968-BB36-48CF-9FBE-12B82081479F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1358D3B4-0698-4003-97EB-B6D489E04138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1358D3B4-0698-4003-97EB-B6D489E04138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1358D3B4-0698-4003-97EB-B6D489E04138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1358D3B4-0698-4003-97EB-B6D489E04138}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

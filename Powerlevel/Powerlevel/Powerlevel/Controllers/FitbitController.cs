@@ -1,5 +1,5 @@
-﻿using Fitbit.Api.Portable;
-using Fitbit.Api.Portable.OAuth2;
+﻿using Fitbit.Api.Portable.OAuth2;
+using Fitbit.Api.Portable;
 using Fitbit.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ using UnitsNet.Units;
 using Powerlevel.Models;
 using Powerlevel.Infastructure;
 using System.Data.Entity;
-using System.Threading;
 
 namespace Powerlevel.Controllers
 {
@@ -159,10 +158,16 @@ namespace Powerlevel.Controllers
         {
             //gets a new fitbit client instances
             var fitbitClient = GetFitbitClient();
-            await fitbitClient.SetGoalsAsync(caloriesOut: 5, steps: 5000);
+             //await fitbitClient.SetGoalsAsync(caloriesOut: 5, steps: 5000);
+
+            
             //gets the current user profile from fitbit
             UserProfile FitBitProfile = await fitbitClient.GetUserProfileAsync();
-            
+            //string x = await fitbitClient.GetApiFreeResponseAsync("https://api.fitbit.com/1/activities.json");
+            ActivityLog testActivity = new ActivityLog { Calories = 300, Date = DateTime.Today.ToString("yyyy-MM-dd"), Name = "Powerlevel Exercises",
+                Duration = 500000, StartTime = DateTime.Now.ToString("HH:mm:ss"), Distance = 1.0f};
+
+            var test = await fitbitClient.LogActivityAsync(testActivity);
             //FitBitProfile = ConvertMeasurments(FitBitProfile);
 
             return View(FitBitProfile);
