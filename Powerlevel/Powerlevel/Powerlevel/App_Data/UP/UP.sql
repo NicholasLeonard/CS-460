@@ -183,7 +183,7 @@ CREATE TABLE [dbo].[UserAvatar]
     [Body] NVARCHAR(64)  NULL DEFAULT 'human1.PNG',
     [Armor] NVARCHAR(64)   NULL DEFAULT 'none.PNG',
     [Weapon] NVARCHAR(64)  NULL DEFAULT 'none.PNG',
-	[Race] NVARCHAR(64) NOT NULL DEFAULT 'human',
+	[Race] NVARCHAR(64) NULL DEFAULT 'human',
     CONSTRAINT [PK_dbo.UserAvatar] PRIMARY KEY CLUSTERED ([UAId] ASC),
     CONSTRAINT [FK_dbo.UserAvatar_User] FOREIGN KEY (UserId) REFERENCES [User](UserId) /* [User] referenced with brackets due to VS built-in "User" creating conflict */
       ON DELETE CASCADE

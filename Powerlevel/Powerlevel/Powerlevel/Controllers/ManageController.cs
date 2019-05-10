@@ -115,7 +115,7 @@ namespace Powerlevel.Controllers
             int userIdInt = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
             //check & see if the user already have an avatar
-            var userValid = repo.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault();
+            var userValid = db.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault();
             //if user doesn't have an avatar
             if (userValid == null)
             {
@@ -344,7 +344,7 @@ namespace Powerlevel.Controllers
             //check if user have avatar
             //get the current logged-in user ID
             //int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
-            var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+            var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             return View(avatarBodies);
         }
@@ -366,8 +366,9 @@ namespace Powerlevel.Controllers
             UserAvatar userAvatars = new UserAvatar();
             userAvatars.UserId = userId;
             userAvatars.Body = "human1.PNG";
-            userAvatars.Armor = "none";
-            userAvatars.Weapon = "none";
+            userAvatars.Armor = "none.PNG";
+            userAvatars.Weapon = "none.PNG";
+            userAvatars.Race = "human";
             return userAvatars;
         }
 
@@ -377,6 +378,7 @@ namespace Powerlevel.Controllers
         [HttpPost]
         public ActionResult SetAvatar(string selected_avatar)
         {
+            // Get the list of avatar body parts (these are items all players have unlocked
             var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
             //get the current logged-in user's id
