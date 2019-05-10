@@ -1082,6 +1082,7 @@
     <Content Include="Views\Home\GettingStarted.cshtml" />
     <Content Include="Views\UserWorkouts\ConfirmWorkout.cshtml" />
     <Content Include="Views\UserWorkouts\CreatePlanWO.cshtml" />
+    <Content Include="Views\Fitbit\APIResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />

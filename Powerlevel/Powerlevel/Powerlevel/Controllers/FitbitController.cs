@@ -2,6 +2,7 @@
 using Fitbit.Api.Portable;
 using Fitbit.Models;
 using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -158,7 +159,7 @@ namespace Powerlevel.Controllers
         {
             //gets a new fitbit client instances
             var fitbitClient = GetFitbitClient();
-             //await fitbitClient.SetGoalsAsync(caloriesOut: 5, steps: 5000);
+             
 
             
             //gets the current user profile from fitbit
@@ -168,11 +169,59 @@ namespace Powerlevel.Controllers
                 Duration = 500000, StartTime = DateTime.Now.ToString("HH:mm:ss"), Distance = 1.0f};
 
             var test = await fitbitClient.LogActivityAsync(testActivity);
-            //FitBitProfile = ConvertMeasurments(FitBitProfile);
+            
 
             return View(FitBitProfile);
         }
 
+        /// <summary>
+        /// Actionresult that handles request to fitbit API to record powerlevel workout log
+        /// </summary>
+        /// <param name="userWorkoutId"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> RecordActivity(int? userWorkoutId)
+        {
+            if(userWorkoutId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //gets a new fitbitclient instance
+            FitbitClient fitbitClient = GetFitbitClient();
+
+            //gets the completed workout that the user wants to log to fitbit
+            UserWorkout CompletedWorkout = db.UserWorkouts.Find(userWorkoutId);
+
+            //gets a newly construted fitbit activitylog to be recorded to the api
+            ActivityLog ActivityLog = NewActivityLog(CompletedWorkout);
+
+            var APIResponse = await fitbitClient.LogActivityAsync(ActivityLog);
+            
+            //sets response message based on result
+            if(APIResponse != null)
+            {
+                ViewBag.Result = "Successfully logged activity.";
+            }
+            else
+            {
+                ViewBag.Result = "Unable to log activity.";
+            }
+            return View("APIResponse");
+        }
+
+        /// <summary>
+        /// Returns a new fitbit activitylog based on the completed userworkout
+        /// </summary>
+        /// <param name="completedWorkout"></param>
+        /// <returns></returns>
+        ActivityLog NewActivityLog(UserWorkout completedWorkout)
+        {//initializes the new activity log, adjust calorie calculation based on bmi
+            ActivityLog NewLog = new ActivityLog { Calories = 300, Date = DateTime.Today.ToString("yyyy-MM-dd"), Name = "Powerlevel Workouts",
+                StartTime = completedWorkout.StartTime.ToString("HH:mm:ss"),
+                Duration = Math.Abs((long)(completedWorkout.CompletedTime - completedWorkout.StartTime).TotalMilliseconds), Distance = 1.0f};
+
+            return NewLog;
+        }
         /// <summary>
         /// Converts from kg to lb and cm to ft for user height and weight
         /// </summary>
