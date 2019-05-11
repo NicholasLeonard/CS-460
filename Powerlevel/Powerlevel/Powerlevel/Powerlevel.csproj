@@ -290,6 +290,7 @@
     <Compile Include="Models\ExerciseEquipment.cs" />
     <Compile Include="Models\ExerciseFlag.cs" />
     <Compile Include="Models\ExerciseImage.cs" />
+    <Compile Include="Models\StaticClasses\SetUserBMI.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LevelExp.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1083,6 +1084,7 @@
     <Content Include="Views\UserWorkouts\ConfirmWorkout.cshtml" />
     <Content Include="Views\UserWorkouts\CreatePlanWO.cshtml" />
     <Content Include="Views\Fitbit\APIResponse.cshtml" />
+    <Content Include="Views\Fitbit\RecordActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />

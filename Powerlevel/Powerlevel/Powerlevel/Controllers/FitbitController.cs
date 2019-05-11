@@ -128,15 +128,19 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="accessToken"></param>
         bool StoreCredentials(FitbitClient fitbitClient, UserProfile userProfile)
-        {//stores the fitbit api tokens in the user table
+        {//gets the user that is logging in
             User ourUser = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
             
             if (ourUser.Weight == null || ourUser.HeightFeet == null)
-            {
-                ourUser.HeightFeet = userProfile.Height;
+            {//sets the height and weight components of the user off of the fitbit profile
+                ourUser.HeightFeet = (int)userProfile.Height/12;
+                ourUser.HeightInch = (int)userProfile.Height % 12;
                 ourUser.Weight = userProfile.Weight;
                 db.Entry(ourUser).State = EntityState.Modified;
                 db.SaveChanges();
+
+                //Performs BMI calculation off of newly set height and weight for user
+                Models.StaticClasses.SetUserBMI.SetBMI(ourUser, db);
                 return true;
             }
             return false;
@@ -157,21 +161,25 @@ namespace Powerlevel.Controllers
 
         public async Task<ActionResult> TestToken()
         {
-            //gets a new fitbit client instances
             var fitbitClient = GetFitbitClient();
-             
 
-            
-            //gets the current user profile from fitbit
-            UserProfile FitBitProfile = await fitbitClient.GetUserProfileAsync();
-            //string x = await fitbitClient.GetApiFreeResponseAsync("https://api.fitbit.com/1/activities.json");
-            ActivityLog testActivity = new ActivityLog { Calories = 300, Date = DateTime.Today.ToString("yyyy-MM-dd"), Name = "Powerlevel Exercises",
-                Duration = 500000, StartTime = DateTime.Now.ToString("HH:mm:ss"), Distance = 1.0f};
+            ViewBag.AccessToken = fitbitClient.AccessToken;
 
-            var test = await fitbitClient.LogActivityAsync(testActivity);
-            
+            UserProfile test = await fitbitClient.GetUserProfileAsync();
 
-            return View(FitBitProfile);
+            return View(test)
+        }
+
+        /// <summary>
+        /// Displays page for entering number of calories that were burned during the Powerlevel workout
+        /// </summary>
+        /// <param name="userWorkoutId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult RecordActivity(int? userWorkoutId)
+        {
+            ViewBag.UserWorkoutId = userWorkoutId;
+            return View();
         }
 
         /// <summary>
@@ -179,11 +187,20 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="userWorkoutId"></param>
         /// <returns></returns>
-        public async Task<ActionResult> RecordActivity(int? userWorkoutId)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RecordActivity(int Calories, int? userWorkoutId)
         {
             if(userWorkoutId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            //makes sure nonnegative calorie count
+            if(Calories < 0)
+            {
+                ModelState.AddModelError("", "Calories cannot be a negative number");
+                return View();
             }
 
             //gets a new fitbitclient instance
@@ -193,7 +210,7 @@ namespace Powerlevel.Controllers
             UserWorkout CompletedWorkout = db.UserWorkouts.Find(userWorkoutId);
 
             //gets a newly construted fitbit activitylog to be recorded to the api
-            ActivityLog ActivityLog = NewActivityLog(CompletedWorkout);
+            ActivityLog ActivityLog = NewActivityLog(CompletedWorkout, Calories);
 
             var APIResponse = await fitbitClient.LogActivityAsync(ActivityLog);
             
@@ -214,9 +231,9 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="completedWorkout"></param>
         /// <returns></returns>
-        ActivityLog NewActivityLog(UserWorkout completedWorkout)
+        ActivityLog NewActivityLog(UserWorkout completedWorkout, int calories)
         {//initializes the new activity log, adjust calorie calculation based on bmi
-            ActivityLog NewLog = new ActivityLog { Calories = 300, Date = DateTime.Today.ToString("yyyy-MM-dd"), Name = "Powerlevel Workouts",
+            ActivityLog NewLog = new ActivityLog { Calories = calories, Date = DateTime.Today.ToString("yyyy-MM-dd"), Name = "Powerlevel Workouts",
                 StartTime = completedWorkout.StartTime.ToString("HH:mm:ss"),
                 Duration = Math.Abs((long)(completedWorkout.CompletedTime - completedWorkout.StartTime).TotalMilliseconds), Distance = 1.0f};
 
@@ -234,7 +251,7 @@ namespace Powerlevel.Controllers
 
             //converts height from cm to ft and rounds to 2 decimal places
             Length Height = Length.FromCentimeters(fitBitUser.Height);
-            fitBitUser.Height = Math.Round(Height.ToUnit(LengthUnit.Foot).Feet, 2);
+            fitBitUser.Height = Height.ToUnit(LengthUnit.Inch).Inches;
             
             return (fitBitUser);
         }

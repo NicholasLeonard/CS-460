@@ -25,7 +25,7 @@ namespace Powerlevel.Models
 
         private DateTime Date = DateTime.Now;
 
-        public DateTime StartTime { get; set; }//needs to be here for recording activity to fitbit api
+        public DateTime StartTime { get; set; }
 
         public DateTime CompletedTime
         {

@@ -264,7 +264,7 @@ namespace Powerlevel.Controllers
             userWorkout.UserId = userId;
             userWorkout.UserActiveWorkout = ranWorkoutId;
             userWorkout.ActiveWorkoutStage = 0;
-
+            userWorkout.StartTime = DateTime.Now;
             db.UserWorkouts.Add(userWorkout);
             db.SaveChanges();
         }
