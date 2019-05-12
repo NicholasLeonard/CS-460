@@ -1,0 +1,43 @@
+﻿@model Powerlevel.Models.ViewModels.WorkoutVM
+@using Powerlevel.Models
+
+@{
+    ViewBag.Title = "ConfirmWorkout";
+}
+<br />
+<h2>You've selected the <span style="color:#FDFFAF">@Model.WorkoutName</span> Workout</h2>
+
+
+@if (Model.FromPlan == true)
+{
+    <h3>This is a workout from your plan.</h3>
+}
+
+<br />
+
+<!--Completion Rewards that user can earn if the workout is finished-->
+<hr />
+<h5>Rewards upon Completing this Workout:</h5>
+
+<!--temp variable used to hold the current workoutID to be used in API calls-->
+<div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
+
+<!--Chi's XP Code-->
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<hr />
+
+@Scripts.Render("~/Scripts/workoutRewards.js")
+
+<br />
+
+@using (Html.BeginForm("Progress", "UserWorkouts", new { id = Model.UWId }))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" style="background-color:#6EFF69;" class="StageButton" title="ConfirmWorkout" value="Begin Workout" />
+}
+<br />
+@using (Html.BeginForm("QuickAbandon", "UserWorkouts", new { id = Model.UWId }))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" style="background-color:#FF7869;" class="StageButton" title="AbandonWorkout" value="Cancel Workout" />
+}

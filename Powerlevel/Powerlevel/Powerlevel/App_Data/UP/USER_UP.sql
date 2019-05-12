@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[User]
 (
 	[UserId] INT IDENTITY(1,1), 
     [HeightFeet] INT            NULL,
-    [Weight] INT NULL,
+    [Weight] FLOAT NULL,
 	[DOB] DATETIME,
 	[Gender] NVARCHAR(10),
     [UserName] NVARCHAR(256) NOT NULL,
@@ -17,5 +17,7 @@ CREATE TABLE [dbo].[User]
     [BMI]        FLOAT            DEFAULT 0 NOT NULL,
     [HeightInch] INT            NULL,
 	[TotalWorkoutsCompleted] INT NOT NULL DEFAULT 0, 
+	[FitbitLinked] BIT NOT NULL DEFAULT (0),
+	[FirstTimeLogin] BIT NOT NULL DEFAULT (1),
 	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 )

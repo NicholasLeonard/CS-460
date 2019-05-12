@@ -91,7 +91,16 @@ namespace Powerlevel.Controllers
             //if the start date for the workout event is today or earlier, than return the redirection url
             else if(item.Start.Value.Date == DateTime.Today || item.Start.Value.Date < DateTime.Today)
             {
-                return ("UserWorkouts/Create/" + item.WorkoutId + "?fromPlan=True");
+                //Checks if the User already has an active workout, if so, they will not be given a link to the create page and will be advised to finish their current workout first
+                var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+                int userId = currentUser.First();
+                var existingWorkoutCheck = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.WorkoutCompleted).ToList().DefaultIfEmpty(true).First();
+                if (existingWorkoutCheck == false)
+                {
+                    return ("");
+                }
+
+                return ("UserWorkouts/CreatePlanWO/" + item.WorkoutId);
             }
             //otherwise return an empty string so it won't redirect
             return ("");

@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Powerlevel.Models;
-using System.Threading;
 using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
@@ -25,11 +24,19 @@ namespace Powerlevel.Controllers
 
         //used for making workout events for calendar workout plans
         private static DateTime today = DateTime.Now;
-        private string currentUser = Thread.CurrentPrincipal.Identity.Name;
 
         //GET: UserWorkoutPlans
         public ActionResult Index()
         {
+            ViewBag.WorkoutInProgress = false;
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
+            int userId = currentUser.FirstOrDefault();
+            var existingWorkoutCheck = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.WorkoutCompleted).ToList().DefaultIfEmpty(true).First();
+            if (existingWorkoutCheck == false)
+            {
+                ViewBag.WorkoutInProgress = true;
+            }
+
             ViewBag.Workoutplans = repo.WorkoutPlans.ToList();
             return View(repo.UserWorkoutPlans.ToList());
         }
@@ -88,7 +95,7 @@ namespace Powerlevel.Controllers
             db.SaveChanges();
 
             //deletes workout events associated with the plan
-            var WorkoutEvents = db.WorkoutEvents.Where(x => x.User.UserName == currentUser).Select(x => x);
+            var WorkoutEvents = db.WorkoutEvents.Where(x => x.User.UserName == HttpContext.User.Identity.Name).Select(x => x);
             db.WorkoutEvents.RemoveRange(WorkoutEvents);
             db.SaveChanges();
             return RedirectToAction("Index");
