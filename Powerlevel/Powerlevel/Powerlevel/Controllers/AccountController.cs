@@ -95,9 +95,18 @@ namespace Powerlevel.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
-            {
+            {//Checks to see if the user has logged in before and directs to specific pages based on the value
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    if(IsFirstLogin(user) == false)
+                    {//changes from first time login to regular login so correct redirect is given after logging in
+                        ToggleFirstLogin(user);
+                        return RedirectToAction("GettingStarted", "Home", null);
+                    }
+                    if(IsLinkedAccount(user) == true)
+                    {
+                        return RedirectToAction("Authorize", "Fitbit", null);
+                    }
+                    return RedirectToAction("Index", "Home", null);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -106,6 +115,47 @@ namespace Powerlevel.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
+            }
+        }
+
+        /// <summary>
+        /// Determines if the user has linked a fitbit account
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        bool IsLinkedAccount(ApplicationUser user)
+        {
+            var User = db.Users.Where(x => x.UserName == user.UserName).Select(x => x.FitbitLinked).ToArray().First();
+            return (User);
+        }
+
+        /// <summary>
+        /// Determines if a user has logged in before.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        bool IsFirstLogin(ApplicationUser user)
+        {
+            var User = db.Users.Where(x => x.UserName == user.UserName).Select(x => x.FirstTimeLogin).ToArray().First();
+            return (User);
+        }
+
+        /// <summary>
+        /// Used to set user as not first time login
+        /// </summary>
+        /// <param name="user"></param>
+        void ToggleFirstLogin(ApplicationUser user)
+        {
+            User LoginAttempt = db.Users.Where(x => x.UserName == user.UserName).FirstOrDefault();
+            if(LoginAttempt != null)
+            {
+                LoginAttempt.FirstTimeLogin = true;
+                db.Entry(LoginAttempt).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                throw new InvalidOperationException();
             }
         }
 
@@ -215,7 +265,6 @@ namespace Powerlevel.Controllers
 
                     ViewBag.Message = "Please check your email to confirm your account.";
                     return View("Info"); //redirect to Info page if the user's email is not confirmed.
-                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }

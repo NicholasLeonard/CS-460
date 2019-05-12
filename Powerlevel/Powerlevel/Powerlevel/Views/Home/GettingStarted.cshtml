@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Getting Started";
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+<div class="row">
+       <div class="col-md-12">
+            <p>Welcome to Powerlevel. The gamified workout tracker that pits you and your workout regime against monsters and dungeons to earn cool loot for your character. We have a wide selection of exercises and workouts that you can do or follow one of our predefined workout plans. Regardless of what you do, each exercise will award experience points, which will level up your character. Some activities will even award weapons or armor that you can use to customize your character. Stay active and shape your body while trying to collect all of the loot you can.</p>
+       </div>
+</div>
+<h3>Things to Know</h3>
+<div class="row">
+    @*<div class="col-md-4">
+        <p>Please check your email to confirm your account.</p>
+    </div>*@
+    <div class="col-md-6">
+        <p>We have some integration with the Fitbit website so link your account</p>
+        @Html.ActionLink("Link Fitbit Account", "Authorize", "Fitbit", null, htmlAttributes: new { @class="btn btn-primary"})
+    </div>
+    <div class="col-md-6">
+        <p>After checking your email and confirming your account, don't forget to pick your avatar</p>
+        @Html.ActionLink("Avatar", "Index", "Manage", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+</div>

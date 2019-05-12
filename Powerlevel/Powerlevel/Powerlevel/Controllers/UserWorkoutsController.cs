@@ -264,7 +264,7 @@ namespace Powerlevel.Controllers
             userWorkout.UserId = userId;
             userWorkout.UserActiveWorkout = ranWorkoutId;
             userWorkout.ActiveWorkoutStage = 0;
-
+            userWorkout.StartTime = DateTime.Now;
             db.UserWorkouts.Add(userWorkout);
             db.SaveChanges();
         }
@@ -342,6 +342,7 @@ namespace Powerlevel.Controllers
                 {
                     userWorkout.ActiveWorkoutStage = 0;
                     userWorkout.FromPlan = false;
+                    userWorkout.StartTime = DateTime.Now;
                     db.UserWorkouts.Add(userWorkout);
                     db.SaveChanges();
                     //gets the UWId for the routing id to track in progress workouts
@@ -655,6 +656,9 @@ namespace Powerlevel.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
+
+            bool CurrentUserFitbitLinked = repo.Users.Where(user => user.UserName == HttpContext.User.Identity.Name).Select(user => user.FitbitLinked).FirstOrDefault();
+
             if (UserWorkout == null)
             {
                 return HttpNotFound();
@@ -664,9 +668,16 @@ namespace Powerlevel.Controllers
             {
                 ViewBag.PlanComplete = planComplete;
             }
+            //sets a toggle for creating the option to record an event on fitbit website after completeing a powerlevel workout
+            ViewBag.FitbitLinked = CurrentUserFitbitLinked;
+
             return View(UserWorkout);
         }
 
+        /// <summary>
+        /// Removes the userworkout record from db, should only be used if workout is abandoned
+        /// </summary>
+        /// <param name="userWorkout"></param>
         public void RemoveUserWorkout(UserWorkout userWorkout)
         {
             db.UserWorkouts.Remove(userWorkout);
