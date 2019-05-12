@@ -2,6 +2,8 @@
     [TeamId] INT IDENTITY(1,1) NOT NULL,
     [UserId] INT NULL , 
     [TeamMemId] INT NULL , 
-    PRIMARY KEY CLUSTERED ([TeamId])
+    CONSTRAINT [PK_dbo.Team] PRIMARY KEY CLUSTERED ([TeamId] ASC),
+	CONSTRAINT [FK_dbo.Team_User] FOREIGN KEY (UserId) REFERENCES [User](UserId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
-
