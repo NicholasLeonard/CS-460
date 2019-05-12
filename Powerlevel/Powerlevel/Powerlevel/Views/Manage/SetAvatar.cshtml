@@ -11,22 +11,30 @@
     {
         foreach (var item in Model)
         {
-            @Html.RadioButton("selected_avatar", item.Name);
+            @Html.RadioButton("selected_avatar", item.Imagefile);
             <img src="~/Content/images/avatars/@item.Imagefile.ToString()" , alt="avatar image" />
         }
         <br>
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Select Avatar" class="btn btn-primary" />
+                @*This is used to get the armor select for the avatar*@
+                @*@Html.DropDownListFor("Name", (IEnumerable<SelectListItem>)ViewBag.AvatarArmorSelect, null, new { @class = "form-control" })*@
             </div>
         </div>
 
-    }
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Select Avatar" class="btn btn-primary" />
+        </div>
+    </div>
+
+}
 }
 else
 {
 <p>
-You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-to change your avatar.
+    You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    to change your avatar.
 </p>
 }

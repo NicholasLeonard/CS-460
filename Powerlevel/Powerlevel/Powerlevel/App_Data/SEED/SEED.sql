@@ -407,6 +407,7 @@ INSERT INTO [dbo].[LevelExp] (Level, Exp) VALUES
 (21,99999999)
 GO
 
+/* Seed all avatar parts */
 INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
 ('human1','human1.PNG', 'Body', 'human'),
 ('human2','human2.PNG', 'Body', 'human'),
@@ -424,7 +425,13 @@ INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
 ('goblin2','goblin2.PNG', 'Body','goblin')
 GO
 
+/* Do All Weapon Inserts */
 INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
+('none', 'none.png', 'Weapon', 'human'),
+('none', 'none.png', 'Weapon', 'elf'),
+('none', 'none.png', 'Weapon', 'orc'),
+('none', 'none.png', 'Weapon', 'dwarf'),
+('none', 'none.png', 'Weapon', 'goblin'),
 ('ironsword','humansword1.PNG', 'Weapon', 'human'),
 ('ironsword','elfsword1.PNG', 'Weapon', 'elf'),
 ('ironsword','orcsword1.PNG', 'Weapon', 'orc'),
@@ -440,4 +447,13 @@ INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
 ('ironspear','orcspear1.PNG','Weapon','orc'),
 ('ironspear','dwarfspear1.PNG','Weapon','dwarf'),
 ('ironspear','goblinspear1.PNG','Weapon','goblin')
+GO
+
+/* Do all Armor Inserts */
+INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
+('none', 'none.png', 'Armor', 'human'),
+('none', 'none.png', 'Armor', 'elf'),
+('none', 'none.png', 'Armor', 'orc'),
+('none', 'none.png', 'Armor', 'dwarf'),
+('none', 'none.png', 'Armor', 'goblin')
 GO

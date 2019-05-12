@@ -342,9 +342,54 @@ namespace Powerlevel.Controllers
         public ActionResult SetAvatar()
         {
             //check if user have avatar
-            //get the current logged-in user ID
-            //int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+            //get the current logged-in user Id
+            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            // Create a list of all avatarBodies the user can have
             var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+
+            //Create a list of all weapons a user has
+            var avatarWeapons = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "weapon").ToList();
+            //If the user has no weapons unlocked
+            if (avatarWeapons.Count() == 0)
+            {
+                // Add defualt weapon of each race (ie none) to user's unlocks
+                //search the avatars table where the name is none and the type is Weapon
+                var noWeaponList = db.Avatars.Where(x => x.Name == "none").Where(x => x.Type == "Weapon").ToList();
+                foreach (Avatar wep in noWeaponList)
+                {
+                    AvatarUnlock adder = new AvatarUnlock();
+                    adder.AvaId = wep.AvaId;
+                    adder.UserId = userId;
+                    db.SaveChanges();
+                }
+                avatarWeapons = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Weapon").ToList();
+            }
+            //Create a list of all armor a user has
+            var avatarArmor = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Armor").ToList();
+            //If the user has no armor unlocked
+            if (avatarArmor.Count() == 0)
+            {
+                // Add defualt armor of each race (ie none) to user's unlocks
+                var noArmorList = db.Avatars.Where(x => x.Name == "none").Where(x => x.Type == "Armor").ToList();
+                foreach (Avatar arm in noArmorList)
+                {
+                    AvatarUnlock adder = new AvatarUnlock();
+                    adder.AvaId = arm.AvaId;
+                    adder.UserId = userId;
+                    db.SaveChanges();
+                }
+                avatarArmor = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Weapon").ToList();
+            }
+
+            //viewBag.UserActiveWorkout = new SelectList(repo.Workouts, "WorkoutId", "Name", WorkoutFromPlan);
+            //Here I filter out all results in the list but the human ones, to help remove options
+            //var res = Customers.Join(Orders, x => x.customer_id, y => y.customer_id, (x, y) => x).ToList();
+            var Selectarmor = db.Avatars.Join(avatarArmor, x => x.AvaId, y => y.AvaId, (x, y) => y).ToList();
+            ViewBag.AvatarArmorSelect = new SelectList(Selectarmor, "Name", "Name");
+
+            var Selectweapon = db.Avatars.Join(avatarWeapons, x => x.AvaId, y => y.AvaId, (x, y) => y).ToList();
+            ViewBag.AvatarWeaponSelect = new SelectList(Selectweapon, "Name", "Name");
 
             return View(avatarBodies);
         }
@@ -352,13 +397,20 @@ namespace Powerlevel.Controllers
         public void GiveUserAvatar(int userId)
         {
             //populate the table with default values
-            UserAvatar userAvatars = CreateDefaultAvatar(userId);
+            UserAvatar userAvatars = new UserAvatar();
+
+            userAvatars.UserId = userId;
+            userAvatars.Body = "human1.PNG";
+            userAvatars.Armor = "none.PNG";
+            userAvatars.Weapon = "none.PNG";
+            userAvatars.Race = "human";
 
             //create a new row in the UserAvatars database
             db.UserAvatars.Add(userAvatars);
             db.SaveChanges();
         }
 
+        //TEST FUNCTION:: DON'T REMOVE YET - Alex 5-10-19
         //Used to create the default user avatar for a given user id, useful in testing
         public UserAvatar CreateDefaultAvatar(int userId)
         {

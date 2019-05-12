@@ -541,6 +541,7 @@
     <Content Include="Content\images\avatars\humanaxe1.PNG" />
     <Content Include="Content\images\avatars\humanspear1.PNG" />
     <Content Include="Content\images\avatars\humansword1.PNG" />
+    <Content Include="Content\images\avatars\none.PNG" />
     <Content Include="Content\images\avatars\orc1.PNG" />
     <Content Include="Content\images\avatars\orc2.PNG" />
     <Content Include="Content\images\avatars\orcaxe1.PNG" />
