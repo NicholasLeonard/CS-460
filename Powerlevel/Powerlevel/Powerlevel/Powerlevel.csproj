@@ -353,6 +353,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\DOWN\TEAM_DOWN.sql" />
     <Content Include="App_Data\SEED\AVATAR_SEED.sql" />
     <Content Include="App_Data\SEED\USER_DEMO_SEED.sql" />
     <Content Include="App_Data\toaster.mdf" />

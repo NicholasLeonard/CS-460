@@ -76,7 +76,7 @@ namespace Powerlevel.Feature
 this.ScenarioInitialize(scenarioInfo);
             this.ScenarioStart();
 #line 7
- testRunner.Given("I have logged in and navigated to other user profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have logged in and navigated to other user\'s profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.And("I have not already teamed up with the user", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9

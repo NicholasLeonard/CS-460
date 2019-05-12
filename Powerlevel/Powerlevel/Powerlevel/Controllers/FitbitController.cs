@@ -167,7 +167,7 @@ namespace Powerlevel.Controllers
 
             UserProfile test = await fitbitClient.GetUserProfileAsync();
 
-            return View(test)
+            return View(test);
         }
 
         /// <summary>
