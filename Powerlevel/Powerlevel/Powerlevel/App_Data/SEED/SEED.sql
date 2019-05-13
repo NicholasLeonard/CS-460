@@ -427,11 +427,11 @@ GO
 
 /* Do All Weapon Inserts */
 INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
-('none', 'none.png', 'Weapon', 'human'),
-('none', 'none.png', 'Weapon', 'elf'),
-('none', 'none.png', 'Weapon', 'orc'),
-('none', 'none.png', 'Weapon', 'dwarf'),
-('none', 'none.png', 'Weapon', 'goblin'),
+('none', 'none.PNG', 'Weapon', 'human'),
+('none', 'none.PNG', 'Weapon', 'elf'),
+('none', 'none.PNG', 'Weapon', 'orc'),
+('none', 'none.PNG', 'Weapon', 'dwarf'),
+('none', 'none.PNG', 'Weapon', 'goblin'),
 ('ironsword','humansword1.PNG', 'Weapon', 'human'),
 ('ironsword','elfsword1.PNG', 'Weapon', 'elf'),
 ('ironsword','orcsword1.PNG', 'Weapon', 'orc'),
@@ -451,9 +451,9 @@ GO
 
 /* Do all Armor Inserts */
 INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
-('none', 'none.png', 'Armor', 'human'),
-('none', 'none.png', 'Armor', 'elf'),
-('none', 'none.png', 'Armor', 'orc'),
-('none', 'none.png', 'Armor', 'dwarf'),
-('none', 'none.png', 'Armor', 'goblin')
+('none', 'none.PNG', 'Armor', 'human'),
+('none', 'none.PNG', 'Armor', 'elf'),
+('none', 'none.PNG', 'Armor', 'orc'),
+('none', 'none.PNG', 'Armor', 'dwarf'),
+('none', 'none.PNG', 'Armor', 'goblin')
 GO

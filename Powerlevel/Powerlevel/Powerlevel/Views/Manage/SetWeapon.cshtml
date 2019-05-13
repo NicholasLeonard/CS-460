@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Powerlevel.Models.Avatar>
+@using Powerlevel.Models
+@{
+    ViewBag.Title = "SetWeapon";
+}
+
+<h2>SetWeapon</h2>
+<!--I will need to start by setting up the logic for checking if the user is even logged in-->
+@if (Request.IsAuthenticated)
+{
+
+
+    using (Html.BeginForm("SetArmor", "Manage", FormMethod.Post))
+    {
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="rpgui-container framed-golden col" style="position:relative; width:120px; height:150px; margin:10px; float left">
+                    @Html.RadioButton("selected_weapon", item.Name)
+                    <img src="~/Content/images/avatars/@item.Imagefile.ToString()" , alt="avatar image" , style="margin:auto" />
+                </div>
+            }
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Select Armor" class="btn btn-primary" />
+            </div>
+        </div>
+
+    }
+}
+else
+{
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to change your avatar.
+    </p>
+}

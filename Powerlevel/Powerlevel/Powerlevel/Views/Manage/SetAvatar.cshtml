@@ -9,19 +9,17 @@
 
     using (Html.BeginForm("SetAvatar", "Manage", FormMethod.Post))
     {
-        foreach (var item in Model)
-        {
-            @Html.RadioButton("selected_avatar", item.Imagefile);
-            <img src="~/Content/images/avatars/@item.Imagefile.ToString()" , alt="avatar image" />
-        }
-        <br>
-        <div class="form-group">
-            <div class="col-md-10">
-                @*This is used to get the armor select for the avatar*@
-                @*@Html.DropDownListFor("Name", (IEnumerable<SelectListItem>)ViewBag.AvatarArmorSelect, null, new { @class = "form-control" })*@
-            </div>
-        </div>
+    <div class="row">
 
+        @foreach (var item in Model)
+        {
+        <div class="rpgui-container framed-golden col" style="position:relative; width:120px; height:150px; margin:10px; float left">
+            @Html.RadioButton("selected_avatar", item.Imagefile)
+            <img src="~/Content/images/avatars/@item.Imagefile.ToString()" , alt="avatar image" , style="margin:auto" />
+        </div>
+        }
+
+    </div>
 
     <div class="form-group">
         <div class="col-md-10">

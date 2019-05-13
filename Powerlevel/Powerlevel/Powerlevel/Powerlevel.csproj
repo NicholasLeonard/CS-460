@@ -1172,6 +1172,8 @@
     <Content Include="Views\UserWorkouts\Progress.cshtml" />
     <Content Include="Views\UserWorkouts\Random.cshtml" />
     <Content Include="Views\Manage\SetAvatar.cshtml" />
+    <Content Include="Views\Manage\SetArmor.cshtml" />
+    <Content Include="Views\Manage\SetWeapon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />

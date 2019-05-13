@@ -21,7 +21,11 @@
             </dd>
             <dt>Current Avatar</dt>
             <dd>
-                <img src="~/Content/images/avatars/@ViewBag.userAvatarBody" , alt="avatar" />
+                <div class="rpgui-container" style="position:relative">
+                    <img src="~/Content/images/avatars/@ViewBag.userAvatarBody"  alt="avatar"  style="z-index:1; position:absolute; border: 1px solid #000;" />
+                    <img src="~/Content/images/avatars/@ViewBag.userAvatarArmor"  alt="avatarArmor"  style="z-index:2; position:absolute; border: 1px solid #f00;" />
+                    <img src="~/Content/images/avatars/@ViewBag.userAvatarWeapon"  alt="avatarWeapon"  style=" z-index:3; position:absolute; border: 1px solid #0f0;" />
+                </div>
             </dd>
         </dl>
     </div>
@@ -49,9 +53,13 @@
             </dd>
             <dt>Change Avatar:</dt>
             <dd>
-                @Html.ActionLink("Change", "SetAvatar")
+                @Html.ActionLink("Change Body", "SetAvatar")
+                <br />
+                @Html.ActionLink("Change Armor", "SetArmor")
+                <br />
+                @Html.ActionLink("Change Weapon", "SetWeapon")
             </dd>
-            <hr />
+            <br />
             <dt>Password:</dt>
             <dd>
                 [
