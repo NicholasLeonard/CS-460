@@ -500,6 +500,7 @@ namespace Powerlevel.Controllers
         // GET: UserWorkouts/Complete/5
         public ActionResult Complete(int? id, bool? planComplete)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -509,6 +510,53 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
+            //If the user completed their workout plan
+            if (planComplete == true)
+            {
+                //get the current logged-in user Id
+                int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+                //Get the current users avatar unlocks
+                var userUnlocks = db.AvatarUnlocks.Where(x => x.UserId == userId);
+                //Get all available gear
+                var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon");
+                bool foundGear = false;
+                foreach(Avatar item in allGear)
+                {
+                    //Check if we already have gear
+                    if(foundGear == false)
+                    {
+                        //check if the user has the current item in their unlocks
+                        bool any = userUnlocks.Any(x => x.AvaId == item.AvaId);
+                        if(any == false)
+                        {
+                            //Get our exit condtion filled
+                            foundGear = true;
+                            //Get the name of the gear to display on the HTML later
+                            ViewBag.GotGear = item.Name;
+                            //Add all gear with that name and type to the players unlocks
+                            var addlist = db.Avatars.Where(x => x.Name == item.Name).Where(x => x.Type == item.Type).ToList();
+                            foreach(Avatar add in addlist)
+                            {
+                                AvatarUnlock adder = new AvatarUnlock();
+                                adder.UserId = userId;
+                                adder.AvaId = add.AvaId;
+                                db.AvatarUnlocks.Add(adder);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+                //If user has all gear in the game atm
+                if (foundGear == false)
+                {
+                    //Tell the html code nothing was found and give the user 200 exp
+                    ViewBag.GotGear = "none";
+                    AddExp(200);
+                }
+                
+                
+            }
+
 
             ViewBag.PlanComplete = planComplete;
             return View(UserWorkout);
@@ -543,6 +591,8 @@ namespace Powerlevel.Controllers
         {
             db.UserWorkoutPlans.Remove(userPlan);
             db.SaveChanges();
+
+            
 
             //removes workout events for active plan once plan is complete so they are not displayed on the calendar
             RemoveWorkoutEvents();

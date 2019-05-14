@@ -20,6 +20,15 @@
 @if (ViewBag.PlanComplete == true)
 {
     <h3>Congratulations! You also completed a Workout Plan!</h3>
+
+    if(ViewBag.GotGear != "none")
+    {
+        <h3>You have also obtained a @ViewBag.GotGear for your character</h3>
+    }
+    else
+    {
+        <h3>You currently have all the gear we have to offer, so you instead gain an extra 200 exp</h3>
+    }
 }
 <!-- Since the user will always level up every 100 XP they will be congratulated upon reaching a new level
     if they met the requirement of earning enough XP after a completed workout (this code will need to be updated

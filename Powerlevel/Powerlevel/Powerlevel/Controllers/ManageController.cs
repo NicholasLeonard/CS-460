@@ -396,6 +396,9 @@ namespace Powerlevel.Controllers
 
             userAvatars.Body = selected_avatar; //change their avatar body
             userAvatars.Race = requestAvatarItem.Race; // change the avatar race
+            //Clear current gear and armor
+            userAvatars.Weapon = "none.PNG";
+            userAvatars.Armor = "none.PNG";
             db.Entry(userAvatars).State = EntityState.Modified;
             db.SaveChanges();
 
