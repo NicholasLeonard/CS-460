@@ -39,11 +39,11 @@
 }
 <br />
 
-@Html.ActionLink("Return Home", "Index", "Home", null, new { @class = "btn btn-success", id = "RedirectButton" })
-@Html.ActionLink("View History", "History", null, new { @class = "btn btn-success", id = "RedirectButton" })
-@Html.ActionLink("View Plan", "Index", "UserWorkoutPlans", null, new { @class = "btn btn-success", id = "RedirectButton" })
+@Html.ActionLink("Return Home", "Index", "Home", null, new { @class = "rpgui-button" })
+@Html.ActionLink("View History", "History", null, new { @class = "rpgui-button" })
+@Html.ActionLink("View Plan", "Index", "UserWorkoutPlans", null, new { @class = "rpgui-button" })
 @if(ViewBag.FitbitLinked == true)
 {
-    @Html.ActionLink("Record Fitbit Activity", "RecordActivity", "Fitbit", new { userWorkoutId = Model.UWId}, new { @class = "btn btn-success", id = "RedirectButton" })
+    @Html.ActionLink("Record Fitbit Activity", "RecordActivity", "Fitbit", new { userWorkoutId = Model.UWId}, new { @class = "rpgui-button" })
 }
 @Scripts.Render("~/Scripts/workoutRewards.js")
