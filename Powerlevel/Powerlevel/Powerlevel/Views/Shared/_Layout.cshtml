@@ -36,6 +36,7 @@
                         <li class="nav-item">@Html.ActionLink("Workout History", "History", "UserWorkouts", null, new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("My Plans", "Index", "UserWorkoutPlans", null, new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink("All Plans", "Index", "WorkoutPlanWorkout", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.Actionlink("Rankings", "Index", "Ranking", null, new { @class = "nav-link" })</li>
 
                         @*display their level only once user is logged in, infos are updated using ajax*@
                         @if (User.Identity.IsAuthenticated == true)
