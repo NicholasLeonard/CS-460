@@ -9,6 +9,7 @@ using System.Data.Entity;
 using Powerlevel.Models;
 using Powerlevel.Infastructure;
 
+
 namespace Powerlevel.Controllers
 {
     public class UserController : Controller
@@ -29,7 +30,7 @@ namespace Powerlevel.Controllers
         public ActionResult Index()
         {
             User user = db.Users.Where(x => x.UserName == HttpContext.User.Identity.Name).FirstOrDefault();
-            if(user == null)
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home", null);
             }
@@ -53,7 +54,8 @@ namespace Powerlevel.Controllers
                 //updates the values in the entry
                 metrics.HeightFeet = currentUserMetrics.HeightFeet;
 
-                if (currentUserMetrics.HeightInch > 9){// SAFETY CHECK
+                if (currentUserMetrics.HeightInch > 9)
+                {// SAFETY CHECK
                     currentUserMetrics.HeightInch = 9; //currently if user set their inch > 10, BMI will get bug out. 
                 }
                 else { metrics.HeightInch = currentUserMetrics.HeightInch; }
@@ -62,16 +64,133 @@ namespace Powerlevel.Controllers
                 db.Entry(metrics).State = EntityState.Modified;
 
 
-                //calculate user BMI on submit
+                /*//calculate user BMI on submit
                 //BMI Formula: ( (lbs * 703) / inch^2 )
                 //convert inch to decimal, then to inches
                 double tempHeight = (double)(metrics.HeightFeet + (metrics.HeightInch / 10)) * 12;
                 metrics.BMI = Math.Round((double)((metrics.Weight * 703) / Math.Pow(tempHeight, 2.00)), 2); //round to 2 decimal places
-                db.SaveChanges();
+                db.SaveChanges();*/
+                Models.StaticClasses.SetUserBMI.SetBMI(metrics, db);
             }
             // return RedirectToAction("Display", "User", null);
-             return RedirectToAction("Index", "Manage", null);
+            return RedirectToAction("Index", "Manage", null);
         }
+
+        /// <summary>
+        /// party/team system, join functionality
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet][Authorize]
+        public ActionResult JoinTeam(int id)
+        {
+            //get current loggedin userID
+            int currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //check for duplicates
+            var duplicateUser = db.Teams.Where(x => x.TeamId == currentUserId && x.TeamMemId == id).FirstOrDefault();
+
+            //safety check: make sure user is not partying up with themselves
+            if (currentUserId != id && duplicateUser == null)
+            {
+                Team teamObject = new Team();
+                teamObject.UserId = currentUserId;
+                teamObject.TeamMemId = id;
+                db.Teams.Add(teamObject); //add to the db
+
+                Team peerTeamObject = new Team(); //peer user also added to the db
+                peerTeamObject.UserId = id;
+                peerTeamObject.TeamMemId = currentUserId;
+                db.Teams.Add(peerTeamObject); //add to the db
+
+                db.SaveChanges();
+            }
+            return RedirectToAction("Profiles", "User", id);
+        }
+
+        /// <summary>
+        /// party/team system, join functionality
+        /// </summary>
+        /// <returns></returns>
+     
+        [HttpGet][Authorize]
+        public ActionResult LeaveTeam(int id)
+        {
+            //get current loggedin userID
+            int currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            if (currentUserId != id)
+            {
+
+                //delete the row in the database for the current user
+                var teamObj = db.Teams.Where(x => x.UserId == currentUserId && x.TeamMemId == id).FirstOrDefault();
+                if (teamObj != null)
+                {
+                    db.Teams.Remove(teamObj);
+                    db.SaveChanges();
+                }
+
+                //delete the row in the database for the peer user
+                var peerTeamObj = db.Teams.Where(x => x.UserId == id && x.TeamMemId == currentUserId).FirstOrDefault();
+                if (peerTeamObj != null)
+                {
+                    db.Teams.Remove(peerTeamObj);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Profiles", "User", id);
+        }
+
+        /// <summary>
+        /// Displays other user's profile
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Profiles(int? id)
+        {
+            User userObject = new User();
+            userObject = db.Users.Find(id); //find by primary key id
+
+            //fail safe page redirect
+            if (id == null || userObject == null)
+            {
+                return RedirectToAction("Index", "Manage", null); //redirect user if null or id not found
+            }
+
+            ViewBag.userName = userObject.UserName; //pass the data into a viewbag, get data by ID
+            ViewBag.level = userObject.Level;
+            ViewBag.exp = userObject.Experience;
+            ViewBag.heightFeet = userObject.HeightFeet;
+            ViewBag.heightInch = userObject.HeightInch;
+            ViewBag.weight = userObject.Weight;
+            ViewBag.BMI = userObject.BMI;
+            ViewBag.userAvatarBody = userObject.UserAvatars.ElementAt(0).Body; //get the first body element of the ICollection in index 0 
+
+            //get current loggedin userID
+            int currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //check if the current user is already team'd up
+            var currentUserInTeam = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).FirstOrDefault();
+
+            //check if the current user is already team'd up with the same peer
+            var peerUserInTeam = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).FirstOrDefault();
+
+
+            //check if the other user is in the same team
+            if (currentUserInTeam == null && id != currentUserId) //if null, user is not team'd up with currentUser
+            {
+                //pass the other user id into viewbag for view
+                ViewBag.TeamURL = "/user/joinTeam/" + id;
+                ViewBag.TeamupMessage = ">>TEAM UP<<";
+            }
+            else if (currentUserInTeam != null && id != currentUserId)
+            {
+                ViewBag.TeamURL = "/user/leaveTeam/" + id;
+                ViewBag.TeamupMessage = ">>LEAVE TEAM<<";
+            }
+            return View();
+        }
+
+
 
         /// <summary>
         /// Displays the current user's metrics
@@ -82,7 +201,7 @@ namespace Powerlevel.Controllers
         {//gets the metrics of the current user
             var currentUser = HttpContext.User.Identity.Name;
 
-            if(currentUser != null)
+            if (currentUser != null)
             {//displays the current user metrics
                 User currentUserMetrics = db.Users.Where(x => x.UserName == currentUser).FirstOrDefault();
                 return View(currentUserMetrics);

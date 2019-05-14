@@ -1,0 +1,1 @@
+﻿INSERT INTO [dbo].[User] (HeightFeet,) VALUES

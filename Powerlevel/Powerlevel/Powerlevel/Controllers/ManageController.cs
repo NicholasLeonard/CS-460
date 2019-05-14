@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Powerlevel.Models;
 using Powerlevel.Infastructure;
-
+using System.Collections.Generic;
 namespace Powerlevel.Controllers
 {
     [Authorize]
@@ -45,9 +45,9 @@ namespace Powerlevel.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -67,6 +67,7 @@ namespace Powerlevel.Controllers
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
+
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
                 : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
@@ -126,6 +127,32 @@ namespace Powerlevel.Controllers
             ViewBag.userAvatarBody = userValid.Body.ToString();
             ViewBag.userAvatarArmor = userValid.Armor.ToString();
             ViewBag.userAvatarWeapon = userValid.Weapon.ToString();
+
+
+            //get team members id
+            var teamMemIdList = db.Teams.Where(x => x.UserId == userIdInt).Select(y => y.TeamMemId).ToList();
+
+            //get team members name
+            List<string> teamMemNameList = new List<string>();
+            for (int i = 0; i < teamMemIdList.Count(); i++)
+            {
+                int? teamIdTemp = teamMemIdList[i]; //a temp buffer uses to do LINQ queries 
+                if (teamIdTemp != null)
+                {
+                    //safety check, only add to list if not null
+                    ViewBag.teamMessage = "150% Exp Bonus activated!";
+                    var memName = db.Users.Where(x => x.UserId == teamIdTemp).Select(y => y.UserName).FirstOrDefault();
+                    teamMemNameList.Add(memName);
+                }
+            }
+            //get the total team member count, pass to view
+            ViewBag.teamMemberCount = teamMemIdList.Count();
+
+            //pass the team member name to view
+            ViewBag.teamMemberName = teamMemNameList;
+
+            //pass the team members Id to view
+            ViewBag.teamMemberId = teamMemIdList;
 
             var model = new IndexViewModel
             {
@@ -612,7 +639,7 @@ namespace Powerlevel.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -663,6 +690,6 @@ namespace Powerlevel.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

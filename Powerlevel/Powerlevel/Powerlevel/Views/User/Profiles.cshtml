@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Profiles";
+}
+
+<h2>@ViewBag.userName's Profile </h2>
+<hr />
+<div class="row">
+    <!--use 2 columns to make the layouts looks better-->
+    <div class="col-md-3"><img src="~/Content/images/avatars/@ViewBag.userAvatarBody" , alt="avatar" width="250" height="250" /></div>
+    <div class="col-md-9">
+        <dl class="dl-horizontal">
+            <dt>Level:</dt>
+            <dd>
+                @ViewBag.level
+            </dd>
+            <dt>Total Experience:</dt>
+            <dd>
+                @ViewBag.exp
+            </dd>
+            <dt>Height:</dt>
+            <dd>
+                @ViewBag.heightFeet ft. @ViewBag.heightInch in.
+            </dd>
+            <dt>Weight:</dt>
+            <dd>
+                @ViewBag.weight lb.
+            </dd>
+            <dt>Fitness Level(BMI):</dt>
+            <dd>
+                @ViewBag.BMI (@ViewBag.BMIdecs)
+            </dd>
+            <dd>
+                <a class="btn btn-success" href="@ViewBag.TeamURL">@ViewBag.TeamupMessage</a>
+            </dd>
+        </dl>
+    </div>
+</div>

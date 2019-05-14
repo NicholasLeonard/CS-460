@@ -1,4 +1,4 @@
-/* This file is only for populating the lists of exercises, as such a list is exhaustive */
+﻿/* This file is only for populating the lists of exercises, as such a list is exhaustive */
 /* Edit Log
 2/28/2019
 	-REFACTOR: Changed all Singlur instances for table names to Plural
@@ -6,48 +6,48 @@
 */
 
 
-/*Items inserted:
-	ID 1: Bench Press
-	ID 2: Bent-over row
-	ID 3: Chin-up
-	ID 4: Incline flye
-	ID 5: Diamond push-up
-	ID 6: Dumbbell overhead press
-	ID 7: Hammer-grip dumbbell bench press
-	ID 8: Dumbbell triceps extension
-	ID 9: Lat Pull Down
-	ID 10: Leg Press
-	ID 11: Lying Leg Curl
-	ID 12: Rope Pressdown
-	ID 13: Barbell Biceps Curl
-	ID 14: Standing Calf Raise
-	ID 15: Crunches
-	ID 16: Rest
-	ID 17: Dumbell Bench Press
-	ID 18: Dumbell Flye
-	ID 19: Dumbell Lateral Raise
-	ID 20: Preacher Curl With Cable
-	ID 21: Lying EZ-Bar Triceps Extension
-	ID 22: Seated Leg Curl
-	ID 23: Seated Calf Raise
-	ID 24: Incline Barbell Bench Press
-	ID 25: Barbell Rack Upright Row
-	ID 26: Dumbell Kickbacks
-	ID 27: Single-Arm Neutral-Grip Dumbell Row
-	ID 28: Incline Dumbell Biceps Curl
-	ID 29: Reverse Crunch
-	ID 30: Back Squat
-	ID 31: Romanian Deadlift
-	ID 32: Push-Ups
-	ID 33: Pylo Push-Ups
-	ID 34: Ab-Draw Leg Slides
-	ID 35: Air Bike
-	ID 36: Plank
-	ID 37: Lying Knee Raise
-	ID 38: Body-Weight Lunges
-	ID 39: Body-Weight Side Lunges
-	ID 40: Prisoner Squats
-	ID 41: Body-Weight Standing Calf Raise
+/*Items inserted: (If there is an ✖ it means it does not have any pictures)
+	ID 1: Bench Press ✓
+	ID 2: Bent-over row ✓
+	ID 3: Chin-up ✓
+	ID 4: Incline flye ✖
+	ID 5: Diamond push-up ✓
+	ID 6: Dumbell overhead press ✓
+	ID 7: Hammer-grip dumbell bench press ✓
+	ID 8: Dumbell triceps extension ✓
+	ID 9: Lat Pull Down ✓
+	ID 10: Leg Press ✓
+	ID 11: Lying Leg Curl ✖
+	ID 12: Rope Pressdown ✓
+	ID 13: Barbell Biceps Curl ✓
+	ID 14: Standing Calf Raise ✓
+	ID 15: Crunches ✓
+	ID 16: Rest ✓
+	ID 17: Dumbell Bench Press ✓
+	ID 18: Dumbell Flye ✓
+	ID 19: Dumbell Lateral Raise ✓
+	ID 20: Preacher Curl With Cable ✓
+	ID 21: Lying EZ-Bar Triceps Extension ✓
+	ID 22: Seated Leg Curl ✓
+	ID 23: Seated Calf Raise ✖
+	ID 24: Incline Barbell Bench Press ✓
+	ID 25: Barbell Rack Upright Row ✓
+	ID 26: Dumbell Kickbacks ✓
+	ID 27: Single-Arm Neutral-Grip Dumbell Row ✓
+	ID 28: Incline Dumbell Biceps Curl ✓
+	ID 29: Reverse Crunch ✓
+	ID 30: Back Squat ✓
+	ID 31: Romanian Deadlift ✓
+	ID 32: Push-Ups ✓
+	ID 33: Pylo Push-Ups ✓
+	ID 34: Ab-Draw Leg Slides ✓
+	ID 35: Air Bike ✓
+	ID 36: Plank ✓
+	ID 37: Lying Knee Raise ✓
+	ID 38: Body-Weight Lunges ✓
+	ID 39: Body-Weight Side Lunges ✓
+	ID 40: Prisoner Squats ✓
+	ID 41: Body-Weight Standing Calf Raise ✓
 
 */
 /* Insert into main exercise table */
@@ -76,7 +76,7 @@ Keeping your chest up, core braced and elbows pointing up, lower the weights beh
 Your arms should be completely straight and your torso upright. Pull your shoulder blades down and back, and bring the bar to your chest. 
 Pause, then slowly return to the starting position.'),
 ('Leg Press', 'Strength', 'Legs', 'Adjust the seat of the machine so that you can sit comfortably with your hips beneath your knees and your knees in line with your feet.
-Remove the safeties and lower your knees toward your chest until they�re bent 90 degrees and then press back up.
+Remove the safeties and lower your knees toward your chest until they’re bent 90 degrees and then press back up.
 Be careful not to go too low or you risk your lower back coming off the seat (which can cause injury).')
 GO
 
@@ -137,7 +137,7 @@ GO
 
 
 INSERT INTO [dbo].[Exercise]  (Name, Type, MainMuscleWorked, Instructions) VALUES
-('Romanian Deadlift', 'Strength', 'Hamstrings', 'Hold the bar in front of your thighs with a shoulder-width grip. Pull it in toward your body�don�t let it drift in front of you. 
+('Romanian Deadlift', 'Strength', 'Hamstrings', 'Hold the bar in front of your thighs with a shoulder-width grip. Pull it in toward your body—don’t let it drift in front of you. 
 Drive your hips back and lower your torso, allowing your knees to bend as needed, until you feel a stretch in your hamstrings. Extend your hips to come back up.'),
 ('Push-Ups', 'Strength', 'Chest', 'Start off by lying face down on the floor or on a mat with your feet together and arms shoulder width apart. 
 Slowly draw your abs in, inhale and raise your body off of the floor until your arms are straight, keeping your head and neck level with your body as this will be your starting position.
@@ -303,10 +303,75 @@ INSERT INTO [dbo].[ExerciseImage] (ExerciseId, ImageName) VALUES
 (1, '1_1.jpg'),
 (1, '1_2.jpg'),
 (2, '2_1.jpg'),
+(2, '2_2.jpg'),
 (3, '3_1.jpg'),
-(4, '4_1.jpg'),
+(3, '3_2.jpg'),
 (5, '5_1.jpg'),
+(5, '5_2.jpg'),
 (6, '6_1.jpg'),
+(6, '6_2.jpg'),
 (7, '7_1.jpg'),
-(8, '8_1.jpg')
+(7, '7_2.jpg'),
+(8, '8_1.jpg'),
+(8, '8_2.jpg'),
+(9, '9_1.jpg'),
+(9, '9_2.jpg'),
+(10, '10_1.jpg'),
+(10, '10_2.jpg'),
+(12, '12_1.jpg'),
+(12, '12_2.jpg'),
+(13, '13_1.jpg'),
+(13, '13_2.jpg'),
+(14, '14_1.jpg'),
+(14, '14_2.jpg'),
+(15, '15_1.jpg'),
+(15, '15_2.jpg'),
+(16, '16_1.jpg'),
+(17, '17_1.jpg'),
+(17, '17_2.jpg'),
+(18, '18_1.jpg'),
+(18, '18_2.jpg'),
+(19, '19_1.jpg'),
+(19, '19_2.jpg'),
+(20, '20_1.jpg'),
+(20, '20_2.jpg'),
+(21, '21_1.jpg'),
+(21, '21_2.jpg'),
+(22, '22_1.jpg'),
+(22, '22_2.jpg'),
+(24, '24_1.jpg'),
+(24, '24_2.jpg'),
+(25, '25_1.jpg'),
+(25, '25_2.jpg'),
+(26, '26_1.jpg'),
+(26, '26_2.jpg'),
+(27, '27_1.jpg'),
+(27, '27_2.jpg'),
+(28, '28_1.jpg'),
+(28, '28_2.jpg'),
+(29, '29_1.jpg'),
+(29, '29_2.jpg'),
+(30, '30_1.jpg'),
+(30, '30_2.jpg'),
+(31, '31_1.jpg'),
+(31, '31_2.jpg'),
+(32, '32_1.jpg'),
+(32, '32_2.jpg'),
+(33, '33_1.jpg'),
+(33, '33_2.jpg'),
+(34, '34_1.jpg'),
+(34, '34_2.jpg'),
+(35, '35_1.jpg'),
+(35, '35_2.jpg'),
+(36, '36_1.jpg'),
+(37, '37_1.jpg'),
+(37, '37_2.jpg'),
+(38, '38_1.jpg'),
+(38, '38_2.jpg'),
+(39, '39_1.jpg'),
+(39, '39_2.jpg'),
+(40, '40_1.jpg'),
+(40, '40_2.jpg'),
+(41, '41_1.jpg'),
+(41, '41_2.jpg')
 GO

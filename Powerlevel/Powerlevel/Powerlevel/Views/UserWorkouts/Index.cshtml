@@ -96,17 +96,18 @@
     <br />
     <br />
     <img src="~/Content/images/design_images/goblin_poison_blade.png" id="GoblinPoisonBlade" />
+
+    <br /><br />
+    <p>Not working out right now? <b>@Html.ActionLink("View your Workout History!", "History", null, new { @class = "LinkColor" })</b></p>
 }
 
 else
 {
+    <br />
     <p>
         You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
         to view or start your Workout.
     </p>
 }
-
-<br /><br />
-<p>Not working out right now? <b>@Html.ActionLink("View your Workout History!", "History", null, new { @class = "LinkColor" })</b></p>
 
 @Scripts.Render("~/Scripts/workoutRewards.js")
