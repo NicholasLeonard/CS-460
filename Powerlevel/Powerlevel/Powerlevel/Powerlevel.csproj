@@ -357,10 +357,6 @@
   <ItemGroup>
     <Content Include="App_Data\DOWN\DOWN.sql" />
     <Content Include="App_Data\SEED\SEED.sql" />
-    <Content Include="App_Data\toaster.mdf" />
-    <Content Include="App_Data\toaster_log.ldf">
-      <DependentUpon>toaster.mdf</DependentUpon>
-    </Content>
     <Content Include="App_Data\DOWN\TEAM_DOWN.sql" />
     <Content Include="App_Data\SEED\AVATAR_SEED.sql" />
     <Content Include="App_Data\SEED\USER_DEMO_SEED.sql" />
