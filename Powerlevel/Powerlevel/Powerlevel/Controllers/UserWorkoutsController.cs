@@ -13,7 +13,6 @@ using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
-
     public class UserWorkoutsController : Controller
     {
         private toasterContext db = new toasterContext();

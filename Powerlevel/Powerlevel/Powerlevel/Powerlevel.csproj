@@ -307,6 +307,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\APIController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ExerciseController.cs" />
     <Compile Include="Controllers\FitbitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -596,7 +597,10 @@
     <Content Include="Content\images\avatars\orcspear1.PNG" />
     <Content Include="Content\images\design_images\cobblestone_path.jpg" />
     <Content Include="Content\images\design_images\goblin_poison_blade.png" />
+    <Content Include="Content\images\design_images\goblin_sad.png" />
+    <Content Include="Content\images\design_images\goblin_skull.png" />
     <Content Include="Content\images\design_images\goblin_swordsman.png" />
+    <Content Include="Content\images\design_images\zombie.png" />
     <Content Include="Content\images\exercise_examples\10_1.jpg" />
     <Content Include="Content\images\exercise_examples\10_2.jpg" />
     <Content Include="Content\images\exercise_examples\12_1.jpg" />
@@ -926,7 +930,6 @@
     <Content Include="Content\bootstrap\alerts.less" />
     <Content Include="Content\RPGUI\package.json" />
     <Content Include="Content\RPGUI\README.md" />
-    <None Include="Properties\PublishProfiles\powerlevel - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -1305,6 +1308,9 @@
     <Content Include="Views\UserWorkouts\CreatePlanWO.cshtml" />
     <Content Include="Views\Fitbit\APIResponse.cshtml" />
     <Content Include="Views\Fitbit\RecordActivity.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker3.standalone.css.map" />
@@ -1316,8 +1322,6 @@
   <ItemGroup>
     <Folder Include="fonts\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Views\API\" />
-    <Folder Include="Views\Calendar\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
