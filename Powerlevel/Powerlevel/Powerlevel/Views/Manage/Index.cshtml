@@ -6,94 +6,99 @@
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Level:</dt>
-        <dd>
-            @ViewBag.userCurrentLevel
-        </dd>
-        <dt>Total Experience:</dt>
-        <dd>
-            @ViewBag.userExperiencePoints
-        </dd>
-        <dt>Height:</dt>
-        <dd>
-            @ViewBag.userHeightFeet ft. @ViewBag.userHeightInch in.
-        </dd>
-        <dt>Weight:</dt>
-        <dd>
-            @ViewBag.userWeight lb.
-        </dd>
-        <dt>Fitness Level(BMI):</dt>
-        <dd>
-            @ViewBag.userBMI (@ViewBag.BMIdecs)
-        </dd>
-        <dt>Team Members:</dt>
-        <dd>
-            <span style="color:gold">@ViewBag.teamMessage</span>
+<h4>Change your account settings</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4 rpgui-container framed-golden-2">
+        <dl class="dl-horizontal">
+            <dt>Level:</dt>
+            <dd>
+                @ViewBag.userCurrentLevel
+            </dd>
+            <dt>Total Experience:</dt>
+            <dd>
+                @ViewBag.userExperiencePoints
+            </dd>
+            <dt>Current Avatar</dt>
+            <dd>
+                <div class="rpgui-container" style="position:relative">
+                    <img src="~/Content/images/avatars/@ViewBag.userAvatarBody"  alt="avatar"  style="z-index:1; position:absolute; height:110px; width:auto;" />
+                    <img src="~/Content/images/avatars/@ViewBag.userAvatarArmor"  alt="avatarArmor"  style="z-index:2; position:absolute; height:110px; width:auto;" />
+                    <img src="~/Content/images/avatars/@ViewBag.userAvatarWeapon"  alt="avatarWeapon"  style=" z-index:3; position:absolute; height:110px; width:auto;" />
+                </div>
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-4 rpgui-container framed-golden-2">
+        <dl class="dl-horizontal">
+            <dt>Height:</dt>
+            <dd>
+                @ViewBag.userHeightFeet ft. @ViewBag.userHeightInch in.
+            </dd>
+            <dt>Weight:</dt>
+            <dd>
+                @ViewBag.userWeight lb.
+            </dd>
+            <dt>Fitness Level(BMI):</dt>
+            <dd>
+                @ViewBag.userBMI (@ViewBag.BMIdecs)
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-4 rpgui-container framed-golden-2">
+        <dl class="dl-horizontal">
+            <dt>Adjust Metrics:</dt>
+            <dd>
+                @Html.ActionLink("Metrics", "Index", "User")
+            </dd>
+            <dt>Change Avatar:</dt>
+            <dd>
+                @Html.ActionLink("Change Body", "SetAvatar")
+                <br />
+                @Html.ActionLink("Change Armor", "SetArmor")
+                <br />
+                @Html.ActionLink("Change Weapon", "SetWeapon")
+            </dd>
             <br />
-            @*display team member name and link to their profile*@
-            @for (int i = 0; i < ViewBag.teamMemberCount; i++)
-            {
-                <a href="user/Profiles/@ViewBag.teamMemberId[i]">@ViewBag.teamMemberName[i]</a>
-            }
-        </dd>
-
-        <dt>Adjust Metrics:</dt>
-        <dd>
-            @Html.ActionLink("Metrics", "Index", "User")
-        </dd>
-        <dt>Current Avatar</dt>
-        <dd>
-            <img src="~/Content/images/avatars/@ViewBag.userAvatarBody" , alt="avatar" />
-        </dd>
-        <dt>Change Avatar:</dt>
-        <dd>
-            @Html.ActionLink("Change", "SetAvatar")
-        </dd>
-
-        @*<dt>Display Metrics:</dt>
+            <dt>Password:</dt>
             <dd>
-                @Html.ActionLink("Display", "Display", "User")
-            </dd>*@
+                [
+                @if (Model.HasPassword)
+                {
+                    @Html.ActionLink("Change your password", "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink("Create", "SetPassword")
+                }
+                ]
+            </dd>
+        </dl>
+    </div>
 
-        <hr />
-
-        <dt>Password:</dt>
+    @*<dt>External Logins:</dt>
         <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
+            @Model.Logins.Count [
+            @Html.ActionLink("Manage", "ManageLogins") ]
+        </dd>*@
 
-        @*<dt>External Logins:</dt>
-            <dd>
-                @Model.Logins.Count [
-                @Html.ActionLink("Manage", "ManageLogins") ]
-            </dd>*@
-
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+    @*
+        Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
              See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
 
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
+         Uncomment the following block after you have set up two-factor authentication
+    *@
+    @*
+        <dt>Phone Number:</dt>
+        <dd>
+            @(Model.PhoneNumber ?? "None")
+            @if (Model.PhoneNumber != null)
+            {
+                <br />
+                <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     <br />
                     <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
@@ -103,40 +108,40 @@
                         <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
                     }
                 }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        *@
-
-        @*<dt>Two-Factor Authentication:</dt>
-            <dd>
-                <p>
-                    There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                    for details on setting up this ASP.NET application to support two-factor authentication.
-                </p>*@
-
-        @*@if (Model.TwoFactor)
-            {
-                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>Enabled
-                    <input type="submit" value="Disable" class="btn btn-link" />
-                    </text>
-                }
             }
             else
             {
-                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <text>Disabled
-                    <input type="submit" value="Enable" class="btn btn-link" />
-                    </text>
-                }
-            }*@
+                <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+            }
         </dd>
-    </dl>
+    *@
+
+    @*<dt>Two-Factor Authentication:</dt>
+        <dd>
+            <p>
+                There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                for details on setting up this ASP.NET application to support two-factor authentication.
+            </p>*@
+
+    @*@if (Model.TwoFactor)
+        {
+            using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <text>Enabled
+                <input type="submit" value="Disable" class="btn btn-link" />
+                </text>
+            }
+        }
+        else
+        {
+            using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <text>Disabled
+                <input type="submit" value="Enable" class="btn btn-link" />
+                </text>
+            }
+        }*@
+
 </div>

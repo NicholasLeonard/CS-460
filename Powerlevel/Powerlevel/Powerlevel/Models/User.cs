@@ -12,6 +12,7 @@ namespace Powerlevel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            AvatarUnlocks = new HashSet<AvatarUnlock>();
             UserAvatars = new HashSet<UserAvatar>();
             UserWorkouts = new HashSet<UserWorkout>();
             WorkoutEvents = new HashSet<WorkoutEvent>();
@@ -45,6 +46,9 @@ namespace Powerlevel.Models
         public bool FitbitLinked { get; set; }
 
         public bool FirstTimeLogin { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AvatarUnlock> AvatarUnlocks { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserAvatar> UserAvatars { get; set; }

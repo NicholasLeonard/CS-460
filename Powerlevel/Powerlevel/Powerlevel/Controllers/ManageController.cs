@@ -116,15 +116,17 @@ namespace Powerlevel.Controllers
             int userIdInt = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
             //check & see if the user already have an avatar
-            var userValid = repo.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault();
+            var userValid = db.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault();
             //if user doesn't have an avatar
-            if (userValid == null)
+            if (userValid == null || userValid.Body == null)
             {
                 GiveUserAvatar(userIdInt);
+                userValid = db.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault();
             }
-
             //get user avatar
-            ViewBag.userAvatarBody = db.UserAvatars.Where(x => x.UserId == userIdInt).FirstOrDefault().Body.ToString();
+            ViewBag.userAvatarBody = userValid.Body.ToString();
+            ViewBag.userAvatarArmor = userValid.Armor.ToString();
+            ViewBag.userAvatarWeapon = userValid.Weapon.ToString();
 
 
             //get team members id
@@ -369,26 +371,204 @@ namespace Powerlevel.Controllers
         public ActionResult SetAvatar()
         {
             //check if user have avatar
-            //get the current logged-in user ID
-            //int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+            //get the current logged-in user Id
+            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
 
+            // Create a list of all avatarBodies the user can have (OLD IMPLEMENTATION)
+            //var SelectBody = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
 
+            //Create a list of all the bodies a user has
+            var avatarBodies = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Body").ToList();
+            //If the user has no bodies unlocked
+            if (avatarBodies.Count() == 0)
+            {
+                var noBodyList = db.Avatars.Where(x => x.Type == "Body").ToList();
+                foreach (Avatar body in noBodyList)
+                {
+                    AvatarUnlock adder = new AvatarUnlock();
+                    adder.AvaId = body.AvaId;
+                    adder.UserId = userId;
+                    db.AvatarUnlocks.Add(adder);
+                    db.SaveChanges();
+                }
+                avatarBodies = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Body").ToList();
+            }
 
-            var avatarBodies = repo.Avatars.Where(x => x.Type.Equals("Body")).ToList();
+            //Create a list of the avatars to pass
+            System.Collections.Generic.List<Avatar> SelectBody = new System.Collections.Generic.List<Avatar>();
+            foreach (AvatarUnlock avaUnlk in avatarBodies)
+            {
+                //Get the current avatar object from the users list based on the avatar id
+                Avatar adder = db.Avatars.Where(x => x.AvaId == avaUnlk.AvaId).First();
+                //Add that avatar object to the list of avatar objects
+                SelectBody.Add(adder);
+                System.Diagnostics.Debug.WriteLine(adder.Name.ToString());
+            }
 
-            return View(avatarBodies);
+            return View(SelectBody);
+        }
+
+        //
+        // POST: /Manage/SetAvatar
+        [HttpPost]
+        public ActionResult SetAvatar(string selected_avatar)
+        {
+            //get the current logged-in user's id
+            var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //update the user selected avatar to the database
+            //UserAvatar userAvatars = new UserAvatar();
+            UserAvatar userAvatars = db.UserAvatars.Where(x => x.UserId == userId).Select(x => x).ToList().FirstOrDefault(); //find the user column in the database table\
+            Avatar requestAvatarItem = db.Avatars.Where(x => x.Imagefile == selected_avatar).FirstOrDefault();
+
+            userAvatars.Body = selected_avatar; //change their avatar body
+            userAvatars.Race = requestAvatarItem.Race; // change the avatar race
+            //Clear current gear and armor
+            userAvatars.Weapon = "none.PNG";
+            userAvatars.Armor = "none.PNG";
+            db.Entry(userAvatars).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SetArmor()
+        {
+            //get the current logged-in user Id
+            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //Create a list of all armor a user has
+            var avatarArmor = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Armor").ToList();
+            //If the user has no armor unlocked
+            if (avatarArmor.Count() == 0)
+            {
+                // Add defualt armor of each race (ie none) to user's unlocks
+                var noArmorList = db.Avatars.Where(x => x.Name == "none").Where(x => x.Type == "Armor").ToList();
+                foreach (Avatar arm in noArmorList)
+                {
+                    AvatarUnlock adder = new AvatarUnlock();
+                    adder.AvaId = arm.AvaId;
+                    adder.UserId = userId;
+                    db.AvatarUnlocks.Add(adder);
+                    db.SaveChanges();
+                }
+                avatarArmor = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Weapon").ToList();
+            }
+
+            //Create a list of the avatars to pass
+            System.Collections.Generic.List<Avatar> SelectArmor = new System.Collections.Generic.List<Avatar>();
+            foreach (AvatarUnlock avaUnlk in avatarArmor)
+            {
+                //Get the current avatar object from the users list based on the avatar id
+                Avatar adder = db.Avatars.Where(x => x.AvaId == avaUnlk.AvaId).First();
+                //Add that avatar object to the list of avatar objects if we don't have an object of the same name
+                if (SelectArmor.Any(x => x.Name == adder.Name) == false)
+                {
+                    SelectArmor.Add(adder);
+                    System.Diagnostics.Debug.WriteLine(adder.Name.ToString());
+                }
+            }
+            return View(SelectArmor);
+        }
+
+        //
+        // POST: /Manage/SetArmor
+        [HttpPost]
+        public ActionResult SetArmor(string selected_armor)
+        {
+            //get the current logged-in user's id
+            var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //update the user selected avatar to the database
+            UserAvatar userAvatars = db.UserAvatars.Where(x => x.UserId == userId).Select(x => x).ToList().FirstOrDefault(); //find the user entry in the database table
+            // Get the needed avatar based on current race
+            Avatar requestAvatarItem = db.Avatars.Where(x => x.Name == selected_armor).Where(x => x.Race == userAvatars.Race).Where(x => x.Type == "Armor").FirstOrDefault();
+
+            userAvatars.Armor = requestAvatarItem.Imagefile; //change their avatar armor
+            db.Entry(userAvatars).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SetWeapon()
+        {
+            //get the current logged-in user Id
+            int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //Create a list of all weapons a user has
+            var avatarWeapons = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Weapon").ToList();
+            //If the user has no weapons unlocked
+            if (avatarWeapons.Count() == 0)
+            {
+                // Add defualt weapon of each race (ie none) to user's unlocks
+                //search the avatars table where the name is none and the type is Weapon
+                var noWeaponList = db.Avatars.Where(x => x.Name == "none").Where(x => x.Type == "Weapon").ToList();
+                foreach (Avatar wep in noWeaponList)
+                {
+                    AvatarUnlock adder = new AvatarUnlock();
+                    adder.AvaId = wep.AvaId;
+                    adder.UserId = userId;
+                    db.AvatarUnlocks.Add(adder);
+                    db.SaveChanges();
+                }
+                avatarWeapons = db.AvatarUnlocks.Where(x => x.UserId == userId).Where(x => x.Avatar.Type.ToString() == "Weapon").ToList();
+            }
+
+            //Create a list of the avatars to pass
+            System.Collections.Generic.List<Avatar> SelectWeapon = new System.Collections.Generic.List<Avatar>();
+            foreach (AvatarUnlock avaUnlk in avatarWeapons)
+            {
+                //Get the current avatar object from the users list based on the avatar id
+                Avatar adder = db.Avatars.Where(x => x.AvaId == avaUnlk.AvaId).First();
+                //Add that avatar object to the list of avatar objects if we don't have an object of the same name
+                if (SelectWeapon.Any(x => x.Name == adder.Name) == false)
+                {
+                    SelectWeapon.Add(adder);
+                    System.Diagnostics.Debug.WriteLine(adder.Name.ToString());
+                }
+            }
+
+            return View(SelectWeapon);
+        }
+
+        //
+        // POST: /Manage/SetWeapon
+        [HttpPost]
+        public ActionResult SetWeapon(string selected_weapon)
+        {
+            //get the current logged-in user's id
+            var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            //update the user selected avatar to the database
+            UserAvatar userAvatars = db.UserAvatars.Where(x => x.UserId == userId).Select(x => x).ToList().FirstOrDefault(); //find the user entry in the database table
+            // Get the needed avatar based on current race
+            Avatar requestAvatarItem = db.Avatars.Where(x => x.Name == selected_weapon).Where(x => x.Race == userAvatars.Race).Where(x => x.Type == "Weapon").FirstOrDefault();
+
+            userAvatars.Weapon= requestAvatarItem.Imagefile; //change their avatar weapon
+            db.Entry(userAvatars).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public void GiveUserAvatar(int userId)
         {
             //populate the table with default values
-            UserAvatar userAvatars = CreateDefaultAvatar(userId);
+            UserAvatar userAvatarDef = new UserAvatar();
+
+            userAvatarDef.UserId = userId;
+            userAvatarDef.Body = "human1.PNG";
+            userAvatarDef.Armor = "none.PNG";
+            userAvatarDef.Weapon = "none.PNG";
+            userAvatarDef.Race = "human";
 
             //create a new row in the UserAvatars database
-            db.UserAvatars.Add(userAvatars);
+            db.UserAvatars.Add(userAvatarDef);
             db.SaveChanges();
         }
 
+        //TEST FUNCTION:: DON'T REMOVE YET - Alex 5-10-19
         //Used to create the default user avatar for a given user id, useful in testing
         public UserAvatar CreateDefaultAvatar(int userId)
         {
@@ -396,30 +576,10 @@ namespace Powerlevel.Controllers
             UserAvatar userAvatars = new UserAvatar();
             userAvatars.UserId = userId;
             userAvatars.Body = "human1.PNG";
-            userAvatars.Armor = "none";
-            userAvatars.Weapon = "none";
+            userAvatars.Armor = "none.PNG";
+            userAvatars.Weapon = "none.PNG";
+            userAvatars.Race = "human";
             return userAvatars;
-        }
-
-
-        //
-        // POST: /Manage/SetAvatar
-        [HttpPost]
-        public ActionResult SetAvatar(string selected_avatar)
-        {
-            var avatarBodies = db.Avatars.Where(x => x.Type.Equals("Body")).ToList();
-
-            //get the current logged-in user's id
-            var userId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
-
-            //update the user selected avatar to the database
-            //UserAvatar userAvatars = new UserAvatar();
-            UserAvatar userAvatars = db.UserAvatars.Where(x => x.UserId == userId).Select(x => x).ToList().FirstOrDefault(); //find the user column in the database table
-            userAvatars.Body = selected_avatar; //change their avatar body
-            db.Entry(userAvatars).State = EntityState.Modified;
-            db.SaveChanges();
-
-            return RedirectToAction("Index");
         }
 
         //

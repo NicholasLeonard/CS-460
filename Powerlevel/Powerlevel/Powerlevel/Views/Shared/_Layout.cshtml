@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
 
+<!-- include rpgui -->
+<link href="~/Content/RPGUI/rpgui.css" rel="stylesheet" type="text/css">
+<script src="~/Content/RPGUI/rpgui.js"></script>
 <!--ActionLinks that have the LinkColor class declared will turn green-->
 <html>
 <head>
@@ -9,57 +12,62 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/DataTables/css/jquery.dataTables.css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    
+    @Scripts.Render("~/bundles/jquery")\
+
+
 
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                @Html.ActionLink("PowerLevel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">@Html.ActionLink("Exercises", "Index", "Exercise", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("My Workouts", "Index", "UserWorkouts", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Workout History", "History", "UserWorkouts", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("My Plans", "Index", "UserWorkoutPlans", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("All Plans", "Index", "WorkoutPlanWorkout", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Rankings", "Index", "Ranking", null, new { @class = "nav-link" })</li>
-                    @*display their level only once user is logged in, infos are updated using ajax*@
-                    @if (User.Identity.IsAuthenticated == true)
-                    {
-                        @*@<li><a>@Html.Label("LEVEL: 1 | EXP: 1000", new { style = "color:#98afd3" }) </a></li>*@
-                        <li class="nav-item"><a id="userInfos_navbar" class="nav-link"> </a></li>
-                    }
-                </ul>
+    <div class="rpgui-content rpgui-cursor-default" style="overflow-y:scroll">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    @Html.ActionLink("PowerLevel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
 
-                @Html.Partial("_LoginPartial")
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">@Html.ActionLink("Exercises", "Index", "Exercise", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("My Workouts", "Index", "UserWorkouts", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Workout History", "History", "UserWorkouts", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("My Plans", "Index", "UserWorkoutPlans", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("All Plans", "Index", "WorkoutPlanWorkout", null, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Rankings", "Index", "Ranking", null, new { @class = "nav-link" })</li>
+
+                        @*display their level only once user is logged in, infos are updated using ajax*@
+                        @if (User.Identity.IsAuthenticated == true)
+                        {
+                            @*@<li><a>@Html.Label("LEVEL: 1 | EXP: 1000", new { style = "color:#98afd3" }) </a></li>*@
+                            <li class="nav-item"><a id="userInfos_navbar" class="nav-link"> </a></li>
+                        }
+                    </ul>
+
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
+        </nav>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - PowerLevel</p>
+            </footer>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - PowerLevel</p>
-        </footer>
+
+
+
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+        @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
+
+        @Scripts.Render("~/Scripts/ToasterScripts.js")
+        @Scripts.Render("~/Scripts/userInfos.js")
+        @RenderSection("scripts", required: false)
     </div>
-
-
-
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
-    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap4.js")
-    
-    @Scripts.Render("~/Scripts/ToasterScripts.js")
-    @Scripts.Render("~/Scripts/userInfos.js")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

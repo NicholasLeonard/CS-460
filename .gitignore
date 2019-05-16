@@ -4,6 +4,9 @@
 # Calendar ignores
 demos/
 
+# Publish Profiles
+Powerlevel/Properties/PublishProfiles/
+
 #generated backup files
 *.orig
 
