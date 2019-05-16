@@ -182,10 +182,15 @@ namespace Powerlevel.Controllers
                 ViewBag.TeamURL = "/user/joinTeam/" + id;
                 ViewBag.TeamupMessage = ">>TEAM UP<<";
             }
-            else if (currentUserInTeam != null && id != currentUserId)
+           if (currentUserInTeam != null && id != currentUserId)
             {
                 ViewBag.TeamURL = "/user/leaveTeam/" + id;
                 ViewBag.TeamupMessage = ">>LEAVE TEAM<<";
+            }
+            if (currentUserInTeam != null && id == currentUserId)
+            {
+                ViewBag.TeamURL = "";
+                ViewBag.TeamupMessage = "You can't team up with yourself.";
             }
             return View();
         }

@@ -434,6 +434,7 @@ namespace Powerlevel.Controllers
                 {
                     userWorkout.ActiveWorkoutStage = 0;
                     userWorkout.FromPlan = true;
+                    userWorkout.StartTime = DateTime.Now;
                     db.UserWorkouts.Add(userWorkout);
                     db.SaveChanges();
                     //gets the UWId to be the routing id for ConfirmWorkouts page
