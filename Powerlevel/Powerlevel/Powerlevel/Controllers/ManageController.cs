@@ -110,7 +110,7 @@ namespace Powerlevel.Controllers
             }
             if (ViewBag.userBMI >= 30)
             {
-                ViewBag.BMIdecs = "Obesity";
+                ViewBag.BMIdecs = "Obese";
             }
             //get the current logged-in user ID as an integer
             int userIdInt = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();

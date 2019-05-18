@@ -20,7 +20,7 @@
 @{ string percentString = percentStage.ToString("#0.##%"); }
 <h3 style="text-align:center">Workout Progress</h3>
 <div id="wholeBar">
-    <div id="percentBar" style="width:@percentString;"><p style="text-align:center; font-size:20px; font-family:'Comic Sans MS'; color:black"><b>@percentString</b></p></div>
+    <div id="percentBar" style="width:@percentString;"><p style="text-align:center">@percentString</p></div>
 </div>
 
 <table>
@@ -34,17 +34,17 @@
                     <!-- Prevents user from going back a workout if they are on the first stage -->
                     if (PrevNextCheck == 0)
                     {
-                        <input type="submit" disabled="disabled" id="PrevWorkoutDis" title="PrevWorkoutDis" value="Previous Stage" />
+                        <input type="submit" disabled="disabled" id="PrevWorkoutDis" title="PrevWorkoutDis" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px" />
                     }
                     else
                     {
-                        <input type="submit" title="PrevWorkout" id="PrevWorkout" value="Previous Stage" />
+                        <input type="submit" title="PrevWorkout" id="PrevWorkout" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px;" />
                     }
                 }
             </div>
         </td>
         <td>
-            <div style="margin:20px 0px 50px 708px;">
+            <div style="margin:20px 0px 50px 608px;">
                 <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
                 @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
                 {
@@ -53,11 +53,11 @@
                     what is displayed for the name of the textbox -->
                     if (PrevNextCheck + 1 == LastStage)
                     {
-                        <input type="submit" title="CompleteWorkout" id="CompletedWorkout" value="Complete Workout" />
+                        <input type="submit" title="CompleteWorkout" id="CompletedWorkout" value="Complete Workout" style="color:black; border-color:black; padding: 12px 28px" />
                     }
                     else
                     {
-                        <input type="submit" title="NextWorkout" id="NextWorkout" value="Next Stage" />
+                        <input type="submit" title="NextWorkout" id="NextWorkout" value="Next Stage" style="color:black; border-color:black; padding: 12px 62px" />
                     }
                 }
             </div>

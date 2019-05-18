@@ -499,6 +499,15 @@ namespace Powerlevel.Controllers
 
             //gets the activeWorkout record for the user
             var UserWorkout = db.UserWorkouts.Find(id);
+
+            //This segment of code ensures the logged in user is on their own active workout; if they are on another user's active workout, they are denied access
+            int userId = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList().First();
+            var UsersCurrWorkout = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList().DefaultIfEmpty(0).First();
+            if(UsersCurrWorkout != id)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             //gets the active workout
             Workout InProgressWorkout = db.Workouts.Find(UserWorkout.UserActiveWorkout);
             //gets the stage of the active workout
@@ -773,6 +782,7 @@ namespace Powerlevel.Controllers
         public void FinishedWorkout(UserWorkout UserWorkout)
         {
             UserWorkout.WorkoutCompleted = true;
+            UserWorkout.CompletedTime = DateTime.Now;
 
             //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
             AddExp(50);

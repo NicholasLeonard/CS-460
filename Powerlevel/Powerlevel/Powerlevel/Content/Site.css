@@ -133,8 +133,10 @@ LinkColor:active {
     width: 100%;
     background-color: #E7E7E7;
     border-style: solid;
+    border-color:black;
 }
 
 #percentBar {
     height: 30px;
+    background-color: #38FF37;
 }
