@@ -128,7 +128,8 @@ namespace Powerlevel.Controllers
                     Start = (item.DayOfPlan == 1) ? today : Events.First().Start.Value.AddDays(item.DayOfPlan - 1), //this is determining the day on calendar for workout based on day of plan and the first workout in the plan
                     StatusColor = "red",
                     UserId = user,
-                    WorkoutId = item.Workout.WorkoutId
+                    WorkoutId = item.Workout.WorkoutId,
+                    Description = ""
                 });
             }
 

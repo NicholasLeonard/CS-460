@@ -30,6 +30,6 @@ settings.Selectable = true;
 settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
 settings.AllDayDefault = true;
 settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
-settings.ClientSideEvents.EventClick = "function(event, element){ $.ajax('/Calendar/UpdateEvents/' + event.id); console.log('clicked');}";
+settings.ClientSideEvents.EventClick = "function(event, element){ $.ajax('/UserWorkouts/UpdateEvents/' + event.id); console.log('clicked');}";
 settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
 })

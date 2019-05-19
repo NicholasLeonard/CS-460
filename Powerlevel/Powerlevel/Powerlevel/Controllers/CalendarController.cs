@@ -89,7 +89,7 @@ namespace Powerlevel.Controllers
                 return "";
             }
             //if the start date for the workout event is today or earlier, than return the redirection url
-            else if(item.Start.Value.Date == DateTime.Today || item.Start.Value.Date < DateTime.Today)
+            else//if(item.Start.Value.Date == DateTime.Today || item.Start.Value.Date < DateTime.Today)
             {
                 //Checks if the User already has an active workout, if so, they will not be given a link to the create page and will be advised to finish their current workout first
                 var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
@@ -103,7 +103,7 @@ namespace Powerlevel.Controllers
                 return ("UserWorkouts/CreatePlanWO/" + item.WorkoutId);
             }
             //otherwise return an empty string so it won't redirect
-            return ("");
+            //return ("");
         }
 
         /// <summary>
@@ -132,65 +132,6 @@ namespace Powerlevel.Controllers
                 throw new ArgumentOutOfRangeException();
             }
             return message;
-        }
-
-        /// <summary>
-        /// Used to update information about the workout events and make it persistent
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public ActionResult UpdateEvents(int id, bool? abandon)
-        {
-            //gets the WorkoutEvent that needs to be modified
-            WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
-
-            //adjusts the event back to not done if abandoned
-            if(abandon == true)
-            {
-                //updates the workoutevent
-                CurrentEvent = ChangeEventStatus(CurrentEvent);
-
-                //saves changes to the db
-                db.Entry(CurrentEvent).State = EntityState.Modified;
-                db.SaveChanges();
-
-                //redirects to the plan page
-                return RedirectToAction("Index", "UserWorkoutPlans", null);
-            }
-
-            if(CurrentEvent.Start.Value.Date == DateTime.Today.Date || CurrentEvent.Start.Value.Date < DateTime.Today.Date)
-            {
-                //updates the workoutevent
-                CurrentEvent = ChangeEventStatus(CurrentEvent);
-
-                //saves changes to the db
-                db.Entry(CurrentEvent).State = EntityState.Modified;
-                db.SaveChanges();
-                return null;
-            }
-            
-            return null;
-        }
-
-        /// <summary>
-        /// Used to update the fields of the workout event to show status.
-        /// </summary>
-        /// <param name="CurrentEvent"></param>
-        /// <returns></returns>
-        public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent, bool abandon = false)
-        {
-            if (abandon == false)
-            {
-                //updates the workoutevent
-                CurrentEvent.StatusColor = "green";
-                CurrentEvent.Description = GetStateMessage(2);
-            }
-            else
-            {
-                CurrentEvent.StatusColor = "red";
-                CurrentEvent.Description = GetStateMessage(0);
-            }
-            return CurrentEvent;
         }
 
         /// <summary>
