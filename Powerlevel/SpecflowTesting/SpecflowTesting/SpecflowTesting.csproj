@@ -71,6 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Team.cs" />
+    <Compile Include="Team.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Team.feature</DependentUpon>
+    </Compile>
     <Compile Include="UserLoginTest.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -81,6 +87,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Team.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Team.feature.cs</LastGenOutput>
+    </None>
     <None Include="UserLoginTest.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>UserLoginTest.feature.cs</LastGenOutput>
