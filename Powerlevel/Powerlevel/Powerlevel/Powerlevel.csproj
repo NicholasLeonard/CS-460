@@ -942,7 +942,6 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="runtests.cmd" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\fullcalendar.helper.js" />
     <Content Include="Scripts\fullcalendar.helper.min.js" />
@@ -1297,12 +1296,6 @@
     <Content Include="Views\Ranking\Details.cshtml" />
     <Content Include="Views\Ranking\Edit.cshtml" />
     <Content Include="Views\Ranking\Index.cshtml" />
-    <None Include="SpecRunTestProfile.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SpecRunTestProfile_2011_09.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Home\GettingStarted.cshtml" />
     <Content Include="Views\UserWorkouts\ConfirmWorkout.cshtml" />
     <Content Include="Views\UserWorkouts\CreatePlanWO.cshtml" />

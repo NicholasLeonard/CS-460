@@ -6,7 +6,7 @@ using SeleniumExtras.WaitHelpers;
 using System;
 using TechTalk.SpecFlow;
 
-namespace SpecflowTests.StepBindings
+namespace SpecflowTesting.StepBindings
 {
     [Binding]
     public class UserLoginTestSteps : IDisposable
@@ -26,7 +26,7 @@ namespace SpecflowTests.StepBindings
             driver.Navigate().GoToUrl("https://powerlevel.azurewebsites.net/Account/Login");
             Assert.IsTrue(driver.Url.ToLower().Contains("account"));
         }
-        
+
         [Given(@"I have entered my username and password credentials")]
         public void GivenIHaveEnteredMyUsernameAndPasswordCredentials()
         {
@@ -46,7 +46,7 @@ namespace SpecflowTests.StepBindings
             var submitButton = driver.FindElementByClassName("btn-primary");
             submitButton.Click();
         }
-        
+
         [Then(@"I should navigate to the Powerlevel homepage")]
         public void ThenIShouldNavigateToThePowerlevelHomepage()
         {
