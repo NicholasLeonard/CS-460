@@ -182,7 +182,7 @@ namespace Powerlevel.Controllers
                 ViewBag.TeamURL = "/user/joinTeam/" + id;
                 ViewBag.TeamupMessage = ">>TEAM UP<<";
             }
-           if (currentUserInTeam != null && id != currentUserId)
+            if (currentUserInTeam != null && id != currentUserId)
             {
                 ViewBag.TeamURL = "/user/leaveTeam/" + id;
                 ViewBag.TeamupMessage = ">>LEAVE TEAM<<";
@@ -191,6 +191,11 @@ namespace Powerlevel.Controllers
             {
                 ViewBag.TeamURL = "";
                 ViewBag.TeamupMessage = "You can't team up with yourself.";
+            }//if there is no one else to team up with, displays message.
+            if (currentUserInTeam == null && id == currentUserId)
+            {
+                ViewBag.TeamURL = "";
+                ViewBag.TeamupMessage = "No one to team up with.";
             }
             return View();
         }
