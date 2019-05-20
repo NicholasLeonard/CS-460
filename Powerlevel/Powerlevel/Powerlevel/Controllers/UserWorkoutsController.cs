@@ -381,7 +381,7 @@ namespace Powerlevel.Controllers
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
 
-                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid});
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid });
                 }
                 else
                 {
@@ -440,7 +440,7 @@ namespace Powerlevel.Controllers
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
 
-                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid});
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid });
                 }
                 else
                 {
@@ -502,9 +502,9 @@ namespace Powerlevel.Controllers
             //This segment of code ensures the logged in user is on their own active workout; if they are on another user's active workout, they are denied access
             int userId = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList().First();
             var UsersCurrWorkout = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList().DefaultIfEmpty(0).First();
-            if(UsersCurrWorkout != id)
+            if (UsersCurrWorkout != id)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return RedirectToAction("Forbidden", "Error");
             }
 
             //gets the active workout
@@ -722,14 +722,14 @@ namespace Powerlevel.Controllers
                 //Get all available gear
                 var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon");
                 bool foundGear = false;
-                foreach(Avatar item in allGear)
+                foreach (Avatar item in allGear)
                 {
                     //Check if we already have gear
-                    if(foundGear == false)
+                    if (foundGear == false)
                     {
                         //check if the user has the current item in their unlocks
                         bool any = userUnlocks.Any(x => x.AvaId == item.AvaId);
-                        if(any == false)
+                        if (any == false)
                         {
                             //Get our exit condtion filled
                             foundGear = true;
@@ -737,7 +737,7 @@ namespace Powerlevel.Controllers
                             ViewBag.GotGear = item.Name;
                             //Add all gear with that name and type to the players unlocks
                             var addlist = db.Avatars.Where(x => x.Name == item.Name).Where(x => x.Type == item.Type).ToList();
-                            foreach(Avatar add in addlist)
+                            foreach (Avatar add in addlist)
                             {
                                 AvatarUnlock adder = new AvatarUnlock();
                                 adder.UserId = userId;
@@ -755,8 +755,8 @@ namespace Powerlevel.Controllers
                     ViewBag.GotGear = "none";
                     AddExp(200);
                 }
-                
-                
+
+
             }
 
             //if the plan is completed, then it sets a viewbag item that will toggle buttons on in the view
@@ -781,7 +781,7 @@ namespace Powerlevel.Controllers
             WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
 
             //adjusts the event back to not done if abandoned
-            if(abandon == true)
+            if (abandon == true)
             {
                 //updates the workoutevent to default because it was abandoned and still needs to be done
                 CurrentEvent = ChangeEventStatus(CurrentEvent, false, true);
@@ -793,7 +793,7 @@ namespace Powerlevel.Controllers
                 //redirects to the plan page
                 return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
-            else if(CurrentEvent.Description == "started")
+            else if (CurrentEvent.Description == "started")
             {
                 //updates the workoutevent to fully completed
                 CurrentEvent = ChangeEventStatus(CurrentEvent, true, false);
@@ -825,7 +825,7 @@ namespace Powerlevel.Controllers
                 //updates the workoutevent description to started so it can be set to green and completed later
                 CurrentEvent.Description = "started";
             }
-            else if(abandon == false && finished == true)
+            else if (abandon == false && finished == true)
             {
                 CurrentEvent.StatusColor = "green";
                 CurrentEvent.Description = "finished";
@@ -856,7 +856,7 @@ namespace Powerlevel.Controllers
         /// <param name="UserWorkout"></param>
         public void FinishedWorkout(UserWorkout UserWorkout)
         {//if the workout is from a plan, it will update the corresponding workout event so the calendar is updated as well
-            if(UserWorkout.FromPlan == true)
+            if (UserWorkout.FromPlan == true)
             {/*joins the workoutevent and userworkout tables to get the userworkout and workoutevent that corresponds with this particular workout iteration and
                the correct day on the calendar so the status color and description can be updated to show its completion */
                 var CalendarEventWorkout = db.WorkoutEvents.Join(db.UserWorkouts,
@@ -895,7 +895,7 @@ namespace Powerlevel.Controllers
             db.UserWorkoutPlans.Remove(userPlan);
             db.SaveChanges();
 
-            
+
 
             //removes workout events for active plan once plan is complete so they are not displayed on the calendar
             RemoveWorkoutEvents();
