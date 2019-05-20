@@ -49,16 +49,26 @@ namespace Powerlevel.Controllers
         public ActionResult Index([Bind(Include = "UserId, HeightFeet, HeightInch, Weight, UserName")] User currentUserMetrics)
         {//this gets the field for the current user that is entering their metrics
             if (ModelState.IsValid)
-            {//gets the entry from the db
+            {
+                //makes sure that inch component of height isn't greater than 11
+                if(currentUserMetrics.HeightInch > 11)
+                {
+                    ModelState.AddModelError("", "Inch component can't be greater than 11");
+                    return View();
+                }
+
+                //gets the entry from the db
                 User metrics = db.Users.Find(currentUserMetrics.UserId);
                 //updates the values in the entry
                 metrics.HeightFeet = currentUserMetrics.HeightFeet;
 
-                if (currentUserMetrics.HeightInch > 9)
+                /*if (currentUserMetrics.HeightInch > 9)
                 {// SAFETY CHECK
                     currentUserMetrics.HeightInch = 9; //currently if user set their inch > 10, BMI will get bug out. 
                 }
-                else { metrics.HeightInch = currentUserMetrics.HeightInch; }
+                else { metrics.HeightInch = currentUserMetrics.HeightInch; }*/
+
+                metrics.HeightInch = currentUserMetrics.HeightInch;
                 metrics.Weight = currentUserMetrics.Weight;
                 //saves the changes to the db
                 db.Entry(metrics).State = EntityState.Modified;
@@ -182,10 +192,20 @@ namespace Powerlevel.Controllers
                 ViewBag.TeamURL = "/user/joinTeam/" + id;
                 ViewBag.TeamupMessage = ">>TEAM UP<<";
             }
-            else if (currentUserInTeam != null && id != currentUserId)
+            if (currentUserInTeam != null && id != currentUserId)
             {
                 ViewBag.TeamURL = "/user/leaveTeam/" + id;
                 ViewBag.TeamupMessage = ">>LEAVE TEAM<<";
+            }
+            if (currentUserInTeam != null && id == currentUserId)
+            {
+                ViewBag.TeamURL = "";
+                ViewBag.TeamupMessage = "You can't team up with yourself.";
+            }//if there is no one else to team up with, displays message.
+            if (currentUserInTeam == null && id == currentUserId)
+            {
+                ViewBag.TeamURL = "";
+                ViewBag.TeamupMessage = "No one to team up with.";
             }
             return View();
         }

@@ -13,7 +13,6 @@ using Powerlevel.Infastructure;
 
 namespace Powerlevel.Controllers
 {
-
     public class UserWorkoutsController : Controller
     {
         private toasterContext db = new toasterContext();
@@ -649,9 +648,9 @@ namespace Powerlevel.Controllers
 
             if (UserWorkout.FromPlan == true)
             {
-                int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Select(x => x.EventId).FirstOrDefault();
+                int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout && x.Description == "started").Select(x => x.EventId).FirstOrDefault();
                 RemoveUserWorkout(UserWorkout);
-                return RedirectToAction("UpdateEvents", "Calendar", new { id = WorkoutEventId, abandon = true });
+                UpdateEvents(WorkoutEventId, true);
             }
 
             RemoveUserWorkout(UserWorkout);
@@ -677,10 +676,10 @@ namespace Powerlevel.Controllers
 
             if (UserWorkout.FromPlan == true)
             {
-                int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout).Select(x => x.EventId).FirstOrDefault();
+                int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout && x.Description == "started").Select(x => x.EventId).FirstOrDefault();
                 db.UserWorkouts.Remove(UserWorkout);
                 db.SaveChanges();
-                return RedirectToAction("UpdateEvents", "Calendar", new { id = WorkoutEventId, abandon = true });
+                UpdateEvents(WorkoutEventId, true);
             }
 
             //deletes the specific workout in the db
@@ -691,7 +690,12 @@ namespace Powerlevel.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: UserWorkouts/Complete/5
+        /// <summary>
+        /// Displays completion screen after a workout is finished detailing rewards
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="planComplete"></param>
+        /// <returns></returns>
         public ActionResult Complete(int? id, bool? planComplete)
         {
 
@@ -707,6 +711,7 @@ namespace Powerlevel.Controllers
             {
                 return HttpNotFound();
             }
+
             //If the user completed their workout plan
             if (planComplete == true)
             {
@@ -754,7 +759,7 @@ namespace Powerlevel.Controllers
                 
             }
 
-
+            //if the plan is completed, then it sets a viewbag item that will toggle buttons on in the view
             if (planComplete != null)
             {
                 ViewBag.PlanComplete = planComplete;
@@ -764,6 +769,76 @@ namespace Powerlevel.Controllers
 
             return View(UserWorkout);
         }
+
+        /// <summary>
+        /// Used to update information about the workout events and make it persistent
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult UpdateEvents(int id, bool? abandon)
+        {
+            //gets the WorkoutEvent that needs to be modified
+            WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
+
+            //adjusts the event back to not done if abandoned
+            if(abandon == true)
+            {
+                //updates the workoutevent to default because it was abandoned and still needs to be done
+                CurrentEvent = ChangeEventStatus(CurrentEvent, false, true);
+
+                //saves changes to the db
+                db.Entry(CurrentEvent).State = EntityState.Modified;
+                db.SaveChanges();
+
+                //redirects to the plan page
+                return RedirectToAction("Index", "UserWorkoutPlans", null);
+            }
+            else if(CurrentEvent.Description == "started")
+            {
+                //updates the workoutevent to fully completed
+                CurrentEvent = ChangeEventStatus(CurrentEvent, true, false);
+
+                //saves changes to the db
+                db.Entry(CurrentEvent).State = EntityState.Modified;
+                db.SaveChanges();
+                return null;
+            }
+            else
+            {
+                //updates the workout event to started
+                CurrentEvent = ChangeEventStatus(CurrentEvent, false, false);
+                db.Entry(CurrentEvent).State = EntityState.Modified;
+                db.SaveChanges();
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Used to update the fields of the workout event to show status.
+        /// </summary>
+        /// <param name="CurrentEvent"></param>
+        /// <returns></returns>
+        public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent, bool finished, bool abandon)
+        {
+            if (abandon == false && finished == false)
+            {
+                //updates the workoutevent description to started so it can be set to green and completed later
+                CurrentEvent.Description = "started";
+            }
+            else if(abandon == false && finished == true)
+            {
+                CurrentEvent.StatusColor = "green";
+                CurrentEvent.Description = "finished";
+            }
+            else
+            {
+                CurrentEvent.StatusColor = "red";
+                CurrentEvent.Description = "";
+            }
+            return CurrentEvent;
+        }
+
+
 
         /// <summary>
         /// Removes the userworkout record from db, should only be used if workout is abandoned
@@ -780,7 +855,19 @@ namespace Powerlevel.Controllers
         /// </summary>
         /// <param name="UserWorkout"></param>
         public void FinishedWorkout(UserWorkout UserWorkout)
-        {
+        {//if the workout is from a plan, it will update the corresponding workout event so the calendar is updated as well
+            if(UserWorkout.FromPlan == true)
+            {/*joins the workoutevent and userworkout tables to get the userworkout and workoutevent that corresponds with this particular workout iteration and
+               the correct day on the calendar so the status color and description can be updated to show its completion */
+                var CalendarEventWorkout = db.WorkoutEvents.Join(db.UserWorkouts,
+                                                            calevent => calevent.WorkoutId,
+                                                            userworkout => userworkout.UserActiveWorkout,
+                                                            (calevent, userworkout) => new { WorkoutEvent = calevent, UserWorkouts = userworkout })
+                                                    .Where(x => x.UserWorkouts.UWId == UserWorkout.UWId && x.WorkoutEvent.Description == "started").FirstOrDefault();
+                //updates the status color and description of the workoutevent for the calendar
+                UpdateEvents(CalendarEventWorkout.WorkoutEvent.EventId, false);
+            }
+            //updates the userworkout record to show workout completion
             UserWorkout.WorkoutCompleted = true;
             UserWorkout.CompletedTime = DateTime.Now;
 

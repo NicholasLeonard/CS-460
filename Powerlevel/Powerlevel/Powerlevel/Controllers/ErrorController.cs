@@ -6,20 +6,20 @@ using System.Web.Mvc;
 
 namespace Powerlevel.Controllers
 {
-    public class HomeController : Controller
+    public class ErrorController : Controller
     {
-        public ActionResult Index()
-        {
-            //Added this code to make sure the test is passing correctly
-            return View("Index");
-        }
-
-        public ActionResult GettingStarted()
+        // GET: Error
+        public ActionResult NotFound()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult BadRequest()
+        {
+            return View();
+        }
+
+        public ActionResult InternalServerError()
         {
             return View();
         }

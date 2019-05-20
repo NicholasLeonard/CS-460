@@ -50,12 +50,12 @@ namespace PowerLevelUnitTests.UnitTests
         {
             //arrange
             Mock<IToasterRepository> mock = new Mock<IToasterRepository>();
-            mock.Setup(x => x.WorkoutEvents).Returns(new WorkoutEvent[] { new WorkoutEvent { Title = "Test event 1", Description = "test event 1 description", StatusColor = "red" } }.AsQueryable);
+            mock.Setup(x => x.WorkoutEvents).Returns(new WorkoutEvent[] { new WorkoutEvent { Title = "Test event 1", Description = "finished", StatusColor = "red" } }.AsQueryable);
 
-            var controller = new CalendarController(mock.Object);
+            var controller = new UserWorkoutsController(mock.Object);
 
             //act
-            var ActualColor = controller.ChangeEventStatus(mock.Object.WorkoutEvents.First());
+            var ActualColor = controller.ChangeEventStatus(mock.Object.WorkoutEvents.First(), true, false);
 
             //assert
             Assert.AreEqual("green", ActualColor.StatusColor);

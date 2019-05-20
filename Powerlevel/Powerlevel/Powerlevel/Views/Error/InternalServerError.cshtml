@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "InternalServerError";
+}
+
+<h1>500</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+            <p>Sorry. We are currently being attacked by the goblin horde and are experiencing internal problems.</p>
+        </div>
+        <div class="col-md-4">
+            @Html.ActionLink("Escape the Goblins!", "Index", "Home", null, new { @class = "rpgui-button" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="~/Content/images/design_images/goblin_skull.png" width="368" height="403" />
+        </div>
+        <div class="col-md-4">
+            <img src="~/Content/images/design_images/goblin_sad.png" width="368" height="403" />
+        </div>
+        <div class="col-md-4">
+            <img src="~/Content/images/design_images/goblin_swordsman.png" width="368" height="403" />
+        </div>
+    </div>
+</div>
+
