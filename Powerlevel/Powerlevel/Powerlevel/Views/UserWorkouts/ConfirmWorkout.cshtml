@@ -30,14 +30,23 @@
 
 <br />
 
-@using (Html.BeginForm("Progress", "UserWorkouts", new { id = Model.UWId }))
-{
-    @Html.AntiForgeryToken()
-    <input type="submit" style="background-color:#6EFF69;" class="StageButton" title="ConfirmWorkout" value="Begin Workout" />
-}
-<br />
-@using (Html.BeginForm("QuickAbandon", "UserWorkouts", new { id = Model.UWId }))
-{
-    @Html.AntiForgeryToken()
-    <input type="submit" style="background-color:#FF7869;" class="StageButton" title="AbandonWorkout" value="Cancel Workout" />
-}
+<div class="row">
+    <div class="col-sm-6">
+        @using (Html.BeginForm("Progress", "UserWorkouts", new { id = Model.UWId }))
+        {
+            @Html.AntiForgeryToken()
+            <center>
+            <input type="submit" style="background-color:#6EFF69; border-color:black; color:black; padding: 12px 40px;" value="Begin Workout" />
+            </center>
+        }
+    </div>
+    <div class="col-sm-6">
+        @using (Html.BeginForm("QuickAbandon", "UserWorkouts", new { id = Model.UWId }))
+        {
+            @Html.AntiForgeryToken()
+            <center>
+            <input type="submit" style="background-color:#FF7869; border-color:black; color:black; padding: 12px 40px;" value="Cancel Workout" />
+            </center>
+        }
+    </div>
+</div>
