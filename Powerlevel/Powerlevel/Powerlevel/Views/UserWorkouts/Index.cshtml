@@ -42,30 +42,34 @@
     //Link to start a new workout if startNewWorkout is true
     if (startNewWorkout == true)
     {
+        <div class="row" align="center">
+            <div class="col-sm-4">
+                @Html.ActionLink("Free Workout", "Create", null, new { @class = "rpgui-button" })
+            </div>
 
-        @Html.ActionLink("Free Workout", "Create", null, new { @class = "rpgui-button"})
+            <div class="col-sm-4">
+                @Html.ActionLink("Workout from Plan", "Index", "UserWorkoutPlans", null, new { @class = "rpgui-button" })
+            </div>
 
-
-        @Html.ActionLink("Workout from Plan", "Index", "UserWorkoutPlans", null, new { @class = "rpgui-button"})
-
-
-        @Html.ActionLink("I don't know...", "Random", "UserWorkouts", null, new { @class = "rpgui-button"})
-       /* This is an alternative text option for starting new workouts
-        *
-       <h4>
-           It looks like you don't have an Active Workout! <b>@Html.ActionLink("Start a New Workout Now!", "Create", null, new { @class = "LinkColor" })</b>
-       </h4>
-       */
-   }
+            <div class="col-sm-4">
+                @Html.ActionLink("I don't know...", "Random", "UserWorkouts", null, new { @class = "rpgui-button" })
+            </div>
+        </div>
+    }
 
     //Button to resume workout if startNewWorkout is false
-        if (startNewWorkout == false)
-        {
-            //Passes in the id of a users current workout
-            @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId}, new { @class = "rpgui-button", style = "margin-left:100px;" })
-
-        //Allows user to abandon their workout if there is one currently active
-            @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "rpgui-button", style = "margin-left:310px;" })
+    if (startNewWorkout == false)
+    {
+        <div class="row" align="center">
+            <div class="col-sm-6">
+                @*Passes in the id of a users current workout*@
+                @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId }, new { @class = "rpgui-button" })
+            </div>
+            <div class="col-sm-6">
+                @*Allows user to abandon their workout if there is one currently active*@
+                @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "rpgui-button" })
+            </div>
+        </div>
     }
 
     @*
