@@ -691,6 +691,7 @@ namespace Powerlevel.Controllers
                 int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout && x.Description == "started").Select(x => x.EventId).FirstOrDefault();
                 RemoveUserWorkout(UserWorkout);
                 UpdateEvents(WorkoutEventId, true);
+                return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
 
             RemoveUserWorkout(UserWorkout);
@@ -720,6 +721,7 @@ namespace Powerlevel.Controllers
                 db.UserWorkouts.Remove(UserWorkout);
                 db.SaveChanges();
                 UpdateEvents(WorkoutEventId, true);
+                return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
 
             //deletes the specific workout in the db
@@ -834,6 +836,7 @@ namespace Powerlevel.Controllers
             //gets the WorkoutEvent that needs to be modified
             WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
 
+            
             //adjusts the event back to not done if abandoned
             if (abandon == true)
             {
@@ -874,12 +877,12 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent, bool finished, bool abandon)
         {
-            if (abandon == false && finished == false)
+            if (finished == false && abandon == false)
             {
                 //updates the workoutevent description to started so it can be set to green and completed later
                 CurrentEvent.Description = "started";
             }
-            else if (abandon == false && finished == true)
+            else if(finished == true && abandon == false)
             {
                 CurrentEvent.StatusColor = "green";
                 CurrentEvent.Description = "finished";
@@ -892,7 +895,21 @@ namespace Powerlevel.Controllers
             return CurrentEvent;
         }
 
+        /// <summary>
+        /// Used to adjust event description back to not started if going back from CreatePlanWO page
+        /// </summary>
+        public ActionResult AdjustEvent()
+        {//gets the workout event who's 'started' description needs to be set back to ''
+           WorkoutEvent EventToAdjust =(WorkoutEvent)db.WorkoutEvents.Where(adjustedEvent => adjustedEvent.Description == "started").Select(adjustedEvent => adjustedEvent);
 
+            //adjusts the event in changeEventStatus
+            EventToAdjust = ChangeEventStatus(EventToAdjust, false, true);
+
+            //save changes to the db
+            db.Entry(EventToAdjust).State = EntityState.Modified;
+            db.SaveChanges();
+            return null;
+        }
 
         /// <summary>
         /// Removes the userworkout record from db, should only be used if workout is abandoned

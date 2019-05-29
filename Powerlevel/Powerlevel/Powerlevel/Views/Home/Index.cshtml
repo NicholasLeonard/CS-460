@@ -11,9 +11,7 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        <p>
             @Html.ActionLink("Things to Know", "GettingStarted", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
-        </p>
     </div>
     <div class="col-md-8">
         <img src="~/Content/images/design_images/goblin_swordsman.png" style="float: right;" width="368" height="403" />
@@ -30,6 +28,6 @@ settings.Selectable = true;
 settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
 settings.AllDayDefault = true;
 settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
-settings.ClientSideEvents.EventClick = "function(event, element){ $.ajax('/UserWorkouts/UpdateEvents/' + event.id); console.log('clicked');}";
+settings.ClientSideEvents.EventClick = "EventClick";
 settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
 })

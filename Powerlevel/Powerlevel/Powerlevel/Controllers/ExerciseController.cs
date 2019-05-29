@@ -47,9 +47,6 @@ namespace Powerlevel.Controllers
             }
             //Get all subtables for the particular exercise's information
             Exercise exercise = db.Exercises.Find(id);
-            ViewBag.Images = repo.ExerciseImages.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
-            ViewBag.Flags = repo.ExerciseFlags.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
-            ViewBag.Equipment = repo.ExerciseEquipments.Where(x => x.ExerciseId == exercise.ExerciseId).ToList();
 
             if (exercise == null)
             {
