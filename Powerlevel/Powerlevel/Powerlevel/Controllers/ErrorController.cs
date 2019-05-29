@@ -23,5 +23,10 @@ namespace Powerlevel.Controllers
         {
             return View();
         }
+
+        public ActionResult Forbidden()
+        {
+            return View();
+        }
     }
 }

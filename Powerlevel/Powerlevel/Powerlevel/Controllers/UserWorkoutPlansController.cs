@@ -59,13 +59,21 @@ namespace Powerlevel.Controllers
         {
             if (ModelState.IsValid)
             {
-                userWorkoutPlan.MaxStage = repo.WorkoutPlanWorkouts.Where(x => x.PlanId == userWorkoutPlan.PlanId).Count();
-                db.UserWorkoutPlans.Add(userWorkoutPlan);
-                db.SaveChanges();
+                //Prevents the user from starting a second plan if they have an existing one
+                if (VerifyActivePlan() == false)
+                {
+                    userWorkoutPlan.MaxStage = repo.WorkoutPlanWorkouts.Where(x => x.PlanId == userWorkoutPlan.PlanId).Count();
+                    db.UserWorkoutPlans.Add(userWorkoutPlan);
+                    db.SaveChanges();
 
-                //calls a method to add all workouts in plan to workoutEvents table
-                AddWorkoutEvents(userWorkoutPlan.PlanId);
-                return RedirectToAction("Index");
+                    //calls a method to add all workouts in plan to workoutEvents table
+                    AddWorkoutEvents(userWorkoutPlan.PlanId);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View(userWorkoutPlan);
         }
@@ -78,7 +86,7 @@ namespace Powerlevel.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             UserWorkoutPlan ActiveUserPlan = db.UserWorkoutPlans.Find(id);
-            if (ActiveUserPlan  == null)
+            if (ActiveUserPlan == null)
             {
                 return HttpNotFound();
             }
@@ -120,7 +128,7 @@ namespace Powerlevel.Controllers
             var AllWorkouts = Workouts.WorkoutPlanWorkouts.Where(x => x.PlanId == planId).Select(x => new { x.Workout, x.DayOfPlan }).ToList();
 
             //adds each workout as a workout event to be added to the events table in db
-            foreach(var item in AllWorkouts)
+            foreach (var item in AllWorkouts)
             {
                 Events.Add(new WorkoutEvent
                 {
@@ -134,7 +142,7 @@ namespace Powerlevel.Controllers
             }
 
             //adds records to the db assuming that the events list is valid
-            if(Events != null)
+            if (Events != null)
             {
                 db.WorkoutEvents.AddRange(Events);
                 db.SaveChanges();
@@ -143,6 +151,26 @@ namespace Powerlevel.Controllers
             {
                 throw new InvalidOperationException();
             }
+        }
+
+        /// <summary>
+        /// Returns True if the logged in user has an active plan, else returns False
+        /// </summary>
+        /// <returns></returns>
+        public bool VerifyActivePlan()
+        {
+            //Assume there is no active plan
+            bool ActivePlan = false;
+
+            var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserName).ToList();
+            string userName = currentUser.First();
+            //Check db for active workouts of current user, if there is none then "ActiveWorkout" variable remains false
+            var existingPlanCheck = repo.UserWorkoutPlans.Where(x => x.UserName == userName).Select(x => x.PlanId).ToList().DefaultIfEmpty(0).First();
+            if (existingPlanCheck != 0)
+            {
+                ActivePlan = true;
+            }
+            return ActivePlan;
         }
 
         /// <summary>

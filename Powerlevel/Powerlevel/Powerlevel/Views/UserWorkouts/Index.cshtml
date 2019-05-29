@@ -61,8 +61,8 @@
     //Button to resume workout if startNewWorkout is false
         if (startNewWorkout == false)
         {
-            //Passes in the id of a users current workout and a false boolean value to the Progress function, since this is the workout button not attached to a plan
-            @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId, fromPlan = false }, new { @class = "rpgui-button", style = "margin-left:100px;" })
+            //Passes in the id of a users current workout
+            @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId}, new { @class = "rpgui-button", style = "margin-left:100px;" })
 
         //Allows user to abandon their workout if there is one currently active
             @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "rpgui-button", style = "margin-left:310px;" })

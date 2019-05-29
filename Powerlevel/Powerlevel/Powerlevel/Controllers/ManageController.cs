@@ -110,7 +110,7 @@ namespace Powerlevel.Controllers
             }
             if (ViewBag.userBMI >= 30)
             {
-                ViewBag.BMIdecs = "Obesity";
+                ViewBag.BMIdecs = "Obese";
             }
             //get the current logged-in user ID as an integer
             int userIdInt = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
@@ -140,7 +140,7 @@ namespace Powerlevel.Controllers
                 if (teamIdTemp != null)
                 {
                     //safety check, only add to list if not null
-                    ViewBag.teamMessage = "150% Exp Bonus activated!";
+                    ViewBag.teamMessage = "200% Bonus Exp activated!";
                     var memName = db.Users.Where(x => x.UserId == teamIdTemp).Select(y => y.UserName).FirstOrDefault();
                     teamMemNameList.Add(memName);
                 }

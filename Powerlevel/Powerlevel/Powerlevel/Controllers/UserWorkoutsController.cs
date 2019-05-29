@@ -381,7 +381,7 @@ namespace Powerlevel.Controllers
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
 
-                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid});
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid });
                 }
                 else
                 {
@@ -440,7 +440,7 @@ namespace Powerlevel.Controllers
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
 
-                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid});
+                    return RedirectToAction("ConfirmWorkout", routeValues: new { id = uwid });
                 }
                 else
                 {
@@ -460,6 +460,46 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public ActionResult ConfirmWorkout(int? id)
         {
+            //check if the user is teamed up, if true display viewbag message accordingly
+            var currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            var userInTeam = db.Teams.Where(x => x.UserId == currentUserId).FirstOrDefault();
+
+            if (userInTeam != null)//if it's not null  & return something, it means that they are teamed up
+            {
+                ViewBag.IsTeamedUp = 1;
+
+                //get all the team members in the team)
+                //get team members id
+                var teamMemIdList = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).ToList();
+
+                //get team members name
+                List<string> teamMemNameList = new List<string>();
+                for (int i = 0; i < teamMemIdList.Count(); i++)
+                {
+                    int? teamIdTemp = teamMemIdList[i]; //a temp buffer uses to do LINQ queries 
+                    if (teamIdTemp != null)
+                    {
+                        //safety check, only add to list if not null
+                        var memName = db.Users.Where(x => x.UserId == teamIdTemp).Select(y => y.UserName).FirstOrDefault();
+                        teamMemNameList.Add(memName);
+                    }
+                }
+                //get the total team member count, pass to view
+                ViewBag.teamMemberCount = teamMemIdList.Count();
+
+                //pass the team member name to view
+                ViewBag.teamMemberName = teamMemNameList;
+
+                //pass the team members Id to view
+                ViewBag.teamMemberId = teamMemIdList;
+
+                ViewBag.BonusExpMessageArrow = "->";
+                ViewBag.BonusExpMessage = "100 (200% Team EXP Bonus)!";
+            }
+
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -498,6 +538,15 @@ namespace Powerlevel.Controllers
 
             //gets the activeWorkout record for the user
             var UserWorkout = db.UserWorkouts.Find(id);
+
+            //This segment of code ensures the logged in user is on their own active workout; if they are on another user's active workout, they are denied access
+            int userId = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList().First();
+            var UsersCurrWorkout = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList().DefaultIfEmpty(0).First();
+            if (UsersCurrWorkout != id)
+            {
+                return RedirectToAction("Forbidden", "Error");
+            }
+
             //gets the active workout
             Workout InProgressWorkout = db.Workouts.Find(UserWorkout.UserActiveWorkout);
             //gets the stage of the active workout
@@ -715,14 +764,14 @@ namespace Powerlevel.Controllers
                 //Get all available gear
                 var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon");
                 bool foundGear = false;
-                foreach(Avatar item in allGear)
+                foreach (Avatar item in allGear)
                 {
                     //Check if we already have gear
-                    if(foundGear == false)
+                    if (foundGear == false)
                     {
                         //check if the user has the current item in their unlocks
                         bool any = userUnlocks.Any(x => x.AvaId == item.AvaId);
-                        if(any == false)
+                        if (any == false)
                         {
                             //Get our exit condtion filled
                             foundGear = true;
@@ -730,7 +779,7 @@ namespace Powerlevel.Controllers
                             ViewBag.GotGear = item.Name;
                             //Add all gear with that name and type to the players unlocks
                             var addlist = db.Avatars.Where(x => x.Name == item.Name).Where(x => x.Type == item.Type).ToList();
-                            foreach(Avatar add in addlist)
+                            foreach (Avatar add in addlist)
                             {
                                 AvatarUnlock adder = new AvatarUnlock();
                                 adder.UserId = userId;
@@ -748,8 +797,8 @@ namespace Powerlevel.Controllers
                     ViewBag.GotGear = "none";
                     AddExp(200);
                 }
-                
-                
+
+
             }
 
             //if the plan is completed, then it sets a viewbag item that will toggle buttons on in the view
@@ -775,7 +824,7 @@ namespace Powerlevel.Controllers
 
             
             //adjusts the event back to not done if abandoned
-            if(abandon == true)
+            if (abandon == true)
             {
                 //updates the workoutevent to default because it was abandoned and still needs to be done
                 CurrentEvent = ChangeEventStatus(CurrentEvent, false, true);
@@ -787,7 +836,7 @@ namespace Powerlevel.Controllers
                 //redirects to the plan page
                 return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
-            else if(CurrentEvent.Description == "started")
+            else if (CurrentEvent.Description == "started")
             {
                 //updates the workoutevent to fully completed
                 CurrentEvent = ChangeEventStatus(CurrentEvent, true, false);
@@ -864,7 +913,7 @@ namespace Powerlevel.Controllers
         /// <param name="UserWorkout"></param>
         public void FinishedWorkout(UserWorkout UserWorkout)
         {//if the workout is from a plan, it will update the corresponding workout event so the calendar is updated as well
-            if(UserWorkout.FromPlan == true)
+            if (UserWorkout.FromPlan == true)
             {/*joins the workoutevent and userworkout tables to get the userworkout and workoutevent that corresponds with this particular workout iteration and
                the correct day on the calendar so the status color and description can be updated to show its completion */
                 var CalendarEventWorkout = db.WorkoutEvents.Join(db.UserWorkouts,
@@ -877,6 +926,7 @@ namespace Powerlevel.Controllers
             }
             //updates the userworkout record to show workout completion
             UserWorkout.WorkoutCompleted = true;
+            UserWorkout.CompletedTime = DateTime.Now;
 
             //increase user exp by 50 on workout completion, right now exp reward is fixed at 50 per workout, might change it later
             AddExp(50);
@@ -902,7 +952,7 @@ namespace Powerlevel.Controllers
             db.UserWorkoutPlans.Remove(userPlan);
             db.SaveChanges();
 
-            
+
 
             //removes workout events for active plan once plan is complete so they are not displayed on the calendar
             RemoveWorkoutEvents();
