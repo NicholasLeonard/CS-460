@@ -45,5 +45,15 @@ INSERT INTO [dbo].[Avatar] (Name, Imagefile, Type, Race) VALUES
 ('none', 'none.PNG', 'Armor', 'elf'),
 ('none', 'none.PNG', 'Armor', 'orc'),
 ('none', 'none.PNG', 'Armor', 'dwarf'),
-('none', 'none.PNG', 'Armor', 'goblin')
+('none', 'none.PNG', 'Armor', 'goblin'),
+('redscarf', 'humanredscarf.PNG', 'Armor', 'human'),
+('redscarf', 'elfredscarf.PNG', 'Armor', 'elf'),
+('redscarf', 'orcredscarf.PNG', 'Armor', 'orc'),
+('redscarf', 'dwarfredscarf.PNG', 'Armor', 'dwarf'),
+('redscarf', 'goblinredscarf.PNG', 'Armor', 'goblin'),
+('ironvest', 'humanironvest.PNG', 'Armor', 'human'),
+('ironvest', 'elfironvest.PNG', 'Armor', 'elf'),
+('ironvest', 'orcironvest.PNG', 'Armor', 'orc'),
+('ironvest', 'dwarfironvest.PNG', 'Armor', 'dwarf'),
+('ironvest', 'goblinironvest.PNG', 'Armor', 'goblin')
 GO
