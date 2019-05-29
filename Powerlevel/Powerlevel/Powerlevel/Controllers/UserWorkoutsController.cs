@@ -761,7 +761,11 @@ namespace Powerlevel.Controllers
                 var userUnlocks = db.AvatarUnlocks.Where(x => x.UserId == userId);
                 //Get all available gear
                 var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon");
+                //bool that keeps track of if we find new gear to give to the user
                 bool foundGear = false;
+                //if we find new gear, store name and type
+                string newItemName = "none";
+                string newItemType = "none";
                 foreach (Avatar item in allGear)
                 {
                     //Check if we already have gear
@@ -769,24 +773,23 @@ namespace Powerlevel.Controllers
                     {
                         //check if the user has the current item in their unlocks
                         bool any = userUnlocks.Any(x => x.AvaId == item.AvaId);
+                        //We found new gear
                         if (any == false)
                         {
-                            //Get our exit condtion filled
+                            //Get our exit condition filled
                             foundGear = true;
                             //Get the name of the gear to display on the HTML later
                             ViewBag.GotGear = item.Name;
-                            //Add all gear with that name and type to the players unlocks
-                            var addlist = db.Avatars.Where(x => x.Name == item.Name).Where(x => x.Type == item.Type).ToList();
-                            foreach (Avatar add in addlist)
-                            {
-                                AvatarUnlock adder = new AvatarUnlock();
-                                adder.UserId = userId;
-                                adder.AvaId = add.AvaId;
-                                db.AvatarUnlocks.Add(adder);
-                                db.SaveChanges();
-                            }
+                            newItemName = item.Name;
+                            newItemType = item.Type;
+                            //NOTE:: I know this is bad practice but for now we need to see if this will work
+                            break;
                         }
                     }
+                }
+                if (foundGear == true)
+                { 
+                    addGearToUserUnlocks(userId, newItemName, newItemType);
                 }
                 //If user has all gear in the game atm
                 if (foundGear == false)
@@ -808,6 +811,20 @@ namespace Powerlevel.Controllers
             ViewBag.FitbitLinked = CurrentUserFitbitLinked;
 
             return View(UserWorkout);
+        }
+
+        public void addGearToUserUnlocks(int userId, string itemName, string itemType)
+        {
+            //Add all gear with that name and type to the players unlocks
+            var addlist = db.Avatars.Where(x => x.Name == itemName).Where(x => x.Type == itemType).ToList();
+            foreach (Avatar add in addlist)
+            {
+                AvatarUnlock adder = new AvatarUnlock();
+                adder.UserId = userId;
+                adder.AvaId = add.AvaId;
+                db.AvatarUnlocks.Add(adder);
+            }
+            db.SaveChanges();
         }
 
         /// <summary>
