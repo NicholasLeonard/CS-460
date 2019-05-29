@@ -143,14 +143,15 @@ GO
 /* Edit Log
 2/28/2019
 	-REFACTOR: Changed all Singular instances for table names to Plural
-
+5/20/2019
+	-REFACTOR: Added new fields
 */
 
 CREATE TABLE [dbo].[User]
 (
 	[UserId] INT IDENTITY(1,1), 
     [HeightFeet] INT            NULL,
-    [Weight] INT NULL,
+    [Weight] FLOAT NULL,
 	[DOB] DATETIME,
 	[Gender] NVARCHAR(10),
     [UserName] NVARCHAR(256) NOT NULL,
@@ -158,6 +159,9 @@ CREATE TABLE [dbo].[User]
     [Level] INT NOT NULL DEFAULT 1, 
     [BMI]        FLOAT            DEFAULT 0 NOT NULL,
     [HeightInch] INT            NULL,
+	[TotalWorkoutsCompleted] INT NOT NULL DEFAULT 0, 
+	[FitbitLinked] BIT NOT NULL DEFAULT (0),
+	[FirstTimeLogin] BIT NOT NULL DEFAULT (1),
 	CONSTRAINT [PK_dbo.User] PRIMARY KEY CLUSTERED ([UserId] ASC)
 );
 GO
@@ -223,7 +227,9 @@ CREATE TABLE [dbo].[UserWorkout]
 	[UserId] INT NOT NULL,
 	[UserActiveWorkout] INT NOT NULL,
 	[ActiveWorkoutStage] INT NOT NULL,
+	[FromPlan] BIT NOT NULL, /*Refactoring so that FromPlan is saved within the database, instead of URL based*/
 	[WorkoutCompleted] BIT NOT NULL, /* This is for checking Workout History, if a workout is marked completed, it will appear in the user's workout history view */
+	[StartTime] DATETIME NOT NULL,
 	[CompletedTime] DATETIME NULL
 	CONSTRAINT [PK_dbo.UserWorkout] PRIMARY KEY CLUSTERED ([UWId] ASC),
 	CONSTRAINT [FK_dbo.UserWorkout_User] FOREIGN KEY (UserId) REFERENCES [User](UserId) /* [User] referenced with brackets due to VS built-in "User" creating conflict */
@@ -251,7 +257,6 @@ CREATE TABLE [dbo].[UserWorkoutPlan]
 GO
 
 /*Table for workout calendar events for workout plan*/
-
 CREATE TABLE [dbo].[WorkoutEvent]
 (
 	[EventId] INT IDENTITY(1,1) NOT NULL, 
@@ -266,5 +271,17 @@ CREATE TABLE [dbo].[WorkoutEvent]
 	CONSTRAINT [PK_dbo.Event] PRIMARY KEY CLUSTERED ([EventId] ASC),
 	CONSTRAINT [FK_dbo.WorkoutEvent_User] FOREIGN KEY (UserId) REFERENCES [User](UserId),
 	CONSTRAINT [FK_dbo.WorkoutEvent_Workout] FOREIGN KEY (WorkoutId) REFERENCES Workout(WorkoutId)
+);
+GO
+
+/*Team Up Script */
+CREATE TABLE [dbo].[Team] (
+    [TeamId] INT IDENTITY(1,1) NOT NULL,
+    [UserId] INT NULL , 
+    [TeamMemId] INT NULL , 
+    CONSTRAINT [PK_dbo.Team] PRIMARY KEY CLUSTERED ([TeamId] ASC),
+	CONSTRAINT [FK_dbo.Team_User] FOREIGN KEY (UserId) REFERENCES [User](UserId)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 GO

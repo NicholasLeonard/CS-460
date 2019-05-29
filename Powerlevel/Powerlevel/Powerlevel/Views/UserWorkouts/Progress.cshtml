@@ -23,47 +23,45 @@
     <div id="percentBar" style="width:@percentString;"><p style="text-align:center">@percentString</p></div>
 </div>
 
-<table>
-    <tr>
-        <td>
-            <div style="margin:20px 0px 50px 0px;">
-                <!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
-                @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
+<br />
+<div class="row">
+    <div class="col-sm-6">
+        <!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
+        @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
+        {
+            @Html.AntiForgeryToken()
+            <!-- Prevents user from going back a workout if they are on the first stage -->
+            if (PrevNextCheck == 0)
+            {
+                <input type="submit" disabled="disabled" id="PrevWorkoutDis" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px" />
+            }
+            else
+            {
+                <input type="submit" id="PrevWorkout" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px;" />
+            }
+        }
+    </div>
+    <div class="col-sm-6">
+        <div align="right">
+            <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
+            @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
+            {
+                @Html.AntiForgeryToken()
+                <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
+                what is displayed for the name of the textbox -->
+                if (PrevNextCheck + 1 == LastStage)
                 {
-                    @Html.AntiForgeryToken()
-                    <!-- Prevents user from going back a workout if they are on the first stage -->
-                    if (PrevNextCheck == 0)
-                    {
-                        <input type="submit" disabled="disabled" id="PrevWorkoutDis" title="PrevWorkoutDis" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px" />
-                    }
-                    else
-                    {
-                        <input type="submit" title="PrevWorkout" id="PrevWorkout" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px;" />
-                    }
+                    <input type="submit" id="CompletedWorkout" value="Complete Workout" style="color:black; border-color:black; padding: 12px 28px" />
                 }
-            </div>
-        </td>
-        <td>
-            <div style="margin:20px 0px 50px 608px;">
-                <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
-                @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
+                else
                 {
-                    @Html.AntiForgeryToken()
-                    <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
-                    what is displayed for the name of the textbox -->
-                    if (PrevNextCheck + 1 == LastStage)
-                    {
-                        <input type="submit" title="CompleteWorkout" id="CompletedWorkout" value="Complete Workout" style="color:black; border-color:black; padding: 12px 28px" />
-                    }
-                    else
-                    {
-                        <input type="submit" title="NextWorkout" id="NextWorkout" value="Next Stage" style="color:black; border-color:black; padding: 12px 62px" />
-                    }
+                    <input type="submit" id="NextWorkout" value="Next Stage" style="color:black; border-color:black; padding: 12px 62px" />
                 }
-            </div>
-        </td>
-    </tr>
-</table>
+            }
+        </div>
+    </div>
+</div>
+<br />
 
 <!-- Exercise information pulled from VM -->
 <h2>Current Exercise: <b>@Html.ActionLink(Model.CurrentExercise.Name, "Details", "Exercise", new { id = Model.CurrentExercise.ExerciseId }, new { @class = "LinkColor" })</b></h2>
@@ -117,6 +115,6 @@
 <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
 <hr />
 <br />
-@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId }, new { @class="btn btn-danger"})
+@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId }, new { @class = "btn btn-danger" })
 
 @Scripts.Render("~/Scripts/workoutRewards.js")

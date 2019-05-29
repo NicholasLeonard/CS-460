@@ -28,13 +28,33 @@ textarea {
 /*userInfos_navbar design*/
 #userInfos_navbar {
     /*border-radius: 25px;*/
-    color: deepskyblue;
+    color: #70FFFF; /*deepskyblue;*/
     /*border: 1.5px solid #ffffff;*/
-    padding: 15px;
+    /*padding: 15px;*/
+}
+
+/*userInfos_xp design --practically identical to userInfos_navbar*/
+#userInfos_xp{
+    color: #70FFFF;
+}
+
+/*changes the color of the navbar links*/
+#navbar-link {
+    color: white;
+}
+
+/*Changes the color of the register link*/
+#registerLink{
+    color: white;
+}
+
+/*Changes the color of the login link*/
+#loginLink{
+    color: white;
 }
 
 /*Synchronizes colors on sortable dataTables with the rest of the site color scheme*/
-table.dataTable tbody tr{
+table.dataTable tbody tr {
     background: none !important;
 }
 

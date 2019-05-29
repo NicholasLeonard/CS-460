@@ -972,3 +972,13 @@ ul.rpgui-list-imp {
   left: 40px;
   background-image: url("img/slider-thumb-golden.png");
   background-size: 100% 100%; }
+
+#portraitBox {
+    position: relative;
+    width: 120px;
+    height: 170px;
+    margin: 10px;
+    float: left;
+    min-width: 200px;
+    max-width: 200px
+}

@@ -7,9 +7,9 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { @class="nav-link", title = "Manage" })
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { @class="nav-link", title = "Manage", id = "navbar-link" })
         </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log off</a></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link" id="navbar-link">Log off</a></li>
     </ul>
     }
 }

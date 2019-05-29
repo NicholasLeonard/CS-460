@@ -11,3 +11,15 @@
     });
 
 });
+
+//used to update the calendar workout event based on the events url state so that it only adjusts
+//it in the db if there is not a currently active workout.
+function EventClick(event) {
+        if (event.url != "") {
+            console.log(event.description);
+            $.ajax("/UserWorkouts/UpdateEvents/" + event.id);
+        }
+        else {
+            console.log("Clicked");
+        }
+}

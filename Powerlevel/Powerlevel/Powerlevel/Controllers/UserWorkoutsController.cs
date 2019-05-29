@@ -460,6 +460,46 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public ActionResult ConfirmWorkout(int? id)
         {
+            //check if the user is teamed up, if true display viewbag message accordingly
+            var currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            var userInTeam = db.Teams.Where(x => x.UserId == currentUserId).FirstOrDefault();
+
+            if (userInTeam != null)//if it's not null  & return something, it means that they are teamed up
+            {
+                ViewBag.IsTeamedUp = 1;
+
+                //get all the team members in the team)
+                //get team members id
+                var teamMemIdList = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).ToList();
+
+                //get team members name
+                List<string> teamMemNameList = new List<string>();
+                for (int i = 0; i < teamMemIdList.Count(); i++)
+                {
+                    int? teamIdTemp = teamMemIdList[i]; //a temp buffer uses to do LINQ queries 
+                    if (teamIdTemp != null)
+                    {
+                        //safety check, only add to list if not null
+                        var memName = db.Users.Where(x => x.UserId == teamIdTemp).Select(y => y.UserName).FirstOrDefault();
+                        teamMemNameList.Add(memName);
+                    }
+                }
+                //get the total team member count, pass to view
+                ViewBag.teamMemberCount = teamMemIdList.Count();
+
+                //pass the team member name to view
+                ViewBag.teamMemberName = teamMemNameList;
+
+                //pass the team members Id to view
+                ViewBag.teamMemberId = teamMemIdList;
+
+                ViewBag.BonusExpMessageArrow = "->";
+                ViewBag.BonusExpMessage = "100 (200% Team EXP Bonus)!";
+            }
+
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -651,6 +691,7 @@ namespace Powerlevel.Controllers
                 int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout && x.Description == "started").Select(x => x.EventId).FirstOrDefault();
                 RemoveUserWorkout(UserWorkout);
                 UpdateEvents(WorkoutEventId, true);
+                return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
 
             RemoveUserWorkout(UserWorkout);
@@ -680,6 +721,7 @@ namespace Powerlevel.Controllers
                 db.UserWorkouts.Remove(UserWorkout);
                 db.SaveChanges();
                 UpdateEvents(WorkoutEventId, true);
+                return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
 
             //deletes the specific workout in the db
@@ -721,32 +763,32 @@ namespace Powerlevel.Controllers
                 var userUnlocks = db.AvatarUnlocks.Where(x => x.UserId == userId);
                 //Get all available gear
                 var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon");
+                //bool that keeps track of if we find new gear to give to the user
                 bool foundGear = false;
+                //if we find new gear, store name and type
+                string newItemName = "none";
+                string newItemType = "none";
                 foreach (Avatar item in allGear)
                 {
-                    //Check if we already have gear
-                    if (foundGear == false)
+                    //check if the user has the current item in their unlocks
+                    bool any = userUnlocks.Where(x => x.AvaId == item.AvaId).Any();
+                    //We found new gear
+                    if (any == false)
                     {
-                        //check if the user has the current item in their unlocks
-                        bool any = userUnlocks.Any(x => x.AvaId == item.AvaId);
-                        if (any == false)
-                        {
-                            //Get our exit condtion filled
-                            foundGear = true;
-                            //Get the name of the gear to display on the HTML later
-                            ViewBag.GotGear = item.Name;
-                            //Add all gear with that name and type to the players unlocks
-                            var addlist = db.Avatars.Where(x => x.Name == item.Name).Where(x => x.Type == item.Type).ToList();
-                            foreach (Avatar add in addlist)
-                            {
-                                AvatarUnlock adder = new AvatarUnlock();
-                                adder.UserId = userId;
-                                adder.AvaId = add.AvaId;
-                                db.AvatarUnlocks.Add(adder);
-                                db.SaveChanges();
-                            }
-                        }
+                        //Get our exit condition filled
+                        foundGear = true;
+                        //Get the name of the gear to display on the HTML later
+                        ViewBag.GotGear = item.Name;
+                        newItemName = item.Name;
+                        newItemType = item.Type;
+                        //NOTE:: I know this is bad practice but for now we need to see if this will work
+                        break;
                     }
+                }
+                //Add new gear to the user if we can
+                if (foundGear == true)
+                { 
+                    addGearToUserUnlocks(userId, newItemName, newItemType);
                 }
                 //If user has all gear in the game atm
                 if (foundGear == false)
@@ -770,6 +812,20 @@ namespace Powerlevel.Controllers
             return View(UserWorkout);
         }
 
+        public void addGearToUserUnlocks(int userId, string itemName, string itemType)
+        {
+            //Add all gear with that name and type to the players unlocks
+            var addlist = db.Avatars.Where(x => x.Name == itemName).Where(x => x.Type == itemType).ToList();
+            foreach (Avatar add in addlist)
+            {
+                AvatarUnlock adder = new AvatarUnlock();
+                adder.UserId = userId;
+                adder.AvaId = add.AvaId;
+                db.AvatarUnlocks.Add(adder);
+            }
+            db.SaveChanges();
+        }
+
         /// <summary>
         /// Used to update information about the workout events and make it persistent
         /// </summary>
@@ -780,6 +836,7 @@ namespace Powerlevel.Controllers
             //gets the WorkoutEvent that needs to be modified
             WorkoutEvent CurrentEvent = db.WorkoutEvents.Find(id);
 
+            
             //adjusts the event back to not done if abandoned
             if (abandon == true)
             {
@@ -820,12 +877,12 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public WorkoutEvent ChangeEventStatus(WorkoutEvent CurrentEvent, bool finished, bool abandon)
         {
-            if (abandon == false && finished == false)
+            if (finished == false && abandon == false)
             {
                 //updates the workoutevent description to started so it can be set to green and completed later
                 CurrentEvent.Description = "started";
             }
-            else if (abandon == false && finished == true)
+            else if(finished == true && abandon == false)
             {
                 CurrentEvent.StatusColor = "green";
                 CurrentEvent.Description = "finished";
@@ -838,7 +895,21 @@ namespace Powerlevel.Controllers
             return CurrentEvent;
         }
 
+        /// <summary>
+        /// Used to adjust event description back to not started if going back from CreatePlanWO page
+        /// </summary>
+        public ActionResult AdjustEvent()
+        {//gets the workout event who's 'started' description needs to be set back to ''
+           WorkoutEvent EventToAdjust =(WorkoutEvent)db.WorkoutEvents.Where(adjustedEvent => adjustedEvent.Description == "started").Select(adjustedEvent => adjustedEvent);
 
+            //adjusts the event in changeEventStatus
+            EventToAdjust = ChangeEventStatus(EventToAdjust, false, true);
+
+            //save changes to the db
+            db.Entry(EventToAdjust).State = EntityState.Modified;
+            db.SaveChanges();
+            return null;
+        }
 
         /// <summary>
         /// Removes the userworkout record from db, should only be used if workout is abandoned

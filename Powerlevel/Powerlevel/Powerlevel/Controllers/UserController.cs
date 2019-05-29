@@ -57,6 +57,30 @@ namespace Powerlevel.Controllers
                     return View();
                 }
 
+                if (currentUserMetrics.HeightFeet <= 0)
+                {
+                    ModelState.AddModelError("", "Invalid Feet.");
+                    return View();
+                }
+
+                if (currentUserMetrics.HeightInch < 0)
+                {
+                    ModelState.AddModelError("", "Invalid Inches.");
+                    return View();
+                }
+
+                if (currentUserMetrics.Weight <= 0)
+                {
+                    ModelState.AddModelError("", "Invalid weight.");
+                    return View();
+                }
+
+                if (currentUserMetrics.Weight == null || currentUserMetrics.HeightFeet == null|| currentUserMetrics.HeightInch == null)
+                {
+                    ModelState.AddModelError("", "Please fill out all the fields.");
+                    return View();
+                }
+
                 //gets the entry from the db
                 User metrics = db.Users.Find(currentUserMetrics.UserId);
                 //updates the values in the entry
@@ -182,17 +206,27 @@ namespace Powerlevel.Controllers
             var currentUserInTeam = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).FirstOrDefault();
 
             //check if the current user is already team'd up with the same peer
-            var peerUserInTeam = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).FirstOrDefault();
-
+            var peerUserInTeam = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).ToList();
+             
 
             //check if the other user is in the same team
-            if (currentUserInTeam == null && id != currentUserId) //if null, user is not team'd up with currentUser
+            if (id != currentUserId) //if null, user is not team'd up with currentUser
             {
                 //pass the other user id into viewbag for view
                 ViewBag.TeamURL = "/user/joinTeam/" + id;
                 ViewBag.TeamupMessage = ">>TEAM UP<<";
             }
-            if (currentUserInTeam != null && id != currentUserId)
+
+            int isInTeam = 0;
+            //check the list and see if the peer is in the team with the leader
+            for (int i = 0; i < peerUserInTeam.Count(); i++)
+            {
+                if (peerUserInTeam[i] == id)
+                {
+                    isInTeam = 1;
+                }
+            }
+            if (currentUserInTeam != null && id != currentUserId && isInTeam == 1)
             {
                 ViewBag.TeamURL = "/user/leaveTeam/" + id;
                 ViewBag.TeamupMessage = ">>LEAVE TEAM<<";
@@ -205,7 +239,7 @@ namespace Powerlevel.Controllers
             if (currentUserInTeam == null && id == currentUserId)
             {
                 ViewBag.TeamURL = "";
-                ViewBag.TeamupMessage = "No one to team up with.";
+                ViewBag.TeamupMessage = "You can't team up with yourself.";
             }
             return View();
         }
