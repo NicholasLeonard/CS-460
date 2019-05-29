@@ -13,7 +13,7 @@
 
         @foreach (var item in Model)
         {
-        <div class="rpgui-container framed-golden col" style="position:relative; width:120px; height:150px; margin:10px; float left">
+        <div class="rpgui-container framed-golden col" style="position:relative; width:120px; height:150px; margin:10px; float:left; min-width:170px; max-width:170px">
             @Html.RadioButton("selected_avatar", item.Imagefile)
             <img src="~/Content/images/avatars/@item.Imagefile.ToString()" , alt="avatar image" , style="margin:auto" />
         </div>

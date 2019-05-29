@@ -768,25 +768,22 @@ namespace Powerlevel.Controllers
                 string newItemType = "none";
                 foreach (Avatar item in allGear)
                 {
-                    //Check if we already have gear
-                    if (foundGear == false)
+                    //check if the user has the current item in their unlocks
+                    bool any = userUnlocks.Where(x => x.AvaId == item.AvaId).Any();
+                    //We found new gear
+                    if (any == false)
                     {
-                        //check if the user has the current item in their unlocks
-                        bool any = userUnlocks.Any(x => x.AvaId == item.AvaId);
-                        //We found new gear
-                        if (any == false)
-                        {
-                            //Get our exit condition filled
-                            foundGear = true;
-                            //Get the name of the gear to display on the HTML later
-                            ViewBag.GotGear = item.Name;
-                            newItemName = item.Name;
-                            newItemType = item.Type;
-                            //NOTE:: I know this is bad practice but for now we need to see if this will work
-                            break;
-                        }
+                        //Get our exit condition filled
+                        foundGear = true;
+                        //Get the name of the gear to display on the HTML later
+                        ViewBag.GotGear = item.Name;
+                        newItemName = item.Name;
+                        newItemType = item.Type;
+                        //NOTE:: I know this is bad practice but for now we need to see if this will work
+                        break;
                     }
                 }
+                //Add new gear to the user if we can
                 if (foundGear == true)
                 { 
                     addGearToUserUnlocks(userId, newItemName, newItemType);
