@@ -59,12 +59,15 @@
                 <h4>
                     @* <b>Current Plan Id:</b> @Html.DisplayFor(modelItem => item.)*@
                 </h4>
-                @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId }, new { @class = "btn btn-danger" })
                 <br />
                 if (ViewBag.WorkoutInProgress == true)
                 {
                     <br />
                     <h2 style="color:orange">It looks like you have an Active Workout! You must @Html.ActionLink("finish or abandon", "Index", "UserWorkouts") it before continuing with the plan!</h2>
+                }
+                else
+                {
+                    @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId }, new { @class = "btn btn-danger" })
                 }
                 <br />
             }
@@ -81,7 +84,7 @@
        settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
        settings.AllDayDefault = true;
        settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
-       settings.ClientSideEvents.EventClick = "function(event, element){ $.ajax('/Userworkouts/UpdateEvents/' + event.id); console.log('clicked');}";
+       settings.ClientSideEvents.EventClick = "EventClick";//defined in ToasterScript.js
        settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
    })
     }

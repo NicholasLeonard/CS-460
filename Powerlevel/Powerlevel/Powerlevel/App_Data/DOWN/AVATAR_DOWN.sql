@@ -6,7 +6,7 @@ GO
 /*Drop Foreign keys*/
 ALTER TABLE [dbo].[AvatarUnlock] DROP CONSTRAINT [FK_dbo.AvatarUnlock_User]
 GO
-ALTER TABLE [dbo].[AvatarUnlock] DROP CONSTRAINT [AvatarUnlock_Avatar]
+ALTER TABLE [dbo].[AvatarUnlock] DROP CONSTRAINT [FK_dbo.AvatarUnlock_Avatar]
 GO
 
 /* Drop Table */
