@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Powerlevel.Models.Avatar>
 @using Powerlevel.Models
 <h2>Set Avatar</h2>
+<h4>Note that changing your avatar will unequip your current gear</h4>
 
 <!--I will need to start by setting up the logic for checking if the user is even logged in-->
 @if (Request.IsAuthenticated)
