@@ -23,8 +23,22 @@
 <div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
 
 <!--Chi's XP Code-->
-<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span> @ViewBag.BonusExpMessageArrow <span style="color:gold">@ViewBag.BonusExpMessage</span>
+<br />
+<br />
+
+
+@if (@ViewBag.IsTeamedUp == 1)
+{
+    <span>Your team member(s): </span> @*display team member name and link to their profile*@
+    for(int i = 0; i < ViewBag.teamMemberCount; i++)
+    {
+        <a href="~/user/Profiles/@ViewBag.teamMemberId[i]"> @ViewBag.teamMemberName[i]</a><span>,</span>
+    } 
+    <span>would also receive <span style="color:gold">25</span> EXP point <span style="color:greenyellow">(50% Bonus EXP)!</span></span>
+}
 <hr />
+
 
 @Scripts.Render("~/Scripts/workoutRewards.js")
 
@@ -36,7 +50,7 @@
         {
             @Html.AntiForgeryToken()
             <center>
-            <input type="submit" style="background-color:#6EFF69; border-color:black; color:black; padding: 12px 40px;" value="Begin Workout" />
+                <input type="submit" style="background-color:#6EFF69; border-color:black; color:black; padding: 12px 40px;" value="Begin Workout" />
             </center>
         }
     </div>
@@ -45,7 +59,7 @@
         {
             @Html.AntiForgeryToken()
             <center>
-            <input type="submit" style="background-color:#FF7869; border-color:black; color:black; padding: 12px 40px;" value="Cancel Workout" />
+                <input type="submit" style="background-color:#FF7869; border-color:black; color:black; padding: 12px 40px;" value="Cancel Workout" />
             </center>
         }
     </div>

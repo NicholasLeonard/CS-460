@@ -460,6 +460,46 @@ namespace Powerlevel.Controllers
         /// <returns></returns>
         public ActionResult ConfirmWorkout(int? id)
         {
+            //check if the user is teamed up, if true display viewbag message accordingly
+            var currentUserId = db.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
+
+            var userInTeam = db.Teams.Where(x => x.UserId == currentUserId).FirstOrDefault();
+
+            if (userInTeam != null)//if it's not null  & return something, it means that they are teamed up
+            {
+                ViewBag.IsTeamedUp = 1;
+
+                //get all the team members in the team)
+                //get team members id
+                var teamMemIdList = db.Teams.Where(x => x.UserId == currentUserId).Select(y => y.TeamMemId).ToList();
+
+                //get team members name
+                List<string> teamMemNameList = new List<string>();
+                for (int i = 0; i < teamMemIdList.Count(); i++)
+                {
+                    int? teamIdTemp = teamMemIdList[i]; //a temp buffer uses to do LINQ queries 
+                    if (teamIdTemp != null)
+                    {
+                        //safety check, only add to list if not null
+                        var memName = db.Users.Where(x => x.UserId == teamIdTemp).Select(y => y.UserName).FirstOrDefault();
+                        teamMemNameList.Add(memName);
+                    }
+                }
+                //get the total team member count, pass to view
+                ViewBag.teamMemberCount = teamMemIdList.Count();
+
+                //pass the team member name to view
+                ViewBag.teamMemberName = teamMemNameList;
+
+                //pass the team members Id to view
+                ViewBag.teamMemberId = teamMemIdList;
+
+                ViewBag.BonusExpMessageArrow = "->";
+                ViewBag.BonusExpMessage = "100 (200% Team EXP Bonus)!";
+            }
+
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
