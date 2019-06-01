@@ -760,9 +760,9 @@ namespace Powerlevel.Controllers
                 //get the current logged-in user Id
                 int userId = repo.Users.Where(x => x.UserName == User.Identity.Name).Select(y => y.UserId).FirstOrDefault();
                 //Get the current users avatar unlocks
-                var userUnlocks = db.AvatarUnlocks.Where(x => x.UserId == userId);
+                var userUnlocks = db.AvatarUnlocks.Where(x => x.UserId == userId).ToList();
                 //Get all available gear
-                var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon");
+                var allGear = db.Avatars.Where(x => x.Type == "Armor" || x.Type == "Weapon").ToList();
                 //bool that keeps track of if we find new gear to give to the user
                 bool foundGear = false;
                 //if we find new gear, store name and type
