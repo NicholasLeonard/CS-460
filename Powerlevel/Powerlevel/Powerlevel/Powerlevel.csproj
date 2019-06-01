@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.213\build\SpecFlow.Tools.MsBuild.Generation.props" Condition="Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.213\build\SpecFlow.Tools.MsBuild.Generation.props')" />
+  <!--<Import Project="..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.213\build\SpecFlow.Tools.MsBuild.Generation.props" Condition="Exists('..\packages\SpecFlow.Tools.MsBuild.Generation.3.0.213\build\SpecFlow.Tools.MsBuild.Generation.props')" />
   <Import Project="..\packages\SpecRun.SpecFlow.3-0-0.3.0.337\build\SpecRun.SpecFlow.3-0-0.props" Condition="Exists('..\packages\SpecRun.SpecFlow.3-0-0.3.0.337\build\SpecRun.SpecFlow.3-0-0.props')" />
-  <Import Project="..\packages\SpecRun.Runner.3.0.337\build\SpecRun.Runner.props" Condition="Exists('..\packages\SpecRun.Runner.3.0.337\build\SpecRun.Runner.props')" />
+  <Import Project="..\packages\SpecRun.Runner.3.0.337\build\SpecRun.Runner.props" Condition="Exists('..\packages\SpecRun.Runner.3.0.337\build\SpecRun.Runner.props')" /> -->
   <Import Project="..\packages\Microsoft.NET.Test.Sdk.15.0.0\build\net45\Microsoft.Net.Test.Sdk.props" Condition="Exists('..\packages\Microsoft.NET.Test.Sdk.15.0.0\build\net45\Microsoft.Net.Test.Sdk.props')" />
   <Import Project="..\packages\NUnit3TestAdapter.3.13.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.13.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
@@ -174,9 +174,9 @@
     <Reference Include="SendGridMail, Version=6.3.4.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
       <HintPath>..\packages\Sendgrid.6.3.4\lib\SendGridMail.dll</HintPath>
     </Reference>
-    <Reference Include="SpecRun.Runtime.SpecFlowPlugin, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <!--<Reference Include="SpecRun.Runtime.SpecFlowPlugin, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecRun.SpecFlow.3-0-0.3.0.337\lib\net45\SpecRun.Runtime.SpecFlowPlugin.dll</HintPath>
-    </Reference>
+    </Reference> -->
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
