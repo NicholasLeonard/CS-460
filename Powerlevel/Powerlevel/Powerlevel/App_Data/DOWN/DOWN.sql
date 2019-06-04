@@ -74,6 +74,19 @@ GO
 DROP TABLE IF EXISTS [dbo].[Avatar]
 GO
 
+/*Down scripts for Team table*/
+/*Drop Primary key*/
+ALTER TABLE [dbo].[Team] DROP CONSTRAINT [PK_dbo.Team]
+GO
+
+/*Drop Foreign key*/
+ALTER TABLE [dbo].[Team] DROP CONSTRAINT [FK_dbo.Team_User]
+GO
+
+/*Drop Table*/
+DROP TABLE IF EXISTS [dbo].[Team] 
+GO
+
 /*Down script for our User table*/
 /*DROP PKs*/
 ALTER TABLE [dbo].[User] DROP CONSTRAINT [PK_dbo.User]
@@ -168,4 +181,18 @@ GO
 ALTER TABLE  [dbo].[Exercise]             DROP CONSTRAINT [PK_dbo.Exercise]
 GO
 DROP TABLE IF EXISTS [dbo].[Exercise] 	
+GO
+
+/* Drop ASP User Tables*/
+DROP TABLE If EXISTS [dbo].[AspNetUserClaims]
+GO
+DROP TABLE IF EXISTS [dbo].[AspNetUserLogins]
+GO
+DROP TABLE IF EXISTS [dbo].[AspNetUserRoles]
+GO
+DROP TABLE IF EXISTS [dbo].[AspNetUsers]
+GO
+DROP TABLE IF EXISTS [dbo].[AspNetRoles]
+GO
+DROP TABLE IF EXISTS [dbo].[__MigrationHistory]
 GO

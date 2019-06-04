@@ -18,13 +18,15 @@ With this project, we aim to provide an RPG element to user's normal workout rou
 
 ## Current State
 
-We haven't started building yet. You eager adventurers will just have to wait until the monsters come.
+Five Sprints in. Basic working fashion.
 
 ## How to access
 
 This is not something you have to build it is a website hosted on Microsoft Azure. Just follow the URL below and you are on your way to sleighing monsters and getting into shape.
 
-*URL Coming Soon*
+https://powerlevel.azurewebsites.net
+
+If the site is no longer deployed, follow this link to download and host the website locally.
 
 ## Designers and Inceptors
 
