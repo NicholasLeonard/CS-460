@@ -25,7 +25,7 @@ namespace SpecflowTesting.StepBindings
         {
             driver.Navigate().GoToUrl("https://powerlevel.azurewebsites.net/Account/Login");
             Assert.IsTrue(driver.Url.ToLower().Contains("account"));
-            this.userKey = "jacetest";
+            this.userKey = "jace";
             this.passKey = "Jace1!";
             var searchUserBox = driver.FindElementById("Username");
             var searchKeyBox = driver.FindElementById("Password");
@@ -36,7 +36,7 @@ namespace SpecflowTesting.StepBindings
             driver.Navigate().GoToUrl("https://powerlevel.azurewebsites.net/UserWorkouts");
 
             //Makes sure jacetest does not have an existing workout leading into this test so that it will always pass
-            if(driver.FindElementByXPath("/html/body/div/div/a[2]").Text == "Abandon Workout")
+            if(driver.FindElementByXPath("/html/body/div/div/div/div[2]").Text == "Abandon Workout")
             {
                 ThenIAbandonTheSingleWorkout();
             }
@@ -87,7 +87,7 @@ namespace SpecflowTesting.StepBindings
         [Then(@"I abandon the single workout")]
         public void ThenIAbandonTheSingleWorkout()
         {
-            var abandonButton = driver.FindElementByXPath("/html/body/div/div/a[2]");
+            var abandonButton = driver.FindElementByXPath("/html/body/div/div/div/div[2]");
             abandonButton.Click();
             Assert.IsTrue(driver.Url.ToLower().Contains("abandon"));
             var confirmAbandon = driver.FindElementByXPath("/html/body/div/div/div/form/div/input");

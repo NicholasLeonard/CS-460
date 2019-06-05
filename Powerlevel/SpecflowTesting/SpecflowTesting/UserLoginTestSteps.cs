@@ -30,7 +30,7 @@ namespace SpecflowTesting.StepBindings
         [Given(@"I have entered my username and password credentials")]
         public void GivenIHaveEnteredMyUsernameAndPasswordCredentials()
         {
-            this.userKey = "jacetest";
+            this.userKey = "jace";
             this.passKey = "Jace1!";
             var searchUserBox = driver.FindElementById("Username");
             var searchKeyBox = driver.FindElementById("Password");
@@ -51,7 +51,8 @@ namespace SpecflowTesting.StepBindings
         public void ThenIShouldNavigateToThePowerlevelHomepage()
         {
             System.Threading.Thread.Sleep(2000);
-            Assert.IsTrue(driver.Title.ToLower().Contains("powerlevel"));
+            //Ensures you are now on the homepage by verifying text that can only be found there is reachable
+            Assert.IsTrue(driver.FindElementByXPath("/html/body/div/div/div[2]/div[1]/a").Text == "Things to Know");
         }
 
         public void Dispose()
