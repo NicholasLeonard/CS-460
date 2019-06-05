@@ -18,6 +18,12 @@ namespace Powerlevel
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "CatchStuff",
+                url: "{*url}",
+                defaults: new { controller = "Error", action = "NotFound" }
+                );
         }
     }
 }

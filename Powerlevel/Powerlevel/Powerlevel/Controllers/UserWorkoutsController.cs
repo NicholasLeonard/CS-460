@@ -533,7 +533,7 @@ namespace Powerlevel.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Forbidden", "Error");
             }
 
             //gets the activeWorkout record for the user

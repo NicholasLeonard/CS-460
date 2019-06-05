@@ -11,11 +11,17 @@ namespace Powerlevel.Controllers
         // GET: Error
         public ActionResult NotFound()
         {
+            HttpContext.Response.StatusCode = 404;
+            HttpContext.Response.TrySkipIisCustomErrors = true;
+
             return View();
         }
 
         public ActionResult BadRequest()
         {
+            HttpContext.Response.StatusCode = 400;
+            HttpContext.Response.TrySkipIisCustomErrors = true;
+
             return View();
         }
 
