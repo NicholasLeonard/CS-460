@@ -26,7 +26,38 @@ This is not something you have to build it is a website hosted on Microsoft Azur
 
 https://powerlevel.azurewebsites.net
 
-If the site is no longer deployed, follow this link to download and host the website locally.
+If the site is no longer deployed, follow [this](https://bitbucket.org/Hexamoy/toastercode/src/master/) link to download the source files and run it locally.
+
+#### Setup
+
+1. Download site to a local repository.
+
+2. Make sure there is a packages folder in every directory that contains a `.sln` file and place it at the same level as the file.
+
+3. Open the `.sln` file in visual studios and build the project. When prompted to restore missing nuget packages, make sure to do so.
+
+4. Right click on the App_Data folder and click add new item. Select SQL Server Database and name it `toaster.mdf`. This should make a `.mdf` file, which works as a local database.
+
+5. Double click on the new database file so that the project recognizes it and opens the server explorer window.
+
+6. While still in the App_Data folder, open the subfolder labeled Up and double click on the `UP.sql` to open the file.
+
+7. Once the `UP.sql` file is open, click on the connect button near the top of the editor beneath the file tabs and three over to the left of the little search box. Once the connect window opens, select local, MSSQLLocalDB (if this option doesn't appear, you need to install database workload for visual studio). In the botom tab where it says `<default>`, select the path to the local `.mdf` file you created. Then hit connect.
+
+8. Once the `UP.sql` file is connected to your local database, click on the execute button (green, right facing triangle) to populate your database.
+
+9. Outside of your repository, create a file called `Web.SECRETS.config` and add the following to the file. (you'll have to get the values from us)
+
+```csharp
+<appSettings>
+    <add key="FitbitClientId" value="" />
+    <add key="FitbitClientSecret" value="" />
+    <add key="mailAccount" value="" />
+    <add key="mailPassword" value="" />
+</appSettings>
+```
+
+10. Once the database file has been populated with Powerlevel's data and the secrets file has been created, you are ready to run the website. Hit `ctrl + F5` to build and run the website.
 
 ## Designers and Inceptors
 
