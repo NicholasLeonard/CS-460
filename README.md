@@ -57,7 +57,7 @@ If the site is no longer deployed, follow [this](https://bitbucket.org/Hexamoy/t
 </appSettings>
 ```
 
-10. Once the database file has been populated with Powerlevel's data and the secrets file has been created, you are ready to run the website. Hit `ctrl + F5` to build and run the website.
+Once the database file has been populated with Powerlevel's data and the secrets file has been created, you are ready to run the website. Hit `ctrl + F5` to build and run the website.
 
 ## Designers and Inceptors
 
