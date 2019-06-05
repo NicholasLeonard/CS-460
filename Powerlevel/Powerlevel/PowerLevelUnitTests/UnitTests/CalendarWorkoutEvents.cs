@@ -15,9 +15,9 @@ namespace PowerLevelUnitTests.UnitTests
     {
         private WorkoutEvent[] events = new WorkoutEvent[]
         {
-            new WorkoutEvent { Title = "Test event 1", Start = DateTime.Parse("04/10/19"), User = new User { UserId = 2, UserName = "tester", DOB = DateTime.Parse("04/25/2000"), Level = 0 }, UserId = 2, WorkoutId = 1 },
-            new WorkoutEvent { Title = "Test event 2", Start = DateTime.Parse("04/12/19"), User = new User { UserId = 2, UserName = "tester", DOB = DateTime.Parse("04/25/2000"), Level = 0 }, UserId = 2, WorkoutId = 1 },
-            new WorkoutEvent { Title = "Test event 3", Start = DateTime.Parse("04/14/19"), User = new User { UserId = 2, UserName = "tester", DOB = DateTime.Parse("04/25/2000"), Level = 0 }, UserId = 2, WorkoutId = 1 }
+            new WorkoutEvent { Title = "Test event 1", Start = DateTime.Parse("04/10/19"), User = new User { UserId = 2, UserName = "tester", DOB = DateTime.Parse("04/25/2000"), Level = 0 }, UserId = 2, WorkoutId = 1, StatusColor = "green" },
+            new WorkoutEvent { Title = "Test event 2", Start = DateTime.Parse("04/12/19"), User = new User { UserId = 2, UserName = "tester", DOB = DateTime.Parse("04/25/2000"), Level = 0 }, UserId = 2, WorkoutId = 1, StatusColor = "green" },
+            new WorkoutEvent { Title = "Test event 3", Start = DateTime.Parse("04/14/19"), User = new User { UserId = 2, UserName = "tester", DOB = DateTime.Parse("04/25/2000"), Level = 0 }, UserId = 2, WorkoutId = 1, StatusColor = "green" }
         };
 
         //PBI 139
