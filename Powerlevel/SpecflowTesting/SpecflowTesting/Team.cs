@@ -39,7 +39,7 @@ namespace SpecflowTesting
             var loginButton = driver.FindElementByClassName("btn-primary");
             loginButton.Click();
           
-            driver.Navigate().GoToUrl("https://powerlevel.azurewebsites.net/user/Profiles/15");
+            driver.Navigate().GoToUrl("https://powerlevel.azurewebsites.net/user/Profiles/4");
         }
 
         [When(@"I click the teamup button")]
@@ -53,7 +53,7 @@ namespace SpecflowTesting
         [Then(@"the page remain unchanged")]
         public void ThenThePageRemainUnchanged()
         {
-            Assert.IsTrue(TeamupButtontext.Length == 0); //the button is empty
+            Assert.AreEqual("You can't team up with yourself.", TeamupButtontext);
         }
 
         public void Dispose()

@@ -38,7 +38,6 @@ namespace Powerlevel.Controllers
         }
 
 
-
         /// <summary>
         /// Used to adjust metrics after they have been entered
         /// </summary>
