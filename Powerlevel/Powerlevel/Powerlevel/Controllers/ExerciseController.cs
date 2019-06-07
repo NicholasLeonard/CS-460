@@ -25,7 +25,6 @@ namespace Powerlevel.Controllers
         /// Displays all exercises
         /// </summary>
         /// <returns>View with list of all exercises and Viewbag with All equipment for exercises</returns>
-        // GET: Exercise
         public ActionResult Index()
         {
             //Grab all equipment to be displayed

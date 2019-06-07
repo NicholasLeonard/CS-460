@@ -27,7 +27,7 @@ namespace Powerlevel.Controllers
 
         //GET: UserWorkoutPlans
         public ActionResult Index()
-        {
+        {// does a check to see if the user has a currently active workout and then redirects flow based on result
             ViewBag.WorkoutInProgress = false;
             var currentUser = repo.Users.Where(x => x.UserName == HttpContext.User.Identity.Name.ToString()).Select(x => x.UserId).ToList();
             int userId = currentUser.FirstOrDefault();

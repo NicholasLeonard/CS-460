@@ -82,30 +82,20 @@ namespace Powerlevel.Controllers
 
                 //gets the entry from the db
                 User metrics = db.Users.Find(currentUserMetrics.UserId);
+
                 //updates the values in the entry
                 metrics.HeightFeet = currentUserMetrics.HeightFeet;
-
-                /*if (currentUserMetrics.HeightInch > 9)
-                {// SAFETY CHECK
-                    currentUserMetrics.HeightInch = 9; //currently if user set their inch > 10, BMI will get bug out. 
-                }
-                else { metrics.HeightInch = currentUserMetrics.HeightInch; }*/
-
                 metrics.HeightInch = currentUserMetrics.HeightInch;
                 metrics.Weight = currentUserMetrics.Weight;
+
                 //saves the changes to the db
                 db.Entry(metrics).State = EntityState.Modified;
 
 
-                /*//calculate user BMI on submit
-                //BMI Formula: ( (lbs * 703) / inch^2 )
-                //convert inch to decimal, then to inches
-                double tempHeight = (double)(metrics.HeightFeet + (metrics.HeightInch / 10)) * 12;
-                metrics.BMI = Math.Round((double)((metrics.Weight * 703) / Math.Pow(tempHeight, 2.00)), 2); //round to 2 decimal places
-                db.SaveChanges();*/
+                //calculate user BMI on submit                
                 Models.StaticClasses.SetUserBMI.SetBMI(metrics, db);
             }
-            // return RedirectToAction("Display", "User", null);
+
             return RedirectToAction("Index", "Manage", null);
         }
 

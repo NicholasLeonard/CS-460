@@ -21,7 +21,10 @@ namespace Powerlevel.Controllers
             this.repo = repository;
         }
 
-        // GET: PlanWorkouts
+        /// <summary>
+        /// Gets all of the workout plans available
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var planWorkouts = repo.WorkoutPlanWorkouts.Include(p => p.WorkoutPlan).Include(p => p.Workout);

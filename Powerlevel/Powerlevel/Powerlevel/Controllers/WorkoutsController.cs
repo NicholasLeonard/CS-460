@@ -21,6 +21,11 @@ namespace Powerlevel.Models
             this.repo = repository;
         }
 
+        /// <summary>
+        /// Displays the details of a specific workout
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int? id)
         {
             if (id == null)

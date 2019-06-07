@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Ninject;
 
 namespace Powerlevel.Infastructure
-{
+{//handles dependency injection for unit testing
     public class NinjectDependencyResolver : IDependencyResolver
     {
         private IKernel kernel;

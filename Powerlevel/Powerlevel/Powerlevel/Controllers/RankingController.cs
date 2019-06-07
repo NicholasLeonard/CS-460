@@ -14,7 +14,10 @@ namespace Powerlevel.Controllers
     {
         private toasterContext db = new toasterContext();
 
-        // GET: Ranking
+        /// <summary>
+        /// Displays all current Powerlevel users
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View(db.Users.ToList());

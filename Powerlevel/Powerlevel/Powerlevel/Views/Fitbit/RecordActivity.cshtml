@@ -4,7 +4,7 @@
 }
 
 <h2>Record Activity</h2>
-
+@*Creates a form for calory entry to be sent to fitbit and logged on the user's profile*@
 @using (Html.BeginForm("RecordActivity", "Fitbit", FormMethod.Post))
 {
     @Html.AntiForgeryToken();

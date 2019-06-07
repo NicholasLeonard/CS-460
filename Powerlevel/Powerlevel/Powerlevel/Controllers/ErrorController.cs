@@ -8,7 +8,7 @@ namespace Powerlevel.Controllers
 {
     public class ErrorController : Controller
     {
-        // GET: Error
+        // handles custom error redirects for specific numbered errors
         public ActionResult NotFound()
         {
             HttpContext.Response.StatusCode = 404;

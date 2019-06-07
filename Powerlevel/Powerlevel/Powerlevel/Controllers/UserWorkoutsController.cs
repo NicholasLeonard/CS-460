@@ -126,11 +126,6 @@ namespace Powerlevel.Controllers
                 }
             }
 
-            //User testing = new User();     
-            // testing.UserId = 2;
-            //testing.UserName = "testing";
-            //db.Users.Add(testing);
-
             //create new workout object
             Workout randomizeWorkout = new Workout();
             randomizeWorkout.Name = "Random Workouts";
@@ -138,6 +133,7 @@ namespace Powerlevel.Controllers
             randomizeWorkout.MainMuscleFocus = "Mixed";
             randomizeWorkout.TimeEstimate = "60 Minutes";
             randomizeWorkout.ExpReward = 50;
+
             //insert a new record into the database
             db.Workouts.Add(randomizeWorkout);
             db.SaveChanges();
@@ -145,7 +141,7 @@ namespace Powerlevel.Controllers
             //get randomizeWorkout WorkoutId
             var randWorkoutId = db.Workouts.Where(x => x.Name == "Random Workouts").Select(y => y.WorkoutId).FirstOrDefault();
 
-            //create a new excise based on the generator engine
+            //create a new exercise based on the generator engine
             WorkoutExercise randomizeWorkoutExercise = new WorkoutExercise();
             randomizeWorkoutExercise.WorkoutId = randWorkoutId;
 
@@ -235,9 +231,7 @@ namespace Powerlevel.Controllers
                 userData.Experience = getCurrentExp;
                 db.SaveChanges();
             }
-
-
-
+                       
             //calcalate the user level by their exp
             CheckUserLevel();
         }
@@ -269,8 +263,7 @@ namespace Powerlevel.Controllers
 
             //generate random workouts
             int newRanWorkoutId = GenRandomExercise(userBMI);
-
-
+            
             //Creates the userWorkout table and passes it into "RandomCreate" to create the table
             UserWorkout userWorkout = new UserWorkout();
             RandomCreate(userWorkout, newRanWorkoutId);
@@ -377,6 +370,7 @@ namespace Powerlevel.Controllers
                     userWorkout.StartTime = DateTime.Now;
                     db.UserWorkouts.Add(userWorkout);
                     db.SaveChanges();
+
                     //gets the UWId for the routing id to track in progress workouts
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
@@ -436,6 +430,7 @@ namespace Powerlevel.Controllers
                     userWorkout.StartTime = DateTime.Now;
                     db.UserWorkouts.Add(userWorkout);
                     db.SaveChanges();
+
                     //gets the UWId to be the routing id for ConfirmWorkouts page
                     var testuwid = repo.UserWorkouts.Where(x => x.UserId == userId && x.WorkoutCompleted == false).Select(x => x.UWId).ToList();
                     int uwid = testuwid.First();
@@ -497,9 +492,7 @@ namespace Powerlevel.Controllers
                 ViewBag.BonusExpMessageArrow = "->";
                 ViewBag.BonusExpMessage = "100 (200% Team EXP Bonus)!";
             }
-
-
-
+                       
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -716,10 +709,12 @@ namespace Powerlevel.Controllers
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
 
             if (UserWorkout.FromPlan == true)
-            {
+            {//removes the associated user workout records if they are abandoning before they begin
                 int WorkoutEventId = repo.WorkoutEvents.Where(x => x.WorkoutId == UserWorkout.UserActiveWorkout && x.Description == "started").Select(x => x.EventId).FirstOrDefault();
                 db.UserWorkouts.Remove(UserWorkout);
                 db.SaveChanges();
+
+                //resets the calendar event
                 UpdateEvents(WorkoutEventId, true);
                 return RedirectToAction("Index", "UserWorkoutPlans", null);
             }
@@ -747,6 +742,7 @@ namespace Powerlevel.Controllers
             }
             UserWorkout UserWorkout = db.UserWorkouts.Find(id);
 
+            //checks to see if the user has a fitbit account linked, which will provide recording options in the view
             bool CurrentUserFitbitLinked = repo.Users.Where(user => user.UserName == HttpContext.User.Identity.Name).Select(user => user.FitbitLinked).FirstOrDefault();
 
             if (UserWorkout == null)
@@ -797,8 +793,6 @@ namespace Powerlevel.Controllers
                     ViewBag.GotGear = "none";
                     AddExp(200);
                 }
-
-
             }
 
             //if the plan is completed, then it sets a viewbag item that will toggle buttons on in the view
@@ -965,9 +959,7 @@ namespace Powerlevel.Controllers
         {
             db.UserWorkoutPlans.Remove(userPlan);
             db.SaveChanges();
-
-
-
+                       
             //removes workout events for active plan once plan is complete so they are not displayed on the calendar
             RemoveWorkoutEvents();
         }

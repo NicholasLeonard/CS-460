@@ -1296,10 +1296,6 @@
     <Content Include="Views\Manage\SetArmor.cshtml" />
     <Content Include="Views\Manage\SetWeapon.cshtml" />
     <Content Include="Views\User\Profiles.cshtml" />
-    <Content Include="Views\Ranking\Create.cshtml" />
-    <Content Include="Views\Ranking\Delete.cshtml" />
-    <Content Include="Views\Ranking\Details.cshtml" />
-    <Content Include="Views\Ranking\Edit.cshtml" />
     <Content Include="Views\Ranking\Index.cshtml" />
     <Content Include="Views\Home\GettingStarted.cshtml" />
     <Content Include="Views\UserWorkouts\ConfirmWorkout.cshtml" />

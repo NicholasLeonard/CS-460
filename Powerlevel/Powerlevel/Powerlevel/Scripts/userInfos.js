@@ -10,7 +10,7 @@ function ajax_getUserInfos() {
         dataType: 'Json',
         url: "/API/GetUser",
         success: function (userData) { //pass the result into userData
-            $('#userInfos_navbar').text("LEVEL: " + userData[0].Level/* + " / " + "EXP: " + userData[0].Experience*/);
+            $('#userInfos_navbar').text("LEVEL: " + userData[0].Level);
             $('#userInfos_xp').text("EXP: " + userData[0].Experience);
         },
         error: errorOnAjax
