@@ -4,7 +4,7 @@ This is a Portfolio that contains all of the work that I have done for CS 460, w
 
 
 
-![picture](Portfolio_Photos/me_western.jpg)
+![picture](CS_460/Portfolio_Photos/me_western.jpg)
 
 
 
