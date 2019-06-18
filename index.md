@@ -2,11 +2,7 @@
 
 This is a Portfolio that contains all of the work that I have done for CS 460, which is the first course in the Senior sequence at Western Oregon University.
 
-
-
 ![picture](CS_460/Portfolio_Photos/me_western.jpg)
-
-
 
 ## About Me
 
@@ -14,9 +10,9 @@ I am a Senior at Western Oregon University studying Computer Science. I will be 
 
 
 ## Code Repository
+
 Here is the link to my github repository which houses all of the source code that I used for all of these projects.
 [Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
-
 
 ## Homework CS 460 Software Engineering I
 
