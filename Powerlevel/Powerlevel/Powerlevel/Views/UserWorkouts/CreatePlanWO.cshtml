@@ -1,0 +1,49 @@
+﻿<!--Exists as a redirect for the URL String passed in from the Workout Plan calendar-->
+@model Powerlevel.Models.UserWorkout
+
+@{
+    ViewBag.Title = "Create From Plan";
+}
+<h1>@ViewBag.WorkoutId</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <br />
+        <h2>Welcome to the Gym!</h2>
+        <br />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @* Controller logic sets the User connected to Workout to Currently logged in user so no need to give them option to set this  *@
+        <input type="hidden" name="UserId" value="@ViewBag.UserId" />
+
+        @*get the workout name, using a dropdownlist*@
+        <h2>Your planned workout is: <span style="color:#FDFFAF">@ViewBag.PlannedWorkoutName</span></h2>
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserActiveWorkout, "", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserActiveWorkout", null, htmlAttributes: new { @class = "form-control", @hidden = "hidden" })
+                @Html.ValidationMessageFor(model => model.UserActiveWorkout, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Start Workout!" class="btn btn-primary" id="IndexButton" />
+            </div>
+        </div>
+    </div>
+}
+
+    <div>@*Commented this out to prevent the ability to go back on this page. You must start and then abandon if that is what you are after*@
+        @*@Html.ActionLink("Go Back", "Index", null, new { @class = "LinkColor"})*@
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

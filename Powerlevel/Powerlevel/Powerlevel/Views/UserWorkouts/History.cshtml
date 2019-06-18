@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Powerlevel.Models.UserWorkout>
+
+@{
+    ViewBag.Title = "Workout History";
+}
+
+<!-- This is essentially an Index page for all User Workouts that have been completed, identified by the
+    "WorkoutCompleted" boolean data field of the UserWorkouts table being marked "true" -->
+@if (Request.IsAuthenticated)
+{
+    <br />
+    <h2>Workout History for @User.Identity.Name </h2>
+
+    <br />
+
+    <!-- Boolean set to true if the User does not have a workout history, and will not
+        display table data in that case -->
+    bool showTable = false;
+    foreach (var item in Model)
+    {
+        if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == true)
+        {
+            showTable = true;
+        }
+    }
+
+    <!-- Only shows table data if the above function proves there is data to be shown -->
+    if (showTable == true)
+    {
+        <!--Created in Javascript as a datatable SEE Scripts/ToasterScripts.js-->
+        <table class="table" id="myHistoryTable">
+            <thead>
+                <tr>
+                    <th>
+                        Completed Workout
+                    </th>
+
+                    <th>
+                        Date Completed
+                    </th>
+
+                </tr>
+            </thead>
+
+            <!-- takeTen prevents the table from showing anything past the Users last 10 completed workouts, I commented it out for now but implemention works -->
+            @*{int takeTen = 0;}*@
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <!--Ensures both that the logged in user is the same as the user in the table and the workout is not currently active-->
+                    if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == true) // && takeTen < 10
+                    {
+                        //takeTen = takeTen + 1;
+                        <tr>
+                            <td>
+                                @Html.ActionLink(item.Workout.Name, "WorkoutList", "Exercise", new { id = item.UserActiveWorkout }, new { @class = "LinkColor" })
+                            </td>
+                            <td>
+                                @Convert.ToDateTime(item.CompletedTime).ToString("M/d/yyyy 'on' h:mm:ss tt")
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <p>Done with History? <b>@Html.ActionLink("View your Current Workout!", "Index", null, new { @class = "LinkColor" })</b></p>
+    }
+
+    else
+    {
+        <h4>You don't have a Workout History! @Html.ActionLink("Begin your PowerLevel Journey!", "Index", null, new { @class = "LinkColor" })</h4>
+    }
+}
+else
+{
+    <br />
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to view your Workout History.
+    </p>
+}

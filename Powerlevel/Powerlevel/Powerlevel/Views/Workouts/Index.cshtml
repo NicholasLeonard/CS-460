@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Powerlevel.Models.WorkoutPlanWorkout>
+@using Powerlevel.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Workouts for @Html.DisplayName(Model.First().WorkoutPlan.Name)</h2>
+<h4>Description: @ViewBag.Description</h4>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Workout")
+        </th>
+        <th>
+            @Html.DisplayName("Muscle Focus")
+        </th>
+        <th>
+            @Html.DisplayName("Time Estimate")
+        </th>
+        <th>
+            @Html.DisplayName("Day in Plan")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Workout.Name, "WorkoutList", "Exercise", new { id = item.WorkoutId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Workout.MainMuscleFocus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Workout.TimeEstimate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayOfPlan)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,120 @@
+﻿@model Powerlevel.Models.ViewModels.WorkoutVM
+@using Powerlevel.Models
+
+@{
+    ViewBag.Title = "Progress";
+}
+
+<!--Makes the buttons look cool-->
+@*See site.css*@
+
+<br />
+<h1>Current Workout: <b>@Html.ActionLink(Model.WorkoutName, "WorkoutList", "Exercise", new { id = Model.UserActiveWorkout }, new { @class = "LinkColor" })</b></h1>
+<br />
+<!-- Get the Active stage and Max stage in order to determine which buttons may be pressed below -->
+@{ double PrevNextCheck = Model.ActiveWorkoutStage;}
+@{ double LastStage = Model.MaxWorkoutStage;}
+
+<!-- Math and display for the progress bar showing how far along in a workout you're in -->
+@{ double percentStage = PrevNextCheck / LastStage; }
+@{ string percentString = percentStage.ToString("#0.##%"); }
+<h3 style="text-align:center">Workout Progress</h3>
+<div id="wholeBar">
+    <div id="percentBar" style="width:@percentString;"><p style="text-align:center">@percentString</p></div>
+</div>
+
+<br />
+<div class="row">
+    <div class="col-sm-6">
+        <!-- Goes to the "ProgressBack" controller function and decrements ActiveWorkoutStage by 1, then refreshes this page -->
+        @using (Html.BeginForm("ProgressBack", "UserWorkouts", new { id = Model.UWId }))
+        {
+            @Html.AntiForgeryToken()
+            <!-- Prevents user from going back a workout if they are on the first stage -->
+            if (PrevNextCheck == 0)
+            {
+                <input type="submit" disabled="disabled" id="PrevWorkoutDis" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px" />
+            }
+            else
+            {
+                <input type="submit" id="PrevWorkout" value="Previous Stage" style="color:black; border-color:black; padding: 12px 40px;" />
+            }
+        }
+    </div>
+    <div class="col-sm-6">
+        <div align="right">
+            <!-- Goes to the "ProgressForward" controller function and increments ActiveWorkoutStage by 1, then refreshes this page -->
+            @using (Html.BeginForm("ProgressForward", "UserWorkouts", new { id = Model.UWId }))
+            {
+                @Html.AntiForgeryToken()
+                <!-- Both inputs have same functionality as logic is handled in controller, this simply changes
+                what is displayed for the name of the textbox -->
+                if (PrevNextCheck + 1 == LastStage)
+                {
+                    <input type="submit" id="CompletedWorkout" value="Complete Workout" style="color:black; border-color:black; padding: 12px 28px" />
+                }
+                else
+                {
+                    <input type="submit" id="NextWorkout" value="Next Stage" style="color:black; border-color:black; padding: 12px 62px" />
+                }
+            }
+        </div>
+    </div>
+</div>
+<br />
+
+<!-- Exercise information pulled from VM -->
+<h2>Current Exercise: <b>@Html.ActionLink(Model.CurrentExercise.Name, "Details", "Exercise", new { id = Model.CurrentExercise.ExerciseId }, new { @class = "LinkColor" })</b></h2>
+<br />
+<h2>Exercise Type: <b>@Model.CurrentExercise.Type</b></h2>
+<br />
+<h2>Exercise Instructions:</h2>
+<h4>@Model.CurrentExercise.Instructions</h4>
+<br />
+<h2>
+    Exercise Equipment Required:<br />
+    @foreach (ExerciseEquipment equip in ViewBag.Equipment)
+    {
+        <b>@equip.EquipmentName<br></b>
+    }
+</h2>
+<br />
+<!-- This block of code takes in the Viewbag list of ExerciseFlag objects and displays all of them-->
+<h2>
+    Exercise Recorded By: <br />
+    @foreach (ExerciseFlag flag in ViewBag.Flags)
+    {
+        <b>@flag.FlagName<br /></b>
+    }
+</h2>
+<br />
+<!-- This block of code takes in the Viewbag list of ExerciseImage objects and displays the image for each one-->
+@{ int imageCheck = 0;} @* Reports "no images found" if there are no images *@
+<h2>Exercise Images:</h2>
+@foreach (ExerciseImage image in ViewBag.Images)
+{
+    imageCheck++;
+    <!--Using the ImageName field, we can display all of the exercise images-->
+    <img src="~/Content/images/exercise_examples/@image.ImageName" alt="ExerciseImage" style="height:400px;" />
+}
+<!-- Makes report of no images where applicable -->
+@if (imageCheck == 0)
+{
+    <h2><b>None found</b></h2>
+}
+
+
+<!--Completion Rewards that user can earn if the workout is finished-->
+<hr />
+<h5>Rewards upon Workout Completion:</h5>
+
+<!--temp variable used to hold the current workoutID to be used in API calls-->
+<div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
+
+<!--Chi's XP Code-->
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<hr />
+<br />
+@Html.ActionLink("Abandon", "Abandon", new { id = Model.UWId }, new { @class = "btn btn-danger" })
+
+@Scripts.Render("~/Scripts/workoutRewards.js")

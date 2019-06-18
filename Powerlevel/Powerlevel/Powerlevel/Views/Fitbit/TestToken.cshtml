@@ -1,0 +1,27 @@
+﻿@model Fitbit.Models.UserProfile
+<div class="row">
+    @if (ViewBag.AccessToken != null)
+    {
+        <!--<p>Token -- <a id="accessTokenId">@ViewBag.AccessToken.Token</a></p>
+        <p>Token type --    <a id="accessTokenType"> @ViewBag.AccessToken.TokenType</a> </p>
+        <p>Expires In --    <a id="accessTokenExpiration"> @ViewBag.AccessToken.ExpiresIn</a> </p>
+        <p>
+            Refresh token -- <a id="RefreshToken"> @ViewBag.AccessToken.RefreshToken</a>
+        </p>
+            -->
+        <h2>Fitbit call results</h2>
+
+    }
+    else
+    {
+        <p>The current session has not been authenticated with fitbit</p>
+    }
+    @*@Html.ActionLink("Refresh Token", "RefreshToken", "Fitbit")*@
+        <div class="col-md-3" style="float:right; outline:solid; outline-width:thin;">
+            <p>User Profile Name -- @Model.FullName</p>
+            <p>User Profile Weight -- @Model.Weight :: @Model.WaterUnit</p>
+            <p>User Profile Height -- @Model.Height :: @Model.HeightUnit</p>
+            
+        </div>
+    
+</div>

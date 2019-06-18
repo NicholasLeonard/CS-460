@@ -1,0 +1,49 @@
+﻿@model Powerlevel.Models.UserWorkout
+
+@{
+    ViewBag.Title = "Complete";
+}
+
+
+<!-- Completion page is a receipt showing what the User has earned, the actual rewards have already been saved to the database -->
+<br />
+<h3>Congratulations on successfully conquering the <b>@Html.DisplayFor(model => model.Workout.Name)</b> Workout!</h3>
+<br />
+
+<!-- Displays XP, items and other things the user may have earned after Workout completion-->
+<h3 id="#rewards">Your Rewards:</h3>
+<div id="currentWorkoutID" style="visibility: hidden">@Model.UserActiveWorkout</div>
+<img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+<hr />
+
+@*Displays a congratulation message if they have also completed a workout plan*@
+@if (ViewBag.PlanComplete == true)
+{
+    <h3>Congratulations! You also completed a Workout Plan!</h3>
+
+    if(ViewBag.GotGear != "none")
+    {
+        <h3>You have also obtained a @ViewBag.GotGear for your character</h3>
+    }
+    else
+    {
+        <h3>You currently have all the gear we have to offer, so you instead gain an extra 200 exp</h3>
+    }
+}
+<!-- Since the user will always level up every 100 XP they will be congratulated upon reaching a new level
+    if they met the requirement of earning enough XP after a completed workout (this code will need to be updated
+    if there are changes to the distributed amount of XP for workouts and/or the XP required to level up changes) -->
+@if (Model.User.Experience % 100 == 0 && Model.User.Level != 20)
+{
+    <h2><span id="#levelUp">Level Up!</span> You've reached Level @Model.User.Level!</h2>
+}
+<br />
+
+@Html.ActionLink("Return Home", "Index", "Home", null, new { @class = "rpgui-button" })
+@Html.ActionLink("View History", "History", null, new { @class = "rpgui-button" })
+@Html.ActionLink("View Plan", "Index", "UserWorkoutPlans", null, new { @class = "rpgui-button" })
+@if(ViewBag.FitbitLinked == true)
+{
+    @Html.ActionLink("Record Fitbit Activity", "RecordActivity", "Fitbit", new { userWorkoutId = Model.UWId}, new { @class = "rpgui-button" })
+}
+@Scripts.Render("~/Scripts/workoutRewards.js")

@@ -1,0 +1,162 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background: #2E3532;
+    color: #F9E9D9;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/*userInfos_navbar design*/
+#userInfos_navbar {
+    /*border-radius: 25px;*/
+    color: #70FFFF; /*deepskyblue;*/
+    /*border: 1.5px solid #ffffff;*/
+    /*padding: 15px;*/
+}
+
+/*userInfos_xp design --practically identical to userInfos_navbar*/
+#userInfos_xp{
+    color: #70FFFF;
+}
+
+/*changes the color of the navbar links*/
+#navbar-link {
+    color: white;
+}
+
+/*Changes the color of the register link*/
+#registerLink{
+    color: white;
+}
+
+/*Changes the color of the login link*/
+#loginLink{
+    color: white;
+}
+
+/*Synchronizes colors on sortable dataTables with the rest of the site color scheme*/
+table.dataTable tbody tr {
+    background: none !important;
+}
+
+/*Changing color scheme of jumbotron*/
+.jumbotron {
+    background-image: url(images/design_images/cobblestone_path.jpg);
+}
+
+/*Background image to navbar*/
+.navbar {
+    background: #1D7747
+}
+
+/*Set text color for tables the same as rest of site*/
+.table {
+    color: inherit;
+    background: inherit;  
+}
+
+/*Image sizing values for UserWorkout page*/
+#GoblinPoisonBlade{
+    float: left;
+    width: 433px;
+    height: 254px;
+}
+
+/*Causes copyright text to appear beneath images*/
+footer {
+    clear: both;
+}
+
+/*Changing the color of the calendar specifically*/
+#calendar{
+    color: black;
+    background: white;
+}
+
+/*stops text wrapping on the calendar so that it will show full event text*/
+.fc-day-grid-event > .fc-content {
+    white-space: unset !important;
+}
+
+/*Styling for the rewards header of workout completion*/
+#rewards {
+    color: #FDFFAF
+}
+
+/*Styling for the level up message*/
+#levelUp {
+    color: #FFEC3C
+}
+
+/*Fixes collapsible navbar problem*/
+.collapse.in:not(.show) {
+    display: none;
+    display: block;
+}
+
+/*Change link colors for site*/
+.LinkColor {
+    color: #0AC122
+}
+
+LinkColor:active {
+    color: #0AC122
+}
+
+.LinkColor:link {
+    color: #0AC122
+}
+
+.LinkColor:visited {
+    color: #0AC122
+}
+
+
+#PrevWorkoutDis {
+    background-color: #E7E7E7;
+    color: #B5B5B5;
+    border-color: black;
+}
+
+#PrevWorkout {
+    background-color: #FF7869;
+}
+
+#NextWorkout {
+    background-color: #FAFF6B;
+}
+
+#CompletedWorkout {
+    background-color: #6EFF69;
+}
+
+#wholeBar {
+    width: 100%;
+    background-color: #E7E7E7;
+    border-style: solid;
+    border-color:black;
+}
+
+#percentBar {
+    height: 30px;
+    background-color: #38FF37;
+}

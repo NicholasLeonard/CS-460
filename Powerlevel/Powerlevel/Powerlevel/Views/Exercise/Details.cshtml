@@ -1,0 +1,71 @@
+﻿@model Powerlevel.Models.Exercise
+@using Powerlevel.Models
+
+@{
+    ViewBag.Title = Html.DisplayFor(model => model.Name);
+}
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            Primary Muscle Group
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainMuscleWorked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Instructions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Instructions)
+        </dd>
+        <!-- This block of code displays ExerciseEquipment objects by accessing the exercise equipment collection within the model-->
+        <dt>
+            Exercise Equipment Required
+        </dt>
+        <dd>
+            @foreach(ExerciseEquipment equip in Model.ExerciseEquipments)
+            {
+                @equip.EquipmentName<br>
+            }
+        </dd>
+        <!-- This block of code displays the ExerciseFlag objects by accessing the exercise flag collection within the model-->
+        <dt>
+            Exercise Recorded By
+        </dt>
+        <dd>
+            @foreach (ExerciseFlag flag in Model.ExerciseFlags)
+            {
+                @flag.FlagName<br>
+            }
+        </dd>
+        <!-- This block of code displays the ExerciseImage objects for the passed in exercise by accessing the exercise image collection within the model-->
+        <dt>
+            Images
+        </dt>
+        <dd>
+            @foreach (ExerciseImage image in Model.ExerciseImages)
+            {
+                <!--Using the ImageName field, we can display all of the exercise images-->
+                <img src="~/Content/images/exercise_examples/@image.ImageName" alt="ExerciseImage" style="height:400px;" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("All Exercises", "Index")
+</p>

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Powerlevel.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Rankings</h2>
+
+@*<p>
+        @Html.ActionLink("Create Demo users", "Create")
+    </p>*@
+<table class="table">
+    <tr>
+        <th>
+            Rank
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Level
+        </th>
+        <th>
+            Experience
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            Height
+        </th>
+        <th>
+            Weight
+        </th>
+        <th>
+            Fitness Level(BMI)
+        </th>
+        <th>
+            Workout Completed
+        </th>
+
+        <th></th>
+    </tr>
+    @{ int rankCounter = 0;} <!--declare counter for counting ranks-->
+    @*order by experience points*@
+    @foreach (var item in Model.OrderByDescending(x => x.Experience))
+    {
+        <tr>
+            <td>
+                @{rankCounter++;} <!--increase counter per rounds-->
+                @if (rankCounter == 1)
+                {
+                    <h3><span style="color:gold">@rankCounter</span></h3>
+                }
+                @if (rankCounter == 2)
+                {
+                    <h4><span style="color:silver">@rankCounter</span></h4>
+                }
+                @if (rankCounter == 3)
+                {
+                    <h5><span style="color:sandybrown">@rankCounter</span></h5>
+                }
+                @if (rankCounter > 3)
+                {
+                    @rankCounter <!--display rank-->
+                }
+
+            </td>
+            <td>
+                @Html.ActionLink(item.UserName, "Profiles", new { controller = "user", id = item.UserId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Level)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Experience)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HeightFeet) ft. @Html.DisplayFor(modelItem => item.HeightInch) in.
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight) lbs.
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BMI)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalWorkoutsCompleted)
+            </td>
+
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UserId })
+                </td>*@
+        </tr>
+    }
+
+</table>
+

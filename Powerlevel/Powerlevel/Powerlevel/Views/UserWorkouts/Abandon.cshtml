@@ -1,0 +1,28 @@
+﻿<!-- Allows the user to "abandon" a plan by deleting the workout from the UserWorkout table -->
+
+@model Powerlevel.Models.UserWorkout
+
+@{
+    ViewBag.Title = "Abandon";
+}
+
+<br />
+<h3>Are you sure you want to Abandon this Workout?</h3>
+<div>
+    <hr />
+
+        <h4>
+            <b>@Html.DisplayFor(model => model.User.UserName)</b> will abandon the 
+            <b>@Html.DisplayFor(model => model.Workout.Name)</b> Workout
+        </h4>
+    <br />
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <input type="submit" value="Confirm" class="button btn-primary" /> |
+            @Html.ActionLink("Back to Workouts", "Index", null, new { @class = "LinkColor" })
+        </div>
+    }
+</div>

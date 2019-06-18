@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "FourOFour";
+}
+
+<h1>Woops! 404!</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            
+        </div>
+        <div class="col-md-4">
+            <p>You are definitely in the wrong place. Better get out before the zombie gets you!</p>
+        </div>
+        <div class="col-md-4">
+            @Html.ActionLink("Escape!", "Index", "Home", null, new { @class = "rpgui-button" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="~/Content/images/design_images/zombie.png" style="float: right;" width="368" height="403" />
+        </div>
+    </div>
+</div>

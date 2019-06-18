@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Powerlevel.Models.UserWorkoutPlan>
+@using Microsoft.AspNet.Identity
+@using FullCalendar; @*Allows for fullcalendar helper method*@
+@{
+    ViewBag.Title = "Personal Workout Plan";
+}
+
+
+
+@*request the user to be logged-in. Else, ask go to login page*@
+@if (Request.IsAuthenticated)
+{
+    <h2>Personal Workout Plan Page for @User.Identity.Name</h2>
+    <br />
+
+    //This segment of code checks if the logged in user has an active workout, if so, the "Start a New Plan" button will not appear
+    string loggedInId = null;
+    foreach (var item in Model)
+    {
+        if (item.UserName == User.Identity.Name)
+        {
+            loggedInId = item.UserName;
+        }
+    }
+    bool startNewPlan = true;
+    foreach (var item in Model)
+    {
+        if (loggedInId == item.UserName)
+        {
+            startNewPlan = false;
+        }
+    }
+    if (startNewPlan == true)
+    {
+        <p>
+            It looks like you don't have an Active Plan! @Html.ActionLink("Start a New Plan Now!", "Create")
+        </p>
+    }
+    //End of segment of code checking if active plan exists
+
+    if (startNewPlan == false)
+    {
+        foreach (var item in Model)
+        {
+            if (item.UserName == User.Identity.Name)
+            {
+                <h4>
+                    <b>Current Plan:</b> @Html.ActionLink(item.WorkoutPlan.Name, "Index", "Workouts", new { id = item.WorkoutPlan.PlanId }, null)
+                </h4>
+                <h4>
+                    <b>Plan Type:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.Type)
+                </h4>
+                <h4>
+                    <b>Number of Workouts:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.NumberOfWorkouts)
+                </h4>
+                <h4>
+                    <b>Days to Complete Plan:</b> @Html.DisplayFor(modelItem => item.WorkoutPlan.DaysToComplete)
+                </h4>
+                <h4>
+                    @* <b>Current Plan Id:</b> @Html.DisplayFor(modelItem => item.)*@
+                </h4>
+                <br />
+                if (ViewBag.WorkoutInProgress == true)
+                {
+                    <br />
+                    <h2 style="color:orange">It looks like you have an Active Workout! You must @Html.ActionLink("finish or abandon", "Index", "UserWorkouts") it before continuing with the plan!</h2>
+                }
+                else
+                {
+                    @Html.ActionLink("Abandon", "Abandon", new { id = item.LogId }, new { @class = "btn btn-danger" })
+                }
+                <br />
+            }
+        }
+
+        @*Div section for the workout calendar*@
+        @Html.FullCalendar(settings =>
+   {
+       settings.Name = "calendar";
+       settings.Selectable = true;
+       settings.EventDurationEditable = true;
+       settings.Editable = true;
+       settings.Selectable = true;
+       settings.Events = Events.AsJsonFeed(Url.Action("Events", "Calendar"));
+       settings.AllDayDefault = true;
+       settings.ClientSideEvents.EventDestroy = "function() { console.info('event destroyed'); }";
+       settings.ClientSideEvents.EventClick = "EventClick";//defined in ToasterScript.js
+       settings.ClientSideEvents.EventAfterRender = "function(){console.log('after event render');}";
+   })
+    }
+}
+
+@*$.ajax('/Calendar/UpdateEvents/' + event.id);*@
+@*Else, ask them to login*@
+else
+{
+    <h1>User Plan Page</h1>
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to view User Workout Plans.
+    </p>
+}

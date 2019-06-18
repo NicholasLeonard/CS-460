@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Powerlevel.Models.UserWorkout>
+@using Powerlevel.Models
+
+
+@{
+    ViewBag.Title = "Workout Select";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <br />
+    <h1 style="text-align:center">Welcome, <span style="color:#FDFFAF">@User.Identity.Name</span>! Select a Workout method!</h1>
+    <br />
+
+
+    /* This segment of code checks if the logged in user has an active workout, if so, the "Resume Current" button will appear,
+     * otherwise, a "Start New Workout" button appears */
+    int loggedInId = 0;
+    int currentWorkoutId = 0;
+
+    foreach (var item in Model)
+    {
+        /* if the UserWorkout table has a user whose name matches the logged in user AND the Workout has not been completed (I.E., WorkoutCompleted field is "false")
+         * then the loggedInId variable is set to that of the UserId so that the user is unable to start a new workout */
+        if (item.User.UserName == User.Identity.Name && item.WorkoutCompleted == false)
+        {
+            loggedInId = item.UserId;
+        }
+    }
+    bool startNewWorkout = true;
+    foreach (var item in Model)
+    {
+        if (loggedInId == item.User.UserId)
+        {
+            startNewWorkout = false;
+            //currentWorkoutId allows to redirect to the Current Workout the user is at in the Progress view
+            currentWorkoutId = item.UWId;
+        }
+    }
+    //End of segment of code checking if active workouts exist
+
+    //Link to start a new workout if startNewWorkout is true
+    if (startNewWorkout == true)
+    {
+        <div class="row" align="center">
+            <div class="col-sm-4">
+                @Html.ActionLink("Free Workout", "Create", null, new { @class = "rpgui-button" })
+            </div>
+
+            <div class="col-sm-4">
+                @Html.ActionLink("Workout from Plan", "Index", "UserWorkoutPlans", null, new { @class = "rpgui-button" })
+            </div>
+
+            <div class="col-sm-4">
+                @Html.ActionLink("I don't know...", "Random", "UserWorkouts", null, new { @class = "rpgui-button" })
+            </div>
+        </div>
+    }
+
+    //Button to resume workout if startNewWorkout is false
+    if (startNewWorkout == false)
+    {
+        <div class="row" align="center">
+            <div class="col-sm-6">
+                @*Passes in the id of a users current workout*@
+                @Html.ActionLink("Resume Current Workout", "Progress", null, new { id = currentWorkoutId }, new { @class = "rpgui-button" })
+            </div>
+            <div class="col-sm-6">
+                @*Allows user to abandon their workout if there is one currently active*@
+                @Html.ActionLink("Abandon Workout", "Abandon", null, new { id = currentWorkoutId }, new { @class = "rpgui-button" })
+            </div>
+        </div>
+    }
+
+    @*
+        *Stuff that isnt needed but kept some of the code here as implementations may be added elsewhere*
+
+
+
+        <h3>How to do: @item.WorkoutExercise.Exercise.Instructions.ToString()</h3>
+        <h8>Reps and Sets</h8>
+
+            <!--Completion Rewards-->
+            <hr />
+            <h5>Completion Rewards:</h5>
+
+            <!--temp variable used to hold the current workoutID to be used in API calls-->
+            <div id="currentWorkoutID" style="visibility: hidden">@item.WorkoutExercise.WorkoutId</div>
+
+            <img src="~/Content/images/icons/exp.png" alt="Experiences" style="height: 40px; width: 40px;" /> + <span id="Exp_Amount">0</span>
+            <hr />
+            <br />
+
+            <!--Completion Rewards END-->
+
+            @ViewBag.Testings
+        </h4>
+    *@
+
+    <br />
+    <br />
+    <img src="~/Content/images/design_images/goblin_poison_blade.png" id="GoblinPoisonBlade" />
+
+    <br /><br />
+    <p>Not working out right now? <b>@Html.ActionLink("View your Workout History!", "History", null, new { @class = "LinkColor" })</b></p>
+}
+
+else
+{
+    <br />
+    <p>
+        You must be @Html.ActionLink("Logged In", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        to view or start your Workout.
+    </p>
+}
+
+@Scripts.Render("~/Scripts/workoutRewards.js")
