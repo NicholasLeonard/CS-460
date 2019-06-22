@@ -6,7 +6,7 @@ This is a Portfolio that contains all of the work that I have done for CS 460, w
 
 ## About Me
 
-I am a Senior at Western Oregon University studying Computer Science. I will be graduating in June 2019 and am looking forward to a long and fulfilling career as a software engineer. I enjoy camping, hiking, and fishing. I like to play videogames as well as watch movies and I really enjoy having LAN parties with friends. Someday I would like to do some traveling. I would love to travel from the west coast to the east coast and do some traveling over seas.
+I am a Senior at Western Oregon University studying Computer Science. I will be graduating in June 2019 and am looking forward to a long and fulfilling career as a software engineer. I enjoy camping, hiking, and fishing. I like to play video games as well as watch movies and I really enjoy having LAN parties with friends. Someday I would like to do some traveling. I would love to travel from the west coast to the east coast and do some traveling over seas.
 
 
 ## Code Repository
