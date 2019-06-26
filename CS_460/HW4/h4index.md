@@ -1,18 +1,19 @@
 # Nicholas Leonard
-<br/>
+
 ## Homework 4
 
-This assignment was all about MVC and HTTP's GET and POST methods. To complete this assignment, I had to utilize tools and languages that I have been learning throughout this entire term as well as some new ones like HTML's Razor helper functions. I really enjoyed this project. I found learning about GET and POST methods and how they work really interesting. I also thought the two tasks I had to do to demeonstrate their use fun and interesting.
+This assignment was all about MVC and HTTP's GET and POST methods. To complete this assignment, I had to utilize tools and languages that I have been learning throughout this entire term as well as some new ones like HTML's Razor helper functions. I really enjoyed this project. I found learning about GET and POST methods and how they work really interesting. I also thought the two tasks I had to do to demonstrate their use fun and interesting.
 
 ### Important Links
-Here is the link to my github repository, which houses all of the source code for this assignment and others. <br/>
-[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
+
+Here is the link to my GitHub repository, which houses all of the source code for this assignment and others. <br/>
+[GitHub Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
 Here is a link to a video, which demos the pages that I created for this assignment.<br/>
 [Assignment 4 Demo](https://www.youtube.com/watch?v=WraBgHU4vdU)<br/>
 
 This link will take you back to my main portfolio page.
-[Home](../index.md)
+[Home](../../index.md)
 
 ### Step 1. Creating a new MVC Project and Learning the Design Layout
 
@@ -52,10 +53,9 @@ Once I figured out all the files and folders, I went to work constructing the ac
 
 ![Picture](../Portfolio_Photos/Assignment4/Landing_pg.png)
 
-
 ### Step 3. The Converter
 
-Once the landing page was done, I moved on to the Converter page, which utilized the same controller as the landing page. On this page, I used plain old HTML to structure the page and make the form for the input. The form on this page used GET to request from the server and passed data via query strings in the URI. The form element I created called the GET Converter action method defined in the Home Controller. I used two medium coloumns in the form to put the mile input and error text on one side and the radio buttons for the metric unit conversion in another coloumn. I also had to add required to the miles input box to provide validation and I also had to set the type to number in order to prevent the user from sending strings to the server.
+Once the landing page was done, I moved on to the Converter page, which utilized the same controller as the landing page. On this page, I used plain old HTML to structure the page and make the form for the input. The form on this page used GET to request from the server and passed data via query strings in the URI. The form element I created called the GET Converter action method defined in the Home Controller. I used two medium columns in the form to put the mile input and error text on one side and the radio buttons for the metric unit conversion in another column. I also had to add required to the miles input box to provide validation and I also had to set the type to number in order to prevent the user from sending strings to the server.
 
 ```html
 <div class="row">
@@ -96,6 +96,7 @@ Once the landing page was done, I moved on to the Converter page, which utilized
 ### Step 3-2 The Converter Action Method
 
 Once I had designed the page and created the form, I had to write the code for the action method so the server would know what to do with the data it was passed. I first had to get the data out of the query strings. I accomplished this by creating two string variables and calling the Controller `Request` method to get the data out of the query strings.
+
 ```csharp
 [HttpGet]
         public ActionResult Converter()
@@ -104,7 +105,7 @@ Once I had designed the page and created the form, I had to write the code for t
             string Units = Request.QueryString["Units"];
 ```
 
-After I read the input, I put the rest of the execution cycle inside an if statement so that I could use the same action method to display the defualt view when the page initially loads. The if statement checks the value of the `MileInput` variable, which contains the value of the Miles query String. If it is null, the if statement does not execute and the default view is loaded.
+After I read the input, I put the rest of the execution cycle inside an if statement so that I could use the same action method to display the default view when the page initially loads. The if statement checks the value of the `MileInput` variable, which contains the value of the Miles query String. If it is null, the if statement does not execute and the default view is loaded.
 
 ```csharp
 ...
@@ -190,7 +191,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 
 #### The View with Razor
 
- After I finished the landing page and the Converter page, I moved on to the Color Selector page. For this page, I had to make a new Controller and a new view per the requirements of the assignment. I started by creating a new Controller called Color in the Controller folder of my MVC project. I then created a new view called Create in the new Color folder that was generated in the Views folder of the MVC project when I made a new Controller. For this page, I had to use Razor helper functions to construct the form and its input fields. It took me a while to figureout how to added stylings and such to the elements that the Razor functions generated, but I eventually learned how to do it and was then able to add styling classes, placeholder values, pattern specifiers, and required attributes to fully customize the Razor generated elements.
+ After I finished the landing page and the Converter page, I moved on to the Color Selector page. For this page, I had to make a new Controller and a new view per the requirements of the assignment. I started by creating a new Controller called Color in the Controller folder of my MVC project. I then created a new view called Create in the new Color folder that was generated in the Views folder of the MVC project when I made a new Controller. For this page, I had to use Razor helper functions to construct the form and its input fields. It took me a while to figure out how to added stylings and such to the elements that the Razor functions generated, but I eventually learned how to do it and was then able to add styling classes, placeholder values, pattern specifiers, and required attributes to fully customize the Razor generated elements.
 
  ```html
 <div class="row">
@@ -243,6 +244,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 #### The Controller and the Action Method
 
  Once I had finished the Razor code and the general layout of the result, I moved on to the logic for the controller. There are two action methods in this controller. The first is a GET method that just displays the default page.
+
  ```csharp
 /// <summary>
         /// Action method responsible for displaying default view from a GET request.
@@ -299,7 +301,7 @@ After I read the input, I put the rest of the execution cycle inside an if state
 ...
  ```
 
- I used a chane of `if-else` statements to perform the math. If the sum of one component of the two input colors exceeded 255, then I just set the value of the corresponding component of the mixed color to 255. Basically, 255 was the cap for each component of the mixed color.
+ I used a chain of `if-else` statements to perform the math. If the sum of one component of the two input colors exceeded 255, then I just set the value of the corresponding component of the mixed color to 255. Basically, 255 was the cap for each component of the mixed color.
 
  ```csharp
  ...
@@ -376,7 +378,7 @@ I then converted the Color object that contained the mixed color back into a str
 
 #### Styling the Color Cards
 
-Once I passed the colors back to the view, I had to style the elements so that they looked like cards with the given colors. I did this primarily through the main CSS file for the entire application. I defined a new styling class called `.card` to modify `<div>` elements into color cards. Because web browsers often cache CSS files for sites, I decided to style the elements in the CSS file but provide the colors in the HTML for the page itself. That way the colors would always update regardless of wether the CSS file was cached or not. I also created a class called `.symbols` for the elements that contained math symbols used on the mixer page.
+Once I passed the colors back to the view, I had to style the elements so that they looked like cards with the given colors. I did this primarily through the main CSS file for the entire application. I defined a new styling class called `.card` to modify `<div>` elements into color cards. Because web browsers often cache CSS files for sites, I decided to style the elements in the CSS file but provide the colors in the HTML for the page itself. That way the colors would always update regardless of whether the CSS file was cached or not. I also created a class called `.symbols` for the elements that contained math symbols used on the mixer page.
 
 ```css
 /*Used to format the color cards for the color selector*/

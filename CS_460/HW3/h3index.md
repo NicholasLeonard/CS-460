@@ -1,19 +1,20 @@
 # Nicholas Leonard
-<br/>
+
 ## Homework 3
 
-For this assignment, I had to translate a simple Java application into C#, whiched turned out to be easier then I had expected. I have very little experience with Java and no experience with C#. However, it was fairly straight forward, easy to understand, and similar to Java. Once more, it was a new and fun experience. And I enjoyed experimenting with C# so that I could learn it and utilize it.
+For this assignment, I had to translate a simple Java application into C#, which turned out to be easier then I had expected. I have very little experience with Java and no experience with C#. However, it was fairly straight forward, easy to understand, and similar to Java. Once more, it was a new and fun experience. And I enjoyed experimenting with C# so that I could learn it and utilize it.
 
 ### Important Links
-Here is the link to my github repository that holds all of the source files for this assignment and others.<br/>
-[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
+
+Here is the link to my GitHub repository that holds all of the source files for this assignment and others.<br/>
+[GitHub Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
 Here is the link to take you back to the home page of my Portfolio.<br/>
-[Home](../index.md)
+[Home](../../index.md)
 
 ### Step 1. Setting up my IDE (Integrated Development Environment)
 
-This assignment presented the first oppertunity for me to use an IDE for the class. The IDE that I used was Visual Studio 2017 Community addition. As part of the instaltion process, I also installed several extensions and workspaces that would allow me to use Visual Studio 2017 to work with C#, the .NET Framework, and several other program types.
+This assignment presented the first opportunity for me to use an IDE for the class. The IDE that I used was Visual Studio 2017 Community addition. As part of the installation process, I also installed several extensions and workspaces that would allow me to use Visual Studio 2017 to work with C#, the .NET Framework, and several other program types.
 
 ### Step 2. Run the Java Program
 
@@ -37,7 +38,7 @@ Before doing this homework assignment, I had worked with very little Java and I 
 
 #### Node File
 
-I started with the Node class. Because C# contains a lot of similarities to Java, the only real difference between the Java file and the C# file were the nameing conventions, such as capitalization of public variables and methods, the format of the XML comments, and the use of a namespace in C#. I started by just translating the code and then came back later to add the XML comments from the Java file to the C# file.
+I started with the Node class. Because C# contains a lot of similarities to Java, the only real difference between the Java file and the C# file were the naming conventions, such as capitalization of public variables and methods, the format of the XML comments, and the use of a namespace in C#. I started by just translating the code and then came back later to add the XML comments from the Java file to the C# file.
 
 ```java
 /** Singly linked node class. (Java)*/
@@ -82,7 +83,7 @@ namespace Translation
 
 #### QueueInterface File
 
-After I finished the Node file, I moved to the QueueInterface Java file. Once again, there were a lot of similarities between the Java code and the C# code. The only real difference was that the initialized `pop()` function in the Java code had a `throws QueueUnderFlowException`, which cannot be done in C#. The exception can still be thrown, that particular piece of code just cannot be in the initialzation of the function in C#. The other big difference was the naming convention. In C#, interfaces declerations begin with an I, so I changed the name of the interface to IQueueInterface and I capitalized the methods to keep inline with C# naming conventions. The other difference was the variable type for a boolean value is bool in C# rather than boolean in Java.
+After I finished the Node file, I moved to the QueueInterface Java file. Once again, there were a lot of similarities between the Java code and the C# code. The only real difference was that the initialized `pop()` function in the Java code had a `throws QueueUnderFlowException`, which cannot be done in C#. The exception can still be thrown, that particular piece of code just cannot be in the initialization of the function in C#. The other big difference was the naming convention. In C#, interface declarations begin with an I, so I changed the name of the interface to IQueueInterface and I capitalized the methods to keep inline with C# naming conventions. The other difference was the variable type for a Boolean value is bool in C# rather than Boolean in Java.
 
 ```java
 /**
@@ -145,6 +146,7 @@ namespace Translation
 ```
 
 #### QueueUnderFlowException File
+
 Next up was the QueueUnderFlowException Java file. For this file, I had to use class inheritance. User defined exceptions have to inherit properties from the general exceptions class in C#. So I just used the inheritance character `:` to declare the classes in this file. Java also uses `super()` while C# uses `base`. So I used inheritance for that as well. I also had to include `using System;` in order to access the general Exception and base classes.
 
 ```java
@@ -187,7 +189,7 @@ namespace Translation
 
 #### LinkedQueue File
 
-The next file I worked on was the LinkedQueue file. There were no big differences between the Java and C# files. However, there were a few things like C#'s `NullReferenceException` instead of Java's `NullPointerException` and the difference in the naming conventions between Java and C#. There was one significant difference between the two files in that C# does not allow generic types to be set to null. So in the pop function for the C# code, I had to use C#'s `default()` function and pass it the generic type `T` in order to achieve the same result as setting `T tmp = null` in the Java code. The way that the `default()` function works, is that once the class is declared with a specific type, it will set the default null value for that type. Thus, it sets value types to 0, reference types to null, and boolean types to false. I found this specific C# quirk interesting and kind of cool.
+The next file I worked on was the LinkedQueue file. There were no big differences between the Java and C# files. However, there were a few things like C#'s `NullReferenceException` instead of Java's `NullPointerException` and the difference in the naming conventions between Java and C#. There was one significant difference between the two files in that C# does not allow generic types to be set to null. So in the pop function for the C# code, I had to use C#'s `default()` function and pass it the generic type `T` in order to achieve the same result as setting `T tmp = null` in the Java code. The way that the `default()` function works, is that once the class is declared with a specific type, it will set the default null value for that type. Thus, it sets value types to 0, reference types to null, and Boolean types to false. I found this specific C# quirk interesting and kind of cool.
 
 ```java
 /**(java)
@@ -360,7 +362,7 @@ namespace Translation
 
 #### Main File
 
-The last file to translate was the Java main file. This file contained the most differences between the C# and Java verisons. The only main (heh) difference between the two in the first function definition was when a new binary number was added to the list, Java used `add()` and I had to use `AddLast()` for the C# version. Again, I had to observe proper C# naming conventions with capitalization for methods and variables but short of that, the first parts of the files were very similar. The big differences between the two files came in the Main driver function for the GenerateBinaryRepresentationList function. To write to the console, Java uses `System.out.println()` and `System.out.print()` but for C# I had to use `Console.WriteLine()` and `Console.Write()` respectively. Later, I had to use C#'s `Count()` instead of Java's `getLast().length()` to determine the length of the linked list returned by GenerateBinaryRepresentationList. The syntax and method for parsing the input is a little different in C# then in Java so I had to change that too. The only other difference was that I had to use a `foreach` and `for` loop instead of the two `for` loops in the Java code.
+The last file to translate was the Java main file. This file contained the most differences between the C# and Java versions. The only main (heh) difference between the two in the first function definition was when a new binary number was added to the list, Java used `add()` and I had to use `AddLast()` for the C# version. Again, I had to observe proper C# naming conventions with capitalization for methods and variables but short of that, the first parts of the files were very similar. The big differences between the two files came in the Main driver function for the GenerateBinaryRepresentationList function. To write to the console, Java uses `System.out.println()` and `System.out.print()` but for C# I had to use `Console.WriteLine()` and `Console.Write()` respectively. Later, I had to use C#'s `Count()` instead of Java's `getLast().length()` to determine the length of the linked list returned by GenerateBinaryRepresentationList. The syntax and method for parsing the input is a little different in C# then in Java so I had to change that too. The only other difference was that I had to use a `foreach` and `for` loop instead of the two `for` loops in the Java code.
 
 ```java
 java.util.LinkedList; 

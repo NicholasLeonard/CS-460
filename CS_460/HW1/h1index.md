@@ -1,29 +1,31 @@
 # Nicholas Leonard
-<br/>
+
 ## Homework 1
 
 I have never used any of these programs before, so this whole project was a new experience for me. I really enjoyed it and I enjoyed learning new tools as well as experimenting with them to cement the processes in my head and so I can understand how they work.
 
 ### Important Links!
-Here is the link to my main Github repository, which holds all of my source code for this assignment.<br/>
-[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
+
+Here is the link to my main GitHub repository, which holds all of my source code for this assignment.<br/>
+[GitHub Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)
 
 Here is the link to the website I made for this assignment.<br/>
 [Demo](wk1Website.html)
 
 This link will take you back to my main Portfolio page.<br/>
-[Portfolio](../index.md)
+[Portfolio](../../index.md)
 
 <br/>
-### Step 1. Setting up git and making a github account and repository.
 
-The first thing I had to do was actually download git from the provided link in the homework page. Once I had downloaded and installed git and created the remote repository on github, I had to clone the repository onto my local machine.
+### Step 1. Setting up git and making a GitHub account and repository.
+
+The first thing I had to do was actually download git from the provided link in the homework page. Once I had downloaded and installed git and created the remote repository on GitHub, I had to clone the repository onto my local machine.
 
 ```bash
 git clone https://github.com/NicholasLeonard/NicholasLeonard.github.io.git
 ```
 
-After I made the clone, I had to run two git config commands to properly set my git username and email to match with my github profile.
+After I made the clone, I had to run two git config commands to properly set my git username and email to match with my GitHub profile.
 
 ```bash
 git config --global user.name "Nicholas Leonard"
@@ -43,6 +45,7 @@ Date:   Tue Sep 25 12:32:34 2018 -0700
 ```
 
 <br/>
+
 ### Step 2. Coding a Multipage Website using HTML and Bootstrap.
 
 For this assignment, I had to make a website with multiple pages. The overall style and formatting of the pages was up to me, but my site had to contain at least two different kinds of lists, a table, and demonstrate the use of single column and multicolumn layouts. I decided to have a single column for my home page where I detailed what the website was about and then I used multiple columns in later pages.
@@ -64,7 +67,6 @@ I wanted the text to appear in a box on top of the regular background so I put i
 
 ![picture](../Portfolio_Photos/bootstrapfiles.png)
 
-
 To get Bootstrap to work with my pages, I had to include the necessary links in the head element of my HTML document. I also had to create and use my own CSS file, which I also linked in the head of the document.
 
 ```html
@@ -82,7 +84,6 @@ To get Bootstrap to work with my pages, I had to include the necessary links in 
 ```
 
 One of the assignment requirements, was to include some form of link navigation so that all pages in my website could be accessed. I decided to use an active tab system because I thought it looked cool and it also allowed me to use one of the two lists I needed to meet the requirements. Therefore, I included the HTML coding for a navbar and active tab system to provide navigation functionality. I repeated this code on subsequent pages so that they were all linked together.
-
 
 ```html
 <nav class="navbar">
@@ -103,7 +104,6 @@ One of the assignment requirements, was to include some form of link navigation 
 ```
 
 Making the navigation bar and link system was a lot of fun. I started with dummy links and titles because I did not yet have additional pages to link to and I did not know what to call the other pages. However, once I got going, it started to come pretty easily and I was able to come up with some names for my different pages. I did, however, almost forget to go back and change the names of the links on all the pages. I even forgot to add the active class to the current page I was on so that the tab would highlight. It all worked out in the end though.
-
 
 For the next page, I decided to use two columns of images with descriptive text to knockout the multicolumn requirement, but to also provide some practice with image linking. So I used bootstrap div, container, row, and column classes to position the images on the page and then created links to include the images. I did some specific modifications in my CSS file for these elements that I will talk about a little bit later.
 
@@ -174,11 +174,11 @@ For this page, I decided to put the list and the table into two columns to keep 
                 </div>
             </div>
 ```
+</br>
 
-<br/>
 ### Step 3 Styling the website using CSS
 
-For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragragh and header elements black because I wanted consistent black text throughout. I was also able to set the standared background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class, pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements so that I could use them as captions with my images. This allowed me to mess with justification and alignment for the captions of the images.
+For this homework assignment, I had to use a CSS file to consistently style my website. Therefore, I specifically styled paragraph and header elements black because I wanted consistent black text throughout. I was also able to set the standard background of the pages to a muted grey and change the color of the container class to a white-like color so that it would stand out nicely from the background. I also defined a new class, pushdown, which I used for the container and image elements to position them on the pages. I also created an id for specific <code><p></code> elements so that I could use them as captions with my images. This allowed me to mess with justification and alignment for the captions of the images.
 
 ```css
 body {

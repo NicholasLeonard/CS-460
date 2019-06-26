@@ -1,19 +1,22 @@
 # Nicholas Leonard
-<br/>
+
 ## Assignment 9
+
 This assignment, simply involved taking the website that we developed for homework 8 and deploying it on azure.
-<br/>
+
 ### Important Links
-Here is the link to my github repository.<br/>
-[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
+
+Here is the link to my GitHub repository.<br/>
+[GitHub Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
 This link will take you back to my main Portfolio page.<br/>
-[Home](../index.md)<br/>
+[Home](../../index.md)<br/>
 
 Here is the link to the deployed azure site.<br/>
 [Reginald's Auction House](https://hw9.azurewebsites.net)
 
 ### The Process
+
 The first thing I had to do was make an account on azure and create a resource group to house all of the azure stuff.<br/>
 ![picture](../Portfolio_Photos/Assignment9/ResourceGroup.PNG)
 <br/>

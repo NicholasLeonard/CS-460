@@ -1,20 +1,22 @@
 # Nicholas Leonard
-<br/>
+
 ## Homework 5
 
 This assignment was about adding a database and a model to my previous use of the Model View Controller development layout. It also expanded on the types of views and action methods I can use with the Model View Controller development layout. This assignment was challenging. The amount of errors and bugs I had to deal with in order to get the application connected to the database was insane. However, it all worked out in the end and I was able to connect to the database and begin to develop an understanding of how MVC utilizes a database to make data persistent. It also started to help me understand how C# itself is used to connect to databases and the type of logic and procedures it requires. All in all, I had a lot of fun despite the initial headaches.
 
 ### Important Links
-Here is the link to my github repository, which houses all of the source code for this project and others. <br/>
-[Github Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
+
+Here is the link to my GitHub repository, which houses all of the source code for this project and others. <br/>
+[GitHub Repository](https://github.com/NicholasLeonard/NicholasLeonard.github.io)<br/>
 
 Here is the link to a demo video of the application in action. <br/>
 [Demo Video](https://www.youtube.com/watch?v=lUZODFTdpZA&t=3s)<br/>
 
 This link will take you back to my main Portfolio page.<br/>
-[Home](../index.md)
+[Home](../../index.md)
 
 ### Step 1. Creating the new Project
+
 I started by creating a new MVC project, similar to what I did with the last assignment. I then decided to take it one step at a time and start by just making a landing page for the application. I removed the link buttons on the landing page that the default project gave me. I also decided to add a picture that stretched across the top of my website beneath the navbar. I put the code for this in the main layout page for the entire website so that the picture would be on all of the pages in the website.
 
 ```html
@@ -22,10 +24,13 @@ I started by creating a new MVC project, similar to what I did with the last ass
     <img src="~/Images/mountain_banner.jpg" style="width: 100%; height: 150px;" />
  </div>
 ```
+
 ![picture](../Portfolio_Photos/Assignment5/landing.png)
 
 ### Step 2. Creating the Model
+
 The next thing I did was create the model class, which contained all of the fields that I wanted to keep track of in the database and put in the submission form. I also included `System.ComponentModel.DataAnnotations` so that I could use annotations for some built in validation. I used a regular expression to provide some formatting for the phone number field. As part of the assignment, when I displayed the contents of the database, the entries had to be sorted by submission time with the oldest at the top. As such, I included a `DateTime` submitted field that gets the current date and time when the form is submitted. This value is stored in the database but it is not displayed in the form. So it is a bit of server side calculation.
+
 ```csharp
 /// <summary>
     /// CLass that defines data input for a tenants repair order for apartment complex.
@@ -69,6 +74,7 @@ The next thing I did was create the model class, which contained all of the fiel
 ```
 
 ### Step 3. Creating the Form page with a Strongly Typed View
+
 Once I created my model, I designed the form page, which would house the form to submit to request a work order. Once I created the default view, I added a razor model using statement to make it a strongly typed view.
 
 ```csharp
@@ -126,9 +132,11 @@ This allowed me to create the view by using razor helper functions that utilized
    </div>
 }
 ```
+
 ![picture](../Portfolio_Photos/Assignment5/form.png)
 
 ### Step 4. Creating the Database Context Class and Up.sql and Down.sql
+
 Once I finished making the form, I had to make the database context class so that my application could actually talk with the database. I put this class in a new folder called DAL or Data Access Layer. I also had to write two scripts, one for creating a table in the database and populating it called up.sql, and the other for deleting the table called down.sql. These I put in the App_Data folder, which contained the database file. I also had to seed my database with 5 entries. I put the code for this in the up.sql file.
 
 ```csharp
@@ -147,6 +155,7 @@ Once I finished making the form, I had to make the database context class so tha
         public virtual DbSet<ServiceRequests> ServiceRequests { get; set; }
     }
 ```
+
 ```sql
 -- Adds table to database and seeds it with 5 values
 CREATE TABLE [dbo].[ServiceRequests]
@@ -171,13 +180,16 @@ INSERT INTO [dbo].[ServiceRequests] (FirstName, LastName, ApartmentName, UnitNum
 ('Randel', 'Wagner', 'Mountain View Apartments', '3', '541-667-2077', 'My internet is down and I keep hearing random static from my television', '0', '2018-10-22 20:00:00')
 GO
 ```
+
 ```sql
 -- Remove Table from ServiceRequests Database
 DROP TABLE [dbo].[ServiceRequests];
 ```
 
 ### Step 5. Making the List page and Writing the Controller for the Application
+
 After I was able to connect to the database and populated it, I had to make the page that would display the results from the database. This was done by passing the view a list and making the view an `IEnumerable` type so that it could be iterated over and results could be displayed.
+
 ```html
 @model IEnumerable<SurveyResponse.Models.ServiceRequests>
 
@@ -246,7 +258,9 @@ After I was able to connect to the database and populated it, I had to make the 
     }
 </table>
 ```
+
 This allowed me to make the table, but the results needed to be sorted by submission time. To do this, I passed the view an already sorted list from the controller. I used C# dynamic variables to sort the list. This method allowed me to use the `Linq` library methods to do all of the calculations and conversions before passing back to the view. That way I was able to use the server to do all the computation and just use the view for displaying the result.
+
 ```csharp
 ...
 /// <summary>
@@ -265,6 +279,7 @@ This allowed me to make the table, but the results needed to be sorted by submis
 ```
 
 After that was done, I had to write the action methods to display the other views. So I wrote action methods that would display the default home page, the default form page, and the list page. After submitting a service request, I wanted the user to be able to see their request along with the other requests that are ahead of them. So I used a `RedirectToAction()` action method that redirected the user to the list page, which automatically updated the table with their request when the page is rendered.
+
 ```csharp
 ...
 /// <summary>
@@ -307,7 +322,9 @@ After that was done, I had to write the action methods to display the other view
         }
 ...
 ```
+
 At the bottom of the controller, I put a statement to release the controllers access to the database so that memory can be freed up.
+
 ```csharp
 ...
 /// <summary>
@@ -323,6 +340,7 @@ At the bottom of the controller, I put a statement to release the controllers ac
             base.Dispose(disposing);
         }
 ```
+
 Here is a screenshot of the list page.
 
 ![picture](../Portfolio_Photos/Assignment5/list.png)
