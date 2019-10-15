@@ -5,7 +5,7 @@ using RandomStuff.Interfaces;
 
 namespace RandomStuff.Classes
 {
-    class UniqueCharacters:IUniqueCharacters
+    class UniqueCharacters:StringAlgorithms, IUniqueCharacters
     {
         private bool[] characters = new bool[128];
         private String inputString;
@@ -15,11 +15,13 @@ namespace RandomStuff.Classes
             inputString = "Default";
         }
 
+        //not currently used in this code implementation, but here if necessary
         public UniqueCharacters(String input)
         {
             inputString = input;
         }
 
+        //checks to see if all of the characters of a string are unique
         public bool IsUnique()
         {
             //If the string length is greater than 128, then it is not unique because of the limitations of ascii representation
@@ -44,6 +46,16 @@ namespace RandomStuff.Classes
             }
 
             return true;
+        }
+
+        //gets the input from the user and executes the IsUnique algorithim on the input
+        public override void Input()
+        {
+            Console.WriteLine("\nPlease enter a string to check for unique characters.");
+
+            inputString = Console.ReadLine();
+
+            Console.WriteLine(this.IsUnique());
         }
     }
 }

@@ -76,7 +76,7 @@ namespace RandomStuff.Main
         //Executes the selected program from the list
         private static void RunSelectedProgram(int program_num)
         {
-            var program = AvailablePrograms[program_num].Item5.IsUnique();
+            AvailablePrograms[program_num].Item5.Initiate();
         }
     }
 }
