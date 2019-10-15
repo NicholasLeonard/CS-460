@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using RandomStuff.Interfaces;
 
-namespace RandomStuff.Classes
+namespace RandomStuff.Classes.StringClasses
 {
     class UniqueCharacters:StringAlgorithms, IUniqueCharacters
     {

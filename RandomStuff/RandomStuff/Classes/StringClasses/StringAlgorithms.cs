@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RandomStuff.Classes
+namespace RandomStuff.Classes.StringClasses
 {
     //Base class for all of the string based algorithims
     abstract class StringAlgorithms

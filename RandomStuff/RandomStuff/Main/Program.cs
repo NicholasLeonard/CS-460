@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using RandomStuff.Classes;
+using RandomStuff.Classes.StringClasses;
 using System.Text.RegularExpressions;
 
 namespace RandomStuff.Main
