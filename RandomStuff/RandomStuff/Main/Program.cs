@@ -7,8 +7,9 @@ namespace RandomStuff.Main
 {
     class Program
     {// list of programs that can be run
-        static List<Tuple<int, string, string, bool, UniqueCharacters>> AvailablePrograms = new List<Tuple<int, string, string, bool, UniqueCharacters>> {
-            new Tuple<int, string, string, bool, UniqueCharacters>(0, "IsUnique", "Checks if a string contains all unique characters", true, new UniqueCharacters()) };
+        static List<Tuple<int, string, string, string>> AvailablePrograms = new List<Tuple<int, string, string, string>> {
+            new Tuple<int, string, string, string>(0, "IsUnique", "Checks if a string contains all unique characters", "UniqueCharacters"),
+            new Tuple<int, string, string, string>(1, "IsPermutation", "Checks if a string is a permutation of another", "CheckPermutation")};
 
         static void Main(string[] args)
         {
@@ -76,7 +77,18 @@ namespace RandomStuff.Main
         //Executes the selected program from the list
         private static void RunSelectedProgram(int program_num)
         {
-            AvailablePrograms[program_num].Item5.Initiate();
+            switch (AvailablePrograms[program_num].Item4)
+            {
+                case "UniqueCharacters":
+                    new UniqueCharacters().Initiate();
+                    break;
+                case "CheckPermutation":
+                    new CheckPermutation().Initiate();
+                    break;
+                default:
+                    Console.WriteLine("Nothing to run");
+                    break;
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ using RandomStuff.Interfaces;
 
 namespace RandomStuff.Classes.StringClasses
 {
-    class UniqueCharacters:StringAlgorithms, IUniqueCharacters
+    class UniqueCharacters : StringAlgorithms, IUniqueCharacters
     {
         private bool[] characters = new bool[128];
         private String inputString;
@@ -55,7 +55,7 @@ namespace RandomStuff.Classes.StringClasses
 
             inputString = Console.ReadLine();
 
-            Console.WriteLine(this.IsUnique());
+            Console.WriteLine(IsUnique());
         }
     }
 }
