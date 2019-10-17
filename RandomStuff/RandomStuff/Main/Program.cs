@@ -10,7 +10,8 @@ namespace RandomStuff.Main
         static List<Tuple<int, string, string, string>> AvailablePrograms = new List<Tuple<int, string, string, string>> {
             new Tuple<int, string, string, string>(0, "IsUnique", "Checks if a string contains all unique characters", "UniqueCharacters"),
             new Tuple<int, string, string, string>(1, "IsPermutation", "Checks if a string is a permutation of another", "CheckPermutation"),
-            new Tuple<int, string, string, string>(2, "MakeURLSafe", "Removes spaces from the string and replaces with %20", "URLify")};
+            new Tuple<int, string, string, string>(2, "MakeURLSafe", "Removes spaces from the string and replaces with %20", "URLify"),
+            new Tuple<int, string, string, string>(3, "IsPalindromePermutation", "Checks to see if the given string is a permutation of a palindrome. This function ignores capitalization and spaces.", "PalindromePermutation")};
 
         static void Main(string[] args)
         {
@@ -88,6 +89,9 @@ namespace RandomStuff.Main
                     break;
                 case "URLify":
                     new URLify().Initiate();
+                    break;
+                case "PalindromePermutation":
+                    new PalindromePermutation().Initiate();
                     break;
                 default:
                     Console.WriteLine("Nothing to run");
