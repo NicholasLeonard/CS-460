@@ -12,7 +12,8 @@ namespace RandomStuff.Main
             new Tuple<int, string, string, string>(1, "IsPermutation", "Checks if a string is a permutation of another", "CheckPermutation"),
             new Tuple<int, string, string, string>(2, "MakeURLSafe", "Removes spaces from the string and replaces with %20", "URLify"),
             new Tuple<int, string, string, string>(3, "IsPalindromePermutation", "Checks to see if the given string is a permutation of a palindrome. This function ignores capitalization and spaces.", "PalindromePermutation"),
-            new Tuple<int, string, string, string>(4, "IsOneAway", "Determines if two strings are one or zero edits away from eachother.", "OneAway")};
+            new Tuple<int, string, string, string>(4, "IsOneAway", "Determines if two strings are one or zero edits away from eachother.", "OneAway"),
+            new Tuple<int, string, string, string>(5, "Compression", "Compresses a string into letter-number counts.", "StringCompression")};
 
         static void Main(string[] args)
         {
@@ -96,6 +97,9 @@ namespace RandomStuff.Main
                     break;
                 case "OneAway":
                     new OneAway().Initiate();
+                    break;
+                case "StringCompression":
+                    new StringCompression().Initiate();
                     break;
                 default:
                     Console.WriteLine("Nothing to run");
