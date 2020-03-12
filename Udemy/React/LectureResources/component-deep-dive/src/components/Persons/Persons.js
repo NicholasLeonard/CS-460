@@ -12,9 +12,6 @@ class Persons extends Component {
   //   console.log('[Persons.js] componentWillRecieveProps', props);
   // }
 
-  // componentWillUpdate(){
-
-  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[Persons.js] shouldComponentUpdate');
@@ -26,9 +23,17 @@ class Persons extends Component {
     return { message: 'Snapshot' };
   }
 
+  // componentWillUpdate(){
+
+  // }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('[Persons.js] componentDidUpdate');
     console.log(snapshot);
+  }
+
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillUnmount');
   }
 
   render() {
