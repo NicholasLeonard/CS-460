@@ -7,11 +7,11 @@ const initialState = {
   purchased: false
 };
 
-const purchaseInit = (state, action) => {
+const purchaseInit = state => {
   return updateObject(state, { purchased: false });
 };
 
-const purchaseBurgerStart = (state, action) => {
+const purchaseBurgerStart = state => {
   return updateObject(state, { loading: true });
 };
 
